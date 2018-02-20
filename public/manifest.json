@@ -1,0 +1,15 @@
+{
+  "short_name": "Fatecarona",
+  "name": "Fatecarona",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "96x96 32x32 16x16",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#343a40",
+  "background_color": "#ffffff"
+}

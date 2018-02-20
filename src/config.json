@@ -1,0 +1,18 @@
+{
+  "firebase": {
+      "apiKey": "AIzaSyA9RLVdFNQblRw4NrVOViAGVvzGsd3EpxE",
+      "authDomain": "fatecarona.firebaseapp.com",
+      "databaseURL": "https://fatecarona.firebaseio.com",
+      "projectId": "fatecarona",
+      "storageBucket": "fatecarona.appspot.com",
+      "messagingSenderId": "232610915822"
+    },
+    "googlemaps": {
+      "key": "AIzaSyAg5yP_spuOutnWA5krn7z4vmqKxt70TBM",
+      "center": {
+        "lat": -23.6234, 
+        "lng": -46.5552
+      },
+      "zoom": 15
+    }
+}
