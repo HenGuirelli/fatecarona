@@ -32,6 +32,10 @@ class LoginForm extends Component {
       this.props.dispatch(logIn(email, this.state.password, this.props.firebase))
   }
 
+  componentWillMount() {
+    this.props.history.push('/')
+  }
+
   render() {
     const styles = {
       button: {

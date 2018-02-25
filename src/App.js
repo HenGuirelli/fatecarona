@@ -33,8 +33,8 @@ class App extends Component {
   }
 
   render() {
-    const { isLogged } = this.props
-    if (!isLogged) return <Auth/>
+    const { isLogged, history } = this.props
+    if (!isLogged) return <Auth history={history}/>
 
     return (
       <div className="App">

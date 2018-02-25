@@ -1,4 +1,4 @@
-//import axios from 'axios'
+import axios from 'axios'
 
 export function setFirebase(firebase) {
   return {
@@ -11,6 +11,13 @@ export function updateUser(user) {
   return {
     type: "UPDATE_USER",
     payload: user
+  }
+}
+
+export function setUserData(email) {
+  return {
+    type: "SET_USER_DATA",
+    payload: axios.get("http://localhost:8080/users/" + email)
   }
 }
 

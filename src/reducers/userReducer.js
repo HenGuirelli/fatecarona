@@ -1,5 +1,6 @@
 export default function reducer(state={
     user: {},
+    userData: {},
     firebase: {},
     isLogged: false,
     pending: false,
@@ -11,6 +12,9 @@ export default function reducer(state={
       }
       case 'UPDATE_USER': {
         return {...state, user: action.payload, isLogged: true, pending: false}
+      }
+      case 'SET_USER_DATA_FULFILLED': {
+        return {...state, userData: action.payload.data}
       }
       case 'UNSET_USER': {
         return {...state, user: {}, isLogged: false}

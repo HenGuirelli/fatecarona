@@ -1,16 +1,30 @@
-import React, { Component } from 'react';
-import logo from './logo.ico';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react'
+import logo from './logo.ico'
+import SideMenu from './sideMenu.js'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { setUserData } from '../actions/userActions'
 
-export default class NavBar extends Component {
+class NavBar extends Component {
+
+  bindDrawer = f => {
+    this.openDrawer = f;
+  };
+
+  componentWillMount() {
+    this.props.dispatch(setUserData(this.props.user.email.split('@')[0]))
+  }
+
   render() {
+    const { userData } = this.props
     return(
       <nav className="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+        <SideMenu callback={this.bindDrawer} handler={this.handleMenuSelect} userData={userData}/>
         <Link className="navbar-brand" to="/">
-          <img className="App-logo" src={logo} width="30" height="30" alt=""/>Fatecarona
+          <img className="App-logo" src={logo} width="30" height="30" alt=""/>{' '}Fatecarona
         </Link>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
+        <button className="navbar-toggler" type="button" onClick={() => this.openDrawer()}>
+          <span className="navbar-toggler-icon"/>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
@@ -40,3 +54,10 @@ export default class NavBar extends Component {
     );
   }
 }
+
+export default connect(store => {
+  return {
+    user: store.user.user,
+    userData: store.user.userData
+  }
+})(NavBar)
