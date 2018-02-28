@@ -4,6 +4,7 @@ import './App.css'
 import NavBar from './components/NavBar'
 import GoogleMap from './components/GoogleMaps'
 import Auth from './pages/form'
+import MainPage from './pages/main'
 import { connect } from 'react-redux'
 import { setFirebase, updateUser, unsetUser } from './actions/userActions'
 import * as firebase from 'firebase'
@@ -39,7 +40,7 @@ class App extends Component {
     return (
       <div className="App">
         <NavBar logOut={this.logOut.bind(this)}/>
-        <Route exact path="/" render={() => <h1>Main</h1>}/>
+        <Route exact path="/" component={MainPage}/>
         <Route path="/rotas" component={GoogleMap}/>
       </div>
     );

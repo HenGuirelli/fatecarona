@@ -18,15 +18,15 @@ class NavBar extends Component {
   render() {
     const { userData } = this.props
     return(
-      <nav className="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+      <nav className="navbar sticky-top navbar-expand-lg navbar-dark ftc">
         <SideMenu callback={this.bindDrawer} handler={this.handleMenuSelect} userData={userData}/>
-        <Link className="navbar-brand" to="/">
-          <img className="App-logo" src={logo} width="30" height="30" alt=""/>{' '}Fatecarona
-        </Link>
         <button className="navbar-toggler" type="button" onClick={() => this.openDrawer()}>
           <span className="navbar-toggler-icon"/>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <Link className="navbar-brand" to="/">
+            <img className="App-logo" src={logo} width="30" height="30" alt=""/>{' '}Fatecarona
+          </Link>
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
               <Link className="nav-link active" to="/rotas">Rotas</Link>

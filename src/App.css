@@ -2,6 +2,22 @@
   font-size: 1.5em;
 }
 
+.ftc {
+  background-color: #6E4D8B;
+}
+
+.loginBtn:hover {
+  background-color: #a8cf45 !important;
+  color: #6E4D8B !important;
+}
+
+@media (min-width: 600px) {
+  .formLogin {
+    width: 600px;
+    margin: 0 auto;
+  }
+}
+
 .App-intro {
   font-size: large;
 }

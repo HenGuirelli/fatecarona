@@ -57,7 +57,7 @@ class LoginForm extends Component {
 
     const { initState, firebase, user } = this.props
     return (
-      <div style={styles.root}>
+      <div style={styles.root} className="formLogin">
           <img src={logo} alt="" className="img-fluid mx-auto d-block"/>
           <div className="container col">
             <form onSubmit={this.handleSubmit} className="form-group">
@@ -78,7 +78,7 @@ class LoginForm extends Component {
                 />
               <button 
                 type="submit" 
-                className="btn btn-primary btn-block" 
+                className="btn btn-primary btn-block loginBtn" 
                 style={styles.button}>ENTRAR</button>
               {/*<a><img src={logoface} alt="logo" className="bigImg"/></a>
               <br/>
