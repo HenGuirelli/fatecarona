@@ -1,6 +1,7 @@
 {
   "short_name": "Fatecarona",
   "name": "Fatecarona",
+  "gcm_sender_id": "232610915822",
   "icons": [
     {
       "src": "favicon.png",
