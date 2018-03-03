@@ -35,7 +35,9 @@ class App extends Component {
 
   render() {
     const { isLogged, history } = this.props
-    if (!isLogged) return <Auth history={history}/>
+    //if (!isLogged) return <Auth history={history}/>
+
+    if (!window.localStorage.key(0).match('firebase')) return <Auth history={history}/>
 
     return (
       <div className="App">

@@ -11,12 +11,13 @@ class NavBar extends Component {
     this.openDrawer = f;
   };
 
-  componentWillMount() {
-    this.props.dispatch(setUserData(this.props.user.email.split('@')[0]))
-  }
-
   render() {
-    const { userData } = this.props
+    const { user, userData } = this.props
+    
+    if (user.email !== undefined && userData.nome === undefined) {
+      this.props.dispatch(setUserData(this.props.user.email.split('@')[0]));
+    }
+
     return(
       <nav className="navbar sticky-top navbar-expand-lg navbar-dark ftc">
         <SideMenu callback={this.bindDrawer} handler={this.handleMenuSelect} userData={userData}/>
