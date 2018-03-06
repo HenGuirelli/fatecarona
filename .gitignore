@@ -9,7 +9,7 @@ client/coverage
 server/coverage
 
 #other
-server/images/*
+server/images
 client/src/components/config.json
 
 # production

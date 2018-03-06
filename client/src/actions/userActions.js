@@ -1,5 +1,12 @@
 import axios from 'axios'
 
+export function insertUser(user) {
+  return {
+    type: "INSERT_USER",
+    payload: axios.post("http://localhost:8080/users", user)
+  }
+}
+
 export function setFirebase(firebase) {
   return {
     type: "SET_FIREBASE",

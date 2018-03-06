@@ -1,8 +1,16 @@
-const mongoExecute = require('./handleMongo.js').mongoExecute;
-var multer		= require('multer');
-var express 	= require('express');
-var bodyParser 	= require('body-parser');
-var webPush = require('web-push');
+const mongoExecute  = require('./handleMongo.js').mongoExecute;
+var multer		      = require('multer');
+var express 	      = require('express');
+var bodyParser 	    = require('body-parser');
+var webPush         = require('web-push');
+var mysql           = require('mysql');
+
+var pool = mysql.createPool({
+  host     : 'localhost',
+  user     : 'root',
+  password : '3847147298',
+  database : 'fatecarona'
+}); 
 
 const upload = multer({ dest: './images/' });
 
@@ -23,6 +31,20 @@ server.get('/users/*', function(req, res) {
 
 server.get('/users', function(req, res) {
 	mongoExecute(list, null, 'users', response => res.json(response));
+});
+
+server.post('/users', (req, res) => {
+  pool.getConnection((err, connection) => {
+    if(err) {
+      res.json(err);
+      return;
+    }
+    connection.query('INSERT INTO users SET ?', req.body, function(err, rows, fields) {
+      connection.release();
+      if (err) res.json(err);
+      else res.send({success: true});
+    });
+  });
 });
 
 //Manipulação de rotas

@@ -6,7 +6,7 @@ import GoogleMap from './components/GoogleMaps'
 import Auth from './pages/form'
 import MainPage from './pages/main'
 import { connect } from 'react-redux'
-import { setFirebase, updateUser, unsetUser } from './actions/userActions'
+import { setFirebase, updateUser, unsetUser, insertUser } from './actions/userActions'
 import * as firebase from 'firebase'
 
 class App extends Component {
@@ -34,16 +34,21 @@ class App extends Component {
   }
 
   render() {
-    const { isLogged, history } = this.props
+    const { history } = this.props
     //if (!isLogged) return <Auth history={history}/>
-
-    if (!window.localStorage.key(0).match('firebase')) return <Auth history={history}/>
+    const myStorage = window.localStorage.key(0)
+    if (!(myStorage && myStorage.match('firebase'))) return <Auth history={history}/>
 
     return (
       <div className="App">
         <NavBar logOut={this.logOut.bind(this)}/>
         <Route exact path="/" component={MainPage}/>
         <Route path="/rotas" component={GoogleMap}/>
+        <Route path="/test" render={() => <input 
+          type="button" 
+          onClick={() => this.props.dispatch(
+            insertUser({ra: 111111111, nome: 'thiago', email: 'thiago.ramos'})
+          )} value="test"/>}/>
       </div>
     );
   }
@@ -51,6 +56,5 @@ class App extends Component {
 
 export default withRouter(connect(store => {
   return {
-    isLogged: store.user.isLogged,
   }
 })(App))

@@ -42,12 +42,23 @@ class MainPage extends Component {
   }
 
   render() {
-    const { user, userData } = this.props
+    const { userData } = this.props
+
+    const styles = {
+      wrapper: {
+        overflow: 'hidden',
+      },
+      content: {
+        paddingBottom: '5000px',
+        marginBottom: '-5000px', 
+        'backgroundColor': 'white',
+      },
+    }
 
     return (
-      <div>
+      <div style={styles.wrapper}>
         <AvatarHeader userData={userData}/>
-        <div style={{'height': '500px', 'backgroundColor': 'white'}}>
+        <div style={styles.content}>
           <CircBar value={75}/>
         </div>
       </div>
