@@ -9,7 +9,8 @@ client/coverage
 server/coverage
 
 #other
-server/images
+server/images/*
+!server/images/README.md
 client/src/components/config.json
 
 # production
