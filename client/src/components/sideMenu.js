@@ -1,9 +1,16 @@
-import React from 'react';
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
-import Divider from 'material-ui/Divider';
-import Avatar from 'material-ui/Avatar';
-import MapsDirections from 'material-ui/svg-icons/maps/directions';
+import React from 'react'
+import Drawer from 'material-ui/Drawer'
+import MenuItem from 'material-ui/MenuItem'
+import Divider from 'material-ui/Divider'
+import Avatar from 'material-ui/Avatar'
+import PlaceIcon from 'material-ui/svg-icons/maps/place'
+import CarIcon from 'material-ui/svg-icons/maps/directions-car'
+import ConfIcon from 'material-ui/svg-icons/action/settings'
+import HomeIcon from 'material-ui/svg-icons/action/home'
+import ProfileIcon from 'material-ui/svg-icons/action/account-circle'
+import ThumbIcon from 'material-ui/svg-icons/action/thumb-up'
+import SpeakIcon from 'material-ui/svg-icons/action/record-voice-over'
+import SmileIcon from 'material-ui/svg-icons/social/sentiment-very-satisfied'
 import { Link } from 'react-router-dom'
 
 class Item extends React.Component {
@@ -48,14 +55,14 @@ class SideMenu extends React.Component {
       },
       header: {
         margin: '25px 0',
-      }
+      },
     }
 
     const { userData } = this.props
     return (
       <Drawer
         docked={false}
-        width={300}
+        width={250}
         open={this.state.open}
         onRequestChange={(open) => this.setState({open})}
         containerStyle={styles.container}
@@ -69,14 +76,14 @@ class SideMenu extends React.Component {
           <div style={styles.nome}>{userData.nome}</div>
         </center>
         <Divider style={{backgroundColor: '#333', height: '3px'}} />
-        <Item path="/" text="Home" icon={<MapsDirections />} handleClose={this.handleClose}/>
-        <Item path="/perfil" text="Editar perfil" icon={<MapsDirections />} handleClose={this.handleClose}/>
-        <Item path="/caronas/request" text="Quero carona" icon={<MapsDirections />} handleClose={this.handleClose}/>
-        <Item path="/caronas/offer" text="Oferecer carona" icon={<MapsDirections />} handleClose={this.handleClose}/>
-        <Item path="/rotas" text="Meu trajeto" icon={<MapsDirections />} handleClose={this.handleClose}/>
-        <Item path="/caronas/historico" text="Minhas caronas" icon={<MapsDirections />} handleClose={this.handleClose}/>
-        <Item path="/veiculos" text="Meus veículos" icon={<MapsDirections />} handleClose={this.handleClose}/>
-        <Item path="/config" text="Configurações" icon={<MapsDirections />} handleClose={this.handleClose}/>
+        <Item path="/" text="Home" icon={<HomeIcon color={'#000'}/>} handleClose={this.handleClose}/>
+        <Item path="/perfil" text="Editar perfil" icon={<ProfileIcon color={'#000'}/>} handleClose={this.handleClose}/>
+        <Item path="/caronas/request" text="Quero carona" icon={<ThumbIcon color={'#000'}/>} handleClose={this.handleClose}/>
+        <Item path="/caronas/offer" text="Oferecer carona" icon={<SpeakIcon color={'#000'}/>} handleClose={this.handleClose}/>
+        <Item path="/rotas" text="Meu trajeto" icon={<PlaceIcon color={'#000'}/>} handleClose={this.handleClose}/>
+        <Item path="/caronas/historico" text="Minhas caronas" icon={<SmileIcon color={'#000'}/>} handleClose={this.handleClose}/>
+        <Item path="/veiculos" text="Meus veículos" icon={<CarIcon color={'#000'}/>} handleClose={this.handleClose}/>
+        <Item path="/config" text="Configurações" icon={<ConfIcon color={'#000'}/>} handleClose={this.handleClose}/>
       </Drawer>
     );
   }

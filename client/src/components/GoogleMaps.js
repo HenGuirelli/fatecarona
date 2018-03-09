@@ -46,7 +46,7 @@ class GoogleMap extends Component {
     }
 
     return (
-      <div>
+      <div className="pageBase">
         <div className="container" style={styles.root}>
           <div className="form-group">
             <label htmlFor="origem">Origem</label>
@@ -62,7 +62,7 @@ class GoogleMap extends Component {
             <a role="button" style={styles.button} className="btn btn-primary btn-block" onClick={this.displayRoute.bind(this)}>Carregar Rota</a>
           </div>
         </div>
-        <div className="Map container" style={{height: '500px'}}/>
+        <div className="Map container" style={{height: '-webkit-fill-available', maxHeigh: 'calc(100% -210px)'}}/>
       </div>
     );
   }

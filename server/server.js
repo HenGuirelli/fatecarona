@@ -9,7 +9,7 @@ var pool = mysql.createPool({
   host     : 'localhost',
   user     : 'root',
   password : '3847147298',
-  database : 'fatecarona'
+  database : 'Fatecarona'
 }); 
 
 const upload = multer({ dest: './images/' });
@@ -39,10 +39,24 @@ server.post('/users', (req, res) => {
       res.json(err);
       return;
     }
-    connection.query('INSERT INTO users SET ?', req.body, function(err, rows, fields) {
+    connection.query('INSERT INTO membro SET ?', req.body, function(err, rows, fields) {
       connection.release();
       if (err) res.json(err);
       else res.send({success: true});
+    });
+  });
+});
+
+server.get('/userstest', (req, res) => {
+  pool.getConnection((err, connection) => {
+    if(err) {
+      res.json(err);
+      return;
+    }
+    connection.query('SELECT * FROM membro', function(err, rows, fields) {
+      connection.release();
+      if (err) res.json(err);
+      else res.json(rows);
     });
   });
 });

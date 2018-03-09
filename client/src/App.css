@@ -18,6 +18,10 @@
   }
 }
 
+.pageBase {
+  height: stretch;
+}
+
 .App-intro {
   font-size: large;
 }

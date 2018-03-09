@@ -3,26 +3,19 @@ import CircularProgress from 'material-ui/CircularProgress';
 
 const styles = {
   root: {
-    paddingTop: '50px',
+    paddingTop: '5em',
   },
   progress: {
-    position: 'relative',
     width: '150px',
     height: '150px',
+    marginTop: '2em',
   },
   innerNumber: {
-    width: '150px',
-    height: '40px',
-    textAlign: 'center',
+    
     fontSize: '2.5em',
-    position: 'absolute',
-    top: '50px',
-    left: 0,
+    marginTop: '-114px',
   },
   bar: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
   },
   content: {
     width: '75%', 

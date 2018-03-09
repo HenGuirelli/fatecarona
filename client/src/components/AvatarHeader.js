@@ -13,55 +13,57 @@ export default class AvatarHeader extends Component {
       },
       avatar: {
         border: '3px solid white',
-        position: 'absolute',
-        bottom: '-20px',
-        right: '-75px',
+        marginTop: '11px',
       },
       status: {
         color: '#A8CF45',
       },
-      background: {
-        backgroundColor: '#6E4D8B', 
+      background: { 
         height: '150px',
       },
       horaChegada: {
         color: 'white',
         textAlign: 'left',
         position: 'absolute',
-        bottom: '15px',
-        left: '15px',
+        bottom: 0,
+        left: '.5em',
       },
       horaSaida: {
         color: 'white',
         textAlign: 'right',
         position: 'absolute',
-        bottom: '15px',
-        right: '15px',
+        bottom: 0,
+        right: '.5em',
       },
+      root: {
+        backgroundColor: '#6E4D8B',
+      }
     }
     return(
-      <div>
+      <div style={styles.root}>
         <center>
           <div style={styles.nome}>{userData.nome}</div>
           <div style={styles.status}>Oferecendo Carona</div>
         </center>
         <div className="container">
           <div className="row" style={styles.background}>
-            <div className="col" style={{position: 'relative'}}>
+            <div className="col-2" style={{position: 'relative'}}>
               <div style={styles.horaChegada}>
-                <div>Chegando na Fatec</div>
-                <h1>13:00</h1>
+                <div>Chegando<br/>na<br/>Fatec</div>
+                <h2>13:00</h2>
               </div>
+            </div>
+            <center className="col-8">
               <Avatar
                 src={userData.img ? "http://localhost:8080/images/" + userData.img : ""}
                 size={150}
                 style={styles.avatar}
               />
-            </div>
-            <div className="col" style={{position: 'relative'}}>
+            </center>
+            <div className="col-2" style={{position: 'relative'}}>
               <div style={styles.horaSaida}>
-                <div>Saindo da Fatec</div>
-                <h1>17:15</h1>
+                <div>Saindo<br/>da<br/>Fatec</div>
+                <h2>17:15</h2>
               </div>
             </div>
           </div>

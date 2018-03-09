@@ -1,6 +1,14 @@
-body {
+body, html {
   margin: 0;
   padding: 0;
-  background-color: #6E4D8B;
-  font-size: 63.5%;
+  height: 100%;
+  color: #000;
+}
+
+#root {
+  height: 100%;
+}
+
+.App {
+  height: calc(100% - 55px);
 }

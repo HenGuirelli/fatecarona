@@ -52,12 +52,13 @@ class LoginForm extends Component {
       },
       root: {
         paddingTop: '5em',
+        backgroundColor: '#6E4D8B',
       }
     }
 
     const { initState, firebase, user } = this.props
     return (
-      <div style={styles.root} className="formLogin">
+      <div style={styles.root} className="pageBase">
           <img src={logo} alt="" className="img-fluid mx-auto d-block"/>
           <div className="container col">
             <form onSubmit={this.handleSubmit} className="form-group">

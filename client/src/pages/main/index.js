@@ -3,6 +3,9 @@ import AvatarHeader from '../../components/AvatarHeader'
 import { connect } from 'react-redux'
 import { sendSubscription } from '../../actions/notificationActions.js'
 import CircBar from '../../components/CircBar'
+import Plate from '../../components/Plate'
+import Vagas from '../../components/Vagas'
+import Avaliador from '../../components/Avaliador'
 
 class MainPage extends Component {
   componentWillMount() {
@@ -45,21 +48,31 @@ class MainPage extends Component {
     const { userData } = this.props
 
     const styles = {
-      wrapper: {
-        overflow: 'hidden',
-      },
       content: {
-        paddingBottom: '5000px',
-        marginBottom: '-5000px', 
         'backgroundColor': 'white',
       },
     }
 
     return (
-      <div style={styles.wrapper}>
+      <div className="pageBase">
         <AvatarHeader userData={userData}/>
-        <div style={styles.content}>
-          <CircBar value={75}/>
+        <div style={styles.content} className="container-fluid">
+          <div className="row">
+            <div className="col-12 col-xl-6">
+              <CircBar value={75}/>
+            </div>
+            <div className="col-12 col-xl-6">
+              <Avaliador />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12 col-xl-6">
+              <Plate />
+            </div>
+            <div className="col-12 col-xl-6">
+              <Vagas />
+            </div>
+          </div>
         </div>
       </div>
     )

@@ -7,6 +7,13 @@ export function insertUser(user) {
   }
 }
 
+export function loadUser() {
+  return {
+    type: "LOAD_USER",
+    payload: axios.get("http://localhost:8080/userstest")
+  }
+}
+
 export function setFirebase(firebase) {
   return {
     type: "SET_FIREBASE",
