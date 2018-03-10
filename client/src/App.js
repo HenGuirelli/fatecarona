@@ -5,6 +5,8 @@ import NavBar from './components/NavBar'
 import GoogleMap from './components/GoogleMaps'
 import Auth from './pages/form'
 import MainPage from './pages/main'
+import Verify from './pages/verify'
+import Perfil from './pages/perfil'
 import Caronas from './pages/caronas'
 import Config from './pages/config'
 import { connect } from 'react-redux'
@@ -46,15 +48,19 @@ class App extends Component {
   }
 
   render() {
-    const { history } = this.props
+    const { history, user, pending } = this.props
+    if (pending) return null
+
     //if localStorage gets more data then this should be trated differently
-    if (!window.localStorage.key(0)) return <Auth history={history}/>
+    if (!window.localStorage.key(0)) return <Auth history={history} alert={false}/>
+    if (!user.emailVerified) return <Verify firebase={firebase} logOut={this.logOut.bind(this)}/>
 
     return (
       <div className="App">
         <NavBar logOut={this.logOut.bind(this)}/>
         <Route exact path="/" component={MainPage}/>
         <Route path="/rotas" component={GoogleMap}/>
+        <Route path="/perfil" component={Perfil}/>
         <Route path="/caronas/historico" component={Caronas}/>
         <Route path="/config" render={() => <Config logOut={this.logOut.bind(this)}/>}/>
         <Route path="/test" render={() => 
@@ -75,5 +81,6 @@ class App extends Component {
 export default withRouter(connect(store => {
   return {
     user: store.user.user,
+    pending: store.user.pending,
   }
 })(App))

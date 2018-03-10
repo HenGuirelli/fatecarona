@@ -2,7 +2,7 @@ export default function reducer(state={
     user: {},
     userData: {},
     firebase: {},
-    pending: false,
+    pending: true,
     error: null,
   }, action) {
     switch (action.type) {
@@ -16,7 +16,7 @@ export default function reducer(state={
         return {...state, userData: action.payload.data}
       }
       case 'UNSET_USER': {
-        return {...state, user: {}}
+        return {...state, user: {}, pending: false}
       }
       case 'USER_LOGIN_PENDING': {
         return {...state, pending: true}

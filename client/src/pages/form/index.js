@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 import logo from './login_fatecarona.png'
 import logoface from './login_facebook.png'
 import logogoogle from './login_google.png'
+import Cadastro from '../cadastro'
 import { connect } from 'react-redux'
 import { logIn } from '../../actions/userActions'
 
 class LoginForm extends Component {
   constructor() {
     super()
-    this.state = {email: '', password: ''}
+    this.state = {email: '', password: '', isCadOpen: false}
   }
 
   handleEmail = (event) => {
@@ -17,6 +18,10 @@ class LoginForm extends Component {
 
   handlePassword = (event) => {
     this.setState({password: event.target.value})
+  };
+
+  abrirCadastro = () => {
+    this.setState({isCadOpen: true})
   };
 
   handleSubmit = (event) => {
@@ -56,36 +61,48 @@ class LoginForm extends Component {
       }
     }
 
+    if (this.state.isCadOpen) return <Cadastro />
+
     const { initState, firebase, user } = this.props
+
     return (
       <div style={styles.root} className="pageBase">
-          <img src={logo} alt="" className="img-fluid mx-auto d-block"/>
-          <div className="container col">
-            <form onSubmit={this.handleSubmit} className="form-group">
-                <input
-                  placeholder="Usuário"
-                  style={styles.inputText}
-                  value={this.state.email}
-                  onChange={this.handleEmail}
-                  className="form-control"
-                />
-                <input
-                  placeholder="Senha"
-                  style={styles.inputText}
-                  value={this.state.password}
-                  onChange={this.handlePassword}
-                  type="password"
-                  className="form-control"
-                />
-              <button 
-                type="submit" 
-                className="btn btn-primary btn-block loginBtn" 
-                style={styles.button}>ENTRAR</button>
-              {/*<a><img src={logoface} alt="logo" className="bigImg"/></a>
-              <br/>
-              <a><img src={logogoogle} alt="logo" className="bigImg"/></a>*/}
-            </form>
-          </div>
+        <img src={logo} alt="" className="img-fluid mx-auto d-block"/>
+        <div className="container">
+          <form onSubmit={this.handleSubmit} className="form-group">
+              <input
+                placeholder="Usuário"
+                style={styles.inputText}
+                value={this.state.email}
+                onChange={this.handleEmail}
+                className="form-control"
+              />
+              <input
+                placeholder="Senha"
+                style={styles.inputText}
+                value={this.state.password}
+                onChange={this.handlePassword}
+                type="password"
+                className="form-control"
+              />
+            <input
+              type="submit" 
+              className="btn btn-block loginBtn" 
+              style={styles.button}
+              value="ENTRAR"
+            />
+            <input
+              type="button"
+              className="btn btn-block loginBtn"
+              style={styles.button}
+              value="CADASTRAR"
+              onClick={this.abrirCadastro}
+            />
+            {/*<a><img src={logoface} alt="logo" className="bigImg"/></a>
+            <br/>
+            <a><img src={logogoogle} alt="logo" className="bigImg"/></a>*/}
+          </form>
+        </div>
       </div>
     );
   }
