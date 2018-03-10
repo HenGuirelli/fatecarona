@@ -8,7 +8,8 @@ class Perfil extends Component {
     super(props);
     this.state = {
       apelido: props.userData.nome,
-      fileName: 'Nenhum arquivo selecionado.'
+      fileName: 'Nenhum arquivo selecionado.',
+      img: props.userData.img ? "http://localhost:8080/images/" + props.userData.img : ""
     };
   }
 
@@ -37,7 +38,9 @@ class Perfil extends Component {
   }
 
   handleSubmit = () => {
-
+    //to upload images we need to do this
+    const formData = new FormData();
+    formData.append('image', this.state.img);
   }
 
   render() {
@@ -67,8 +70,8 @@ class Perfil extends Component {
       fileLabel: {
         zIndex: 0,
         borderRadius: '20px',
-        width: '12em',
-        marginLeft: '-25px'
+        width: '10em',
+        marginLeft: '-20px'
       }
     }
 
@@ -76,19 +79,21 @@ class Perfil extends Component {
       <div className="pageBase">
         <div className="container">
           <form onSubmit={this.handleSubmit} className="form-group">
-            <center style={{padding: '2em 0', borderBottom: '2px solid grey'}}>
-              <Avatar
-                id="avatar"
-                src={userData.img ? "http://localhost:8080/images/" + userData.img : ""}
-                size={150}
-                style={{zIndex: 1, position: 'relative', border: '3px solid #fff'}}
-              />
-              <span>
-                <input style={styles.file} type="file" id="file" accept="image/*" ref="img" onChange={this.handleImage}/>
-                <label htmlFor="file" style={styles.fileLabel} className="btn btn-primary">Alterar foto</label>
-                <div style={{margin: '-57px 0px 0 146px', width: '168px', textAlign: 'left'}}>{this.state.fileName}</div>
-              </span>
-            </center>
+            <div style={{padding: '2em 0', borderBottom: '2px solid grey'}}>
+              <div style={{position: 'relative', width: '300px', margin: '0 auto'}}>
+                <Avatar
+                  id="avatar"
+                  src={this.state.img}
+                  size={150}
+                  style={{zIndex: 1, position: 'relative', border: '3px solid #fff'}}
+                />
+                <div style={{width: '9em', position: 'absolute', top: '52px', left: '144px'}}>
+                  <input style={styles.file} type="file" id="file" accept="image/*" ref="img" onChange={this.handleImage}/>
+                  <label htmlFor="file" style={styles.fileLabel} className="btn btn-primary">Alterar foto</label>
+                  <div style={{textAlign: 'left'}}>{this.state.fileName}</div>
+                </div>
+              </div>
+            </div>
             <div style={{padding: '2em 0', borderBottom: '2px solid grey'}}>
               Apelido:
               <input
@@ -103,12 +108,16 @@ class Perfil extends Component {
               <TimePicker
                 format="ampm"
                 hintText="CHEGADA"
+                okLabel="CONFIRMAR"
+                cancelLabel="CANCELAR"
                 value={this.state.chegada}
                 onChange={this.handleChegada}
               />
               <TimePicker
                 format="ampm"
                 hintText="SAIDA"
+                okLabel="CONFIRMAR"
+                cancelLabel="CANCELAR"
                 value={this.state.SAIDA}
                 onChange={this.handleSaida}
               />

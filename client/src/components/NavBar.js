@@ -30,24 +30,25 @@ class NavBar extends Component {
           </Link>
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
+              <Link className="nav-link active" to="/perfil">Editar perfil</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link active" to="/caronas/request">Quero carona</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link active" to="/caronas/offer">Oferecer carona</Link>
+            </li>
+            <li className="nav-item">
               <Link className="nav-link active" to="/rotas">Rotas</Link>
             </li>
-            <li className="nav-item dropdown">
-              <Link className="nav-link dropdown-toggle" to="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-              </Link>
-              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <Link className="dropdown-item" to="#">Action</Link>
-                <Link className="dropdown-item" to="#">Another action</Link>
-                <div className="dropdown-divider"></div>
-                <Link className="dropdown-item" to="#">Something else here</Link>
-              </div>
+            <li className="nav-item">
+              <Link className="nav-link active" to="/caronas/historico">Minhas caronas</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link disabled" to="#">Disabled</Link>
+              <Link className="nav-link active" to="/veiculos">Meus veículos</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="#" onClick={this.props.logOut}>LogOut</Link>
+              <Link className="nav-link active" to="#" onClick={this.props.logOut}>LogOut</Link>
             </li>
           </ul>
         </div>
