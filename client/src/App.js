@@ -7,6 +7,7 @@ import Auth from './pages/form'
 import MainPage from './pages/main'
 import Verify from './pages/verify'
 import Perfil from './pages/perfil'
+import Oferecer from './pages/oferecer'
 import Caronas from './pages/caronas'
 import Config from './pages/config'
 import { connect } from 'react-redux'
@@ -62,6 +63,7 @@ class App extends Component {
         <Route path="/rotas" component={GoogleMap}/>
         <Route path="/perfil" component={Perfil}/>
         <Route path="/caronas/historico" component={Caronas}/>
+        <Route path="/caronas/offer" component={Oferecer}/>
         <Route path="/config" render={() => <Config logOut={this.logOut.bind(this)}/>}/>
         <Route path="/test" render={() => 
           <div>
