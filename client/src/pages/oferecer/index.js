@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Avatar from 'material-ui/Avatar'
 import TimePicker from 'material-ui/TimePicker';
 import DatePicker from 'material-ui/DatePicker';
 import DateIcon from 'material-ui/svg-icons/action/date-range'
@@ -32,7 +31,6 @@ class Oferecer extends Component {
   }
 
   render() {
-    const { userData } = this.props
 
     const styles = {
       button: {
@@ -125,6 +123,7 @@ class Oferecer extends Component {
                     formatDate={date => date.toLocaleDateString('pt-BR')}
                     textFieldStyle={styles.date}
                     className="datePicker"
+                    hintText=" "
                   />
                   <DateIcon style={styles.icons}/>
                 </div>
@@ -140,6 +139,7 @@ class Oferecer extends Component {
                     onChange={this.handleSaida}
                     textFieldStyle={styles.time}
                     className="timePicker"
+                    hintText=" "
                   />
                   <TimeIcon style={styles.icons}/>
                 </div>
@@ -156,30 +156,35 @@ class Oferecer extends Component {
             </div>
             <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
               <center>VEÍCULO</center>
-              <div  className="row">
+              <div  className="row btn-group-toggle" data-toggle="buttons">
                 <center className="col-6">
-                  <button className="btn loginBtn" style={styles.carBtn}>
-                    <CarIcon color="#fff" style={{width: '2em', height: '2em'}}/>
-                    <div>GHJ-8930</div>
-                  </button>
+                    <label className="btn loginBtn" style={styles.carBtn}>
+                      <input type="checkbox" style={{position: 'absolute', display: 'none'}}/>
+                      <CarIcon color="#fff" style={{width: '2em', height: '2em'}}/>
+                      <div>GHJ-8930</div>
+                    </label>
                 </center>
                 <center className="col-6">
-                  <button className="btn loginBtn" style={styles.carBtn}>
-                    <CarIcon color="#fff" style={{width: '2em', height: '2em'}}/>
-                    <div>YUJ-7381</div>
-                  </button>
+                    <label className="btn loginBtn" style={styles.carBtn}>
+                      <input type="checkbox" style={{position: 'absolute', display: 'none'}}/>
+                      <CarIcon color="#fff" style={{width: '2em', height: '2em'}}/>
+                      <div>YUJ-7381</div>
+                    </label>
                 </center>
               </div>
             </div>
             <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
               <center>
                 <div>TRAJETO</div>
-                <select className="form-control">
-                  <option selected>Selecione...</option>
+                <select className="form-control" defaultValue="default">
+                  <option value="default">Selecione...</option>
                   <option>Trajeto1</option>
                 </select>
               </center>
             </div>
+            <center>
+              <div>SELECIONE A COMODIDADE DA CARONA</div>
+            </center>
             <input type="submit" value="CONFIRMAR" className="btn loginBtn form-control" style={styles.button}/>
           </form>
         </div>

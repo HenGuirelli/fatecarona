@@ -7,15 +7,27 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import store from './store'
 
 // Needed for onTouchTap used by some material-ui components
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
+const muiTheme = getMuiTheme({
+  "datePicker": {
+    "selectColor": "#512da8",
+    "color": "#673ab7"
+  },
+  "palette": {
+    "pickerHeaderColor": "#673ab7",
+    "primary1Color": "#673ab7"
+  }
+});
+
 ReactDOM.render(
   <Provider store={store}>
-    <MuiThemeProvider>
+    <MuiThemeProvider muiTheme={muiTheme}>
       <BrowserRouter>
         <App />
       </BrowserRouter>

@@ -44,7 +44,7 @@ class Perfil extends Component {
   }
 
   render() {
-    const { userData } = this.props
+    //const { userData } = this.props
 
     const styles = {
       button: {
@@ -71,7 +71,10 @@ class Perfil extends Component {
         zIndex: 0,
         borderRadius: '20px',
         width: '10em',
-        marginLeft: '-20px'
+        marginLeft: '-20px',
+        backgroundColor: '#a8cf45',
+        border: 'none',
+        color: '#6E4D8B'
       }
     }
 

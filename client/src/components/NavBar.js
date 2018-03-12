@@ -20,7 +20,7 @@ class NavBar extends Component {
 
     return(
       <nav className="navbar sticky-top navbar-expand-lg navbar-dark ftc">
-        <SideMenu callback={this.bindDrawer} handler={this.handleMenuSelect} userData={userData}/>
+        <SideMenu callback={this.bindDrawer} handler={this.handleMenuSelect} />
         <button className="navbar-toggler" type="button" onClick={() => this.openDrawer()}>
           <span className="navbar-toggler-icon"/>
         </button>
@@ -30,25 +30,25 @@ class NavBar extends Component {
           </Link>
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link className="nav-link active" to="/perfil">Editar perfil</Link>
+              <Link className="nav-link" to="/perfil">Editar perfil</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link active" to="/caronas/request">Quero carona</Link>
+              <Link className="nav-link" to="/caronas/request">Quero carona</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link active" to="/caronas/offer">Oferecer carona</Link>
+              <Link className="nav-link" to="/caronas/offer">Oferecer carona</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link active" to="/rotas">Rotas</Link>
+              <Link className="nav-link" to="/rotas">Rotas</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link active" to="/caronas/historico">Minhas caronas</Link>
+              <Link className="nav-link" to="/caronas/historico">Minhas caronas</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link active" to="/veiculos">Meus veículos</Link>
+              <Link className="nav-link" to="/veiculos">Meus veículos</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link active" to="#" onClick={this.props.logOut}>LogOut</Link>
+              <Link className="nav-link" to="#" onClick={this.props.logOut}>LogOut</Link>
             </li>
           </ul>
         </div>

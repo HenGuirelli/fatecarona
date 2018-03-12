@@ -1,11 +1,20 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { insertUser } from '../../actions/userActions'
+import Dialog from 'material-ui/Dialog'
 
 class Cadastro extends Component {
   constructor() {
     super()
-    this.state = {email: '', senha: '', nome: '', cel: '', ra: ''}
+    this.state = {
+      email: '', 
+      senha: '', 
+      nome: '', 
+      cel: '', 
+      ra: '', 
+      dialog: false,
+      msg: ''
+    }
   }
 
   handleEmail = (event) => {
@@ -32,15 +41,15 @@ class Cadastro extends Component {
     event.preventDefault()
     const { email, senha, nome, cel, ra } = this.state
     if(email.length === 0 || senha.length === 0 || nome.length === 0 || cel.length === 0 || ra.length === 0) {
-      this.displayModal("Favor Preencher todos os campos!")
+      this.displayDialog("Favor Preencher todos os campos!")
       return
     }
     if (!email.match('@fatec.sp.gov.br')) {
-      this.displayModal('Utilize um email institucional! ex:"@fatec.sp.gov.br"')
+      this.displayDialog('Utilize um email institucional! ex:"@fatec.sp.gov.br"')
       return
     }
     if (!/[0-9]{5}-[0-9]{4}/.test(cel)) {
-      this.displayModal('Numero com formato inválido. ex:"99999-9999"')
+      this.displayDialog('Numero com formato inválido. ex:"99999-9999"')
     }
     this.props.firebase.auth().createUserWithEmailAndPassword(email, senha)
     .then(
@@ -55,9 +64,12 @@ class Cadastro extends Component {
     });
   }
 
-  displayModal(text) {
-    document.getElementsByClassName('modal-body')[0].innerText = text;
-    window.$('#errorModal').modal();
+  displayDialog(msg) {
+    this.setState({dialog: true, msg})
+  }
+
+  handleClose = () => {
+    this.setState({dialog: false})
   }
 
   render() {
@@ -80,23 +92,18 @@ class Cadastro extends Component {
       }
     }
 
-    const { firebase } = this.props
+    //const { firebase } = this.props
     return (
       <div style={styles.root} className="pageBase">
-          <div className="modal fade" id="errorModal" tabIndex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
-            <div className="modal-dialog" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="errorModalLabel">Erro:</h5>
-                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                </div>
-              </div>
-            </div>
-          </div>
+          <Dialog
+            title="Erro:"
+            actions={null}
+            modal={false}
+            open={this.state.dialog}
+            onRequestClose={this.handleClose}
+          >
+          {this.state.msg}
+          </Dialog>
           <div className="container">
             <form onSubmit={this.handleSubmit} className="form-group">
                 <input

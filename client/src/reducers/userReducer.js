@@ -22,7 +22,7 @@ export default function reducer(state={
         return {...state, pending: true}
       }
       case 'USER_LOGIN_REJECTED': {
-        return {...state, error: action.payload}
+        return {...state, error: action.payload, pending: false}
       }
       case 'LOAD_USER_FULFILLED': {
         return {...state, user: action.payload.data[0]}

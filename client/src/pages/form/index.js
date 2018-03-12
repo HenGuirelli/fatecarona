@@ -1,15 +1,20 @@
 import React, { Component } from 'react'
-import logo from './login_fatecarona.png'
-import logoface from './login_facebook.png'
-import logogoogle from './login_google.png'
+import logo from './login_fatecarona.svg'
 import Cadastro from '../cadastro'
 import { connect } from 'react-redux'
 import { logIn } from '../../actions/userActions'
+import Dialog from 'material-ui/Dialog'
 
 class LoginForm extends Component {
   constructor() {
     super()
-    this.state = {email: '', password: '', isCadOpen: false}
+    this.state = {
+      email: '', 
+      password: '', 
+      isCadOpen: false,
+      dialog: false,
+      msg: ''
+    }
   }
 
   handleEmail = (event) => {
@@ -24,10 +29,18 @@ class LoginForm extends Component {
     this.setState({isCadOpen: true})
   };
 
+  displayDialog = (msg) => {
+    this.setState({dialog: true, msg})
+  }
+
+  handleClose = () => {
+    this.setState({dialog: false})
+  }
+
   handleSubmit = (event) => {
     event.preventDefault()
       if(this.state.email.length === 0 || this.state.password.length === 0) {
-        alert('Favor inserir email e senha')
+        this.displayDialog('Favor inserir email e senha')
         return
       }
       let email = this.state.email
@@ -39,6 +52,10 @@ class LoginForm extends Component {
 
   componentWillMount() {
     this.props.history.push('/')
+  }
+
+  componentDidMount() {
+    if (this.props.error) this.displayDialog('Usuário e/ou senha inválidos!')
   }
 
   render() {
@@ -63,10 +80,18 @@ class LoginForm extends Component {
 
     if (this.state.isCadOpen) return <Cadastro />
 
-    const { initState, firebase, user } = this.props
-
+    //const { initState, firebase, user } = this.props
     return (
       <div style={styles.root} className="pageBase">
+        <Dialog
+          title="Erro:"
+          actions={null}
+          modal={false}
+          open={this.state.dialog}
+          onRequestClose={this.handleClose}
+        >
+        {this.state.msg}
+        </Dialog>
         <img src={logo} alt="" className="img-fluid mx-auto d-block"/>
         <div className="container">
           <form onSubmit={this.handleSubmit} className="form-group">
@@ -98,9 +123,6 @@ class LoginForm extends Component {
               value="CADASTRAR"
               onClick={this.abrirCadastro}
             />
-            {/*<a><img src={logoface} alt="logo" className="bigImg"/></a>
-            <br/>
-            <a><img src={logogoogle} alt="logo" className="bigImg"/></a>*/}
           </form>
         </div>
       </div>
@@ -113,5 +135,6 @@ export default connect(store => {
     initState: store.user.initState, 
     firebase: store.user.firebase, 
     user: store.user.user,
+    error: store.user.error,
   }
 })(LoginForm)

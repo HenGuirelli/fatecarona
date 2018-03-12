@@ -2,7 +2,7 @@ import React from 'react'
 import Drawer from 'material-ui/Drawer'
 import MenuItem from 'material-ui/MenuItem'
 import Divider from 'material-ui/Divider'
-import Avatar from 'material-ui/Avatar'
+import headerIcon from './headerIcon.svg'
 import PlaceIcon from 'material-ui/svg-icons/maps/place'
 import CarIcon from 'material-ui/svg-icons/maps/directions-car'
 import ConfIcon from 'material-ui/svg-icons/action/settings'
@@ -42,9 +42,6 @@ class SideMenu extends React.Component {
 
   render() {
     const styles = {
-      avatar: {
-        border: '3px solid #333',
-      },
       container: {
         backgroundColor: '#A8CF45',
       },
@@ -54,11 +51,10 @@ class SideMenu extends React.Component {
         fontSize: '15px',
       },
       header: {
-        margin: '25px 0',
+        margin: '2em 1em',
       },
     }
 
-    const { userData } = this.props
     return (
       <Drawer
         docked={false}
@@ -68,12 +64,7 @@ class SideMenu extends React.Component {
         containerStyle={styles.container}
       >
         <center style={styles.header}>
-          <Avatar
-            src={userData.img ? "http://localhost:8080/images/" + userData.img : ""}
-            size={150}
-            style={styles.avatar}
-          />
-          <div style={styles.nome}>{userData.nome}</div>
+          <img src={headerIcon} alt="" className="img-fluid mx-auto d-block"/>
         </center>
         <Divider style={{backgroundColor: '#333', height: '3px'}} />
         <Item path="/" text="Home" icon={<HomeIcon color={'#000'}/>} handleClose={this.handleClose}/>
