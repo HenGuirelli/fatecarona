@@ -2,7 +2,7 @@ import React from 'react'
 import Drawer from 'material-ui/Drawer'
 import MenuItem from 'material-ui/MenuItem'
 import Divider from 'material-ui/Divider'
-import headerIcon from './headerIcon.svg'
+import headerIcon from '../pages/form/login_fatecarona.svg'
 import PlaceIcon from 'material-ui/svg-icons/maps/place'
 import CarIcon from 'material-ui/svg-icons/maps/directions-car'
 import ConfIcon from 'material-ui/svg-icons/action/settings'
@@ -13,19 +13,7 @@ import SpeakIcon from 'material-ui/svg-icons/action/record-voice-over'
 import SmileIcon from 'material-ui/svg-icons/social/sentiment-very-satisfied'
 import { Link } from 'react-router-dom'
 
-class Item extends React.Component {
-  render() {
-    const { path, text, icon, handleClose } = this.props
-    return (
-      <Link to={path} onClick={handleClose}>
-        <MenuItem style={{color: '#333', fontWeight: 'bolder', fontSize: '20px'}} primaryText={text} leftIcon={icon} />
-        <Divider style={{backgroundColor: '#333', height: '3px'}} />
-      </Link>
-    )
-  }
-}
-
-class SideMenu extends React.Component {
+export default class SideMenu extends React.Component {
 
   constructor(props) {
     super(props);
@@ -43,17 +31,55 @@ class SideMenu extends React.Component {
   render() {
     const styles = {
       container: {
-        backgroundColor: '#A8CF45',
-      },
-      nome: {
-        color: '#333',
-        fontWeight: 'bolder',
-        fontSize: '15px',
+        backgroundColor: '#6E4D8B',
       },
       header: {
         margin: '2em 1em',
       },
     }
+
+    const items = [
+      {
+        path: '/', 
+        text: 'Home', 
+        icon: <HomeIcon color={'#FFF'}/>
+      },
+      {
+        path: '/perfil', 
+        text: 'Editar perfil', 
+        icon: <ProfileIcon color={'#FFF'}/>
+      },
+      {
+        path: '/caronas/request', 
+        text: 'Quero carona', 
+        icon: <ThumbIcon color={'#FFF'}/>
+      },
+      {
+        path: '/caronas/offer', 
+        text: 'Oferecer carona', 
+        icon: <SpeakIcon color={'#FFF'}/>
+      },
+      {
+        path: '/rotas', 
+        text: 'Meus trajetos', 
+        icon: <PlaceIcon color={'#FFF'}/>
+      },
+      {
+        path: '/caronas/historico', 
+        text: 'Minhas caronas', 
+        icon: <SmileIcon color={'#FFF'}/>
+      },
+      {
+        path: '/veiculos', 
+        text: 'Meus veículos', 
+        icon: <CarIcon color={'#FFF'}/>
+      },
+      {
+        path: '/config', 
+        text: 'Configurações', 
+        icon: <ConfIcon color={'#FFF'}/>
+      }
+    ]
 
     return (
       <Drawer
@@ -61,23 +87,23 @@ class SideMenu extends React.Component {
         width={250}
         open={this.state.open}
         onRequestChange={(open) => this.setState({open})}
-        containerStyle={styles.container}
+        containerStyle={styles.container} 
       >
         <center style={styles.header}>
           <img src={headerIcon} alt="" className="img-fluid mx-auto d-block"/>
         </center>
-        <Divider style={{backgroundColor: '#333', height: '3px'}} />
-        <Item path="/" text="Home" icon={<HomeIcon color={'#000'}/>} handleClose={this.handleClose}/>
-        <Item path="/perfil" text="Editar perfil" icon={<ProfileIcon color={'#000'}/>} handleClose={this.handleClose}/>
-        <Item path="/caronas/request" text="Quero carona" icon={<ThumbIcon color={'#000'}/>} handleClose={this.handleClose}/>
-        <Item path="/caronas/offer" text="Oferecer carona" icon={<SpeakIcon color={'#000'}/>} handleClose={this.handleClose}/>
-        <Item path="/rotas" text="Meu trajeto" icon={<PlaceIcon color={'#000'}/>} handleClose={this.handleClose}/>
-        <Item path="/caronas/historico" text="Minhas caronas" icon={<SmileIcon color={'#000'}/>} handleClose={this.handleClose}/>
-        <Item path="/veiculos" text="Meus veículos" icon={<CarIcon color={'#000'}/>} handleClose={this.handleClose}/>
-        <Item path="/config" text="Configurações" icon={<ConfIcon color={'#000'}/>} handleClose={this.handleClose}/>
+        <Divider style={{backgroundColor: '#FFF', height: '1px'}} />
+        {items.map(item =>
+          <Link to={item.path} onClick={this.handleClose} key={item.path}>
+            <MenuItem 
+              style={{color: '#FFF', fontWeight: 'bolder', fontSize: '20px', textDecoration: 'none'}} 
+              primaryText={item.text} 
+              leftIcon={item.icon}
+            />
+            <Divider style={{backgroundColor: '#FFF', height: '1px'}} />
+          </Link>
+        )}
       </Drawer>
     );
   }
 }
-
-export default SideMenu

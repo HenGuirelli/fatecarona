@@ -18,6 +18,10 @@
   }
 }
 
+a:hover {
+  text-decoration: none;
+}
+
 .pageBase {
   height: stretch;
 }
