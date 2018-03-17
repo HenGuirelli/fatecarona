@@ -24,7 +24,7 @@ class AtivarVeic extends Component{
                 <CarIcon color="#000" style={{width: '2em', height: '2em'}}/>
               </div>
               </center>
-            <input type="submit" value="ADICIONAR" className="btn loginBtn form-control" style={styles.button}/>
+            <input type="submit" value="ATIVAR" className="btn loginBtn form-control" style={styles.button}/>
           </form>
         </div>
       </div>

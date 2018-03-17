@@ -5,8 +5,10 @@ import DatePicker from 'material-ui/DatePicker';
 import DateIcon from 'material-ui/svg-icons/action/date-range'
 import TimeIcon from 'material-ui/svg-icons/action/schedule'
 import CarIcon from 'material-ui/svg-icons/maps/directions-car'
+import AcessbleIcon from 'material-ui/svg-icons/action/accessible'
+import SmokingIcon from 'material-ui/svg-icons/places/smoking-rooms'
+import MusicIcon from 'material-ui/svg-icons/image/audiotrack'
 import styles from './styles'
-import './index.css'
 
 class Oferecer extends Component {
   constructor(props) {
@@ -25,10 +27,8 @@ class Oferecer extends Component {
     this.setState({saida: date})
   };
 
-  handleSubmit = () => {
-    //to upload images we need to do this
-    const formData = new FormData();
-    formData.append('image', this.state.img);
+  handleSubmit = (e) => {
+    e.preventDefault()
   }
 
   render() {
@@ -72,37 +72,37 @@ class Oferecer extends Component {
                 </div>
               </div>
             </div>
-            <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
+            <div style={{paddingBottom: '2em', margin: '0 1px', borderBottom: '2px solid grey'}}>
                 <center>
-                <div>VOCÊ VAI...</div>
+                <div style={styles.title}>VOCÊ VAI...</div>
                 <div className="btn-group form-control" style={{border: 'none'}}>
                   <input type="button" value="IR À FATEC" className="btn loginBtn" style={styles.buttonL}/>
                   <input type="button" value="SAIR DA FATEC" className="btn loginBtn" style={styles.buttonR}/>
                 </div>
                 </center>
             </div>
-            <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
-              <center>VEÍCULO</center>
+            <div style={{paddingBottom: '2em', margin: '0 1px', borderBottom: '2px solid grey'}}>
+              <center style={styles.title}>VEÍCULO</center>
               <div  className="row btn-group-toggle" data-toggle="buttons">
                 <center className="col-6">
                     <label className="btn loginBtn" style={styles.carBtn}>
                       <input type="checkbox" style={{position: 'absolute', display: 'none'}}/>
                       <CarIcon color="#fff" style={{width: '2em', height: '2em'}}/>
-                      <div>GHJ-8930</div>
                     </label>
+                    <div>GHJ-8930</div>
                 </center>
                 <center className="col-6">
                     <label className="btn loginBtn" style={styles.carBtn}>
                       <input type="checkbox" style={{position: 'absolute', display: 'none'}}/>
                       <CarIcon color="#fff" style={{width: '2em', height: '2em'}}/>
-                      <div>YUJ-7381</div>
                     </label>
+                    <div>YUJ-7381</div>
                 </center>
               </div>
             </div>
-            <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
+            <div style={{paddingBottom: '2em', margin: '0 1px', borderBottom: '2px solid grey'}}>
               <center>
-                <div>TRAJETO</div>
+                <div style={styles.title}>TRAJETO</div>
                 <select className="form-control" defaultValue="default">
                   <option value="default">Selecione...</option>
                   <option>Trajeto1</option>
@@ -110,7 +110,30 @@ class Oferecer extends Component {
               </center>
             </div>
             <center>
-              <div>SELECIONE A COMODIDADE DA CARONA</div>
+              <div style={styles.title}>SELECIONE A COMODIDADE DA CARONA</div>
+              <div  className="row btn-group-toggle" data-toggle="buttons">
+                <center className="col-4">
+                    <label className="btn loginBtn" style={styles.iconBG}>
+                      <input type="checkbox" style={{position: 'absolute', display: 'none'}}/>
+                      <AcessbleIcon color="#fff" style={{width: '2em', height: '2em'}}/>
+                    </label>
+                    <div>Acomodação de Deficientes</div>
+                </center>
+                <center className="col-4">
+                    <label className="btn loginBtn" style={styles.iconBG}>
+                      <input type="checkbox" style={{position: 'absolute', display: 'none'}}/>
+                      <SmokingIcon color="#fff" style={{width: '2em', height: '2em'}}/>
+                    </label>
+                    <div>Aceitação de Fumantes</div>
+                </center>
+                <center className="col-4">
+                    <label className="btn loginBtn" style={styles.iconBG}>
+                      <input type="checkbox" style={{position: 'absolute', display: 'none'}}/>
+                      <MusicIcon color="#fff" style={{width: '2em', height: '2em'}}/>
+                    </label>
+                    <div>Ouvintes de Muita Música</div>
+                </center>
+              </div>
             </center>
             <input type="submit" value="CONFIRMAR" className="btn loginBtn form-control" style={styles.button}/>
           </form>

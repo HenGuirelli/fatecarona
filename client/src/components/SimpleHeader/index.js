@@ -5,8 +5,8 @@ export default class SimpleHeader extends Component {
     const { title } = this.props
 
     return(
-      <center style={{backgroundColor: '#6E4D8B', padding: '1em 0'}}>
-        <h1 style={{color: '#A8CF45'}}>
+      <center style={{backgroundColor: 'transparent', position: 'absolute', top: 0}}>
+        <h1 style={{color: '#fff'}}>
           {title}
         </h1>
       </center>

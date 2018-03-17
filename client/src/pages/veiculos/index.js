@@ -1,13 +1,29 @@
 import React, { Component } from 'react'
 import Veiculo from '../../components/Veiculo'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
+const veiculos = [
+  {
+    marca: 'FIAT',
+    modelo: 'SIENA',
+    placa : 'GHJ-8930'
+  },
+  {
+    marca: 'VOLKSWAGEN',
+    modelo: 'FUSCA',
+    placa : 'YUJ-7381'
+  },
+  {
+    marca: 'MITSUBISHI',
+    modelo: 'PAJERO',
+    placa : 'COC-2355'
+  },
+]
 
 class Veiculos extends Component{
 
-  handleSubmit = (event) =>{
-    <Link to={'/veiculos/ativar'} onClick={this.handleClose}></Link>
+  handleActivation = (carPlate) =>{
+    this.props.history.push('/veiculos/ativar/' + carPlate)
   }
 
   render(){
@@ -28,44 +44,24 @@ class Veiculos extends Component{
       }
     }
 
-    const veiculos = [{
-      marca: 'FIAT',
-      modelo: 'SIENA',
-      placa : 'GHJ-8930'
-    },
-    {
-      marca:'FIAT',
-      modelo: 'PALIO',
-      placa : 'SDO-2032'
-    },
-    {
-      marca:'FIAT',
-      modelo: 'UNO',
-      placa : 'UNO-0101'
-    }
-  ]
     return(
       <div className="pageBase">
         <div className="container">
-          <form onSubmit={this.handleSubmit} className="form-group">
-            {veiculos.map(veiculos =>
-              <div style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
-                <center>
-                  <button className="btn loginBtn" style={styles.carButton}>
-                    <Veiculo
-                      marca={veiculos.marca}
-                      modelo={veiculos.modelo}
-                      placa={veiculos.placa}
-                    />
-                  </button>
-                </center>
+            {veiculos.map(veiculo =>
+              <div className="row" style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
+                <button className="btn loginBtn" onClick={() => this.handleActivation(veiculo.placa)} style={styles.carButton}>
+                  <Veiculo
+                    marca={veiculo.marca}
+                    modelo={veiculo.modelo}
+                    placa={veiculo.placa}
+                    key={veiculo.placa}
+                  />
+                </button>
               </div>
             )}
-            <input type="submit" value="ADICIONAR" className="btn loginBtn form-control" style={styles.button}/>
-          </form>
+            <input type="button" value="ADICIONAR" className="btn loginBtn btn-block" style={styles.button}/>
         </div>
       </div>
-
     )
   }
 }
