@@ -26,7 +26,19 @@ server.use(function(req, res, next) {
 //Manipulação de usuários
 
 server.get('/users/*', function(req, res) {
-	mongoExecute(find, {email: req.params[0]}, 'users', response => res.json(response));
+	//mongoExecute(find, {email: req.params[0]}, 'users', response => res.json(response));
+
+  pool.getConnection((err, connection) => {
+    if(err) {
+      res.json(err);
+      return;
+    }
+    connection.query('SELECT * FROM membro where email = ?',[req.params[0]], function(err, rows, fields) {
+      connection.release();
+      if (err) res.json(err);
+      else res.json(rows[0]);
+    });
+  });
 });
 
 server.get('/users', function(req, res) {

@@ -1,15 +1,21 @@
 import React, { Component } from 'react'
 import Avatar from 'material-ui/Avatar'
-import { Rating } from 'material-ui-rating'
 
 export default class Lift extends Component {
   render() {
-    const { userData, action, date, desc, rating } = this.props
+    const { userData, text } = this.props
 
     const styles = {
       root: {
         margin: '1em',
         padding: '1em',
+      },
+      btn: {
+        fontSize: '10px',
+        width: '100%',
+      },
+      btnContainer: {
+        padding: '0 10px',
       }
     }
 
@@ -23,17 +29,17 @@ export default class Lift extends Component {
             />
           </div>
           <div className="col-9 col-xl-11">
-            <h4>{action}</h4>
-            <Rating
-              value={rating}
-              readOnly={true}
-              style={{marginLeft: '-12px'}}
-              itemStyle={{width: '5em'}}
-            />
             <div>
-              {date}<br/>
-              {desc}
+              {text}
             </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-6" style={styles.btnContainer}>
+            <input type="button" style={styles.btn} className="btn btn-primary" value="GERENCIAR" />
+          </div>
+          <div className="col-6" style={styles.btnContainer}>
+            <input type="button" style={styles.btn} className="btn btn-primary" value="ESPIAR MOTORISTA" />
           </div>
         </div>
       </div>

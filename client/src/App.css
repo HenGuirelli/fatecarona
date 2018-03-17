@@ -8,11 +8,12 @@
 
 .btnLift {
   font-size: 13px;
-  border: 2px solid #d3d3d3;
+  border: 1px solid #d3d3d3;
 }
 
 .btnLift:hover {
   background-color: #a8cf45;
+  outline: none;
 }
 
 .loginBtn:hover {

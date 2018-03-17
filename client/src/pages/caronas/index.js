@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import Lift from '../../components/Lift'
+import LiftRating from '../../components/LiftRating'
+import LiftMgt from '../../components/LiftMgt'
 import { connect } from 'react-redux'
 
 class Caronas extends Component {
   render() {
     const { userData } = this.props
-
+    window.comp = LiftRating
     return (
       <div>
         <div className="row btn-group" style={{width: '100%', marginLeft: 0}}>
@@ -15,26 +16,17 @@ class Caronas extends Component {
         </div>
         <div className="container">
           <div className="row">
-            <Lift 
+            <LiftRating 
               userData={userData} 
-              action="Deu Carona" 
-              date="29/07/2017" 
-              desc="Chegando na Fatec."
-              rating={2}
+              name="Thiago" 
+              rating={4} 
+              text="I don't like this"
             />
-            <Lift 
+          </div>
+          <div className="row">
+            <LiftMgt
               userData={userData} 
-              action="Recebeu Carona" 
-              date="01/02/2018" 
-              desc="Saindo da Fatec."
-              rating={4}
-            />
-            <Lift 
-              userData={userData} 
-              action="Deu Carona" 
-              date="03/03/2018" 
-              desc="Chegando na Fatec."
-              rating={3}
+              text="Vai pegar carona com BIANCA em 28/02/2018 saindo da FATEC."
             />
           </div>
         </div>
