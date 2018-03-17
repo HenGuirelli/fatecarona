@@ -10,5 +10,13 @@ body, html {
 }
 
 .App {
-  height: calc(100% - 55px);
+  height: calc(100% - 44px);
+}
+
+.timePicker input, .datePicker input {
+  text-align: center;
+}
+
+.timePicker div hr, .datePicker div hr{
+  border: none !important;
 }

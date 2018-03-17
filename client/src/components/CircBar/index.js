@@ -3,29 +3,8 @@ import CircularProgress from 'material-ui/CircularProgress';
 import styles from './styles'
 
 export default class Leilometer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {value: 0};
-  }
-
-  componentDidMount() {
-    this.timerID = setInterval(
-      () => this.animate(),
-      50
-    );
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timerID);
-  }
-
-  animate = () => {
-    if (this.state.value < this.props.value) {
-      this.setState({value: this.state.value + 1})
-    }
-  }
-
   render() {
+    const { value } = this.props
     return (
       <center style={styles.root}>
         <h4>Caronas bem sucedidas</h4>
@@ -33,12 +12,12 @@ export default class Leilometer extends React.Component {
           <CircularProgress
             color={'#76c4fb'}
             mode="determinate"
-            value={this.state.value}
+            value={value}
             size={150}
             thickness={15}
             style={styles.bar}
           />
-          <div style={styles.innerNumber}>{this.state.value + '%'}</div>
+          <div style={styles.innerNumber}>{value + '%'}</div>
         </div>
       </center>
     );

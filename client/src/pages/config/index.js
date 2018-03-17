@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import SimpleHeader from '../../components/SimpleHeader'
 
 export default class Config extends Component {
   render() {
@@ -21,7 +20,6 @@ export default class Config extends Component {
 
     return(
       <div className="pageBase">
-        <SimpleHeader title="Configurações"/>
         <div>
           <div style={{padding: '1em', borderBottom: '1px solid #d6d6d6'}}>
             <h4>Serviços conectados:</h4>
