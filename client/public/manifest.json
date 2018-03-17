@@ -4,14 +4,24 @@
   "gcm_sender_id": "232610915822",
   "icons": [
     {
-      "src": "favicon.png",
-      "sizes": "96x96 32x32 16x16",
+      "src": "favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon-96x96.png",
+      "sizes": "96x96",
       "type": "image/png"
     }
   ],
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#343a40",
+  "theme_color": "#6E4D8B",
   "background_color": "#ffffff"
 }

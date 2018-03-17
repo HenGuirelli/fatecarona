@@ -22,12 +22,12 @@ class NavBar extends Component {
     return(
       <nav className="navbar sticky-top navbar-expand-lg navbar-dark ftc">
         <SideMenu callback={this.bindDrawer} handler={this.handleMenuSelect} />
-        <div className="navbar-toggler" style={{color: '#fff', border: 'none', margin: '0 auto'}}>
-            {menuItems.find(item => item.selected).text}
-        </div>
-        <button className="navbar-toggler" type="button" onClick={() => this.openDrawer()}>
+        <button style={{position: 'absolute', left: 0, border: 'none'}} className="navbar-toggler" type="button" onClick={() => this.openDrawer()}>
           <span className="navbar-toggler-icon"/>
         </button>
+        <div className="navbar-toggler" style={{color: '#fff', border: 'none', width: '100%', textAlign: 'center'}}>
+            {menuItems.find(item => item.selected).text}
+        </div>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <Link className="navbar-brand" to="/">
             <img className="App-logo" src={logo} width="30" height="30" alt=""/>{' '}Fatecarona
