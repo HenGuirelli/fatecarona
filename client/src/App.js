@@ -8,8 +8,11 @@ import MainPage from './pages/main'
 import Verify from './pages/verify'
 import Perfil from './pages/perfil'
 import Oferecer from './pages/oferecer'
+import Pedir from './pages/pedir'
 import Caronas from './pages/caronas'
 import Config from './pages/config'
+import Veiculos from './pages/veiculos'
+import Ativar from './pages/ativarveic'
 import { connect } from 'react-redux'
 import { setFirebase, updateUser, unsetUser, insertUser, loadUser } from './actions/userActions'
 import * as firebase from 'firebase'
@@ -63,15 +66,18 @@ class App extends Component {
         <Route path="/rotas" component={GoogleMap}/>
         <Route path="/perfil" component={Perfil}/>
         <Route path="/caronas/historico" component={Caronas}/>
+        <Route path="/caronas/request" component={Pedir}/>
         <Route path="/caronas/offer" component={Oferecer}/>
+        <Route path="/veiculos" component={Veiculos}/>
+        <Route path="/veiculos/ativar" component={Ativar}/>
         <Route path="/config" render={() => <Config logOut={this.logOut.bind(this)}/>}/>
-        <Route path="/test" render={() => 
+        <Route path="/test" render={() =>
           <div>
-            <input 
-            type="button" 
+            <input
+            type="button"
             onClick={this.test.bind(this)} value="Insert"/>
-            <input 
-            type="button" 
+            <input
+            type="button"
             onClick={this.testLoad.bind(this)} value="Select"/>
           </div>
         }/>
