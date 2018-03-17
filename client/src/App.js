@@ -61,14 +61,14 @@ class App extends Component {
 
     return (
       <div className="App">
-        <NavBar logOut={this.logOut.bind(this)}/>
+        <NavBar logOut={this.logOut.bind(this)} history={history}/>
         <Route exact path="/" component={MainPage}/>
         <Route path="/rotas" component={GoogleMap}/>
         <Route path="/perfil" component={Perfil}/>
         <Route path="/caronas/historico" component={Caronas}/>
         <Route path="/caronas/request" component={Pedir}/>
         <Route path="/caronas/offer" component={Oferecer}/>
-        <Route path="/veiculos" component={Veiculos}/>
+        <Route exact path="/veiculos" component={Veiculos}/>
         <Route path="/veiculos/ativar" component={Ativar}/>
         <Route path="/config" render={() => <Config logOut={this.logOut.bind(this)}/>}/>
         <Route path="/test" render={() =>

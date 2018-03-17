@@ -7,9 +7,9 @@ class Perfil extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      apelido: props.userData.nome,
+      apelido: props.userData.apelido,
       fileName: 'Nenhum arquivo selecionado.',
-      img: props.userData.img ? "http://localhost:8080/images/" + props.userData.img : ""
+      img: props.userData.img ? "http://localhost:8080/images/" + props.userData.img : "",
     };
   }
 
@@ -44,7 +44,7 @@ class Perfil extends Component {
   }
 
   render() {
-    //const { userData } = this.props
+    const { userData } = this.props
 
     const styles = {
       button: {

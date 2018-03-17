@@ -10,49 +10,49 @@ import SmileIcon from 'material-ui/svg-icons/social/sentiment-very-satisfied'
 export default [
   {
     path: '/',
-    text: 'Home',
+    text: 'HOME',
     icon: HomeIcon,
     selected: true
   },
   {
     path: '/perfil',
-    text: 'Editar perfil',
+    text: 'EDITAR PERFIL',
     icon: ProfileIcon,
     selected: false
   },
   {
     path: '/caronas/request',
-    text: 'Quero carona',
+    text: 'QUERO CARONA',
     icon: ThumbIcon,
     selected: false
   },
   {
     path: '/caronas/offer',
-    text: 'Oferecer carona',
+    text: 'OFERECER CARONA',
     icon: SpeakIcon,
     selected: false
   },
   {
     path: '/rotas',
-    text: 'Meus trajetos',
+    text: 'MEUS TRAJETOS',
     icon: PlaceIcon,
     selected: false
   },
   {
     path: '/caronas/historico',
-    text: 'Minhas caronas',
+    text: 'MINHAS CARONAS',
     icon: SmileIcon,
     selected: false
   },
   {
     path: '/veiculos',
-    text: 'Meus veículos',
+    text: 'MEUS VEÍCULOS',
     icon: CarIcon,
     selected: false
   },
   {
     path: '/config',
-    text: 'Configurações',
+    text: 'CONFIGURAÇÕES',
     icon: ConfIcon,
     selected: false
   }

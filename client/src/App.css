@@ -21,6 +21,14 @@
   color: #6E4D8B !important;
 }
 
+.timePicker input, .datePicker input {
+  text-align: center;
+}
+
+.timePicker div hr, .datePicker div hr{
+  border: none !important;
+}
+
 @media (min-width: 600px) {
   .formLogin {
     width: 600px;

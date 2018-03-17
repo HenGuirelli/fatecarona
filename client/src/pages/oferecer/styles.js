@@ -8,23 +8,29 @@ export default {
     fontSize: '25px',
   },
   buttonL: {
-    borderBottomLeftRadius: '25px',
-    borderTopLeftRadius: '25px',
-    backgroundColor: '#6E4D8B',
-    borderColor: '#a8cf45',
-    color: '#a8cf45',
+    borderRadius: '25px',
+    backgroundColor: '#fff',
+    borderColor: 'grey',
+    color: '#000',
     fontSize: '15px',
-    width: '50%'
-
+    width: '50%',
+    marginRight: '10px'
   },
   buttonR: {
-    borderBottomRightRadius: '25px',
-    borderTopRightRadius: '25px',
+    borderRadius: '25px',
+    backgroundColor: '#fff',
+    borderColor: 'grey',
+    color: '#000',
+    fontSize: '15px',
+    width: '50%',
+    marginLeft: '10px'
+  },
+  iconBG: {
+    borderRadius: '100%',
     backgroundColor: '#6E4D8B',
     borderColor: '#a8cf45',
-    color: '#a8cf45',
-    fontSize: '15px',
-    width: '50%'
+    color: '#fff',
+    fontSize: '21px',
   },
   carBtn: {
     borderRadius: '25px',
@@ -74,5 +80,8 @@ export default {
     position: 'relative',
     width: '131px',
     margin: '0 auto'
+  },
+  title: {
+    margin: '1em 0'
   }
 }
