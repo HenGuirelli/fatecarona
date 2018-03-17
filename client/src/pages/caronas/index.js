@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import AvatarHeader from '../../components/AvatarHeader'
 import Lift from '../../components/Lift'
 import { connect } from 'react-redux'
 
@@ -9,7 +8,11 @@ class Caronas extends Component {
 
     return (
       <div>
-        <AvatarHeader userData={userData}/>
+        <div className="row btn-group" style={{width: '100%', marginLeft: 0}}>
+          <input type="button" className="btnLift col-4" value="ATIVAS" />
+          <input type="button" className="btnLift col-4" value="FINALIZADAS" />
+          <input type="button" className="btnLift col-4" value="PENDENTES" />
+        </div>
         <div className="container">
           <div className="row">
             <Lift 

@@ -6,6 +6,15 @@
   background-color: #6E4D8B;
 }
 
+.btnLift {
+  font-size: 13px;
+  border: 2px solid #d3d3d3;
+}
+
+.btnLift:hover {
+  background-color: #a8cf45;
+}
+
 .loginBtn:hover {
   background-color: #a8cf45 !important;
   color: #6E4D8B !important;

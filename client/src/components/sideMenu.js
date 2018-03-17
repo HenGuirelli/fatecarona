@@ -13,6 +13,57 @@ import SpeakIcon from 'material-ui/svg-icons/action/record-voice-over'
 import SmileIcon from 'material-ui/svg-icons/social/sentiment-very-satisfied'
 import { Link } from 'react-router-dom'
 
+const items = [
+  {
+    path: '/', 
+    text: 'Home',
+    icon: HomeIcon,
+    selected: true
+  },
+  {
+    path: '/perfil', 
+    text: 'Editar perfil', 
+    icon: ProfileIcon,
+    selected: false
+  },
+  {
+    path: '/caronas/request', 
+    text: 'Quero carona', 
+    icon: ThumbIcon,
+    selected: false
+  },
+  {
+    path: '/caronas/offer', 
+    text: 'Oferecer carona', 
+    icon: SpeakIcon,
+    selected: false
+  },
+  {
+    path: '/rotas', 
+    text: 'Meus trajetos', 
+    icon: PlaceIcon,
+    selected: false
+  },
+  {
+    path: '/caronas/historico', 
+    text: 'Minhas caronas', 
+    icon: SmileIcon,
+    selected: false
+  },
+  {
+    path: '/veiculos', 
+    text: 'Meus veículos', 
+    icon: CarIcon,
+    selected: false
+  },
+  {
+    path: '/config', 
+    text: 'Configurações', 
+    icon: ConfIcon,
+    selected: false
+  }
+]
+
 export default class SideMenu extends React.Component {
 
   constructor(props) {
@@ -22,7 +73,11 @@ export default class SideMenu extends React.Component {
 
   handleOpen = () => this.setState({open: true});
 
-  handleClose = () => this.setState({open: false});
+  handleClose = item => {
+    items.forEach(element => element.selected = false)
+    item.selected = true;
+    this.setState({open: false});
+  };
 
   componentWillMount() {
     this.props.callback(this.handleOpen);
@@ -36,50 +91,21 @@ export default class SideMenu extends React.Component {
       header: {
         margin: '2em 1em',
       },
-    }
-
-    const items = [
-      {
-        path: '/', 
-        text: 'Home', 
-        icon: <HomeIcon color={'#FFF'}/>
+      itemUnselected: {
+        color: '#FFF', 
+        fontWeight: 'bolder', 
+        fontSize: '20px', 
+        textDecoration: 'none',
+        backgroundColor: '#6E4D8B'
       },
-      {
-        path: '/perfil', 
-        text: 'Editar perfil', 
-        icon: <ProfileIcon color={'#FFF'}/>
-      },
-      {
-        path: '/caronas/request', 
-        text: 'Quero carona', 
-        icon: <ThumbIcon color={'#FFF'}/>
-      },
-      {
-        path: '/caronas/offer', 
-        text: 'Oferecer carona', 
-        icon: <SpeakIcon color={'#FFF'}/>
-      },
-      {
-        path: '/rotas', 
-        text: 'Meus trajetos', 
-        icon: <PlaceIcon color={'#FFF'}/>
-      },
-      {
-        path: '/caronas/historico', 
-        text: 'Minhas caronas', 
-        icon: <SmileIcon color={'#FFF'}/>
-      },
-      {
-        path: '/veiculos', 
-        text: 'Meus veículos', 
-        icon: <CarIcon color={'#FFF'}/>
-      },
-      {
-        path: '/config', 
-        text: 'Configurações', 
-        icon: <ConfIcon color={'#FFF'}/>
+      itemSelected: {
+        color: '#000', 
+        fontWeight: 'bolder', 
+        fontSize: '20px', 
+        textDecoration: 'none',
+        backgroundColor: '#A8CF45'
       }
-    ]
+    }
 
     return (
       <Drawer
@@ -94,13 +120,13 @@ export default class SideMenu extends React.Component {
         </center>
         <Divider style={{backgroundColor: '#FFF', height: '1px'}} />
         {items.map(item =>
-          <Link to={item.path} onClick={this.handleClose} key={item.path}>
+          <Link to={item.path} onClick={() => this.handleClose(item)} key={item.path}>
             <MenuItem 
-              style={{color: '#FFF', fontWeight: 'bolder', fontSize: '20px', textDecoration: 'none'}} 
-              primaryText={item.text} 
-              leftIcon={item.icon}
+              style={item.selected ? styles.itemSelected : styles.itemUnselected} 
+              primaryText={item.text}
+              leftIcon={<item.icon color={item.selected ? '#000' : '#FFF'}/>}
             />
-            <Divider style={{backgroundColor: '#FFF', height: '1px'}} />
+            <Divider style={{backgroundColor: '#FFF', height: '2px'}} />
           </Link>
         )}
       </Drawer>

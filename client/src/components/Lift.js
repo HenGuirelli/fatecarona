@@ -7,12 +7,6 @@ export default class Lift extends Component {
     const { userData, action, date, desc, rating } = this.props
 
     const styles = {
-      greenBar: {
-        backgroundColor: '#77bf42',
-        height: '4em',
-        width: '1em',
-        margin: '-10px 0 -10px 17px'
-      },
       root: {
         margin: '1em',
         padding: '1em',
@@ -23,11 +17,6 @@ export default class Lift extends Component {
       <div className="container" style={styles.root}>
         <div className="row">
           <div className="col-3 col-xl-1">
-            <Avatar
-              src={userData.img ? "http://localhost:8080/images/" + userData.img : ""}
-              size={50}
-            />
-            <div style={styles.greenBar}/>
             <Avatar
               src={userData.img ? "http://localhost:8080/images/" + userData.img : ""}
               size={50}
