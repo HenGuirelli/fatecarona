@@ -15,7 +15,7 @@ class Caronas extends Component {
           <input type="button" className="btnLift col-4" value="PENDENTES" />
         </div>
         <div className="container">
-          <div className="row">
+          <div className="row" style={{borderBottom: '1px solid grey'}}>
             <LiftRating 
               userData={userData} 
               name="Thiago" 
@@ -23,7 +23,7 @@ class Caronas extends Component {
               text="I don't like this"
             />
           </div>
-          <div className="row">
+          <div className="row" style={{borderBottom: '1px solid grey'}}>
             <LiftMgt
               userData={userData} 
               text="Vai pegar carona com BIANCA em 28/02/2018 saindo da FATEC."

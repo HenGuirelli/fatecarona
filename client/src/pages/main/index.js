@@ -10,10 +10,10 @@ import Avaliador from '../../components/Avaliador'
 class MainPage extends Component {
   componentWillMount() {
     if ('Notification' in window && navigator.serviceWorker) {
-      if (Notification.permission === "default") { 
+      if (Notification.permission === "default") {
         Notification.requestPermission(status => {
           console.log('Notification permission status:', status);
-        }); 
+        });
       } else if (Notification.permission === "granted") {
         navigator.serviceWorker.getRegistration().then(reg => {
           reg.pushManager.getSubscription().then(sub => {
@@ -23,7 +23,7 @@ class MainPage extends Component {
               this.props.dispatch(sendSubscription(this.props.userData.email, sub));
             }
           });
-        });   
+        });
       }
     }
   }

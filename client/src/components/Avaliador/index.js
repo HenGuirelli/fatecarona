@@ -1,25 +1,8 @@
 import React, { Component } from 'react'
+import styles from './styles'
 
 export default class Avaliador extends Component {
   render() {
-
-    const styles = {
-      root: {
-        paddingTop: '5em',
-      },
-      info: {
-        marginTop: '2em',
-      },
-      img: {
-        height: 'auto',
-        width: '10em',
-      },
-      score: {
-        fontSize: '3em',
-        marginTop: '-104px'
-      }
-    }
-
     return(
       <center style={styles.root}>
       <h4>Avaliação</h4>
@@ -30,4 +13,4 @@ export default class Avaliador extends Component {
       </center>
     )
   }
-} 
+}

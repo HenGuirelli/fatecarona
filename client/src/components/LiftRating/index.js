@@ -2,14 +2,12 @@ import React, { Component } from 'react'
 import Avatar from 'material-ui/Avatar'
 import { Rating } from 'material-ui-rating'
 
-export default class Review extends Component {
+export default class Lift extends Component {
   render() {
-    const { userData, autor, rating, comentario } = this.props
+    const { userData, name, rating, text } = this.props
 
     const styles = {
       root: {
-        backgroundColor: '#fff',
-        borderRadius: '1em',
         margin: '1em',
         padding: '1em',
       }
@@ -25,15 +23,15 @@ export default class Review extends Component {
             />
           </div>
           <div className="col-9 col-xl-11">
-            <h4>{autor}</h4>
+            <h4>{name}</h4>
             <Rating
               value={rating}
               readOnly={true}
-              style={{marginLeft: '-12px'}}
+              style={{margin: '-12px 0 0 -12px'}}
               itemStyle={{width: '5em'}}
             />
-            <div>
-              {comentario}
+            <div style={{marginTop: '-9px'}}>
+              {text}
             </div>
           </div>
         </div>

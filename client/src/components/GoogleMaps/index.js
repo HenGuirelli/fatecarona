@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import * as map from '../actions/mapActions'
+import * as map from '../../actions/mapActions'
 import { connect } from 'react-redux'
 
 class GoogleMap extends Component {
@@ -50,14 +50,14 @@ class GoogleMap extends Component {
         <div className="container" style={styles.root}>
           <div className="form-group">
             <label htmlFor="origem">Origem</label>
-            <input 
+            <input
               className="form-control"
               ref="origem"
             />
             <label htmlFor="destino">Destino</label>
-            <input 
-              className="form-control" 
-              ref="destino" 
+            <input
+              className="form-control"
+              ref="destino"
             />
             <a role="button" style={styles.button} className="btn btn-primary btn-block" onClick={this.displayRoute.bind(this)}>Carregar Rota</a>
           </div>

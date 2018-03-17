@@ -87,13 +87,15 @@ class Oferecer extends Component {
       },
       time: {
         maxWidth: '100px',
-        backgroundColor: '#a8cf45',
-        borderRadius: '20px'
+        backgroundColor: '#fff',
+        borderRadius: '20px',
+        border: '2px solid #6E4D8B'
       },
       date: {
         maxWidth: '100px',
-        backgroundColor: '#a8cf45',
-        borderRadius: '20px'
+        backgroundColor: '#fff',
+        borderRadius: '20px',
+        border: '2px solid #6E4D8B'
       },
       icons: {
         position: 'absolute', 
@@ -109,6 +111,8 @@ class Oferecer extends Component {
       }
     }
 
+    const now = new Date()
+
     return (
       <div className="pageBase">
         <div className="container">
@@ -120,6 +124,7 @@ class Oferecer extends Component {
                   <DatePicker 
                     disableYearSelection={true}
                     minDate={new Date()}
+                    maxDate={new Date(now.setMonth(now.getMonth() + 1))}
                     formatDate={date => date.toLocaleDateString('pt-BR')}
                     textFieldStyle={styles.date}
                     className="datePicker"

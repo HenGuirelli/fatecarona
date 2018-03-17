@@ -1,28 +1,6 @@
 import React from 'react';
 import CircularProgress from 'material-ui/CircularProgress';
-
-const styles = {
-  root: {
-    paddingTop: '5em',
-  },
-  progress: {
-    width: '150px',
-    height: '150px',
-    marginTop: '2em',
-  },
-  innerNumber: {
-    
-    fontSize: '2.5em',
-    marginTop: '-114px',
-  },
-  bar: {
-  },
-  content: {
-    width: '75%', 
-    marginRight: 'auto', 
-    marginLeft: 'auto'
-  },
-}
+import styles from './styles'
 
 export default class Leilometer extends React.Component {
   constructor(props) {

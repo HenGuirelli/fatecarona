@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import logo from './logo.ico'
-import SideMenu from './sideMenu.js'
+import SideMenu from '../SideMenu'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { setUserData } from '../actions/userActions'
+import { setUserData } from '../../actions/userActions'
 
 class NavBar extends Component {
 
@@ -13,7 +13,7 @@ class NavBar extends Component {
 
   render() {
     const { user, userData } = this.props
-    
+
     if (user.email !== undefined && userData.nome === undefined) {
       this.props.dispatch(setUserData(this.props.user.email.split('@')[0]));
     }
