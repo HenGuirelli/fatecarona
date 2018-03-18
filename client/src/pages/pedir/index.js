@@ -58,7 +58,7 @@ class Pedir extends Component {
                 <div style={styles.box}>
                   HORA
                   <TimePicker
-                    format="ampm"
+                    format="24hr"
                     okLabel="CONFIRMAR"
                     cancelLabel="CANCELAR"
                     value={this.state.SAIDA}
@@ -74,9 +74,15 @@ class Pedir extends Component {
             <div style={{paddingBottom: '2em', margin: '0 1px', borderBottom: '2px solid grey'}}>
                 <center>
                 <div style={styles.title}>VOCÊ PRECISA...</div>
-                <div className="btn-group form-control" style={{border: 'none'}}>
-                  <input type="button" value="IR À FATEC" className="btn loginBtn" style={styles.buttonL}/>
-                  <input type="button" value="SAIR DA FATEC" className="btn loginBtn" style={styles.buttonR}/>
+                <div className="btn-group btn-group-toggle form-control" data-toggle="buttons" style={{border: 'none'}}>
+                  <label className="btn loginBtn" style={styles.buttonL}>
+                    <input type="radio" id="opt1" autoComplete="off" style={{position: 'absolute', display: 'none'}}/>
+                    <div>IR À FATEC</div>
+                  </label>
+                  <label className="btn loginBtn" style={styles.buttonR}>
+                    <input type="radio" id="opt1" autoComplete="off" style={{position: 'absolute', display: 'none'}}/>
+                    <div>SAIR DA FATEC</div>
+                  </label>
                 </div>
                 </center>
             </div>

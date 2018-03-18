@@ -59,7 +59,7 @@ class Oferecer extends Component {
                 <div style={styles.box}>
                   HORA
                   <TimePicker
-                    format="ampm"
+                    format="24hr"
                     okLabel="CONFIRMAR"
                     cancelLabel="CANCELAR"
                     value={this.state.SAIDA}
@@ -75,25 +75,31 @@ class Oferecer extends Component {
             <div style={{paddingBottom: '2em', margin: '0 1px', borderBottom: '2px solid grey'}}>
                 <center>
                 <div style={styles.title}>VOCÊ VAI...</div>
-                <div className="btn-group form-control" style={{border: 'none'}}>
-                  <input type="button" value="IR À FATEC" className="btn loginBtn" style={styles.buttonL}/>
-                  <input type="button" value="SAIR DA FATEC" className="btn loginBtn" style={styles.buttonR}/>
+                <div className="btn-group btn-group-toggle form-control" data-toggle="buttons" style={{border: 'none'}}>
+                  <label className="btn loginBtn" style={styles.buttonL}>
+                    <input type="radio" id="opt1" autoComplete="off" style={{position: 'absolute', display: 'none'}}/>
+                    <div>IR À FATEC</div>
+                  </label>
+                  <label className="btn loginBtn" style={styles.buttonR}>
+                    <input type="radio" id="opt1" autoComplete="off" style={{position: 'absolute', display: 'none'}}/>
+                    <div>SAIR DA FATEC</div>
+                  </label>
                 </div>
                 </center>
             </div>
             <div style={{paddingBottom: '2em', margin: '0 1px', borderBottom: '2px solid grey'}}>
               <center style={styles.title}>VEÍCULO</center>
-              <div  className="row btn-group-toggle" data-toggle="buttons">
+              <div  className="btn-group btn-group-toggle form-control" data-toggle="buttons" style={{border: 'none'}}>
                 <center className="col-6">
-                    <label className="btn loginBtn" style={styles.carBtn}>
-                      <input type="checkbox" style={{position: 'absolute', display: 'none'}}/>
+                    <label className="btn loginBtn active" style={styles.carBtn}>
+                      <input type="radio" id="opt1" autoComplete="off" defaultChecked style={{position: 'absolute', display: 'none'}}/>
                       <CarIcon color="#fff" style={{width: '2em', height: '2em'}}/>
                     </label>
                     <div>GHJ-8930</div>
                 </center>
                 <center className="col-6">
                     <label className="btn loginBtn" style={styles.carBtn}>
-                      <input type="checkbox" style={{position: 'absolute', display: 'none'}}/>
+                      <input type="radio" id="opt2" autoComplete="off" style={{position: 'absolute', display: 'none'}}/>
                       <CarIcon color="#fff" style={{width: '2em', height: '2em'}}/>
                     </label>
                     <div>YUJ-7381</div>
