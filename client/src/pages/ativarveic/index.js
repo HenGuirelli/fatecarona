@@ -6,8 +6,6 @@ import ImgIcon from 'material-ui/svg-icons/image/assistant-photo'
 class AtivarVeic extends Component{
   render(){
 
-    console.log(this.props.params);
-
     const styles = {
       buttonL: {
         margin: '25px 0',
