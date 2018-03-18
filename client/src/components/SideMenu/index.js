@@ -5,8 +5,6 @@ import Divider from 'material-ui/Divider'
 import { Link } from 'react-router-dom'
 import headerIcon from '../../pages/form/login_fatecarona.svg'
 import styles from './styles'
-import menuItems from './menuItems'
-
 
 export default class SideMenu extends React.Component {
 
@@ -17,9 +15,7 @@ export default class SideMenu extends React.Component {
 
   handleOpen = () => this.setState({open: true});
 
-  handleClose = item => {
-    menuItems.forEach(element => element.selected = false)
-    item.selected = true;
+  handleClose = () => {
     this.setState({open: false});
   };
 
@@ -28,6 +24,7 @@ export default class SideMenu extends React.Component {
   }
 
   render() {
+    const { menuItems } = this.props
 
     return (
       <Drawer
@@ -42,7 +39,7 @@ export default class SideMenu extends React.Component {
         </center>
         <Divider style={{backgroundColor: '#FFF', height: '1px'}} />
         {menuItems.map(item =>
-          <Link to={item.path} onClick={() => this.handleClose(item)} key={item.path}>
+          <Link to={item.path} onClick={this.handleClose} key={item.path}>
             <MenuItem
               style={item.selected ? styles.itemSelected : styles.itemUnselected}
               primaryText={item.text}
