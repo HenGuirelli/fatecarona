@@ -73,11 +73,11 @@ class CadVeiculos extends Component{
                 <center>
                   <div>LUGARES DISPONÍVEIS</div>
                   <div className="input-group" style={styles.inputNumber}>
-                  <div>
-                      <PassgIcon color="#6E4D8B" style={{width: '2em', height: '2em', margin:'0'}}/>
-                  </div>
+                    <div>
+                        <PassgIcon color="#6E4D8B" style={{width: '2em', height: '2em', margin:'0'}}/>
+                    </div>
                     <input type="number" name="quantity" min="1" max="10" className="form-control"/>
-                </div>
+                  </div>
                 </center>
             </div>
             <input type="submit" value="ADICIONAR" className="btn loginBtn form-control" style={styles.button}/>
