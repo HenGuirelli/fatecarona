@@ -10,7 +10,8 @@ body, html {
 }
 
 .App {
-  height: calc(100% - 44px);
+  margin-top: 58px;
+  height: calc(100% - 58px);
 }
 
 .timePicker input, .datePicker input {

@@ -15,4 +15,5 @@ create table membro(
 );
 
 insert into membro (ra, nome, telefone, apelido, curso, email, img, chegada, saida) values
-  (1680481522013, "Thiago Cardoso Ramos", "011955931212","Proagace", "ADS","thiago.ramos9", "avatar.jpg", "13:00:00", "18:00:00");
+  (1680481522013, "Thiago Cardoso Ramos", "011955931212","Proagace", "ADS","thiago.ramos9", "avatar.jpg", "13:00:00", "18:00:00"),
+  (1680481522022, "Monquidesio da Silva", "011955931212","Monqui", "SEG","monqui.desio", "avatar.jpg", "13:00:00", "18:00:00");

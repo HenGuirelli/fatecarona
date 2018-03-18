@@ -5,100 +5,115 @@ var bodyParser 	    = require('body-parser');
 var webPush         = require('web-push');
 var mysql           = require('mysql');
 
+var router = express.Router();
+const upload = multer({ dest: './images/' });
+
 var pool = mysql.createPool({
   host     : 'localhost',
   user     : 'root',
   password : '3847147298',
   database : 'Fatecarona'
-}); 
-
-const upload = multer({ dest: './images/' });
+});
 
 const server = express();
 server.use( bodyParser.json() );
 server.use( bodyParser.urlencoded({extended: true}));
-server.use(function(req, res, next) {
+
+router.get(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 
 //Manipulação de usuários
+router.route('/users')
+  .get(function(req, res) {
+    pool.getConnection(function(err, connection) {
+      if (err) res.send(err);
 
-server.get('/users/*', function(req, res) {
-	//mongoExecute(find, {email: req.params[0]}, 'users', response => res.json(response));
+      connection.query('SELECT * FROM membro', function(err, rows, fields) {
+        connection.release();
+        if (err) res.send(err);
+        res.json(rows);
+      });
+    });
+  })
+  .post(function(req, res) {
+    pool.getConnection(function(err, connection) {
+      if(err) res.send(err);
 
-  pool.getConnection((err, connection) => {
-    if(err) {
-      res.json(err);
-      return;
-    }
-    connection.query('SELECT * FROM membro where email = ?',[req.params[0]], function(err, rows, fields) {
-      connection.release();
-      if (err) res.json(err);
-      else res.json(rows[0]);
+      connection.query('INSERT INTO membro SET ?', req.body, function(err, rows, fields) {
+        connection.release();
+        if (err) res.send(err);
+        res.json({ success: true });
+      });
     });
   });
-});
 
-server.get('/users', function(req, res) {
-	mongoExecute(list, null, 'users', response => res.json(response));
-});
+router.route('/users/:user_email')
+  .get(function(req, res) {
+    pool.getConnection(function(err, connection) {
+      if (err) res.send(err);
 
-server.post('/users', (req, res) => {
-  pool.getConnection((err, connection) => {
-    if(err) {
-      res.json(err);
-      return;
-    }
-    connection.query('INSERT INTO membro SET ?', req.body, function(err, rows, fields) {
-      connection.release();
-      if (err) res.json(err);
-      else res.send({success: true});
+      connection.query('SELECT * FROM membro where email = ?',[req.params.user_email], function(err, rows, fields) {
+        connection.release();
+        if (err) res.send(err);
+        res.json(rows[0]);
+      });
+    });
+  })
+  .delete(function(req, res) {
+    pool.getConnection(function(err, connection) {
+      if (err) res.send(err);
+
+      connection.query('DELETE FROM membro WHERE email = ?', [req.params.user_email], function(err, rows, fields) {
+        connection.release();
+        if (err) res.send(err);
+        res.json({ message: 'Usuário ' + req.params.user_email + ' excluido.'});
+      });
+    });
+  })
+  .put(function(req, res) {
+    pool.getConnection(function(err, connection) {
+      if (err) res.send(err);
+
+      connection.query('UPDATE membro SET ? WHERE email = ?', [req.body, req.params.user_email], function(err, rows, fields) {
+        connection.release();
+        if (err) res.send(err);
+        res.json(rows[0]);
+      });
     });
   });
-});
-
-server.get('/userstest', (req, res) => {
-  pool.getConnection((err, connection) => {
-    if(err) {
-      res.json(err);
-      return;
-    }
-    connection.query('SELECT * FROM membro', function(err, rows, fields) {
-      connection.release();
-      if (err) res.json(err);
-      else res.json(rows);
-    });
-  });
-});
 
 //Manipulação de rotas
 
-server.post('/routes', (req, res) => {
-	mongoExecute(insert, [req.body], 'rotas', response => res.send({success: true}));
-});
+router.route('/routes/:user_email')
+  .post(function(req, res) {
+    //mongoExecute(insert, [req.body], 'rotas', response => res.send({success: true}));
+  })
+  .get(function(req, res) {
+  	//mongoExecute(find, { email: req.params[0] }, 'rotas', response => res.json(response));
+  })
+  .put(function(req, res) {
+  	//mongoExecute(find, { email: req.params[0] }, 'rotas', response => res.json(response));
+  })
+  .delete(function(req, res) {
+  	//mongoExecute(find, { email: req.params[0] }, 'rotas', response => res.json(response));
+  });
 
-server.get('/routes/*', (req, res) => {
-	mongoExecute(find, { email: req.params[0] }, 'rotas', response => res.json(response));
-});
+//Manipulação de imagens
 
-server.post('/images', upload.single('avatar'), (req, res) => {
-	if(!req.file) {
-		console.log("No file received");
-		return res.send({
-			success: false
-		});
-	}
-	console.log('File received');
-	return res.send({
-		success: true
-	});
-});
+router.route('/images')
+  .post(upload.single('avatar'), function(req, res) {
+  	if (!req.file) res.json({ message: 'No file attached'});
 
-server.get('/images/*', (req, res) => {
-	res.sendFile(__dirname + '/images/' + req.params[0]);
-});
+  	res.json({ message: 'File received' });
+  });
+
+router.route('/images/:file_name')
+  .get(function(req, res) {
+  	res.sendFile(__dirname + '/images/' + req.params.file_name);
+  });
 
 //notificações
 
@@ -126,5 +141,6 @@ function notify(subscription, payload) {
   .catch(err => console.log(err));
 }
 
+server.use(router);
 server.listen(8080);
 console.log("Servidor rodando na porta 8080");

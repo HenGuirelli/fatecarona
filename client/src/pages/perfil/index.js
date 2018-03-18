@@ -10,12 +10,12 @@ class Perfil extends Component {
     const aux1 = props.userData.chegada ? props.userData.chegada.substr(0, 5).split(':') : null;
     const aux2 = props.userData.saida ? props.userData.saida.substr(0, 5).split(':') : null;
     this.state = {
-      apelido: props.userData.apelido,
+      apelido: props.userData.apelido || '',
       fileName: 'Nenhum arquivo selecionado.',
       img: props.userData.img ? "http://localhost:8080/images/" + props.userData.img : "",
       chegada: aux1 ? new Date(null, null, null, aux1[0], aux1[1]) : null,
       saida: aux2 ? new Date(null, null, null, aux2[0], aux2[1]) : null,
-      telefone: props.userData.telefone
+      telefone: props.userData.telefone || ''
     };
   }
 
@@ -43,7 +43,8 @@ class Perfil extends Component {
     this.setState({telefone: event.target.value})
   }
 
-  handleSubmit = () => {
+  handleSubmit = (event) => {
+    event.preventDefault();
     //to upload images we need to do this
     const formData = new FormData();
     formData.append('image', this.state.img);
@@ -116,6 +117,7 @@ class Perfil extends Component {
             <div style={{padding: '2em 0'}}>
               NÚMERO DE TELEFONE
               <input
+                type="number"
                 style={styles.inputText}
                 value={this.state.telefone}
                 onChange={this.handlePhone}

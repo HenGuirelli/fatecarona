@@ -12,14 +12,14 @@ class NavBar extends Component {
   };
 
   render() {
-    const { user, userData, menuItems, history } = this.props
+    const { user, userData, menuItems } = this.props
 
     if (user.email !== undefined && userData.nome === undefined) {
       this.props.dispatch(setUserData(this.props.user.email.split('@')[0]));
     }
 
     return(
-      <nav className="navbar sticky-top navbar-expand-lg navbar-dark ftc">
+      <nav className="navbar navbar-expand-lg navbar-dark ftc" style={{position: 'fixed', width: '100%', height: '58px', top: 0, left: 0, zIndex: 100}}>
         <SideMenu callback={this.bindDrawer} handler={this.handleMenuSelect} menuItems={menuItems}/>
         <button style={{position: 'absolute', left: 0, border: 'none'}} className="navbar-toggler" type="button" onClick={() => this.openDrawer()}>
           <span className="navbar-toggler-icon"/>
