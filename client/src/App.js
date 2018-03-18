@@ -65,7 +65,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <NavBar logOut={this.logOut.bind(this)} history={history} menuItems={menuItems}/>
+        <NavBar logOut={this.logOut.bind(this)} menuItems={menuItems}/>
         <Route exact path="/" component={MainPage}/>
         <Route path="/rotas" component={GoogleMap}/>
         <Route path="/perfil" component={Perfil}/>

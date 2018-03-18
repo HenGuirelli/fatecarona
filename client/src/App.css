@@ -38,7 +38,7 @@ a:hover {
 }
 
 .pageBase {
-  height: stretch;
+  height: 100%;
 }
 
 .App-intro {
