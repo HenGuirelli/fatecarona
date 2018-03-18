@@ -17,7 +17,7 @@ export default class AvatarHeader extends Component {
             <div className="col-2" style={{position: 'relative'}}>
               <div style={styles.horaChegada}>
                 <div>Chegando<br/>na<br/>Fatec</div>
-                <h2>13:00</h2>
+                <h2>{userData.chegada ? userData.chegada.substr(0, 5) : ''}</h2>
               </div>
             </div>
             <center className="col-8">
@@ -30,7 +30,7 @@ export default class AvatarHeader extends Component {
             <div className="col-2" style={{position: 'relative'}}>
               <div style={styles.horaSaida}>
                 <div>Saindo<br/>da<br/>Fatec</div>
-                <h2>17:15</h2>
+                <h2>{userData.saida ? userData.saida.substr(0, 5) : ''}</h2>
               </div>
             </div>
           </div>

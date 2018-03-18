@@ -16,6 +16,7 @@ import Ativar from './pages/ativarveic'
 import { connect } from 'react-redux'
 import { setFirebase, updateUser, unsetUser, insertUser, loadUser } from './actions/userActions'
 import * as firebase from 'firebase'
+import menuItems from './menuItems'
 
 class App extends Component {
   componentWillMount() {
@@ -53,6 +54,9 @@ class App extends Component {
 
   render() {
     const { history, user, pending } = this.props
+    menuItems.forEach(element => element.selected = false)
+    menuItems.find(element => element.path === history.location.pathname).selected = true
+
     if (pending) return null
 
     //if localStorage gets more data then this should be trated differently
@@ -61,7 +65,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <NavBar logOut={this.logOut.bind(this)} history={history}/>
+        <NavBar logOut={this.logOut.bind(this)} history={history} menuItems={menuItems}/>
         <Route exact path="/" component={MainPage}/>
         <Route path="/rotas" component={GoogleMap}/>
         <Route path="/perfil" component={Perfil}/>

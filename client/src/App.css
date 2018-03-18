@@ -16,7 +16,12 @@
   outline: none;
 }
 
-.loginBtn:hover {
+.textInput {
+  border: 2px solid #6E4D8B;
+}
+
+.active,
+.loginBtn:active {
   background-color: #a8cf45 !important;
   color: #6E4D8B !important;
 }

@@ -4,7 +4,6 @@ import SideMenu from '../SideMenu'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { setUserData } from '../../actions/userActions'
-import menuItems from '../SideMenu/menuItems'
 
 class NavBar extends Component {
 
@@ -13,7 +12,7 @@ class NavBar extends Component {
   };
 
   render() {
-    const { user, userData } = this.props
+    const { user, userData, menuItems, history } = this.props
 
     if (user.email !== undefined && userData.nome === undefined) {
       this.props.dispatch(setUserData(this.props.user.email.split('@')[0]));
@@ -21,7 +20,7 @@ class NavBar extends Component {
 
     return(
       <nav className="navbar sticky-top navbar-expand-lg navbar-dark ftc">
-        <SideMenu callback={this.bindDrawer} handler={this.handleMenuSelect} />
+        <SideMenu callback={this.bindDrawer} handler={this.handleMenuSelect} menuItems={menuItems}/>
         <button style={{position: 'absolute', left: 0, border: 'none'}} className="navbar-toggler" type="button" onClick={() => this.openDrawer()}>
           <span className="navbar-toggler-icon"/>
         </button>

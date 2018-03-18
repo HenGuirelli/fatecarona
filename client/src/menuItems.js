@@ -12,7 +12,7 @@ export default [
     path: '/',
     text: 'HOME',
     icon: HomeIcon,
-    selected: true
+    selected: false
   },
   {
     path: '/perfil',
