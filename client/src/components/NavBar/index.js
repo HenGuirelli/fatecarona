@@ -42,7 +42,7 @@ class NavBar extends Component {
               <Link className="nav-link" to="/caronas/offer">Oferecer carona</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/rotas">Rotas</Link>
+              <Link className="nav-link" to="/rotas">Meus Trajetos</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/caronas/historico">Minhas caronas</Link>

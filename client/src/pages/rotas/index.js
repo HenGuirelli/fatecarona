@@ -1,30 +1,27 @@
 import React, { Component } from 'react'
-import Veiculo from '../../components/Veiculo'
+import Rota from '../../components/Rota'
 import { connect } from 'react-redux'
 
-const veiculos = [
+const rotas = [
   {
-    marca: 'FIAT',
-    modelo: 'SIENA',
-    placa : 'GHJ-8930'
+    id: '1',
+    desc: 'Meu trajeto p casa',
+    origem: 'FATEC SÃO CAETANO DO SUL',
+    destino : 'DIADEMA'
   },
   {
-    marca: 'VOLKSWAGEN',
-    modelo: 'FUSCA',
-    placa : 'YUJ-7381'
-  },
-  {
-    marca: 'MITSUBISHI',
-    modelo: 'PAJERO',
-    placa : 'COC-2355'
+    id: '1',
+    desc: 'Meu trajeto p facul',
+    origem: 'DIADEMA',
+    destino : 'FATEC SÃO CAETANO DO SUL'
   },
 ]
 
-class Veiculos extends Component{
+class Rotas extends Component{
 
-  handleActivation = (carPlate) =>{
-    this.props.history.push('/veiculos/ativar/')
-  }
+/*  handleActivation = (carPlate) =>{
+      this.props.history.push()
+  }*/
 
   render(){
     const styles = {
@@ -36,7 +33,7 @@ class Veiculos extends Component{
         color: '#a8cf45',
         fontSize: '25px',
       },
-      carButton:{
+      rotaButton:{
         margin: '25px 0',
         borderRadius: '25px',
         backgroundColor: 'transparent',
@@ -47,14 +44,14 @@ class Veiculos extends Component{
     return(
       <div className="pageBase">
         <div className="container">
-            {veiculos.map(veiculo =>
+            {rotas.map(rota =>
               <div className="row" style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
-                <button className="btn loginBtn" onClick={() => this.handleActivation(veiculo.placa)} style={styles.carButton}>
-                  <Veiculo
-                    marca={veiculo.marca}
-                    modelo={veiculo.modelo}
-                    placa={veiculo.placa}
-                    key={veiculo.placa}
+                <button className="btn loginBtn" style={styles.rotaButton}>
+                  <Rota
+                    desc={rota.desc}
+                    origem={rota.origem}
+                    destino={rota.destino}
+                    key={rota.id}
                   />
                 </button>
               </div>
@@ -71,4 +68,4 @@ export default connect(store => {
     user: store.user.user,
     userData: store.user.userData
   }
-})(Veiculos)
+})(Rotas)

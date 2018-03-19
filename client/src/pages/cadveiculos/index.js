@@ -8,19 +8,11 @@ class CadVeiculos extends Component{
     const styles = {
       button: {
         margin: '25px 0',
-        borderRadius: '25px',
+        borderRadius: '15px',
         backgroundColor: '#6E4D8B',
         borderColor: '#a8cf45',
         color: '#a8cf45',
         fontSize: '25px',
-      },
-      placaBG: {
-        borderRadius: '25px',
-        borderWidth: '2px',
-        backgroundColor: 'transparent',
-        borderColor: 'black',
-        color: 'black',
-        fontSize: '18px',
       },
       inputText: {
         borderRadius: '10px',
@@ -29,11 +21,20 @@ class CadVeiculos extends Component{
         width: '6em'
       },
       inputOption: {
-        width: '25em'
+        width: '25em',
+        borderRadius: '7px',
+        borderWidth: '1px',
+        borderColor: '#6E4D8B'
       },
       inputNumber: {
         width: '10em'
       },
+      borderNumber:{
+        borderRadius: '7px',
+        borderWidth: '1px',
+        borderColor: '#6E4D8B',
+        textAlign: 'center'
+      }
     }
     return(
       <div className="pageBase">
@@ -76,7 +77,7 @@ class CadVeiculos extends Component{
                     <div>
                         <PassgIcon color="#6E4D8B" style={{width: '2em', height: '2em', margin:'0'}}/>
                     </div>
-                    <input type="number" name="quantity" min="1" max="10" className="form-control"/>
+                    <input type="number" name="quantity" min="1" max="10" placeholder="1"  style={styles.borderNumber} className="form-control"/>
                   </div>
                 </center>
             </div>
