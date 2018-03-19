@@ -55,7 +55,8 @@ class App extends Component {
   render() {
     const { history, user, pending } = this.props
     menuItems.forEach(element => element.selected = false)
-    menuItems.find(element => element.path === history.location.pathname).selected = true
+    let item = menuItems.find(element => element.path === history.location.pathname)
+    if (item) item.selected = true
 
     if (pending) return null
 

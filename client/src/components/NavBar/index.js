@@ -13,6 +13,7 @@ class NavBar extends Component {
 
   render() {
     const { user, userData, menuItems } = this.props
+    let item = menuItems.find(item => item.selected)
 
     if (user.email !== undefined && userData.nome === undefined) {
       this.props.dispatch(setUserData(this.props.user.email.split('@')[0]));
@@ -25,7 +26,7 @@ class NavBar extends Component {
           <span className="navbar-toggler-icon"/>
         </button>
         <div className="navbar-toggler" style={{color: '#fff', border: 'none', width: '100%', textAlign: 'center'}}>
-            {menuItems.find(item => item.selected).text}
+            {item ? item.text : ''}
         </div>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <Link className="navbar-brand" to="/">
