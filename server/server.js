@@ -4,9 +4,20 @@ var express 	      = require('express');
 var bodyParser 	    = require('body-parser');
 var webPush         = require('web-push');
 var mysql           = require('mysql');
+const path          = require('path');
 
 var router = express.Router();
-const upload = multer({ dest: './images/' });
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, __dirname + '/images/');
+  },
+  filename: function (req, file, cb) {
+    var id = Math.random().toString(16) + Date.now() + path.extname(file.originalname);
+    cb(null, id);
+  }
+});
+var upload = multer({ storage: storage }).single('image');
 
 var pool = mysql.createPool({
   host     : 'localhost',
@@ -19,7 +30,7 @@ const server = express();
 server.use( bodyParser.json() );
 server.use( bodyParser.urlencoded({extended: true}));
 
-router.get(function(req, res, next) {
+router.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
@@ -104,10 +115,15 @@ router.route('/routes/:user_email')
 //Manipulação de imagens
 
 router.route('/images')
-  .post(upload.single('avatar'), function(req, res) {
-  	if (!req.file) res.json({ message: 'No file attached'});
-
-  	res.json({ message: 'File received' });
+  .post(function (req, res) {
+    upload(req, res, function (err) {
+      if (err){
+        console.log(JSON.stringify(err));
+        res.status(400).send('fail saving image');
+      } else {
+        res.send(res.req.file.filename);
+      }
+    });
   });
 
 router.route('/images/:file_name')
@@ -119,12 +135,13 @@ router.route('/images/:file_name')
 
 var subscriptions = [];
 
-server.post('/subs', (req, res) => {
-  var body = req.body;
-  subscriptions.push({email: body.email, subscription: body.subscription});
-  notify(subscriptions[0].subscription, 'it worked!');
-  res.send({subscribed: true});
-});
+router.route('/subs')
+  .post(function(req, res) {
+    var body = req.body;
+    subscriptions.push({email: body.email, subscription: body.subscription});
+    notify(subscriptions[0].subscription, 'it worked!');
+    res.send({subscribed: true});
+  });
 
 function notify(subscription, payload) {
   var options = {

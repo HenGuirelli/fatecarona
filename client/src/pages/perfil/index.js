@@ -21,9 +21,8 @@ class Perfil extends Component {
 
   handleImage = () => {
     if(this.refs.img.files.length > 0) {
-      const url = URL.createObjectURL(this.refs.img.files[0])
+      const url = URL.createObjectURL(this.refs.img.files[0]);
       this.setState({img: url, fileName: this.refs.img.files[0].name});
-      window.$('#avatar')[0].src = url;
     }
   };
 
@@ -45,9 +44,17 @@ class Perfil extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    //to upload images we need to do this
-    const formData = new FormData();
-    formData.append('image', this.state.img);
+    var formData = new FormData();
+    formData.set('image', this.refs.img.files[0]);
+    fetch('http://localhost:8080/images', {
+      method: 'POST',
+      body: formData
+    }).then(res => res.text())
+    .then(fileName => {
+      //executar o dispatch aqui utilizando fileName em
+      //conjunto com as outras informações de usuário
+      console.log(fileName);
+    });
   }
 
   render() {
