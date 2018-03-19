@@ -4,10 +4,10 @@ import TimePicker from 'material-ui/TimePicker';
 import DatePicker from 'material-ui/DatePicker';
 import DateIcon from 'material-ui/svg-icons/action/date-range'
 import TimeIcon from 'material-ui/svg-icons/action/schedule'
-import CarIcon from 'material-ui/svg-icons/maps/directions-car'
-import AcessbleIcon from 'material-ui/svg-icons/action/accessible'
-import SmokingIcon from 'material-ui/svg-icons/places/smoking-rooms'
-import MusicIcon from 'material-ui/svg-icons/image/audiotrack'
+import CarIcon from '../../components/Veiculo/veiculo_branco.png'
+import CadeiranteIcon from '../../components/LiftMgt/cadeirante_branco.png'
+import SmokingIcon from '../../components/LiftMgt/fumante_branco.png'
+import MusicIcon from '../../components/LiftMgt/musica_branco.png'
 import styles from './styles'
 
 class Oferecer extends Component {
@@ -93,14 +93,14 @@ class Oferecer extends Component {
                 <center className="col-6">
                     <label className="btn loginBtn active" style={styles.carBtn}>
                       <input type="radio" id="opt1" autoComplete="off" defaultChecked style={{position: 'absolute', display: 'none'}}/>
-                      <CarIcon color="#fff" style={{width: '2em', height: '2em'}}/>
+                      <img style={{width: '3.5em', height: '1.5em', margin:'0'}} src={CarIcon} alt={"Car Logo"}/>
                     </label>
                     <div>GHJ-8930</div>
                 </center>
                 <center className="col-6">
                     <label className="btn loginBtn" style={styles.carBtn}>
                       <input type="radio" id="opt2" autoComplete="off" style={{position: 'absolute', display: 'none'}}/>
-                      <CarIcon color="#fff" style={{width: '2em', height: '2em'}}/>
+                      <img style={{width: '3.5em', height: '1.5em', margin:'0'}} src={CarIcon} alt={"Car Logo"}/>
                     </label>
                     <div>YUJ-7381</div>
                 </center>
@@ -121,21 +121,21 @@ class Oferecer extends Component {
                 <center className="col-4">
                     <label className="btn loginBtn" style={styles.iconBG}>
                       <input type="checkbox" style={{position: 'absolute', display: 'none'}}/>
-                      <AcessbleIcon color="#fff" style={{width: '2em', height: '2em'}}/>
+                      <img src={CadeiranteIcon} alt={"Cadeirante Icon"} style={styles.prefIcons}/>
                     </label>
                     <div>Acomodação de Deficientes</div>
                 </center>
                 <center className="col-4">
                     <label className="btn loginBtn" style={styles.iconBG}>
                       <input type="checkbox" style={{position: 'absolute', display: 'none'}}/>
-                      <SmokingIcon color="#fff" style={{width: '2em', height: '2em'}}/>
+                      <img src={SmokingIcon} alt={"Fumante Icon"} style={styles.prefIcons}/>
                     </label>
                     <div>Aceitação de Fumantes</div>
                 </center>
                 <center className="col-4">
                     <label className="btn loginBtn" style={styles.iconBG}>
                       <input type="checkbox" style={{position: 'absolute', display: 'none'}}/>
-                      <MusicIcon color="#fff" style={{width: '2em', height: '2em'}}/>
+                      <img src={MusicIcon} alt={"Music Icon"} style={styles.prefIcons}/>
                     </label>
                     <div>Ouvintes de Muita Música</div>
                 </center>

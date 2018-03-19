@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import CarIcon from 'material-ui/svg-icons/maps/directions-car'
+import CarIcon  from './veiculo.png'
 
 export default class Veiculo extends Component {
   render() {
@@ -22,7 +22,8 @@ export default class Veiculo extends Component {
       <div className="container" style={styles.root}>
         <div className="row">
           <div className="col-1">
-            <CarIcon color="#000" style={{width: '2em', height: '2em', margin:'0'}}/>
+            <img style={{width: '4em', height: '1.7em', margin:'0'}} src={CarIcon} alt={"Car Logo"}/>
+            <div style={{marginLeft:'10px', color:'#a8cf45'}}>Ativo</div>
           </div>
           <div className="col">
             <div style={styles.descSize}>{marca},{modelo}</div>

@@ -26,14 +26,14 @@ export default {
     marginLeft: '10px'
   },
   iconBG: {
-    borderRadius: '100%',
+    borderRadius: '45%',
     backgroundColor: '#6E4D8B',
     borderColor: '#a8cf45',
     color: '#fff',
     fontSize: '21px',
   },
   carBtn: {
-    borderRadius: '25px',
+    borderRadius: '15px',
     backgroundColor: '#6E4D8B',
     borderColor: '#a8cf45',
     color: '#fff',
@@ -75,6 +75,9 @@ export default {
     width: '2em',
     top: '29px',
     left: '101px'
+  },
+  prefIcons:{
+    width:'1.3em', height: '1.5em'
   },
   box: {
     position: 'relative',
