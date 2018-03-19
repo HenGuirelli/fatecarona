@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import PassgIcon from 'material-ui/svg-icons/notification/airline-seat-recline-normal'
+import PassgIcon from '../../components/Veiculo/lugares_roxo.png'
 
 
 class CadVeiculos extends Component{
@@ -18,7 +18,8 @@ class CadVeiculos extends Component{
         borderRadius: '10px',
         borderWidth: '1.5px',
         borderColor: '#6E4D8B',
-        width: '6em'
+        width: '8em',
+        textAlign:'center'
       },
       inputOption: {
         width: '25em',
@@ -27,13 +28,14 @@ class CadVeiculos extends Component{
         borderColor: '#6E4D8B'
       },
       inputNumber: {
-        width: '10em'
+        width: '10em',
       },
       borderNumber:{
         borderRadius: '7px',
         borderWidth: '1px',
         borderColor: '#6E4D8B',
-        textAlign: 'center'
+        textAlign: 'center',
+        width: '5em'
       }
     }
     return(
@@ -44,7 +46,7 @@ class CadVeiculos extends Component{
               <center>
                 <div className="col-6">PLACA</div>
                 <input
-                  placeholder='GHJ-8930'
+                  placeholder='AAA-0000'
                   style={styles.inputText}
                   className="form-control"
                 />
@@ -75,9 +77,11 @@ class CadVeiculos extends Component{
                   <div>LUGARES DISPONÍVEIS</div>
                   <div className="input-group" style={styles.inputNumber}>
                     <div>
-                        <PassgIcon color="#6E4D8B" style={{width: '2em', height: '2em', margin:'0'}}/>
+                        <img src={PassgIcon} alt={"Passageiro Icon"} color="#6E4D8B" style={{width: '1.5em', height: '1.8em', margin:' 3px 10px'}}/>
                     </div>
-                    <input type="number" name="quantity" min="1" max="10" placeholder="1"  style={styles.borderNumber} className="form-control"/>
+                    <div>
+                      <input type="number" name="quantity" min="1" max="10" placeholder="1"  style={styles.borderNumber} className="form-control"/>
+                    </div>
                   </div>
                 </center>
             </div>

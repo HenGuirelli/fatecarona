@@ -4,9 +4,9 @@ import TimePicker from 'material-ui/TimePicker';
 import DatePicker from 'material-ui/DatePicker';
 import DateIcon from 'material-ui/svg-icons/action/date-range'
 import TimeIcon from 'material-ui/svg-icons/action/schedule'
-import AcessbleIcon from 'material-ui/svg-icons/action/accessible'
-import SmokingIcon from 'material-ui/svg-icons/places/smoking-rooms'
-import MusicIcon from 'material-ui/svg-icons/image/audiotrack'
+import CadeiranteIcon from '../../components/LiftMgt/cadeirante_branco.png'
+import SmokingIcon from '../../components/LiftMgt/fumante_branco.png'
+import MusicIcon from '../../components/LiftMgt/musica_branco.png'
 import styles from '../oferecer/styles'
 
 class Pedir extends Component {
@@ -89,7 +89,7 @@ class Pedir extends Component {
             <div style={{paddingBottom: '2em', margin: '0 1px', borderBottom: '2px solid grey'}}>
               <center>
                 <div style={styles.title}>TRAJETO</div>
-                <select className="form-control" defaultValue="default">
+                <select style={styles.buttonR} className="form-control" defaultValue="default">
                   <option value="default">Selecione...</option>
                   <option>Trajeto1</option>
                 </select>
@@ -101,21 +101,21 @@ class Pedir extends Component {
                 <center className="col-4">
                     <label className="btn loginBtn" style={styles.iconBG}>
                       <input type="checkbox" style={{position: 'absolute', display: 'none'}}/>
-                      <AcessbleIcon color="#fff" style={{width: '2em', height: '2em'}}/>
+                      <img src={CadeiranteIcon} alt={"Cadeirante Icon"} style={styles.prefIcons}/>
                     </label>
                     <div>Acomodação de Deficientes</div>
                 </center>
                 <center className="col-4">
                     <label className="btn loginBtn" style={styles.iconBG}>
                       <input type="checkbox" style={{position: 'absolute', display: 'none'}}/>
-                      <SmokingIcon color="#fff" style={{width: '2em', height: '2em'}}/>
+                      <img src={SmokingIcon} alt={"Fumante Icon"} style={styles.prefIcons}/>
                     </label>
                     <div>Aceitação de Fumantes</div>
                 </center>
                 <center className="col-4">
                     <label className="btn loginBtn" style={styles.iconBG}>
                       <input type="checkbox" style={{position: 'absolute', display: 'none'}}/>
-                      <MusicIcon color="#fff" style={{width: '2em', height: '2em'}}/>
+                      <img src={MusicIcon} alt={"Music Icon"} style={styles.prefIcons}/>
                     </label>
                     <div>Ouvintes de Muita Música</div>
                 </center>

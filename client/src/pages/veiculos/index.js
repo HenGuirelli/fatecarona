@@ -23,7 +23,7 @@ const veiculos = [
 class Veiculos extends Component{
 
   handleActivation = (carPlate) =>{
-    this.props.history.push('/veiculos/ativar/')
+    this.props.history.push('/veiculos/ativar/' + carPlate)
   }
 
   render(){
