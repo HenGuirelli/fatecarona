@@ -1,16 +1,17 @@
 import axios from 'axios'
+import config from '../config.json'
 
 export function insertUser(user) {
   return {
     type: "INSERT_USER",
-    payload: axios.post("http://localhost:8080/users", user)
+    payload: axios.post(config.endpoint + "/users", user)
   }
 }
 
 export function loadUser() {
   return {
     type: "LOAD_USER",
-    payload: axios.get("http://localhost:8080/userstest")
+    payload: axios.get(config.endpoint + "/userstest")
   }
 }
 
@@ -31,7 +32,14 @@ export function updateUser(user) {
 export function setUserData(email) {
   return {
     type: "SET_USER_DATA",
-    payload: axios.get("http://localhost:8080/users/" + email)
+    payload: axios.get(config.endpoint + "/users/" + email)
+  }
+}
+
+export function updateUserData(email, userData) {
+  return {
+    type: "UPDATE_USER_DATA",
+    payload: axios.put(config.endpoint + "/users/" + email, userData)
   }
 }
 

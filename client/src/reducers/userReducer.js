@@ -4,6 +4,8 @@ export default function reducer(state={
     firebase: {},
     pending: true,
     error: null,
+    updating: false,
+    needReload: false,
   }, action) {
     switch (action.type) {
       case 'SET_FIREBASE': {
@@ -13,7 +15,16 @@ export default function reducer(state={
         return {...state, user: action.payload, pending: false}
       }
       case 'SET_USER_DATA_FULFILLED': {
-        return {...state, userData: action.payload.data}
+        return {...state, userData: action.payload.data, needReload: false}
+      }
+      case 'UPDATE_USER_DATA_PENDING': {
+        return {...state, updating: true}
+      }
+      case 'UPDATE_USER_DATA_FULFILLED': {
+        return {...state, updating: false, needReload: true}
+      }
+      case 'UPDATE_USER_DATA_REJECTED': {
+        return {...state, error: action.payload, updating: false}
       }
       case 'UNSET_USER': {
         return {...state, user: {}, pending: false}

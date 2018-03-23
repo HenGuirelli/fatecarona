@@ -4,6 +4,13 @@ var express 	      = require('express');
 var bodyParser 	    = require('body-parser');
 var webPush         = require('web-push');
 var mysql           = require('mysql');
+var fs              = require('fs');
+var http            = require('http');
+var https           = require('https');
+var privateKey      = fs.readFileSync('./key.pem', 'utf8');
+var certificate     = fs.readFileSync('./cert.pem', 'utf8');
+var credentials     = {key: privateKey, cert: certificate};
+
 const path          = require('path');
 
 var router = express.Router();
@@ -32,6 +39,7 @@ server.use( bodyParser.urlencoded({extended: true}));
 
 router.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
@@ -91,7 +99,7 @@ router.route('/users/:user_email')
       connection.query('UPDATE membro SET ? WHERE email = ?', [req.body, req.params.user_email], function(err, rows, fields) {
         connection.release();
         if (err) res.send(err);
-        res.json(rows[0]);
+        res.json(rows);
       });
     });
   });
@@ -159,5 +167,17 @@ function notify(subscription, payload) {
 }
 
 server.use(router);
-server.listen(8080);
-console.log("Servidor rodando na porta 8080");
+
+var httpsServer = https.createServer(credentials, server);
+var httpServer  = http.createServer(server);
+
+httpsServer.listen(8443);
+httpServer.listen(8080);
+
+/*http.createServer(function (req, res) {
+    res.writeHead(301, {"Location": "https://" + req.headers['host'] + req.url});
+    res.end();
+}).listen(80);*/
+
+console.log("Servidor HTTP rodando na porta 8080.");
+console.log("Servidor HTTPS rodando na porta 8443.");

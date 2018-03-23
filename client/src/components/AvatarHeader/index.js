@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Avatar from 'material-ui/Avatar'
+import config from '../../config.json'
 import styles from './styles'
 
 export default class AvatarHeader extends Component {
@@ -22,7 +23,7 @@ export default class AvatarHeader extends Component {
             </div>
             <center className="col-8">
               <Avatar
-                src={userData.img ? "http://localhost:8080/images/" + userData.img : ""}
+                src={userData.img ? config.endpoint + "/images/" + userData.img : ""}
                 size={150}
                 style={styles.avatar}
               />

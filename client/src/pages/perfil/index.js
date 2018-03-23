@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Avatar from 'material-ui/Avatar'
+import config from '../../config.json'
 import TimePicker from 'material-ui/TimePicker'
 import styles from './styles'
+import { updateUserData, setUserData } from '../../actions/userActions'
 
 class Perfil extends Component {
   constructor(props) {
@@ -11,8 +13,8 @@ class Perfil extends Component {
     const aux2 = props.userData.saida ? props.userData.saida.substr(0, 5).split(':') : null;
     this.state = {
       apelido: props.userData.apelido || '',
-      fileName: 'Nenhum arquivo selecionado.',
-      img: props.userData.img ? "http://localhost:8080/images/" + props.userData.img : "",
+      fileName: props.userData.img || 'Nenhum arquivo selecionado.',
+      img: props.userData.img ? config.endpoint + "/images/" + props.userData.img : "",
       chegada: aux1 ? new Date(null, null, null, aux1[0], aux1[1]) : null,
       saida: aux2 ? new Date(null, null, null, aux2[0], aux2[1]) : null,
       telefone: props.userData.telefone || ''
@@ -21,8 +23,16 @@ class Perfil extends Component {
 
   handleImage = () => {
     if(this.refs.img.files.length > 0) {
+      let formData = new FormData();
       const url = URL.createObjectURL(this.refs.img.files[0]);
-      this.setState({img: url, fileName: this.refs.img.files[0].name});
+      formData.set('image', this.refs.img.files[0]);
+      fetch(config.endpoint + '/images', {
+        method: 'POST',
+        body: formData
+      }).then(res => res.text())
+      .then(fileName => {
+        this.setState({img: url, fileName});
+      });
     }
   };
 
@@ -44,20 +54,20 @@ class Perfil extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    var formData = new FormData();
-    formData.set('image', this.refs.img.files[0]);
-    fetch('http://localhost:8080/images', {
-      method: 'POST',
-      body: formData
-    }).then(res => res.text())
-    .then(fileName => {
-      //executar o dispatch aqui utilizando fileName em
-      //conjunto com as outras informações de usuário
-      console.log(fileName);
-    });
+    let myState = this.state;
+    this.props.dispatch(updateUserData(this.props.userData.email, {
+      apelido: myState.apelido,
+      chegada: myState.chegada.toTimeString().substr(0, 8),
+      saida: myState.saida.toTimeString().substr(0, 8),
+      telefone: myState.telefone,
+      img: myState.fileName
+    }));
   }
 
   render() {
+    const { updating, needReload, error } = this.props
+    if (updating) return <div>Loading...</div>
+    else if (needReload) return <div>Informações atualizadas!</div>
     return (
       <div className="pageBase">
         <div className="container">
@@ -73,7 +83,7 @@ class Perfil extends Component {
                 <div style={{width: '9em', position: 'absolute', top: '52px', left: '144px'}}>
                   <input style={styles.file} type="file" id="file" accept="image/*" ref="img" onChange={this.handleImage}/>
                   <label htmlFor="file" style={styles.fileLabel} className="btn btn-primary">Alterar foto</label>
-                  <div style={{textAlign: 'left'}}>{this.state.fileName}</div>
+                  <div style={{textAlign: 'left', overflowWrap: 'break-word'}}>{this.state.fileName}</div>
                 </div>
               </div>
             </div>
@@ -142,6 +152,9 @@ class Perfil extends Component {
 export default connect(store => {
   return {
     user: store.user.user,
-    userData: store.user.userData
+    userData: store.user.userData,
+    updating: store.user.updating,
+    needReload: store.user.needReload,
+    error: store.user.error
   }
 })(Perfil)

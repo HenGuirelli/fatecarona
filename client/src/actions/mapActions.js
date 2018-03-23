@@ -1,4 +1,5 @@
 import axios from 'axios'
+import config from '../config.json'
 
 export function renderMap() {
   return {
@@ -9,7 +10,7 @@ export function renderMap() {
 export function storeRoute(route, user) {
   return {
     type: "STORE_ROUTE",
-    payload: axios.post('http://localhost:8080/routes', {
+    payload: axios.post(config.endpoint + '/routes', {
       email: user.email,
       rota: {
         origin: route.request.origin.query,

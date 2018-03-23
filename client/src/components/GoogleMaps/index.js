@@ -17,13 +17,27 @@ class GoogleMap extends Component {
 
   displayRoute() {
     let origin = this.refs.origem.value;
-    let destination = this.refs.destino.value;
+    let destination = this.refs.destino.value
     if(!origin || !destination) {
       return;
     }
+
+    let waypts = [];
+    let checkboxArray = document.getElementById('waypoints');
+    for (var i = 0; i < checkboxArray.length; i++) {
+      if (checkboxArray.options[i].selected) {
+        waypts.push({
+          location: checkboxArray[i].value,
+          stopover: true
+        });
+      }
+    }
+
     this.props.dirServ.route({
       origin: origin,
       destination: destination,
+      waypoints: waypts,
+      optimizeWaypoints: true,
       travelMode: 'DRIVING'
     }, (response, status) => {
       if (status === 'OK') {
@@ -56,6 +70,12 @@ class GoogleMap extends Component {
               className="form-control"
               ref="destino"
             />
+            <b>Pontos de interesse</b> <br/>
+            <i>(Ctrl+Click ou Cmd+Click para seleção multipla)</i> <br/>
+            <select multiple id="waypoints">
+              <option value="terminal rodoviado nicolau delic">Terminal SCS</option>
+              <option value="AV. Goiás">AV. Goiás</option>
+            </select>
             <a role="button" style={styles.button} className="btn btn-primary btn-block" onClick={this.displayRoute.bind(this)}>Carregar Rota</a>
           </div>
         </div>

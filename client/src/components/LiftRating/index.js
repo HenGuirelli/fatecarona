@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Avatar from 'material-ui/Avatar'
+import config from '../../config.json'
 import { Rating } from 'material-ui-rating'
 
 export default class Lift extends Component {
@@ -18,7 +19,7 @@ export default class Lift extends Component {
         <div className="row">
           <div className="col-3 col-xl-1">
             <Avatar
-              src={userData.img ? "http://localhost:8080/images/" + userData.img : ""}
+              src={userData.img ? config.endpoint + "/images/" + userData.img : ""}
               size={50}
             />
           </div>

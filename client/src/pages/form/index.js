@@ -9,8 +9,8 @@ class LoginForm extends Component {
   constructor() {
     super()
     this.state = {
-      email: '', 
-      password: '', 
+      email: '',
+      password: '',
       isCadOpen: false,
       dialog: false,
       msg: ''
@@ -75,6 +75,9 @@ class LoginForm extends Component {
       root: {
         paddingTop: '5em',
         backgroundColor: '#6E4D8B',
+        marginBottom: '-5000px',
+        paddingBottom: '5000px',
+        overflow: 'hidden'
       }
     }
 
@@ -82,7 +85,7 @@ class LoginForm extends Component {
 
     //const { initState, firebase, user } = this.props
     return (
-      <div style={styles.root} className="pageBase">
+      <div style={styles.root}>
         <Dialog
           title="Erro:"
           actions={null}
@@ -111,8 +114,8 @@ class LoginForm extends Component {
                 className="form-control"
               />
             <input
-              type="submit" 
-              className="btn btn-block loginBtn" 
+              type="submit"
+              className="btn btn-block loginBtn"
               style={styles.button}
               value="ENTRAR"
             />
@@ -132,8 +135,8 @@ class LoginForm extends Component {
 
 export default connect(store => {
   return {
-    initState: store.user.initState, 
-    firebase: store.user.firebase, 
+    initState: store.user.initState,
+    firebase: store.user.firebase,
     user: store.user.user,
     error: store.user.error,
   }
