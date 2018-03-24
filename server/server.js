@@ -147,7 +147,7 @@ router.route('/subs')
   .post(function(req, res) {
     var body = req.body;
     subscriptions.push({email: body.email, subscription: body.subscription});
-    notify(subscriptions[0].subscription, 'it worked!');
+    notify(subscriptions.find(sub => sub.email === body.email).subscription, 'it worked!');
     res.send({subscribed: true});
   });
 

@@ -8,7 +8,7 @@ import Vagas from '../../components/Vagas'
 import Avaliador from '../../components/Avaliador'
 
 class MainPage extends Component {
-  componentWillMount() {
+  checkSubscription = (email) => {
     if ('Notification' in window && navigator.serviceWorker) {
       if (Notification.permission === "default") {
         Notification.requestPermission(status => {
@@ -20,7 +20,7 @@ class MainPage extends Component {
             if (sub === null) {
               this.subscribeUser();
             } else {
-              this.props.dispatch(sendSubscription(this.props.userData.email, sub));
+              this.props.dispatch(sendSubscription(email, sub));
             }
           });
         });
@@ -52,6 +52,8 @@ class MainPage extends Component {
         'backgroundColor': 'white',
       },
     }
+
+    if( userData.email !== "undefined") this.checkSubscription(userData.email);
 
     return (
       <div className="pageBase">

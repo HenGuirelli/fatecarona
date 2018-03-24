@@ -3,10 +3,16 @@ import * as map from '../../actions/mapActions'
 import { connect } from 'react-redux'
 
 class GoogleMap extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {waypoints: []};
+  } 
+
   componentDidMount() {
     this.props.dispatch(map.renderMap())
     this.bindAutoComplete(this.refs.origem)
     this.bindAutoComplete(this.refs.destino)
+    this.bindAutoComplete(this.refs.waypoint)
   }
 
   bindAutoComplete(element) {
@@ -15,21 +21,31 @@ class GoogleMap extends Component {
     {types: ['geocode']});
   }
 
-  displayRoute() {
+  addWaypoint = () => {
+    let waypoints = this.state.waypoints;
+    if (!waypoints.includes(this.refs.waypoint.value)) {
+      waypoints.push(this.refs.waypoint.value);
+      this.setState({waypoints})
+    }
+    this.refs.waypoint.value = "";
+  }
+
+  displayRoute = () => {
     let origin = this.refs.origem.value;
-    let destination = this.refs.destino.value
+    let destination = this.refs.destino.value;
+
     if(!origin || !destination) {
       return;
     }
 
     let waypts = [];
-    let checkboxArray = document.getElementById('waypoints');
+    let checkboxArray = document.getElementById("waypoints");
     for (var i = 0; i < checkboxArray.length; i++) {
-      if (checkboxArray.options[i].selected) {
+      if(checkboxArray.options[i].selected) {
         waypts.push({
           location: checkboxArray[i].value,
-          stopover: true
-        });
+          stopover: false
+        })
       }
     }
 
@@ -56,6 +72,8 @@ class GoogleMap extends Component {
       },
     }
 
+    const { waypoints } = this.state
+
     return (
       <div className="pageBase">
         <div className="container">
@@ -70,13 +88,28 @@ class GoogleMap extends Component {
               className="form-control"
               ref="destino"
             />
-            <b>Pontos de interesse</b> <br/>
-            <i>(Ctrl+Click ou Cmd+Click para seleção multipla)</i> <br/>
+          
+            <div className="input-group mb-3">
+              <input
+                className="form-control"
+                ref="waypoint"
+                placeholder="Ponto de interesse"
+              />
+              <div className="input-group-append">
+                <a 
+                  role="button" 
+                  className="btn btn-primary btn-block" 
+                  onClick={() => this.addWaypoint(waypoints)}>
+                  Adicionar ponto
+                </a>
+              </div>
+            </div>
+
             <select multiple id="waypoints">
-              <option value="terminal rodoviado nicolau delic">Terminal SCS</option>
-              <option value="AV. Goiás">AV. Goiás</option>
+              {waypoints.map((waypt, key) => <option value={waypt} key={key}>{waypt}</option>)}
             </select>
-            <a role="button" style={styles.button} className="btn btn-primary btn-block" onClick={this.displayRoute.bind(this)}>Carregar Rota</a>
+            
+            <a role="button" style={styles.button} className="btn btn-primary btn-block" onClick={() => this.displayRoute()}>Carregar Rota</a>
           </div>
         </div>
         <div className="Map container pageBase"/>
