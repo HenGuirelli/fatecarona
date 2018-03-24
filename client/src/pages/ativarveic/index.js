@@ -8,39 +8,22 @@ import KmIcon from '../../components/Veiculo/kmviagens.png'
 class AtivarVeic extends Component{
   render(){
 
+    const { veiculo } = this.props
+
     const styles = {
-      buttonL: {
-        margin: '25px 0',
-        marginLeft: '50%',
-        borderRadius: '15px',
+      btn:{
+        fontSize: '12px',
+        width: '100%',
         backgroundColor: '#6E4D8B',
-        borderColor: '#a8cf45',
-        color: '#a8cf45',
-        fontSize: '25px',
-        width: '10em',
+        borderColor: '#6E4D8B'
       },
-      buttonR: {
-        margin: '25px 0',
-        borderRadius: '15px',
-        backgroundColor: '#6E4D8B',
-        borderColor: '#a8cf45',
-        color: '#a8cf45',
-        fontSize: '25px',
-        width: '8em'
-      },
-      buttonEdit: {
-        backgroundColor: '#6E4D8B',
-        borderColor: '#a8cf45',
-        color: '#a8cf45',
-        marginLeft:'5px',
-        width: '4em',
-        fontSize: '18px',
-        height: '1.8em',
+      btnContainer: {
+        padding:  '0 10px',
       },
       marginStyle:{
         marginTop: '2em'
       },
-      editSize:{
+      inputNumber:{
         width: '4em',
         height: '2em'
       },
@@ -61,14 +44,14 @@ class AtivarVeic extends Component{
               <img src={CarIcon} alt={"Car Icon"} color="#000" style={{width: '4em', height: '1.7em'}}/>
             </div>
             <div>
-              PLACA
+              {veiculo.placa}
             </div>
             <div className="row" style={styles.marginStyle}>
               <div className="col-6" style={styles.colFormat}>
                 MARCA:
               </div>
               <div className="col-0">
-                FIAT
+                {veiculo.marca}
               </div>
             </div>
 
@@ -77,7 +60,7 @@ class AtivarVeic extends Component{
                 MODELO:
               </div>
               <div className="col-0">
-                SIENA
+                {veiculo.modelo}
               </div>
             </div>
 
@@ -86,10 +69,7 @@ class AtivarVeic extends Component{
                 <div>LUGARES</div>
               </div>
               <div className="col-0">
-                <input type="text" className="form-control" style={styles.editSize}/>
-              </div>
-              <div className="col-0">
-                <button className="btn loginBtn form-control" style={styles.buttonEdit} type="button">Editar</button>
+                <input type="number" min="1" max="6" placeholder="1" className="form-control" style={styles.inputNumber}/>
               </div>
             </div>
 
@@ -105,19 +85,18 @@ class AtivarVeic extends Component{
                 <div>0</div>
               </div>
             </div>
-            </center>
-            <div  className="row" style={styles.marginStyle}>
-              <div className="col">
-                <input type="submit" value="ATIVAR" className="btn loginBtn form-control" style={styles.buttonL}/>
+            <div  className="row">
+              <div className="col-6" style={styles.btnContainer}>
+                <input type="submit" value="ATIVAR" className="btn btn-primary" style={styles.btn}/>
               </div>
-              <div className="col">
-                <input type="submit" value="EXCLUIR" className="btn loginBtn form-control" style={styles.buttonR}/>
+              <div className="col-6" style={styles.btnContainer}>
+                <input type="submit" value="EXCLUIR" className="btn btn-primary" style={styles.btn}/>
               </div>
-          </div>
+            </div>
+          </center>
           </form>
         </div>
       </div>
-
     )
   }
 }
@@ -125,6 +104,7 @@ class AtivarVeic extends Component{
 export default connect(store => {
   return {
     user: store.user.user,
-    userData: store.user.userData
+    userData: store.user.userData,
+    veiculo: store.car.veiculo
   }
 })(AtivarVeic)

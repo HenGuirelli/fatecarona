@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Veiculo from '../../components/Veiculo'
 import { connect } from 'react-redux'
+import { ativar } from '../../actions/carActions'
 
 const veiculos = [
   {
@@ -17,13 +18,18 @@ const veiculos = [
     marca: 'MITSUBISHI',
     modelo: 'PAJERO',
     placa : 'COC-2355'
-  },
+  }
 ]
 
 class Veiculos extends Component{
 
-  handleActivation = (carPlate) =>{
-    this.props.history.push('/veiculos/ativar/' + carPlate)
+  handleActivation = (car) =>{
+    this.props.dispatch(ativar(car));
+    this.props.history.push('/veiculos/ativar')
+  }
+
+  handleSubmit = () =>{
+    this.props.history.push('/veiculos/cadastrar')
   }
 
   render(){
@@ -44,31 +50,29 @@ class Veiculos extends Component{
       }
     }
 
-    return(
-      <div className="pageBase">
-        <div className="container">
-            {veiculos.map(veiculo =>
-              <div className="row" style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
-                <button className="btn loginBtn" onClick={() => this.handleActivation(veiculo.placa)} style={styles.carButton}>
-                  <Veiculo
-                    marca={veiculo.marca}
-                    modelo={veiculo.modelo}
-                    placa={veiculo.placa}
-                    key={veiculo.placa}
-                  />
-                </button>
-              </div>
-            )}
-            <input type="button" value="ADICIONAR" className="btn loginBtn btn-block" style={styles.button}/>
+      return(
+        <div className="pageBase">
+          <div className="container">
+              {veiculos.map(veiculo =>
+                <div className="row" style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
+                  <button className="btn loginBtn" onClick={() => this.handleActivation(veiculo)} style={styles.carButton}>
+                    <Veiculo
+                      marca={veiculo.marca}
+                      modelo={veiculo.modelo}
+                      placa={veiculo.placa}
+                      key={veiculo.placa}
+                    />
+                  </button>
+                </div>
+              )}
+              <input type="button" onClick={this.handleSubmit} value="ADICIONAR" className="btn loginBtn btn-block" style={styles.button}/>
+          </div>
         </div>
-      </div>
-    )
+      )
+    }
   }
-}
+
 
 export default connect(store => {
-  return {
-    user: store.user.user,
-    userData: store.user.userData
-  }
+  return
 })(Veiculos)

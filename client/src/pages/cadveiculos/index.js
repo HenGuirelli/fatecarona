@@ -22,7 +22,7 @@ class CadVeiculos extends Component{
         textAlign:'center'
       },
       inputOption: {
-        width: '25em',
+        width: '80%',
         borderRadius: '7px',
         borderWidth: '1px',
         borderColor: '#6E4D8B'

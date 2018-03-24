@@ -19,7 +19,6 @@ insert into membros (ra, nome, telefone, apelido, curso, email, img, chegada, sa
   (1680481522006, "Alexandre Cassiano dos Santos", "011955931212","Xandele", "ADS","alexandre.santos67", "avatar.jpg", "13:00:00", "18:00:00"),
   (1680481522040, "Antonio Ernando Siqueira de Souza Filho", "011955931212","Toninho", "ADS","antonio.souza26", "avatar.jpg", "13:00:00", "18:00:00");
 
-
 create table veiculos(
   id int auto_increment primary key, 
   placa char(8) not null unique,

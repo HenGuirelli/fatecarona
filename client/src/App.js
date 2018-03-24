@@ -12,7 +12,8 @@ import Pedir from './pages/pedir'
 import Caronas from './pages/caronas'
 import Config from './pages/config'
 import Veiculos from './pages/veiculos'
-import Ativar from './pages/ativarveic'
+import AtivarVeic from './pages/ativarveic'
+import CadVeiculo from './pages/cadveiculos'
 import { connect } from 'react-redux'
 import { setFirebase, updateUser, unsetUser, insertUser, loadUser } from './actions/userActions'
 import * as firebase from 'firebase'
@@ -74,7 +75,8 @@ class App extends Component {
         <Route path="/caronas/request" component={Pedir}/>
         <Route path="/caronas/offer" component={Oferecer}/>
         <Route exact path="/veiculos" component={Veiculos}/>
-        <Route path="/veiculos/ativar" component={Ativar}/>
+        <Route path="/veiculos/ativar" component={AtivarVeic}/>
+        <Route path="/veiculos/cadastrar" component={CadVeiculo}/>
         <Route path="/config" render={() => <Config logOut={this.logOut.bind(this)}/>}/>
         <Route path="/test" render={() =>
           <div>

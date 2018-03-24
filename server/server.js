@@ -29,7 +29,7 @@ var upload = multer({ storage: storage }).single('image');
 var pool = mysql.createPool({
   host     : 'localhost',
   user     : 'root',
-  password : '3847147298',
+  password : '',
   database : 'Fatecarona'
 });
 
@@ -162,7 +162,6 @@ function notify(subscription, payload) {
     payload,
     options
   )
-  .then(() => console.log('notification sent.'))
   .catch(err => console.log(err));
 }
 
