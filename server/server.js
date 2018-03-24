@@ -29,7 +29,7 @@ var upload = multer({ storage: storage }).single('image');
 var pool = mysql.createPool({
   host     : 'localhost',
   user     : 'root',
-  password : '3847147298',
+  password : '',
   database : 'Fatecarona'
 });
 
@@ -147,7 +147,8 @@ router.route('/subs')
   .post(function(req, res) {
     var body = req.body;
     subscriptions.push({email: body.email, subscription: body.subscription});
-    notify(subscriptions[0].subscription, 'it worked!');
+    console.log(subscriptions.find(sub => sub.email === body.email));
+    notify(subscriptions.find(sub => sub.email === body.email).subscription, 'it worked!');
     res.send({subscribed: true});
   });
 
@@ -162,7 +163,6 @@ function notify(subscription, payload) {
     payload,
     options
   )
-  .then(() => console.log('notification sent.'))
   .catch(err => console.log(err));
 }
 
