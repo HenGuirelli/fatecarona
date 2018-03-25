@@ -29,7 +29,7 @@ var upload = multer({ storage: storage }).single('image');
 var pool = mysql.createPool({
   host     : 'localhost',
   user     : 'root',
-  password : '',
+  password : 'root',
   database : 'Fatecarona'
 });
 
@@ -170,6 +170,64 @@ router.route('/images')
 router.route('/images/:file_name')
   .get(function(req, res) {
   	res.sendFile(__dirname + '/images/' + req.params.file_name);
+  });
+
+//Manipulação de Veiculos
+
+router.route('/cars/:user_email')
+  .get(function(req, res) {
+    pool.getConnection(function(err, connection) {
+      if (err) res.send(err);
+
+      connection.query('SELECT * FROM veiculos where email = ?',[req.params.user_email], function(err, rows, fields) {
+        connection.release();
+        if (err){
+          res.send(err);
+          return;
+        }
+        res.json(rows);
+      });
+    });
+  });
+
+
+router.route('/cars/ativar/:car_placa')
+
+  .delete(function(req, res) {
+    pool.getConnection(function(err, connection) {
+      if (err) res.send(err);
+
+      connection.query('DELETE FROM veiculos WHERE email = ?', [req.params.car_placa], function(err, rows, fields) {
+        connection.release();
+        if (err) res.send(err);
+        res.json({ message: 'Usuário ' + req.params.user_email + ' excluido.'});
+      });
+    });
+  })
+
+  .put(function(req, res) {
+    pool.getConnection(function(err, connection) {
+      if (err) res.send(err);
+
+      connection.query('UPDATE veiculos SET ? WHERE placa = ?', [req.body, req.params.car_placa], function(err, rows, fields) {
+        connection.release();
+        if (err) res.send(err);
+        res.json(rows);
+      });
+    });
+  });
+
+router.route('/cars')
+  .post(function(req, res) {
+    pool.getConnection(function(err, connection) {
+      if(err) res.send(err);
+
+      connection.query('INSERT INTO veiculos SET ?', req.body, function(err, rows, fields) {
+        connection.release();
+        if (err) res.send(err);
+        res.json({ success: true });
+      });
+    });
   });
 
 //notificações
