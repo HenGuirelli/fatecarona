@@ -66,11 +66,12 @@ class App extends Component {
     if (!window.localStorage.key(0)) return <Auth history={history} alert={false}/>
     if (!user.emailVerified) return <Verify firebase={firebase} logOut={this.logOut.bind(this)}/>
 
+
     if (history.location.pathname !== "/recuperar") {
       if (!window.localStorage.key(0)) return <Auth history={history} alert={false}/>
       if (!user.emailVerified) return <Verify firebase={firebase} logOut={this.logOut.bind(this)}/>
     }
-  
+
     return (
       <div className="App">
         <NavBar logOut={this.logOut.bind(this)} menuItems={menuItems}/>
