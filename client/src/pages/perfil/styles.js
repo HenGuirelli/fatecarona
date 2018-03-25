@@ -11,6 +11,11 @@ export default {
     margin: '25px 0',
     borderRadius: '10px',
   },
+  inputTextCaminho: {
+    margin: '10px 0',
+    borderRadius: '10px',
+    width: '40%'
+  },
   file: {
     width: '0.1px',
     height: '0.1px',
@@ -38,5 +43,8 @@ export default {
     position: 'relative',
     width: '131px',
     margin: '0 auto'
+  },
+  title: {
+    margin: '1em 0'
   }
 }
