@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import CarIcon from 'material-ui/svg-icons/maps/directions-car'
+import TrajetoIcon from './trajeto.png'
 
 export default class Rota extends Component {
   render() {
@@ -11,6 +11,7 @@ export default class Rota extends Component {
         padding: '1em',
       },
       descSize:{
+        marginTop: '14px',
         fontSize:'13px'
       }
     }
@@ -19,7 +20,7 @@ export default class Rota extends Component {
       <div className="container" style={styles.root}>
         <div className="row">
           <div className="col-1">
-            <CarIcon color="#000" style={{width: '2em', height: '2em', margin:'0'}}/>
+            <img style={{width: '2.7em', height: '3em', margin:'0'}} src={TrajetoIcon} alt={"Trajeto Logo"}/>
           </div>
           <div className="col">
             <div style={styles.descSize}>

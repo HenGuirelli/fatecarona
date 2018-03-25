@@ -3,6 +3,8 @@ import { Route, withRouter } from 'react-router-dom'
 import './App.css'
 import NavBar from './components/NavBar'
 import GoogleMap from './components/GoogleMaps'
+import Rotas from './pages/rotas'
+import AlterarRota from './pages/alterarota'
 import Auth from './pages/form'
 import MainPage from './pages/main'
 import Verify from './pages/verify'
@@ -69,7 +71,8 @@ class App extends Component {
       <div className="App">
         <NavBar logOut={this.logOut.bind(this)} menuItems={menuItems}/>
         <Route exact path="/" component={MainPage}/>
-        <Route path="/rotas" component={GoogleMap}/>
+        <Route exact path="/rotas" component={Rotas}/>
+        <Route path="/rotas/alterar" component={AlterarRota}/>
         <Route path="/perfil" component={Perfil}/>
         <Route path="/caronas/historico" component={Caronas}/>
         <Route path="/caronas/request" component={Pedir}/>

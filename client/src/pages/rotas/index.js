@@ -19,9 +19,9 @@ const rotas = [
 
 class Rotas extends Component{
 
-/*  handleActivation = (carPlate) =>{
-      this.props.history.push()
-  }*/
+  handleActivation = (rota) =>{
+    this.props.history.push('/rotas/alterar')
+  }
 
   render(){
     const styles = {
@@ -44,9 +44,9 @@ class Rotas extends Component{
     return(
       <div className="pageBase">
         <div className="container">
-            {rotas.map(rota =>
-              <div className="row" style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
-                <button className="btn loginBtn" style={styles.rotaButton}>
+            {  rotas.map((rota, key) =>
+              <div className="row" key={key} style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
+                <button className="btn loginBtn" onClick={() => this.handleActivation(rota)}  style={styles.rotaButton}>
                   <Rota
                     desc={rota.desc}
                     origem={rota.origem}
