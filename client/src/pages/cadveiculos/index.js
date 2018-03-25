@@ -1,9 +1,54 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import PassgIcon from '../../components/Veiculo/lugares_roxo.png'
+import { insertCar } from '../../actions/carActions'
+import Dialog from 'material-ui/Dialog'
 
 
 class CadVeiculos extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      placa: '',
+      marca: '',
+      modelo: '',
+      dialog: false,
+    };
+  }
+
+  handlePlaca = (event) =>{
+    this.setState({placa: event.target.value.toUpperCase()})
+  }
+  handleMarca = (event) =>{
+    this.setState({marca: event.target.value})
+  }
+  handleModelo = (event) => {
+    this.setState({modelo: event.target.value})
+  }
+
+  handleSubmit = () => {
+    if (this.props.veiculos.length === 5){
+      this.displayDialog("Você já chegou ao limite máximo de veículos!")
+      return;
+    }
+    console.log(this.props.veiculos.length)
+    this.props.dispatch(insertCar({
+        email: this.props.userData.email ,
+        placa: this.state.placa,
+        marca: this.state.marca,
+        modelo: this.state.modelo
+      }))
+      this.displayDialog("Veículo adicionado!")
+  }
+
+  displayDialog(msg) {
+    this.setState({dialog: true, msg})
+  }
+
+  handleClose = () => {
+    this.setState({dialog: false})
+    this.props.history.push('/veiculos')
+  }
+
   render(){
     const styles = {
       button: {
@@ -40,6 +85,14 @@ class CadVeiculos extends Component{
     }
     return(
       <div className="pageBase">
+        <Dialog
+          actions={null}
+          modal={false}
+          open={this.state.dialog}
+          onRequestClose={this.handleClose}
+        >
+        {this.state.msg}
+        </Dialog>
         <div className="container">
           <form className="form-group">
             <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
@@ -49,13 +102,15 @@ class CadVeiculos extends Component{
                   placeholder='AAA-0000'
                   style={styles.inputText}
                   className="form-control"
+                  value={this.state.placa}
+                  onChange={this.handlePlaca}
                 />
               </center>
             </div>
             <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
               <center>
                 <div className="col-6">MARCA</div>
-                <select className="form-control" style={styles.inputOption} defaultValue="default">
+                <select className="form-control" style={styles.inputOption} defaultValue="default" onChange={this.handleMarca} value={this.state.marca}>
                   <option value="default">Selecione...</option>
                   <option>FIAT</option>
                   <option>MERCEDES</option>
@@ -65,27 +120,14 @@ class CadVeiculos extends Component{
             <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
               <center>
                 <div className="col-6">MODELO</div>
-                  <select className="form-control" style={styles.inputOption} defaultValue="default">
+                  <select className="form-control" style={styles.inputOption} defaultValue="default" value={this.state.modelo} onChange={this.handleModelo}>
                     <option value="default">Selecione...</option>
                     <option>SIENA</option>
                     <option>PALIO</option>
                   </select>
                 </center>
             </div>
-            <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
-                <center>
-                  <div>LUGARES DISPONÍVEIS</div>
-                  <div className="input-group" style={styles.inputNumber}>
-                    <div>
-                        <img src={PassgIcon} alt={"Passageiro Icon"} color="#6E4D8B" style={{width: '1.5em', height: '1.8em', margin:' 3px 10px'}}/>
-                    </div>
-                    <div>
-                      <input type="number" name="quantity" min="1" max="10" placeholder="1"  style={styles.borderNumber} className="form-control"/>
-                    </div>
-                  </div>
-                </center>
-            </div>
-            <input type="submit" value="ADICIONAR" className="btn loginBtn form-control" style={styles.button}/>
+            <input type="button" value="ADICIONAR" onClick={this.handleSubmit} className="btn loginBtn form-control" style={styles.button}/>
           </form>
         </div>
       </div>
@@ -96,6 +138,7 @@ class CadVeiculos extends Component{
 export default connect(store => {
   return {
     user: store.user.user,
-    userData: store.user.userData
+    userData: store.user.userData,
+    veiculos: store.car.veiculos
   }
 })(CadVeiculos)
