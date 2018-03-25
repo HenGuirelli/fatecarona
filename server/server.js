@@ -29,7 +29,6 @@ var upload = multer({ storage: storage }).single('image');
 var pool = mysql.createPool({
   host     : 'localhost',
   user     : 'root',
-  password : 'root',
   database : 'Fatecarona'
 });
 
@@ -91,7 +90,6 @@ router.route('/users/:user_email')
         res.json({ message: 'Usuário ' + req.params.user_email + ' excluido.'});
       });
     });
-<<<<<<< HEAD
   })
   .put(function(req, res) {
     pool.getConnection(function(err, connection) {
@@ -103,8 +101,6 @@ router.route('/users/:user_email')
         res.json(rows);
       });
     });
-=======
->>>>>>> 4a444e5bae68571eb85bc7e07782f13d1a9dfe71
   });
 
 //Manipulação de rotas

@@ -14,6 +14,7 @@ import Config from './pages/config'
 import Veiculos from './pages/veiculos'
 import AtivarVeic from './pages/ativarveic'
 import CadVeiculo from './pages/cadveiculos'
+import Recuperar from './pages/recuperar'
 import { connect } from 'react-redux'
 import { setFirebase, updateUser, unsetUser, insertUser, loadUser } from './actions/userActions'
 import * as firebase from 'firebase'
@@ -65,6 +66,11 @@ class App extends Component {
     if (!window.localStorage.key(0)) return <Auth history={history} alert={false}/>
     if (!user.emailVerified) return <Verify firebase={firebase} logOut={this.logOut.bind(this)}/>
 
+    if (history.location.pathname !== "/recuperar") {
+      if (!window.localStorage.key(0)) return <Auth history={history} alert={false}/>
+      if (!user.emailVerified) return <Verify firebase={firebase} logOut={this.logOut.bind(this)}/>
+    }
+  
     return (
       <div className="App">
         <NavBar logOut={this.logOut.bind(this)} menuItems={menuItems}/>
@@ -77,6 +83,7 @@ class App extends Component {
         <Route exact path="/veiculos" component={Veiculos}/>
         <Route path="/veiculos/ativar" component={AtivarVeic}/>
         <Route path="/veiculos/cadastrar" component={CadVeiculo}/>
+        <Route path="/recuperar" component={Recuperar}/>
         <Route path="/config" render={() => <Config logOut={this.logOut.bind(this)}/>}/>
         <Route path="/test" render={() =>
           <div>
