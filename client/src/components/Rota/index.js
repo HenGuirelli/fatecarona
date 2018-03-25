@@ -3,7 +3,7 @@ import TrajetoIcon from './trajeto.png'
 
 export default class Rota extends Component {
   render() {
-    const { id, desc, origem, destino } = this.props
+    const { id, desc, origem, destino, waypoints } = this.props
 
     const styles = {
       root: {

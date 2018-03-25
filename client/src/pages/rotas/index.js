@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Rota from '../../components/Rota'
 import { connect } from 'react-redux'
+import { alteraRota } from '../../actions/mapActions'
+
 
 const rotas = [
   {
@@ -20,6 +22,7 @@ const rotas = [
 class Rotas extends Component{
 
   handleActivation = (rota) =>{
+    this.props.dispatch(alteraRota(rota));
     this.props.history.push('/rotas/alterar')
   }
 

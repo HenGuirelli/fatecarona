@@ -5,10 +5,12 @@ import Dialog from 'material-ui/Dialog'
 
 
 class AlterarRota extends Component{
+
+
   constructor(props) {
     super(props);
     this.state = {
-      ativo: 0
+      dialog: false
     };
   }
 
@@ -22,6 +24,27 @@ class AlterarRota extends Component{
   }
 
   render(){
+    const {rota} = this.props;
+
+    const styles = {
+      textMargin:{
+        marginTop: '2em'
+      },
+      textBold:{
+        fontWeight: 'bold'
+      },
+      btn:{
+        fontSize: '14px',
+        fontWeight: 'bold',
+        width: '100%',
+        backgroundColor: '#6E4D8B',
+        borderColor: '#6E4D8B',
+        margin: '25px 0'
+      },
+      btnContainer: {
+        padding:  '0 10px',
+      },
+    };
 
     return(
       <div className="pageBase">
@@ -37,10 +60,41 @@ class AlterarRota extends Component{
           <form className="form-group">
             <center>
             <div style={{marginTop: '7em'}}>
-              <img style={{width: '2.7em', height: '3em', margin:'0'}} src={TrajetoIcon} alt={"Trajeto Logo"}/>
+              <img style={{width: '3.7em', height: '4em', margin:'0'}} src={TrajetoIcon} alt={"Trajeto Logo"}/>
             </div>
+            <div style={styles.textMargin}>
+              {rota.desc}
+            </div>
+            <div style={styles.textMargin}>ORIGEM:</div>
+            <div style={styles.textBold}>{rota.origem}</div>
+            <div style={styles.textMargin}>DESTINO:</div>
+            <div style={styles.textBold}>{rota.destino}</div>
 
+            <div style={{width: '30%'}}>
+              <input
+                type="button"
+                data-toggle="collapse"
+                data-target="#collapseExample"
+                aria-expanded="false"
+                aria-controls="collapseExample"
+                value="Pontos de Interesse"
+                className="btn btn-primary"
+                style={styles.btn}
+              />
+            </div>
+            <div class="collapse" id="collapseExample">
+              <select multiple class="form-control" id="exampleFormControlSelect2">
+              </select>
+            </div>
           </center>
+            <div  className="row">
+              <div className="col-6" style={styles.btnContainer}>
+                  <input type="button" value="ALTERAR" className="btn btn-primary" style={styles.btn}/>
+              </div>
+              <div className="col-6" style={styles.btnContainer}>
+              <input type="button" value="EXCLUIR" className="btn btn-primary" style={styles.btn}/>
+            </div>
+          </div>
           </form>
         </div>
       </div>
@@ -52,5 +106,6 @@ export default connect(store => {
   return {
     user: store.user.user,
     userData: store.user.userData,
+    rota: store.map.rota
   }
 })(AlterarRota)
