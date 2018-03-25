@@ -53,14 +53,13 @@ class Veiculos extends Component{
       return(
         <div className="pageBase">
           <div className="container">
-              {veiculos.map(veiculo =>
-                <div className="row" style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
+              {veiculos.map((veiculo, key) =>
+                <div className="row" key={key} style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
                   <button className="btn loginBtn" onClick={() => this.handleActivation(veiculo)} style={styles.carButton}>
                     <Veiculo
                       marca={veiculo.marca}
                       modelo={veiculo.modelo}
                       placa={veiculo.placa}
-                      key={veiculo.placa}
                     />
                   </button>
                 </div>
@@ -74,5 +73,5 @@ class Veiculos extends Component{
 
 
 export default connect(store => {
-  return
+  return {}
 })(Veiculos)
