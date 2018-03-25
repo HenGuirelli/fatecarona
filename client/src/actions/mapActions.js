@@ -7,11 +7,12 @@ export function renderMap() {
   }
 }
 
-export function storeRoute(route, user) {
+export function storeRoute(route, email, nomeRota) {
   return {
     type: "STORE_ROUTE",
     payload: axios.post(config.endpoint + '/routes', {
-      email: user.email,
+      email,
+      nomeRota,
       rota: {
         origin: route.request.origin.query,
         destination: route.request.destination.query,
