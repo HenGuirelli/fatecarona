@@ -50,7 +50,7 @@ router.route('/users')
     pool.getConnection(function(err, connection) {
       if (err) res.send(err);
 
-      connection.query('SELECT * FROM membro', function(err, rows, fields) {
+      connection.query('SELECT * FROM membros', function(err, rows, fields) {
         connection.release();
         if (err) res.send(err);
         res.json(rows);
@@ -61,7 +61,7 @@ router.route('/users')
     pool.getConnection(function(err, connection) {
       if(err) res.send(err);
 
-      connection.query('INSERT INTO membro SET ?', req.body, function(err, rows, fields) {
+      connection.query('INSERT INTO membros SET ?', req.body, function(err, rows, fields) {
         connection.release();
         if (err) res.send(err);
         res.json({ success: true });
@@ -74,7 +74,7 @@ router.route('/users/:user_email')
     pool.getConnection(function(err, connection) {
       if (err) res.send(err);
 
-      connection.query('SELECT * FROM membro where email = ?',[req.params.user_email], function(err, rows, fields) {
+      connection.query('SELECT * FROM membros where email = ?',[req.params.user_email], function(err, rows, fields) {
         connection.release();
         if (err) res.send(err);
         res.json(rows[0]);
@@ -85,7 +85,7 @@ router.route('/users/:user_email')
     pool.getConnection(function(err, connection) {
       if (err) res.send(err);
 
-      connection.query('DELETE FROM membro WHERE email = ?', [req.params.user_email], function(err, rows, fields) {
+      connection.query('DELETE FROM membros WHERE email = ?', [req.params.user_email], function(err, rows, fields) {
         connection.release();
         if (err) res.send(err);
         res.json({ message: 'Usuário ' + req.params.user_email + ' excluido.'});
@@ -96,7 +96,7 @@ router.route('/users/:user_email')
     pool.getConnection(function(err, connection) {
       if (err) res.send(err);
 
-      connection.query('UPDATE membro SET ? WHERE email = ?', [req.body, req.params.user_email], function(err, rows, fields) {
+      connection.query('UPDATE membros SET ? WHERE email = ?', [req.body, req.params.user_email], function(err, rows, fields) {
         connection.release();
         if (err) res.send(err);
         res.json(rows);
