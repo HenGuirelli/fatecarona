@@ -21,3 +21,10 @@ export function loadCar(email) {
     payload: axios.get(config.endpoint + "/cars/" + email)
   }
 }
+
+export function updateCar(placa, car) {
+  return {
+    type: "UPDATE_CAR",
+    payload: axios.put(config.endpoint + "/cars/ativar/" + placa, car)
+  }
+}

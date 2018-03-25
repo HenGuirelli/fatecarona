@@ -1,6 +1,6 @@
 export default function reducer(state={
     veiculo: {},
-    veiculos: []
+    veiculos: [],
   }, action) {
     switch (action.type) {
        case 'ATIVAR_VEICULO':{

@@ -17,7 +17,6 @@ class Veiculos extends Component{
 
   componentWillMount() {
     this.props.dispatch(loadCar(this.props.userData.email))
-  
   }
 
 
@@ -26,13 +25,14 @@ class Veiculos extends Component{
 
     const styles = {
       button: {
-        margin: '25px 0',
         borderRadius: '25px',
         backgroundColor: '#6E4D8B',
         borderColor: '#a8cf45',
         color: '#a8cf45',
         fontSize: '25px',
+        bottom: '3px'
       },
+
       carButton:{
         margin: '25px 0',
         borderRadius: '25px',
@@ -44,19 +44,26 @@ class Veiculos extends Component{
       return(
         <div className="pageBase">
           <div className="container">
-            {veiculos.map((veiculo, key) =>
+            {
+              veiculos.length > 0 ? veiculos.map((veiculo, key) =>
               <div className="row" key={key} style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
                 <button className="btn loginBtn" onClick={() => this.handleActivation(veiculo)} style={styles.carButton}>
                   <Veiculo
                     marca={veiculo.marca}
                     modelo={veiculo.modelo}
                     placa={veiculo.placa}
+                    ativo={veiculo.ativo}
                   />
                 </button>
               </div>
-            )}
-            <input type="button" onClick={this.handleSubmit} value="ADICIONAR" className="btn loginBtn btn-block" style={styles.button}/>
+              )
+              :
+              <div>
+                Não há veículo adicionado.
+              </div>
+            }
           </div>
+          <input type="button" onClick={this.handleSubmit} value="ADICIONAR" className="btn loginBtn btn-block" style={styles.button}/>
         </div>
       )
     }
