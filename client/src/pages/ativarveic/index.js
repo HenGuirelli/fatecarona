@@ -64,15 +64,6 @@ class AtivarVeic extends Component{
               </div>
             </div>
 
-            <div className="row">
-              <div className="col-6" style={{textAlign: 'right', marginTop:'5px'}}>
-                <div>LUGARES</div>
-              </div>
-              <div className="col-0">
-                <input type="number" min="1" max="6" placeholder="1" className="form-control" style={styles.inputNumber}/>
-              </div>
-            </div>
-
             <div className="row" style={styles.marginStyle}>
               <div className="col-6" style={{textAlign: 'right'}}>
                 <img src={ViagIcon} alt={"ViagensIcon"} color="#6E4D8B" style={{width: '3em', height: '2.7em', marginRight: '1.1em'}}/>
