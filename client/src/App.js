@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Route, withRouter } from 'react-router-dom'
 import './App.css'
 import NavBar from './components/NavBar'
-import GoogleMap from './components/GoogleMaps'
+import AdicionarRota from './pages/adicionarRota'
 import Rotas from './pages/rotas'
 import AlterarRota from './pages/alterarota'
 import Auth from './pages/form'
@@ -16,6 +16,7 @@ import Config from './pages/config'
 import Veiculos from './pages/veiculos'
 import AtivarVeic from './pages/ativarveic'
 import CadVeiculo from './pages/cadveiculos'
+import Recuperar from './pages/recuperar'
 import { connect } from 'react-redux'
 import { setFirebase, updateUser, unsetUser, insertUser, loadUser } from './actions/userActions'
 import * as firebase from 'firebase'
@@ -64,8 +65,10 @@ class App extends Component {
     if (pending) return null
 
     //if localStorage gets more data then this should be trated differently
-    if (!window.localStorage.key(0)) return <Auth history={history} alert={false}/>
-    if (!user.emailVerified) return <Verify firebase={firebase} logOut={this.logOut.bind(this)}/>
+    if (history.location.pathname !== '/recuperar'){
+      if (!window.localStorage.key(0)) return <Auth history={history} alert={false}/>
+      if (!user.emailVerified) return <Verify firebase={firebase} logOut={this.logOut.bind(this)}/>
+    }
 
     return (
       <div className="App">
@@ -73,6 +76,7 @@ class App extends Component {
         <Route exact path="/" component={MainPage}/>
         <Route exact path="/rotas" component={GoogleMap}/>
         <Route path="/rotas/alterar" component={AlterarRota}/>
+        <Route path="/rotas/adicionar" component={AdicionarRota}/>
         <Route path="/perfil" component={Perfil}/>
         <Route path="/caronas/historico" component={Caronas}/>
         <Route path="/caronas/request" component={Pedir}/>
@@ -80,6 +84,7 @@ class App extends Component {
         <Route exact path="/veiculos" component={Veiculos}/>
         <Route path="/veiculos/ativar" component={AtivarVeic}/>
         <Route path="/veiculos/cadastrar" component={CadVeiculo}/>
+        <Route path="/recuperar" component={Recuperar}/>
         <Route path="/config" render={() => <Config logOut={this.logOut.bind(this)}/>}/>
         <Route path="/test" render={() =>
           <div>
