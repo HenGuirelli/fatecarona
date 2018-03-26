@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import AvatarHeader from '../../components/AvatarHeader'
 import { connect } from 'react-redux'
 import { sendSubscription } from '../../actions/notificationActions.js'
-import CircBar from '../../components/CircBar'
 import Plate from '../../components/Plate'
 import Vagas from '../../components/Vagas'
 import Avaliador from '../../components/Avaliador'
+import { Link } from 'react-router-dom'
 
 class MainPage extends Component {
   checkSubscription = (email) => {
@@ -61,10 +61,11 @@ class MainPage extends Component {
         <div style={styles.content} className="container-fluid">
           <div className="row">
             <div className="col-12 col-xl-6">
-              <CircBar value={75}/>
-            </div>
-            <div className="col-12 col-xl-6">
-              <Avaliador />
+              <Avaliador 
+                text="AVALIAÇÃO COMO CARONISTA"
+                score={3.5}
+              />
+              <Link to="/avaliacoes">ver avaliações</Link>
             </div>
           </div>
           <div className="row">
