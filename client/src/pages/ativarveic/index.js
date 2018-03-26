@@ -161,13 +161,13 @@ class AtivarVeic extends Component{
             <div  className="row">
               <div className="col-6" style={styles.btnContainer}>
                 {veiculo.ativo === 1 ?
-                  <input type="button" onClick={() => this.handleDesativar(veiculo.placa)}  value="DESATIVAR" className="btn btn-primary" style={styles.btn}/>
+                  <input type="button" onClick={() => this.handleDesativar(veiculo.placa)}  value="Desativar" className="btn btn-primary" style={styles.btn}/>
                   :
-                  <input type="button" onClick={() => this.handleAtivar(veiculo.placa)} value="ATIVAR" className="btn btn-primary" style={styles.btn}/>
+                  <input type="button" onClick={() => this.handleAtivar(veiculo.placa)} value="Ativar" className="btn btn-primary" style={styles.btn}/>
                 }
               </div>
               <div className="col-6" style={styles.btnContainer}>
-                <input type="button" value="EXCLUIR" className="btn btn-primary" data-toggle="modal" data-target="#deleteModal" style={styles.btn}/>
+                <input type="button" value="Excluir" className="btn btn-primary" data-toggle="modal" data-target="#deleteModal" style={styles.btn}/>
               </div>
             </div>
           </center>

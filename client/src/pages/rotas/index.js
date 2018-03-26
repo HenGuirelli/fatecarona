@@ -26,6 +26,10 @@ class Rotas extends Component{
     this.props.history.push('/rotas/alterar')
   }
 
+  handleSubmit = () =>{
+    this.props.history.push('/rotas/adicionar')
+  }
+
   render(){
     const styles = {
       button: {
@@ -61,7 +65,7 @@ class Rotas extends Component{
                 </button>
               </div>
             )}
-            <input type="button" value="ADICIONAR" className="btn loginBtn btn-block" style={styles.button}/>
+            <input type="button" onClick={this.handleSubmit} value="Adicionar" className="btn loginBtn btn-block" style={styles.button}/>
         </div>
       </div>
     )

@@ -143,7 +143,7 @@ class CadVeiculos extends Component{
                   </select>
                 </center>
             </div>
-            <input type="button" value="ADICIONAR" onClick={this.handleSubmit} className="btn loginBtn form-control" style={styles.button}/>
+            <input type="button" value="Adicionar" onClick={this.handleSubmit} className="btn loginBtn form-control" style={styles.button}/>
           </form>
         </div>
       </div>

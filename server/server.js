@@ -227,7 +227,7 @@ router.route('/cars/action/:car_placa')
         connection.query('DELETE FROM veiculos WHERE placa = ?', [req.params.car_placa], function(err, rows, fields) {
           connection.release();
           if (err) res.send(err);
-          res.json({ message: 'Usuário ' + req.params.user_email + ' excluido.'});
+          res.json({ message: 'Veículo ' + req.params.user_email + ' excluido.'});
         });
       });
     });

@@ -104,8 +104,8 @@ class Perfil extends Component {
                     <TimePicker
                       format="24hr"
                       hintText=" "
-                      okLabel="CONFIRMAR"
-                      cancelLabel="CANCELAR"
+                      okLabel="Confirmar"
+                      cancelLabel="Cancelar"
                       value={this.state.chegada}
                       onChange={this.handleChegada}
                       className="timePicker"
@@ -119,8 +119,8 @@ class Perfil extends Component {
                     <TimePicker
                       format="24hr"
                       hintText=" "
-                      okLabel="CONFIRMAR"
-                      cancelLabel="CANCELAR"
+                      okLabel="Confirmar"
+                      cancelLabel="Cancelar"
                       value={this.state.saida}
                       onChange={this.handleSaida}
                       className="timePicker"
@@ -182,7 +182,7 @@ class Perfil extends Component {
               <option value="default">SIM, SOU UM MOTORISTA</option>
               <option>NÃO SOU UM MOTORISTA</option>
             </select>
-            <input type="submit" value="SALVAR" className="btn loginBtn form-control" style={styles.button}/>
+            <input type="submit" value="Salvar" className="btn loginBtn form-control" style={styles.button}/>
           </form>
         </div>
       </div>

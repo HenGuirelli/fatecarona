@@ -65,7 +65,7 @@ class Veiculos extends Component{
               </div>
             }
           </div>
-          <input type="button" onClick={this.handleSubmit} value="ADICIONAR" className="btn loginBtn btn-block" style={styles.button}/>
+          <input type="button" onClick={this.handleSubmit} value="Adicionar" className="btn loginBtn btn-block" style={styles.button}/>
         </div>
       )
     }

@@ -147,7 +147,7 @@ class Cadastro extends Component {
               <input
                 type="submit"
                 className="btn btn-primary btn-block loginBtn"
-                style={styles.button} value="CADASTRAR" />
+                style={styles.button} value="Cadastrar" />
             </form>
           </div>
       </div>

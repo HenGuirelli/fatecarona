@@ -133,7 +133,7 @@ class LoginForm extends Component {
               type="submit"
               className="btn btn-block loginBtn"
               style={styles.button}
-              value="ENTRAR"
+              value="Entrar"
             />
 
           </form>
@@ -152,7 +152,7 @@ class LoginForm extends Component {
                 type="button"
                 className="btn btn-block loginBtn"
                 style={styles.button}
-                value="CADASTRAR"
+                value="Cadastrar"
                 onClick={this.abrirCadastro}
               />
             </div>

@@ -89,10 +89,10 @@ class AlterarRota extends Component{
           </center>
             <div  className="row">
               <div className="col-6" style={styles.btnContainer}>
-                  <input type="button" value="ALTERAR" className="btn btn-primary" style={styles.btn}/>
+                  <input type="button" value="Alterar" className="btn btn-primary" style={styles.btn}/>
               </div>
               <div className="col-6" style={styles.btnContainer}>
-              <input type="button" value="EXCLUIR" className="btn btn-primary" style={styles.btn}/>
+              <input type="button" value="Excluir" className="btn btn-primary" style={styles.btn}/>
             </div>
           </div>
           </form>

@@ -30,8 +30,8 @@ export default class Config extends Component {
             Beta 1.0
           </div>
           <center style={{position: 'absolute', bottom: 0, width: '100%'}}>
-            <input type="button" style={styles.button1} className="btn" value="AJUDA/SUPORTE"/>
-            <input type="button" style={styles.button2} className="btn" value="LOGOFF" onClick={logOut}/>
+            <input type="button" style={styles.button1} className="btn" value="Ajuda/Suporte"/>
+            <input type="button" style={styles.button2} className="btn" value="Logoff" onClick={logOut}/>
           </center>
         </div>
       </div>

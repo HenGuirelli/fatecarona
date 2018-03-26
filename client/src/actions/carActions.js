@@ -35,10 +35,3 @@ export function deleteCar(placa) {
     payload: axios.delete(config.endpoint + "/cars/action/" + placa)
   }
 }
-
-export function deleteCar(placa, car){
-  return {
-    type: "DELETE_CAR",
-    payload: axios.put(config.endpoint + "/cars/ativar/" + placa, car)
-  }
-}
