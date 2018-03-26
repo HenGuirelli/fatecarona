@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import logo from './login_fatecarona.svg'
-import Cadastro from '../cadastro'
-import Recuperar from '../recuperar'
 import { connect } from 'react-redux'
 import { logIn } from '../../actions/userActions'
 import Dialog from 'material-ui/Dialog'
@@ -12,8 +10,6 @@ class LoginForm extends Component {
     this.state = {
       email: '',
       password: '',
-      isCadOpen: false,
-      isRecOpen: false,
       dialog: false,
       msg: ''
     }
@@ -28,11 +24,11 @@ class LoginForm extends Component {
   };
 
   abrirCadastro = () => {
-    this.setState({isCadOpen: true})
+    this.props.history.push('/cadastro')
   };
 
   abrirRecuperar = () => {
-    this.setState({isRecOpen: true})
+    this.props.history.push('/recuperarsenha')
   };
 
   displayDialog = (msg) => {
@@ -95,9 +91,6 @@ class LoginForm extends Component {
         overflow: 'hidden'
       }
     }
-
-    if (this.state.isCadOpen) return <Cadastro />
-    if (this.state.isRecOpen) return <Recuperar />
 
     //const { initState, firebase, user } = this.props
     return (

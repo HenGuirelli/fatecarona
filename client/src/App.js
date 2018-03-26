@@ -17,6 +17,7 @@ import Veiculos from './pages/veiculos'
 import AtivarVeic from './pages/ativarveic'
 import CadVeiculo from './pages/cadveiculos'
 import Recuperar from './pages/recuperar'
+import Cadastro from './pages/cadastro'
 import { connect } from 'react-redux'
 import { setFirebase, updateUser, unsetUser, insertUser, loadUser } from './actions/userActions'
 import * as firebase from 'firebase'
@@ -64,15 +65,18 @@ class App extends Component {
 
     if (pending) return null
 
+    let isLogged = false
     //if localStorage gets more data then this should be trated differently
-    if (history.location.pathname !== '/recuperar'){
+
+    if (history.location.pathname !== '/recuperarsenha' && history.location.pathname !== '/cadastro'){
       if (!window.localStorage.key(0)) return <Auth history={history} alert={false}/>
       if (!user.emailVerified) return <Verify firebase={firebase} logOut={this.logOut.bind(this)}/>
+      isLogged = true;
     }
 
     return (
       <div className="App">
-        <NavBar logOut={this.logOut.bind(this)} menuItems={menuItems}/>
+        {isLogged ? <NavBar logOut={this.logOut.bind(this)} menuItems={menuItems}/> : null}
         <Route exact path="/" component={MainPage}/>
         <Route exact path="/rotas" component={Rotas}/>
         <Route path="/rotas/alterar" component={AlterarRota}/>
@@ -84,7 +88,8 @@ class App extends Component {
         <Route exact path="/veiculos" component={Veiculos}/>
         <Route path="/veiculos/ativar" component={AtivarVeic}/>
         <Route path="/veiculos/cadastrar" component={CadVeiculo}/>
-        <Route path="/recuperar" component={Recuperar}/>
+        <Route path="/recuperarsenha" component={Recuperar}/>
+        <Route path="/cadastro" component={Cadastro}/>
         <Route path="/config" render={() => <Config logOut={this.logOut.bind(this)}/>}/>
         <Route path="/test" render={() =>
           <div>

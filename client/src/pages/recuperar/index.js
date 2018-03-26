@@ -59,6 +59,7 @@ class Recuperar extends Component {
       root: {
         paddingTop: '5em',
         backgroundColor: '#6E4D8B',
+        marginTop: '-59px',
         marginBottom: '-5000px',
         paddingBottom: '5000px',
         overflow: 'hidden'

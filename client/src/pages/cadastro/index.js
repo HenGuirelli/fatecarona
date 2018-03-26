@@ -89,13 +89,17 @@ class Cadastro extends Component {
       },
       root: {
         paddingTop: '5em',
+        marginTop: '-58px',
         backgroundColor: '#6E4D8B',
+        marginBottom: '-5000px',
+        paddingBottom: '5000px',
+        overflow: 'hidden'
       }
     }
 
     //const { firebase } = this.props
     return (
-      <div style={styles.root} className="pageBase">
+      <div style={styles.root}>
           <Dialog
             title="Erro:"
             actions={null}

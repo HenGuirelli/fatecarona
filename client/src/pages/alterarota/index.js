@@ -82,8 +82,8 @@ class AlterarRota extends Component{
                 style={styles.btn}
               />
             </div>
-            <div class="collapse" id="collapseExample">
-              <select multiple class="form-control" id="exampleFormControlSelect2">
+            <div className="collapse" id="collapseExample">
+              <select multiple className="form-control" id="exampleFormControlSelect2">
               </select>
             </div>
           </center>
