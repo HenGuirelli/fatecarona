@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Route, withRouter } from 'react-router-dom'
 import './App.css'
 import NavBar from './components/NavBar'
-import GoogleMap from './components/GoogleMaps'
+import AdicionarRota from './pages/adicionarRota'
 import Auth from './pages/form'
 import MainPage from './pages/main'
 import Verify from './pages/verify'
@@ -69,7 +69,7 @@ class App extends Component {
       <div className="App">
         <NavBar logOut={this.logOut.bind(this)} menuItems={menuItems}/>
         <Route exact path="/" component={MainPage}/>
-        <Route path="/rotas" component={GoogleMap}/>
+        <Route path="/rotas" component={AdicionarRota}/>
         <Route path="/perfil" component={Perfil}/>
         <Route path="/caronas/historico" component={Caronas}/>
         <Route path="/caronas/request" component={Pedir}/>
