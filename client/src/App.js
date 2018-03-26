@@ -74,7 +74,7 @@ class App extends Component {
       <div className="App">
         <NavBar logOut={this.logOut.bind(this)} menuItems={menuItems}/>
         <Route exact path="/" component={MainPage}/>
-        <Route exact path="/rotas" component={Rotas}/>
+        <Route exact path="/rotas" component={GoogleMap}/>
         <Route path="/rotas/alterar" component={AlterarRota}/>
         <Route path="/perfil" component={Perfil}/>
         <Route path="/caronas/historico" component={Caronas}/>

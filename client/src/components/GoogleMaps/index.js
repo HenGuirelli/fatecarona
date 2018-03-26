@@ -6,7 +6,7 @@ class GoogleMap extends Component {
   constructor(props) {
     super(props);
     this.state = {waypoints: [], route: {}};
-  } 
+  }
 
   componentWillMount() {
     if (document.cookie) {
@@ -24,8 +24,7 @@ class GoogleMap extends Component {
 
   bindAutoComplete(element) {
     new window.google.maps.places.Autocomplete(
-    /** @type {!HTMLInputElement} */(element),
-    {types: ['geocode']});
+    /** @type {!HTMLInputElement} */(element));
   }
 
   addWaypoint = () => {
@@ -151,7 +150,7 @@ class GoogleMap extends Component {
                 <input
                   type="button"
                   style={{color: '#FFF'}}
-                  className="btn btn-primary btn-block" 
+                  className="btn btn-primary btn-block"
                   onClick={() => this.addWaypoint(waypoints)}
                   value="Adicionar ponto"
                 />
@@ -174,10 +173,10 @@ class GoogleMap extends Component {
               ref="nomeRota"
             />
           </div>
-          <input 
-            type="button" 
-            style={styles.button} 
-            className="btn btn-primary btn-block" 
+          <input
+            type="button"
+            style={styles.button}
+            className="btn btn-primary btn-block"
             value="FINALIZAR"
             onClick={this.storeRoute}
           />
