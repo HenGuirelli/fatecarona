@@ -27,6 +27,7 @@ create table veiculos(
   marca varchar(20),
   modelo varchar(20),
   qtdViagens tinyint unsigned default 0,
+  cor varchar(25),
   foreign key (email) references membros(email)
 );
 
@@ -61,7 +62,11 @@ create table membros_carona (
   foreign key (id) references caronas (id)
 );
 
-insert into veiculos (placa, email, ativo, marca, modelo) values ('AAA-1111', 'alexandre.santos67', 1, 'Mercedes', 'SLK');
+insert into veiculos (placa, email, ativo, marca, modelo, cor) values
+  ('AAA-1111', 'alexandre.santos67', 1, 'Mercedes', 'SLK', 'preto'),
+  ('BBB-2222', 'alexandre.santos67', 1, 'Fiat', 'Palio', 'vermelho'),
+  ('CCC-3333', 'alexandre.santos67', 1, 'Fiat', 'Siena', 'branco');
+
 
 insert into caronas (dataCarona, rota, emailMotorista, kilometragem, veiculo, qtdVagas, musica)
   values (NOW(), 1, 'thiago.ramos9', 12.5, 1, 3, 1);

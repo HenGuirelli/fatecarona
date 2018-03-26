@@ -7,6 +7,13 @@ export function renderMap() {
   }
 }
 
+export function alteraRota(rota) {
+  return{
+    type: "ALTERAR_ROTA",
+    payload: rota
+  }
+}
+
 export function storeRoute(route, email, nomeRota) {
   return {
     type: "STORE_ROUTE",

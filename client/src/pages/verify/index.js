@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Modal from '../../components/Modal'
 
 export default class Verify extends Component {
-  
+
   sendValidationEmail = () => {
     const showModal = this.showModal
     this.props.firebase.auth().currentUser.sendEmailVerification().then(function() {
@@ -40,10 +40,10 @@ export default class Verify extends Component {
         <Modal title={"Verificação de E-Mail"} callBack={this.storeFunc} logOut={this.props.logOut}/>
         <div className="container" style={styles.root}>
           <h1>Email não verificado!</h1>
-          <input 
-            type="button" 
-            className="btn btn-block loginBtn" 
-            value="ENVIAR E-MAIL DE VERIFICAÇÃO"
+          <input
+            type="button"
+            className="btn btn-block loginBtn"
+            value="Enviar E-mail de Verificação"
             style={styles.button}
             onClick={this.sendValidationEmail}
           />

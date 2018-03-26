@@ -7,7 +7,7 @@ class AdicionarRota extends Component {
   constructor(props) {
     super(props);
     this.state = {waypoints: [], route: {}};
-  } 
+  }
 
   componentWillMount() {
     if (document.cookie) {
@@ -69,8 +69,14 @@ class AdicionarRota extends Component {
   render () {
     const styles = {
       button: {
-        color: '#fff',
-        margin: '1em 0',
+        margin: '25px 0',
+        borderRadius: '8px',
+        backgroundColor: '#6E4D8B',
+        borderColor: '#ffffff',
+        color: '#ffffff',
+        fontSize: '20px',
+        width: '70%',
+        marginLeft: '15%'
       },
       buttonLittle: {
         borderRadius: '8px',
@@ -110,13 +116,8 @@ class AdicionarRota extends Component {
               <div className="input-group-append">
                 <input
                   type="button"
-<<<<<<< Updated upstream
-                  style={{color: '#FFF'}}
-                  className="btn btn-primary btn-block" 
-=======
                   style={styles.buttonLittle}
                   className="btn btn-primary btn-block"
->>>>>>> Stashed changes
                   onClick={() => this.addWaypoint(waypoints)}
                   value="Adicionar ponto"
                 />
@@ -126,15 +127,15 @@ class AdicionarRota extends Component {
           <div className="form-group">
 
             <select multiple id="waypoints" className="form-control">
-              {waypoints.map((waypt, key) => 
+              {waypoints.map((waypt, key) =>
                   <option value={waypt} key={key} defaultValue="selected">{waypt}</option>
                 )}
             </select>
-            <input 
-              type="button" 
-              style={styles.button} 
-              className="btn btn-primary btn-block" 
-              onClick={this.getSelected} 
+            <input
+              type="button"
+              style={styles.button}
+              className="btn btn-primary btn-block"
+              onClick={this.getSelected}
               value="Carregar Rota"
             />
           </div>
@@ -148,11 +149,11 @@ class AdicionarRota extends Component {
               ref="nomeRota"
             />
           </div>
-          <input 
-            type="button" 
-            style={styles.button} 
-            className="btn btn-primary btn-block" 
-            value="FINALIZAR"
+          <input
+            type="button"
+            style={styles.button}
+            className="btn btn-primary btn-block"
+            value="Finalizar"
             onClick={this.storeRoute}
           />
         </div>

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import CarIcon  from '../../components/Veiculo/veiculo.png'
 import ViagIcon from '../../components/Veiculo/viagensfeitas.png'
 import KmIcon from '../../components/Veiculo/kmviagens.png'
-import { updateCar } from '../../actions/carActions'
+import { updateCar, deleteCar } from '../../actions/carActions'
 import Dialog from 'material-ui/Dialog'
 
 
@@ -13,7 +13,8 @@ class AtivarVeic extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      ativo: 0
+      ativo: 0,
+      dialog: false
     };
   }
 
@@ -42,6 +43,10 @@ class AtivarVeic extends Component{
       ativo: 0
     }))
     this.displayDialog('O veículo foi desativado!')
+  }
+
+  handleDelete = (placa) => {
+    this.props.dispatch(deleteCar(placa))
   }
 
   displayDialog(msg) {
@@ -92,6 +97,28 @@ class AtivarVeic extends Component{
         >
         {this.state.msg}
         </Dialog>
+
+        <div className="modal fade" id="deleteModal" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">Excluir</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                Tem certeza de que deseja excluir o veículo e todos os dados acumulados ?
+              </div>
+              <div className="modal-footer">
+                <input type="button" value="Sim" className="btn btn-primary"  style={styles.btn} onClick={() => this.handleDelete(veiculo.placa)}/>
+                <input type="button" value="Não" className="btn btn-primary" data-dismiss="modal" style={styles.btn}/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
         <div className="container">
           <form className="form-group">
             <center>
@@ -134,13 +161,13 @@ class AtivarVeic extends Component{
             <div  className="row">
               <div className="col-6" style={styles.btnContainer}>
                 {veiculo.ativo === 1 ?
-                  <input type="button" onClick={() => this.handleDesativar(veiculo.placa)}  value="DESATIVAR" className="btn btn-primary" style={styles.btn}/>
+                  <input type="button" onClick={() => this.handleDesativar(veiculo.placa)}  value="Desativar" className="btn btn-primary" style={styles.btn}/>
                   :
-                  <input type="button" onClick={() => this.handleAtivar(veiculo.placa)} value="ATIVAR" className="btn btn-primary" style={styles.btn}/>
+                  <input type="button" onClick={() => this.handleAtivar(veiculo.placa)} value="Ativar" className="btn btn-primary" style={styles.btn}/>
                 }
               </div>
               <div className="col-6" style={styles.btnContainer}>
-                <input type="button" value="EXCLUIR" className="btn btn-primary" style={styles.btn}/>
+                <input type="button" value="Excluir" className="btn btn-primary" data-toggle="modal" data-target="#deleteModal" style={styles.btn}/>
               </div>
             </div>
           </center>

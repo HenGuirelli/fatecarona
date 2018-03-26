@@ -12,6 +12,7 @@ class CadVeiculos extends Component{
       marca: '',
       modelo: '',
       dialog: false,
+      cor: ''
     };
   }
 
@@ -24,6 +25,9 @@ class CadVeiculos extends Component{
   handleModelo = (event) => {
     this.setState({modelo: event.target.value})
   }
+  handleCor = (event) => {
+    this.setState({cor: event.target.value})
+  }
 
   handleSubmit = () => {
     if (this.props.veiculos.length === 5){
@@ -35,7 +39,8 @@ class CadVeiculos extends Component{
         email: this.props.userData.email ,
         placa: this.state.placa,
         marca: this.state.marca,
-        modelo: this.state.modelo
+        modelo: this.state.modelo,
+        cor: this.state.cor
       }))
       this.displayDialog("Veículo adicionado!")
   }
@@ -127,7 +132,18 @@ class CadVeiculos extends Component{
                   </select>
                 </center>
             </div>
-            <input type="button" value="ADICIONAR" onClick={this.handleSubmit} className="btn loginBtn form-control" style={styles.button}/>
+            <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
+              <center>
+                <div className="col-6">COR</div>
+                  <select className="form-control" style={styles.inputOption} defaultValue="default" value={this.state.cor} onChange={this.handleCor}>
+                    <option value="default">Selecione...</option>
+                    <option>BRANCO</option>
+                    <option>PRETO</option>
+                    <option>VERMELHO</option>
+                  </select>
+                </center>
+            </div>
+            <input type="button" value="Adicionar" onClick={this.handleSubmit} className="btn loginBtn form-control" style={styles.button}/>
           </form>
         </div>
       </div>

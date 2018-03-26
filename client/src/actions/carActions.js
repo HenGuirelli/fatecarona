@@ -25,6 +25,13 @@ export function loadCar(email) {
 export function updateCar(placa, car) {
   return {
     type: "UPDATE_CAR",
-    payload: axios.put(config.endpoint + "/cars/ativar/" + placa, car)
+    payload: axios.put(config.endpoint + "/cars/action/" + placa, car)
+  }
+}
+
+export function deleteCar(placa) {
+  return {
+    type: "DELETE_CAR",
+    payload: axios.delete(config.endpoint + "/cars/action/" + placa)
   }
 }

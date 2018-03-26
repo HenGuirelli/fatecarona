@@ -4,18 +4,22 @@ export default function reducer(state={
     dirServ: {},
     dirDisp: {},
     error: null,
+    rota: {},
   }, action) {
     switch (action.type) {
       case 'MAP_RENDER': {
         var bundle = setMap()
         return {
-          ...state, 
-          unRendered: false, 
+          ...state,
+          unRendered: false,
           map: bundle.map,
           dirServ: bundle.dirServ,
           dirDisp: bundle.dirDisp,
         }
-      } 
+      }
+      case 'ALTERAR_ROTA':{
+        return{...state, rota: action.payload}
+      }
       default: {
         return state
       }
@@ -25,10 +29,10 @@ export default function reducer(state={
 function setMap() {
   var map = new window.google.maps.Map(document.querySelector('.Map'), {
     center: {
-      lat: -23.6234, 
+      lat: -23.6234,
       lng: -46.5552
     },
-    zoom: 10 
+    zoom: 10
   })
   var dirServ = new window.google.maps.DirectionsService();
   var dirDisp = new window.google.maps.DirectionsRenderer({

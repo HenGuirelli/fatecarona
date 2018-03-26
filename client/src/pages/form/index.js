@@ -1,9 +1,5 @@
 import React, { Component } from 'react'
 import logo from './login_fatecarona.svg'
-<<<<<<< Updated upstream
-import Cadastro from '../cadastro'
-=======
->>>>>>> Stashed changes
 import { connect } from 'react-redux'
 import { logIn } from '../../actions/userActions'
 import Dialog from 'material-ui/Dialog'
@@ -14,10 +10,6 @@ class LoginForm extends Component {
     this.state = {
       email: '',
       password: '',
-<<<<<<< Updated upstream
-      isCadOpen: false,
-=======
->>>>>>> Stashed changes
       dialog: false,
       msg: ''
     }
@@ -35,13 +27,10 @@ class LoginForm extends Component {
     this.props.history.push('/cadastro')
   };
 
-<<<<<<< Updated upstream
-=======
   abrirRecuperar = () => {
     this.props.history.push('/recuperarsenha')
   };
 
->>>>>>> Stashed changes
   displayDialog = (msg) => {
     this.setState({dialog: true, msg})
   }
@@ -74,12 +63,21 @@ class LoginForm extends Component {
   render() {
     const styles = {
       button: {
-        margin: '25px 0',
+        margin: '5px 0',
         borderRadius: '25px',
         backgroundColor: 'transparent',
         borderColor: '#a8cf45',
         color: '#a8cf45',
         fontSize: '25px',
+      },
+      buttonRecuperar: {
+        margin: '5px 0',
+        borderRadius: '25px',
+        backgroundColor: 'transparent',
+        borderColor: '#a8cf45',
+        color: '#a8cf45',
+        fontSize: '25px',
+
       },
       inputText: {
         margin: '25px 0',
@@ -94,11 +92,6 @@ class LoginForm extends Component {
       }
     }
 
-<<<<<<< Updated upstream
-    if (this.state.isCadOpen) return <Cadastro />
-
-=======
->>>>>>> Stashed changes
     //const { initState, firebase, user } = this.props
     return (
       <div style={styles.root}>
@@ -133,16 +126,30 @@ class LoginForm extends Component {
               type="submit"
               className="btn btn-block loginBtn"
               style={styles.button}
-              value="ENTRAR"
+              value="Entrar"
             />
-            <input
-              type="button"
-              className="btn btn-block loginBtn"
-              style={styles.button}
-              value="CADASTRAR"
-              onClick={this.abrirCadastro}
-            />
+
           </form>
+          <div className="row">
+            <div className="col-4">
+              <input
+                type="button"
+                className="btn btn-block loginBtn"
+                style={styles.buttonRecuperar}
+                value="?"
+                onClick={this.abrirRecuperar}
+              />
+            </div>
+            <div className="col-8">
+              <input
+                type="button"
+                className="btn btn-block loginBtn"
+                style={styles.button}
+                value="Cadastrar"
+                onClick={this.abrirCadastro}
+              />
+            </div>
+          </div>
         </div>
       </div>
     );
