@@ -72,7 +72,13 @@ class AdicionarRota extends Component {
         color: '#fff',
         margin: '1em 0',
       },
-
+      buttonLittle: {
+        borderRadius: '8px',
+        backgroundColor: '#6E4D8B',
+        borderColor: '#ffffff',
+        color: '#ffffff',
+        fontSize: '16px'
+      },
     }
 
     const { waypoints } = this.state
@@ -104,8 +110,13 @@ class AdicionarRota extends Component {
               <div className="input-group-append">
                 <input
                   type="button"
+<<<<<<< Updated upstream
                   style={{color: '#FFF'}}
                   className="btn btn-primary btn-block" 
+=======
+                  style={styles.buttonLittle}
+                  className="btn btn-primary btn-block"
+>>>>>>> Stashed changes
                   onClick={() => this.addWaypoint(waypoints)}
                   value="Adicionar ponto"
                 />
