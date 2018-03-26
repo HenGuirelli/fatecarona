@@ -192,7 +192,10 @@ router.route('/images/:file_name')
 router.route('/cars/:user_email')
   .get(function(req, res) {
     pool.getConnection(function(err, connection) {
-      if (err) res.send(err);
+      if (err) {
+        res.send(err);
+        return;
+      }
 
       connection.query('SELECT * FROM veiculos where email = ?',[req.params.user_email], function(err, rows, fields) {
         connection.release();
@@ -210,16 +213,21 @@ router.route('/cars/action/:car_placa')
 
   .put(function(req, res) {
     pool.getConnection(function(err, connection) {
-      if (err) res.send(err);
+      if (err) {
+        res.send(err);
+        return;
+      };
 
       connection.query('UPDATE veiculos SET ? WHERE placa = ?', [req.body, req.params.car_placa], function(err, rows, fields) {
         connection.release();
-        if (err) res.send(err);
-        res.json(rows);
+        if (err) {
+          res.send(err);
+          return;
+        }
+        res.json(rows);    
       });
     });
   })
-
   .delete(function(req, res) {
       pool.getConnection(function(err, connection) {
         if (err) res.send(err);
@@ -235,11 +243,17 @@ router.route('/cars/action/:car_placa')
 router.route('/cars')
   .post(function(req, res) {
     pool.getConnection(function(err, connection) {
-      if(err) res.send(err);
+      if(err) {
+        res.send(err);
+        return;
+      }
 
       connection.query('INSERT INTO veiculos SET ?', req.body, function(err, rows, fields) {
         connection.release();
-        if (err) res.send(err);
+        if (err) {
+          res.send(err);
+          return;
+        };
         res.json({ success: true });
       });
     });
@@ -247,13 +261,9 @@ router.route('/cars')
 
 //notificações
 
-var subscriptions = [];
-
 router.route('/subs')
   .post(function(req, res) {
-    var body = req.body;
-    subscriptions.push({email: body.email, subscription: body.subscription});
-    notify(subscriptions.find(sub => sub.email === body.email).subscription, 'it worked!');
+    notify(req.body.subscription, 'Notificação enviada para: ' + req.body.email);
     res.send({subscribed: true});
   });
 
