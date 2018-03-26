@@ -4,7 +4,7 @@ import Avatar from 'material-ui/Avatar'
 import config from '../../config.json'
 import TimePicker from 'material-ui/TimePicker'
 import styles from './styles'
-import { updateUserData, setUserData } from '../../actions/userActions'
+import { updateUserData } from '../../actions/userActions'
 
 class Perfil extends Component {
   constructor(props) {
@@ -65,7 +65,7 @@ class Perfil extends Component {
   }
 
   render() {
-    const { updating, needReload, error } = this.props
+    const { updating, needReload } = this.props
     if (updating) return <div>Loading...</div>
     else if (needReload) return <div>Informações atualizadas!</div>
     return (

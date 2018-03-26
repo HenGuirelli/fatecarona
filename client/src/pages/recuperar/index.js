@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import logo from '../../pages/form/login_fatecarona.svg'
 import Dialog from 'material-ui/Dialog'
 
 class Recuperar extends Component {
@@ -49,6 +50,12 @@ class Recuperar extends Component {
         margin: '25px 0',
         borderRadius: '25px',
       },
+      text: {
+        margin: '25px 0',
+        marginLeft: '35%',
+        color:'#a8cf45',
+        fontWeight: 'normal'
+      },
       root: {
         paddingTop: '5em',
         backgroundColor: '#6E4D8B',
@@ -72,6 +79,8 @@ class Recuperar extends Component {
         {this.state.msg}
         </Dialog>
 
+        <img src={logo} alt="" className="img-fluid mx-auto d-block"/>
+        <h6 style={styles.text}>Esqueci a senha</h6>
         <div className="container">
           <form onSubmit={this.handleSubmit} className="form-group">
               <input

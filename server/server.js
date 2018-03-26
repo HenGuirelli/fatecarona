@@ -48,22 +48,34 @@ router.use(function(req, res, next) {
 router.route('/users')
   .get(function(req, res) {
     pool.getConnection(function(err, connection) {
-      if (err) res.send(err);
+      if (err) {
+        res.send(err);
+        return;
+      }
 
       connection.query('SELECT * FROM membros', function(err, rows, fields) {
         connection.release();
-        if (err) res.send(err);
+        if (err) {
+          res.send(err);
+          return;
+        }
         res.json(rows);
       });
     });
   })
   .post(function(req, res) {
     pool.getConnection(function(err, connection) {
-      if(err) res.send(err);
+      if(err) {
+        res.send(err);
+        return;
+      }
 
       connection.query('INSERT INTO membros SET ?', req.body, function(err, rows, fields) {
         connection.release();
-        if (err) res.send(err);
+        if (err) {
+          res.send(err);
+          return;
+        }
         res.json({ success: true });
       });
     });
@@ -72,25 +84,38 @@ router.route('/users')
 router.route('/users/:user_email')
   .get(function(req, res) {
     pool.getConnection(function(err, connection) {
-      if (err) res.send(err);
+      if (err) {
+        res.send(err);
+        return;
+      }
 
       connection.query('SELECT * FROM membros where email = ?',[req.params.user_email], function(err, rows, fields) {
         connection.release();
-        if (err) res.send(err);
+        if (err) {
+          res.send(err);
+          return;
+        }
         res.json(rows[0]);
       });
     });
   })
   .delete(function(req, res) {
     pool.getConnection(function(err, connection) {
-      if (err) res.send(err);
+      if (err) {
+        res.send(err);
+        return;
+      }
 
       connection.query('DELETE FROM membros WHERE email = ?', [req.params.user_email], function(err, rows, fields) {
         connection.release();
-        if (err) res.send(err);
+        if (err) {
+          res.send(err);
+          return;
+        }
         res.json({ message: 'Usuário ' + req.params.user_email + ' excluido.'});
       });
     });
+
 
   })
   .put(function(req, res) {
@@ -104,22 +129,43 @@ router.route('/users/:user_email')
       });
     });
 
+
+  })
+  .put(function(req, res) {
+    pool.getConnection(function(err, connection) {
+      if (err) {
+        res.send(err);
+        return;
+      }
+
+      connection.query('UPDATE membros SET ? WHERE email = ?', [req.body, req.params.user_email], function(err, rows, fields) {
+        connection.release();
+        if (err) {
+          res.send(err);
+          return;
+        }
+        res.json(rows);
+      });
+    });
+
   });
 
 //Manipulação de rotas
 
-router.route('/routes/:user_email')
+router.route('/routes')
   .post(function(req, res) {
-    //mongoExecute(insert, [req.body], 'rotas', response => res.send({success: true}));
-  })
+    mongoExecute(insert, [req.body], 'rotas', response => res.send({success: true}));
+  });
+router.route('/routes/:user_email')
   .get(function(req, res) {
-  	//mongoExecute(find, { email: req.params[0] }, 'rotas', response => res.json(response));
-  })
+  	mongoExecute(find, { email: req.params.user_email }, 'rotas', response => res.json(response));
+  });
+router.route('/routes/route/:id_rota')
   .put(function(req, res) {
-  	//mongoExecute(find, { email: req.params[0] }, 'rotas', response => res.json(response));
+  	mongoExecute(update, [{ id: req.params.id_rota }, req.body], 'rotas', response => res.json(response));
   })
   .delete(function(req, res) {
-  	//mongoExecute(find, { email: req.params[0] }, 'rotas', response => res.json(response));
+  	mongoExecute(deleteOne, { id: req.params.id_rota }, 'rotas', response => res.json(response));
   });
 
 //Manipulação de imagens
@@ -130,9 +176,10 @@ router.route('/images')
       if (err){
         console.log(JSON.stringify(err));
         res.status(400).send('fail saving image');
-      } else {
-        res.send(res.req.file.filename);
+        return
       }
+
+      res.send(res.req.file.filename);
     });
   });
 

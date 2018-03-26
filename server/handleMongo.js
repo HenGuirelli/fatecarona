@@ -1,5 +1,6 @@
 const config = require('./config.json').mongodb;
 var MongoClient = require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectId; 
 var assert = require('assert');
 
 exports.mongoExecute = (f, obj, col, callback) => {
@@ -28,7 +29,7 @@ find = (db, obj, col, callback) => {
 
 deleteOne = (db, obj, col, callback) => {
   var collection = db.collection(col);
-  collection.deleteOne(obj, (err, result) => {
+  collection.deleteOne({_id: new ObjectId(obj.id)}, (err, result) => {
     assert.equal(err, null);
     assert.equal(1, result.result.n);
     callback(result);
@@ -37,7 +38,7 @@ deleteOne = (db, obj, col, callback) => {
 
 update = (db, obj, col, callback) => {
   let collection = db.collection(col);
-  collection.updateOne(obj[0], { $set: obj[1] }, (err, result) => {
+  collection.updateOne({_id: new ObjectId(obj[0].id)}, { $set: obj[1] }, (err, result) => {
     assert.equal(null, err);
     assert.equal(1, result.result.n);
     callback(result);
