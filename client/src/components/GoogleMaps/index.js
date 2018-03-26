@@ -35,7 +35,7 @@ export default class Map extends Component {
       travelMode: 'DRIVING'
     }, (response, status) => {
       if (status === 'OK') {
-        this.dirDisp.setDirections(response);
+        this.dirDisp.setDirections(response)
         this.renderCircles(response.routes[0].overview_path);
         this.props.routeState(response);
       } else {

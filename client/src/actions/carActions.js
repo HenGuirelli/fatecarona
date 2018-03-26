@@ -28,3 +28,10 @@ export function updateCar(placa, car) {
     payload: axios.put(config.endpoint + "/cars/ativar/" + placa, car)
   }
 }
+
+export function deleteCar(placa, car){
+  return {
+    type: "DELETE_CAR",
+    payload: axios.put(config.endpoint + "/cars/ativar/" + placa, car)
+  }
+}
