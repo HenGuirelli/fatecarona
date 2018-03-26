@@ -25,12 +25,14 @@ class Veiculos extends Component{
 
     const styles = {
       button: {
-        borderRadius: '25px',
+        margin: '25px 0',
+        borderRadius: '8px',
         backgroundColor: '#6E4D8B',
-        borderColor: '#a8cf45',
-        color: '#a8cf45',
-        fontSize: '25px',
-        bottom: '3px'
+        borderColor: '#ffffff',
+        color: '#ffffff',
+        fontSize: '20px',
+        width: '70%',
+        marginLeft: '15%'
       },
 
       carButton:{
