@@ -131,16 +131,57 @@ class Perfil extends Component {
                 </div>
               </div>
             </div>
-            <div style={{padding: '2em 0'}}>
-              NÚMERO DE TELEFONE
-              <input
-                type="number"
-                style={styles.inputText}
-                value={this.state.telefone}
-                onChange={this.handlePhone}
-                className="form-control textInput"
-              />
+            <div className="container">
+              <div style={{padding: '2em 0', borderBottom: '2px solid grey'}}>
+                GERALMENTE DE...
+                <div className="row">
+                  <div className="col-6">
+                    <input
+                      type="number"
+                      style={styles.inputTextCaminho}
+                      value={this.state.telefone}
+                      onChange={this.handlePhone}
+                      className="form-control textInput"
+                    />
+
+                  </div>
+                  <div className="col-6">
+                    <input
+                      type="number"
+                      style={styles.inputTextCaminho}
+                      value={this.state.telefone}
+                      onChange={this.handlePhone}
+                      className="form-control textInput"
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-6">
+                    <input
+                      type="number"
+                      style={styles.inputTextCaminho}
+                      value={this.state.telefone}
+                      onChange={this.handlePhone}
+                      className="form-control textInput"
+                    />
+                  </div>
+                  <div className="col-6">
+                    <input
+                      type="number"
+                      style={styles.inputTextCaminho}
+                      value={this.state.telefone}
+                      onChange={this.handlePhone}
+                      className="form-control textInput"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
+            <div style={styles.title}>PERFIL DE MOTORISTA</div>
+            <select className="form-control" defaultValue="default">
+              <option value="default">SIM, SOU UM MOTORISTA</option>
+              <option>NÃO SOU UM MOTORISTA</option>
+            </select>
             <input type="submit" value="SALVAR" className="btn loginBtn form-control" style={styles.button}/>
           </form>
         </div>

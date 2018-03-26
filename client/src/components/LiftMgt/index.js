@@ -27,7 +27,7 @@ export default class Lift extends Component {
             <input type="button" style={styles.btn} className="btn btn-primary" value="GERENCIAR" />
           </div>
           <div className="col-6" style={styles.btnContainer}>
-            <input type="button" style={styles.btn} className="btn btn-primary" value="ESPIAR MOTORISTA" />
+            <input type="button" style={styles.btn2} className="btn btn-primary" value="ESPIAR MOTORISTA" />
           </div>
         </div>
       </div>

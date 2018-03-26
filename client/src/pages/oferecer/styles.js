@@ -1,11 +1,13 @@
 export default {
   button: {
     margin: '25px 0',
-    borderRadius: '25px',
+    borderRadius: '8px',
     backgroundColor: '#6E4D8B',
-    borderColor: '#a8cf45',
-    color: '#a8cf45',
-    fontSize: '25px',
+    borderColor: '#ffffff',
+    color: '#ffffff',
+    fontSize: '20px',
+    width: '70%',
+    marginLeft: '15%'
   },
   buttonL: {
     borderRadius: '25px',
@@ -28,7 +30,7 @@ export default {
   iconBG: {
     borderRadius: '45%',
     backgroundColor: '#6E4D8B',
-    borderColor: '#a8cf45',
+    borderColor: '#ffffff',
     color: '#fff',
     fontSize: '21px',
   },

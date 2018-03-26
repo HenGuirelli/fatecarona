@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import logo from './login_fatecarona.svg'
 import Cadastro from '../cadastro'
+import Recuperar from '../recuperar'
 import { connect } from 'react-redux'
 import { logIn } from '../../actions/userActions'
 import Dialog from 'material-ui/Dialog'
@@ -12,6 +13,7 @@ class LoginForm extends Component {
       email: '',
       password: '',
       isCadOpen: false,
+      isRecOpen: false,
       dialog: false,
       msg: ''
     }
@@ -27,6 +29,10 @@ class LoginForm extends Component {
 
   abrirCadastro = () => {
     this.setState({isCadOpen: true})
+  };
+
+  abrirRecuperar = () => {
+    this.setState({isRecOpen: true})
   };
 
   displayDialog = (msg) => {
@@ -61,12 +67,21 @@ class LoginForm extends Component {
   render() {
     const styles = {
       button: {
-        margin: '25px 0',
+        margin: '5px 0',
         borderRadius: '25px',
         backgroundColor: 'transparent',
         borderColor: '#a8cf45',
         color: '#a8cf45',
         fontSize: '25px',
+      },
+      buttonRecuperar: {
+        margin: '5px 0',
+        borderRadius: '25px',
+        backgroundColor: 'transparent',
+        borderColor: '#a8cf45',
+        color: '#a8cf45',
+        fontSize: '25px',
+
       },
       inputText: {
         margin: '25px 0',
@@ -82,6 +97,7 @@ class LoginForm extends Component {
     }
 
     if (this.state.isCadOpen) return <Cadastro />
+    if (this.state.isRecOpen) return <Recuperar />
 
     //const { initState, firebase, user } = this.props
     return (
@@ -119,14 +135,28 @@ class LoginForm extends Component {
               style={styles.button}
               value="ENTRAR"
             />
-            <input
-              type="button"
-              className="btn btn-block loginBtn"
-              style={styles.button}
-              value="CADASTRAR"
-              onClick={this.abrirCadastro}
-            />
+
           </form>
+          <div className="row">
+            <div className="col-4">
+              <input
+                type="button"
+                className="btn btn-block loginBtn"
+                style={styles.buttonRecuperar}
+                value="?"
+                onClick={this.abrirRecuperar}
+              />
+            </div>
+            <div className="col-8">
+              <input
+                type="button"
+                className="btn btn-block loginBtn"
+                style={styles.button}
+                value="CADASTRAR"
+                onClick={this.abrirCadastro}
+              />
+            </div>
+          </div>
         </div>
       </div>
     );
