@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Rota from '../../components/Rota'
 import { connect } from 'react-redux'
+import { alteraRota } from '../../actions/mapActions'
+
 
 const rotas = [
   {
@@ -19,19 +21,26 @@ const rotas = [
 
 class Rotas extends Component{
 
-/*  handleActivation = (carPlate) =>{
-      this.props.history.push()
-  }*/
+  handleActivation = (rota) =>{
+    this.props.dispatch(alteraRota(rota));
+    this.props.history.push('/rotas/alterar')
+  }
+
+  handleSubmit = () =>{
+    this.props.history.push('/rotas/adicionar')
+  }
 
   render(){
     const styles = {
       button: {
         margin: '25px 0',
-        borderRadius: '25px',
+        borderRadius: '8px',
         backgroundColor: '#6E4D8B',
-        borderColor: '#a8cf45',
-        color: '#a8cf45',
-        fontSize: '25px',
+        borderColor: '#ffffff',
+        color: '#ffffff',
+        fontSize: '20px',
+        width: '70%',
+        marginLeft: '15%'
       },
       rotaButton:{
         margin: '25px 0',
@@ -44,9 +53,9 @@ class Rotas extends Component{
     return(
       <div className="pageBase">
         <div className="container">
-            {rotas.map(rota =>
-              <div className="row" style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
-                <button className="btn loginBtn" style={styles.rotaButton}>
+            {  rotas.map((rota, key) =>
+              <div className="row" key={key} style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
+                <button className="btn loginBtn" onClick={() => this.handleActivation(rota)}  style={styles.rotaButton}>
                   <Rota
                     desc={rota.desc}
                     origem={rota.origem}
@@ -56,9 +65,7 @@ class Rotas extends Component{
                 </button>
               </div>
             )}
-            <input type="button" value="ADICIONAR" className="btn loginBtn btn-block" style={styles.button}
-              onClick={() => this.props.history.push('/rotas/adicionar')}
-            />
+            <input type="button" onClick={this.handleSubmit} value="Adicionar" className="btn loginBtn btn-block" style={styles.button}/>
         </div>
       </div>
     )

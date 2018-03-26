@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { insertUser } from '../../actions/userActions'
+import logo from '../../pages/form/login_fatecarona.svg'
 import Dialog from 'material-ui/Dialog'
 
 class Cadastro extends Component {
   constructor() {
     super()
     this.state = {
-      email: '', 
-      senha: '', 
-      nome: '', 
-      cel: '', 
-      ra: '', 
+      email: '',
+      senha: '',
+      nome: '',
+      cel: '',
+      ra: '',
       dialog: false,
       msg: ''
     }
@@ -108,6 +109,7 @@ class Cadastro extends Component {
           >
           {this.state.msg}
           </Dialog>
+          <img src={logo} alt="" className="img-fluid mx-auto d-block"/>
           <div className="container">
             <form onSubmit={this.handleSubmit} className="form-group">
                 <input
@@ -148,8 +150,8 @@ class Cadastro extends Component {
                 />
               <input
                 type="submit"
-                className="btn btn-primary btn-block loginBtn" 
-                style={styles.button} value="CADASTRAR" />
+                className="btn btn-primary btn-block loginBtn"
+                style={styles.button} value="Cadastrar" />
             </form>
           </div>
       </div>
@@ -159,6 +161,6 @@ class Cadastro extends Component {
 
 export default connect(store => {
   return {
-    firebase: store.user.firebase, 
+    firebase: store.user.firebase,
   }
 })(Cadastro)

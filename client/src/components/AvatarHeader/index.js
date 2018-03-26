@@ -10,7 +10,7 @@ export default class AvatarHeader extends Component {
     return(
       <div style={styles.root}>
         <center>
-          <div style={styles.nome}>{userData.nome}</div>
+          <div style={styles.apelido}>{userData.apelido}</div>
           <div style={styles.status}>Oferecendo Carona</div>
         </center>
         <div className="container">

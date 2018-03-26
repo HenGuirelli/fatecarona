@@ -60,8 +60,8 @@ class Oferecer extends Component {
                   HORA
                   <TimePicker
                     format="24hr"
-                    okLabel="CONFIRMAR"
-                    cancelLabel="CANCELAR"
+                    okLabel="Confirmar"
+                    cancelLabel="Cancelar"
                     value={this.state.SAIDA}
                     onChange={this.handleSaida}
                     textFieldStyle={styles.time}
@@ -141,7 +141,7 @@ class Oferecer extends Component {
                 </center>
               </div>
             </center>
-            <input type="submit" value="CONFIRMAR" className="btn loginBtn form-control" style={styles.button}/>
+            <input type="submit" value="Confirmar" className="btn loginBtn form-control" style={styles.button}/>
           </form>
         </div>
       </div>
