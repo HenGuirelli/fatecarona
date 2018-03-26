@@ -56,7 +56,9 @@ class Rotas extends Component{
                 </button>
               </div>
             )}
-            <input type="button" value="ADICIONAR" className="btn loginBtn btn-block" style={styles.button}/>
+            <input type="button" value="ADICIONAR" className="btn loginBtn btn-block" style={styles.button}
+              onClick={() => this.props.history.push('/rotas/adicionar')}
+            />
         </div>
       </div>
     )

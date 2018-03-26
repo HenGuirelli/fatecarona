@@ -14,6 +14,11 @@ import Config from './pages/config'
 import Veiculos from './pages/veiculos'
 import AtivarVeic from './pages/ativarveic'
 import CadVeiculo from './pages/cadveiculos'
+<<<<<<< Updated upstream
+=======
+import Recuperar from './pages/recuperar'
+import Cadastro from './pages/cadastro'
+>>>>>>> Stashed changes
 import { connect } from 'react-redux'
 import { setFirebase, updateUser, unsetUser, insertUser, loadUser } from './actions/userActions'
 import * as firebase from 'firebase'
@@ -61,15 +66,30 @@ class App extends Component {
 
     if (pending) return null
 
+    let isLogged = false
     //if localStorage gets more data then this should be trated differently
+<<<<<<< Updated upstream
     if (!window.localStorage.key(0)) return <Auth history={history} alert={false}/>
     if (!user.emailVerified) return <Verify firebase={firebase} logOut={this.logOut.bind(this)}/>
+=======
+    if (history.location.pathname !== '/recuperarsenha' && history.location.pathname !== '/cadastro'){
+      if (!window.localStorage.key(0)) return <Auth history={history} alert={false}/>
+      if (!user.emailVerified) return <Verify firebase={firebase} logOut={this.logOut.bind(this)}/>
+      isLogged = true;
+    }
+>>>>>>> Stashed changes
 
     return (
       <div className="App">
-        <NavBar logOut={this.logOut.bind(this)} menuItems={menuItems}/>
+        {isLogged ? <NavBar logOut={this.logOut.bind(this)} menuItems={menuItems}/> : null}
         <Route exact path="/" component={MainPage}/>
+<<<<<<< Updated upstream
         <Route path="/rotas" component={AdicionarRota}/>
+=======
+        <Route exact path="/rotas" component={Rotas}/>
+        <Route path="/rotas/alterar" component={AlterarRota}/>
+        <Route path="/rotas/adicionar" component={AdicionarRota}/>
+>>>>>>> Stashed changes
         <Route path="/perfil" component={Perfil}/>
         <Route path="/caronas/historico" component={Caronas}/>
         <Route path="/caronas/request" component={Pedir}/>
@@ -77,6 +97,11 @@ class App extends Component {
         <Route exact path="/veiculos" component={Veiculos}/>
         <Route path="/veiculos/ativar" component={AtivarVeic}/>
         <Route path="/veiculos/cadastrar" component={CadVeiculo}/>
+<<<<<<< Updated upstream
+=======
+        <Route path="/recuperarsenha" component={Recuperar}/>
+        <Route path="/cadastro" component={Cadastro}/>
+>>>>>>> Stashed changes
         <Route path="/config" render={() => <Config logOut={this.logOut.bind(this)}/>}/>
         <Route path="/test" render={() =>
           <div>

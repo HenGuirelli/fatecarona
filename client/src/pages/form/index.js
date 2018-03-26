@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import logo from './login_fatecarona.svg'
+<<<<<<< Updated upstream
 import Cadastro from '../cadastro'
+=======
+>>>>>>> Stashed changes
 import { connect } from 'react-redux'
 import { logIn } from '../../actions/userActions'
 import Dialog from 'material-ui/Dialog'
@@ -11,7 +14,10 @@ class LoginForm extends Component {
     this.state = {
       email: '',
       password: '',
+<<<<<<< Updated upstream
       isCadOpen: false,
+=======
+>>>>>>> Stashed changes
       dialog: false,
       msg: ''
     }
@@ -26,9 +32,16 @@ class LoginForm extends Component {
   };
 
   abrirCadastro = () => {
-    this.setState({isCadOpen: true})
+    this.props.history.push('/cadastro')
   };
 
+<<<<<<< Updated upstream
+=======
+  abrirRecuperar = () => {
+    this.props.history.push('/recuperarsenha')
+  };
+
+>>>>>>> Stashed changes
   displayDialog = (msg) => {
     this.setState({dialog: true, msg})
   }
@@ -81,8 +94,11 @@ class LoginForm extends Component {
       }
     }
 
+<<<<<<< Updated upstream
     if (this.state.isCadOpen) return <Cadastro />
 
+=======
+>>>>>>> Stashed changes
     //const { initState, firebase, user } = this.props
     return (
       <div style={styles.root}>
