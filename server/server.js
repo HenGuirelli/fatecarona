@@ -29,7 +29,7 @@ var upload = multer({ storage: storage }).single('image');
 var pool = mysql.createPool({
   host     : 'localhost',
   user     : 'root',
-  password : '',
+  password : 'root',
   database : 'Fatecarona'
 });
 
@@ -206,19 +206,7 @@ router.route('/cars/:user_email')
   });
 
 
-router.route('/cars/ativar/:car_placa')
-
-  .delete(function(req, res) {
-    pool.getConnection(function(err, connection) {
-      if (err) res.send(err);
-
-      connection.query('DELETE FROM veiculos WHERE email = ?', [req.params.car_placa], function(err, rows, fields) {
-        connection.release();
-        if (err) res.send(err);
-        res.json({ message: 'Usuário ' + req.params.user_email + ' excluido.'});
-      });
-    });
-  })
+router.route('/cars/action/:car_placa')
 
   .put(function(req, res) {
     pool.getConnection(function(err, connection) {
@@ -230,7 +218,19 @@ router.route('/cars/ativar/:car_placa')
         res.json(rows);
       });
     });
-  });
+  })
+
+  .delete(function(req, res) {
+      pool.getConnection(function(err, connection) {
+        if (err) res.send(err);
+
+        connection.query('DELETE FROM veiculos WHERE placa = ?', [req.params.car_placa], function(err, rows, fields) {
+          connection.release();
+          if (err) res.send(err);
+          res.json({ message: 'Usuário ' + req.params.user_email + ' excluido.'});
+        });
+      });
+    });
 
 router.route('/cars')
   .post(function(req, res) {
