@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import styles from './styles'
 
 export default class Avaliador extends Component {
@@ -11,6 +12,9 @@ export default class Avaliador extends Component {
       <div style={styles.info}>
         <img src={require('./star.png')} style={styles.img} alt="..."/>
         <div style={styles.score}>{score}</div>
+      </div>
+      <div style={{paddingTop: '38px'}}>
+        <Link to="/avaliacoes">ver avaliações</Link>
       </div>
       </center>
     )

@@ -4,22 +4,40 @@ import CarIcon  from '../../components/Veiculo/veiculo.png'
 import ViagIcon from '../../components/Veiculo/viagensfeitas.png'
 import KmIcon from '../../components/Veiculo/kmviagens.png'
 import { updateCar, deleteCar } from '../../actions/carActions'
-import Dialog from 'material-ui/Dialog'
 
-
-
+const styles = {
+  btn:{
+    fontSize: '12px',
+    width: '100%',
+    backgroundColor: '#6E4D8B',
+    borderColor: '#6E4D8B'
+  },
+  btnDialog:{
+    fontSize: '12px',
+    width: '70px',
+    margin: '0 10px',
+    backgroundColor: '#6E4D8B',
+    borderColor: '#6E4D8B'
+  },
+  btnContainer: {
+    padding:  '0 10px',
+  },
+  marginStyle:{
+    marginTop: '2em'
+  },
+  inputNumber:{
+    width: '4em',
+    height: '2em'
+  },
+  colFormat:{
+    textAlign: 'right'
+  },
+  textFormat:{
+    fontSize:'12px'
+  }
+}
 
 class AtivarVeic extends Component{
-  constructor(props) {
-    super(props);
-    this.state = {
-      ativo: 0,
-      dialog: false
-    };
-  }
-
-
-
   handleAtivar = (placa) => {
     let cont = 0
     this.props.veiculos.forEach(e => {
@@ -28,97 +46,54 @@ class AtivarVeic extends Component{
       }
     )
     if (cont === 2){
-      this.displayDialog('Somente 2 carros podem estár ativos sumultaneamente!')
+      window.displayDialog({msg: 'Somente 2 carros podem estár ativos sumultaneamente!'})
       return;
     }else{
-      this.props.dispatch(updateCar(placa, {
-        ativo: 1
-      }))
-      this.displayDialog('O veículo está ativo!')
+      this.props.dispatch(updateCar(placa, { ativo: 1 }))
+      window.displayDialog({msg: 'O veículo está ativo!'}, '/veiculos')
     }
   }
 
   handleDesativar = (placa) => {
-    this.props.dispatch(updateCar(placa, {
-      ativo: 0
-    }))
-    this.displayDialog('O veículo foi desativado!')
+    this.props.dispatch(updateCar(placa, { ativo: 0 }))
+    window.displayDialog({msg: 'O veículo foi desativado!'}, '/veiculos')
   }
 
   handleDelete = (placa) => {
     this.props.dispatch(deleteCar(placa))
-  }
-
-  displayDialog(msg) {
-    this.setState({dialog: true, msg})
-  }
-
-  handleClose = () => {
-    this.setState({dialog: false})
     this.props.history.push('/veiculos')
+    window.closeDialog()
+  }
+
+  showConfirmation = () => {
+    window.displayDialog({
+      title: 'Excluir',
+      msg: 'Tem certeza de que deseja excluir o veículo e todos os dados acumulados ?',
+      actions: [
+        <input
+          type="button"
+          value="Sim"
+          className="btn btn-primary"
+          style={styles.btnDialog}
+          onClick={() => this.handleDelete(this.props.veiculo.placa)}
+        />,
+        <input
+          type="button"
+          value="Não"
+          className="btn btn-primary"
+          style={styles.btnDialog}
+          onClick={window.closeDialog}
+        />
+      ]
+    })
   }
 
   render(){
 
     const { veiculo } = this.props
 
-    const styles = {
-      btn:{
-        fontSize: '12px',
-        width: '100%',
-        backgroundColor: '#6E4D8B',
-        borderColor: '#6E4D8B'
-      },
-      btnContainer: {
-        padding:  '0 10px',
-      },
-      marginStyle:{
-        marginTop: '2em'
-      },
-      inputNumber:{
-        width: '4em',
-        height: '2em'
-      },
-      colFormat:{
-        textAlign: 'right'
-      },
-      textFormat:{
-        fontSize:'12px'
-      }
-    }
-
     return(
       <div className="pageBase">
-        <Dialog
-          actions={null}
-          modal={false}
-          open={this.state.dialog}
-          onRequestClose={this.handleClose}
-        >
-        {this.state.msg}
-        </Dialog>
-
-        <div className="modal fade" id="deleteModal" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">Excluir</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                Tem certeza de que deseja excluir o veículo e todos os dados acumulados ?
-              </div>
-              <div className="modal-footer">
-                <input type="button" value="Sim" className="btn btn-primary"  style={styles.btn} onClick={() => this.handleDelete(veiculo.placa)}/>
-                <input type="button" value="Não" className="btn btn-primary" data-dismiss="modal" style={styles.btn}/>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
         <div className="container">
           <form className="form-group">
             <center>
@@ -167,7 +142,7 @@ class AtivarVeic extends Component{
                 }
               </div>
               <div className="col-6" style={styles.btnContainer}>
-                <input type="button" value="Excluir" className="btn btn-primary" data-toggle="modal" data-target="#deleteModal" style={styles.btn}/>
+                <input type="button" value="Excluir" className="btn btn-primary" style={styles.btn} onClick={this.showConfirmation}/>
               </div>
             </div>
           </center>

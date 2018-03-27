@@ -2,16 +2,13 @@ import React, { Component } from 'react'
 import logo from './login_fatecarona.svg'
 import { connect } from 'react-redux'
 import { logIn } from '../../actions/userActions'
-import Dialog from 'material-ui/Dialog'
 
 class LoginForm extends Component {
   constructor() {
     super()
     this.state = {
       email: '',
-      password: '',
-      dialog: false,
-      msg: ''
+      password: ''
     }
   }
 
@@ -31,18 +28,10 @@ class LoginForm extends Component {
     this.props.history.push('/recuperarsenha')
   };
 
-  displayDialog = (msg) => {
-    this.setState({dialog: true, msg})
-  }
-
-  handleClose = () => {
-    this.setState({dialog: false})
-  }
-
   handleSubmit = (event) => {
     event.preventDefault()
       if(this.state.email.length === 0 || this.state.password.length === 0) {
-        this.displayDialog('Favor inserir email e senha')
+        window.displayDialog({msg: 'Favor inserir email e senha'})
         return
       }
       let email = this.state.email
@@ -57,7 +46,7 @@ class LoginForm extends Component {
   }
 
   componentDidMount() {
-    if (this.props.error) this.displayDialog('Usuário e/ou senha inválidos!')
+    if (this.props.error) window.displayDialog({msg: 'Usuário e/ou senha inválidos!'})
   }
 
   render() {
@@ -95,15 +84,6 @@ class LoginForm extends Component {
     //const { initState, firebase, user } = this.props
     return (
       <div style={styles.root}>
-        <Dialog
-          title="Erro:"
-          actions={null}
-          modal={false}
-          open={this.state.dialog}
-          onRequestClose={this.handleClose}
-        >
-        {this.state.msg}
-        </Dialog>
         <img src={logo} alt="" className="img-fluid mx-auto d-block"/>
         <div className="container">
           <form onSubmit={this.handleSubmit} className="form-group">

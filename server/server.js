@@ -29,8 +29,15 @@ var upload = multer({ storage: storage }).single('image');
 var pool = mysql.createPool({
   host     : 'localhost',
   user     : 'root',
-  password : '',
+  password : '3847147298',
   database : 'Fatecarona'
+});
+
+pool.getConnection(function(err, connection) {
+  if(err) {
+    console.log(err.sqlMessage);
+    process.exit();
+  }
 });
 
 const server = express();
@@ -224,7 +231,7 @@ router.route('/cars/action/:car_placa')
           res.send(err);
           return;
         }
-        res.json(rows);    
+        res.json(rows);
       });
     });
   })
