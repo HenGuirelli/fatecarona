@@ -1,16 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import logo from '../../pages/form/login_fatecarona.svg'
-import Dialog from 'material-ui/Dialog'
 
 class Recuperar extends Component {
   constructor() {
     super()
     this.state = {
-      email: '',
-      dialog: false,
-      msgTitle: '',
-      msg: ''
+      email: ''
     }
   }
 
@@ -18,22 +14,27 @@ class Recuperar extends Component {
     this.setState({email: event.target.value.toLowerCase()})
   };
 
-  displayDialog = (msgTitle, msg) => {
-    this.setState({dialog: true, msg, msgTitle})
-  }
-
-  handleClose = () => {
-    this.setState({dialog: false})
-  }
-
-  recuperarEmail = () => {
-    let dialog = this.displayDialog
-    this.props.firebase.auth().sendPasswordResetEmail(this.state.email).then(function() {
-          dialog('E-mail enviado', 'E-mail de recuperação enviado. Continue a operação verificando sua caixa de mensagens')
-        }).catch(function(error) {
-          dialog('E-mail incorreto', 'Digite um e-mail cadastrado em nosso sistema')
-        });
-
+  recuperarEmail = (e) => {
+    e.preventDefault()
+    let email = this.state.email
+    if (!email) {
+      window.displayDialog({msg: 'Favor inserir um email.'})
+      return
+    }
+    if (!email.match('@fatec.sp.gov.br')) {
+      email = email + '@fatec.sp.gov.br'
+    }
+    this.props.firebase.auth().sendPasswordResetEmail(email).then(function() {
+      window.displayDialog({
+        title: 'E-mail enviado',
+        msg: 'E-mail de recuperação enviado. Continue a operação verificando sua caixa de mensagens'
+      }, '/')
+    }).catch(function(error) {
+      window.displayDialog({
+        title: 'E-mail incorreto',
+        msg: 'Digite um e-mail cadastrado em nosso sistema'
+      })
+    })
   }
 
   render() {
@@ -70,20 +71,10 @@ class Recuperar extends Component {
 
     return (
       <div style={styles.root}>
-        <Dialog
-          title={this.state.msgTitle}
-          actions={null}
-          modal={false}
-          open={this.state.dialog}
-          onRequestClose={this.handleClose}
-        >
-        {this.state.msg}
-        </Dialog>
-
         <img src={logo} alt="" className="img-fluid mx-auto d-block"/>
         <h6 style={styles.text}>Esqueci a senha</h6>
         <div className="container">
-          <form onSubmit={this.handleSubmit} className="form-group">
+          <form onSubmit={this.recuperarEmail} className="form-group">
               <input
                 placeholder="E-mail"
                 style={styles.inputText}
@@ -92,11 +83,10 @@ class Recuperar extends Component {
                 className="form-control"
               />
             <input
-              type="button"
+              type="submit"
               className="btn btn-block loginBtn"
               style={styles.button}
               value="Enviar confirmação"
-              onClick={this.recuperarEmail}
             />
           </form>
         </div>

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { insertUser } from '../../actions/userActions'
 import logo from '../../pages/form/login_fatecarona.svg'
-import Dialog from 'material-ui/Dialog'
 
 class Cadastro extends Component {
   constructor() {
@@ -12,9 +11,7 @@ class Cadastro extends Component {
       senha: '',
       nome: '',
       cel: '',
-      ra: '',
-      dialog: false,
-      msg: ''
+      ra: ''
     }
   }
 
@@ -42,15 +39,16 @@ class Cadastro extends Component {
     event.preventDefault()
     const { email, senha, nome, cel, ra } = this.state
     if(email.length === 0 || senha.length === 0 || nome.length === 0 || cel.length === 0 || ra.length === 0) {
-      this.displayDialog("Favor Preencher todos os campos!")
+      window.displayDialog({msg: "Favor Preencher todos os campos!"})
       return
     }
     if (!email.match('@fatec.sp.gov.br')) {
-      this.displayDialog('Utilize um email institucional! ex:"@fatec.sp.gov.br"')
+      window.displayDialog({msg: 'Utilize um email institucional! ex:"@fatec.sp.gov.br"'})
       return
     }
     if (!/[0-9]{5}-[0-9]{4}/.test(cel)) {
-      this.displayDialog('Numero com formato inválido. ex:"99999-9999"')
+      window.displayDialog({msg: 'Numero com formato inválido. ex:"99999-9999"'})
+      return
     }
     this.props.firebase.auth().createUserWithEmailAndPassword(email, senha)
     .then(
@@ -61,16 +59,8 @@ class Cadastro extends Component {
       }))
     )
     .catch((error) => {
-      this.displayModal(error.message)
+      window.displayDialog({title: 'Erro', msg: error.msg})
     });
-  }
-
-  displayDialog(msg) {
-    this.setState({dialog: true, msg})
-  }
-
-  handleClose = () => {
-    this.setState({dialog: false})
   }
 
   render() {
@@ -100,60 +90,51 @@ class Cadastro extends Component {
     //const { firebase } = this.props
     return (
       <div style={styles.root}>
-          <Dialog
-            title="Erro:"
-            actions={null}
-            modal={false}
-            open={this.state.dialog}
-            onRequestClose={this.handleClose}
-          >
-          {this.state.msg}
-          </Dialog>
-          <img src={logo} alt="" className="img-fluid mx-auto d-block"/>
-          <div className="container">
-            <form onSubmit={this.handleSubmit} className="form-group">
-                <input
-                  placeholder='RA'
-                  style={styles.inputText}
-                  value={this.state.ra}
-                  onChange={this.handleRA}
-                  className="form-control"
-                />
-                <input
-                  placeholder='E-mail, exemplo: "foo.bar1@fatec.sp.gov.br"'
-                  style={styles.inputText}
-                  value={this.state.email}
-                  onChange={this.handleEmail}
-                  className="form-control"
-                />
-                <input
-                  placeholder="Nome"
-                  style={styles.inputText}
-                  value={this.state.nome}
-                  onChange={this.handleNome}
-                  className="form-control"
-                />
-                <input
-                  placeholder="Senha"
-                  style={styles.inputText}
-                  value={this.state.senha}
-                  onChange={this.handlePassword}
-                  type="password"
-                  className="form-control"
-                />
-                <input
-                  placeholder="Nº Celular"
-                  style={styles.inputText}
-                  value={this.state.cel}
-                  onChange={this.handleCel}
-                  className="form-control"
-                />
+        <img src={logo} alt="" className="img-fluid mx-auto d-block"/>
+        <div className="container">
+          <form onSubmit={this.handleSubmit} className="form-group">
               <input
-                type="submit"
-                className="btn btn-primary btn-block loginBtn"
-                style={styles.button} value="Cadastrar" />
-            </form>
-          </div>
+                placeholder='RA'
+                style={styles.inputText}
+                value={this.state.ra}
+                onChange={this.handleRA}
+                className="form-control"
+              />
+              <input
+                placeholder='E-mail, exemplo: "foo.bar1@fatec.sp.gov.br"'
+                style={styles.inputText}
+                value={this.state.email}
+                onChange={this.handleEmail}
+                className="form-control"
+              />
+              <input
+                placeholder="Nome"
+                style={styles.inputText}
+                value={this.state.nome}
+                onChange={this.handleNome}
+                className="form-control"
+              />
+              <input
+                placeholder="Senha"
+                style={styles.inputText}
+                value={this.state.senha}
+                onChange={this.handlePassword}
+                type="password"
+                className="form-control"
+              />
+              <input
+                placeholder="Nº Celular"
+                style={styles.inputText}
+                value={this.state.cel}
+                onChange={this.handleCel}
+                className="form-control"
+              />
+            <input
+              type="submit"
+              className="btn btn-primary btn-block loginBtn"
+              style={styles.button} value="Cadastrar" />
+          </form>
+        </div>
       </div>
     );
   }

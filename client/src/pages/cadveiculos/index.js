@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { insertCar } from '../../actions/carActions'
-import Dialog from 'material-ui/Dialog'
-
 
 class CadVeiculos extends Component{
   constructor(props) {
@@ -11,7 +9,6 @@ class CadVeiculos extends Component{
       placa: '',
       marca: '',
       modelo: '',
-      dialog: false,
       cor: ''
     };
   }
@@ -31,10 +28,9 @@ class CadVeiculos extends Component{
 
   handleSubmit = () => {
     if (this.props.veiculos.length === 5){
-      this.displayDialog("Você já chegou ao limite máximo de veículos!")
+      window.displayDialog({msg: "Você já chegou ao limite máximo de veículos!"})
       return;
     }
-    console.log(this.props.veiculos.length)
     this.props.dispatch(insertCar({
         email: this.props.userData.email ,
         placa: this.state.placa,
@@ -42,16 +38,7 @@ class CadVeiculos extends Component{
         modelo: this.state.modelo,
         cor: this.state.cor
       }))
-      this.displayDialog("Veículo adicionado!")
-  }
-
-  displayDialog(msg) {
-    this.setState({dialog: true, msg})
-  }
-
-  handleClose = () => {
-    this.setState({dialog: false})
-    this.props.history.push('/veiculos')
+      window.displayDialog({msg: "Veículo adicionado!"}, '/veiculos')
   }
 
   render(){
@@ -90,14 +77,6 @@ class CadVeiculos extends Component{
     }
     return(
       <div className="pageBase">
-        <Dialog
-          actions={null}
-          modal={false}
-          open={this.state.dialog}
-          onRequestClose={this.handleClose}
-        >
-        {this.state.msg}
-        </Dialog>
         <div className="container">
           <form className="form-group">
             <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>

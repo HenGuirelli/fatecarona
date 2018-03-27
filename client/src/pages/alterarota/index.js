@@ -1,28 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import TrajetoIcon  from '../../components/Rota/trajeto.png'
-import Dialog from 'material-ui/Dialog'
-
 
 class AlterarRota extends Component{
-
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      dialog: false
-    };
-  }
-
-  displayDialog(msg) {
-    this.setState({dialog: true, msg})
-  }
-
-  handleClose = () => {
-    this.setState({dialog: false})
-    this.props.history.push('/rotas')
-  }
-
   render(){
     const {rota} = this.props;
 
@@ -48,14 +28,6 @@ class AlterarRota extends Component{
 
     return(
       <div className="pageBase">
-        <Dialog
-          actions={null}
-          modal={false}
-          open={this.state.dialog}
-          onRequestClose={this.handleClose}
-        >
-        {this.state.msg}
-        </Dialog>
         <div className="container">
           <form className="form-group">
             <center>
