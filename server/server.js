@@ -1,7 +1,9 @@
-const mongoExecute  = require('./handleMongo.js').mongoExecute;
 var multer		      = require('multer');
 var express 	      = require('express');
 var bodyParser 	    = require('body-parser');
+const config        = require('./config.json').mongodb;
+var MongoClient     = require('mongodb').MongoClient;
+var ObjectId        = require('mongodb').ObjectId;
 var webPush         = require('web-push');
 var mysql           = require('mysql');
 var fs              = require('fs');
@@ -12,6 +14,13 @@ var certificate     = fs.readFileSync('./cert.pem', 'utf8');
 var credentials     = {key: privateKey, cert: certificate};
 
 const path          = require('path');
+const vapidKeys     = require('./vapidKeys.json');
+webPush.setGCMAPIKey('AAAANiiw5e4:APA91bFm2hOYB4dD0bQWuHoKFH66sVBB5vIU6vLFSkhQPnuPh18Skj5rN9GP99HUnEjNRyj5Ktz5_v6s0a-9TZKjve8iCOEhwZ10fqaLTZMWqo9fe-WHfiaLKtZvI_fZiN1GP6eRZHDS');
+webPush.setVapidDetails(
+  'mailto:thiago.ramos9@fatec.sp.gov.br',
+  vapidKeys.publicKey,
+  vapidKeys.privateKey
+);
 
 var router = express.Router();
 
@@ -38,6 +47,17 @@ pool.getConnection(function(err, connection) {
     console.log(err.sqlMessage);
     process.exit();
   }
+  connection.release();
+});
+
+var mongoPool;
+
+MongoClient.connect(config.url, {poolSize: 10}, (err, db) => {
+  if(err) {
+    console.log(err);
+    process.exit();
+  }
+  mongoPool = db;
 });
 
 const server = express();
@@ -160,18 +180,48 @@ router.route('/users/:user_email')
 
 router.route('/routes')
   .post(function(req, res) {
-    mongoExecute(insert, [req.body], 'rotas', response => res.send({success: true}));
+    mongoPool.collection('rotas').insertOne(req.body, (err, result) => {
+      if(err) {
+        res.send(err);
+        return;
+      }
+      res.send(result);
+    });
   });
+
 router.route('/routes/:user_email')
   .get(function(req, res) {
-  	mongoExecute(find, { email: req.params.user_email }, 'rotas', response => res.json(response));
+    mongoPool.collection('rotas').findOne({ email: req.params.user_email }, (err, result) => {
+      if(err) {
+        res.send(err);
+        return;
+      }
+      res.send(result);
+    });
   });
+
 router.route('/routes/route/:id_rota')
   .put(function(req, res) {
-  	mongoExecute(update, [{ id: req.params.id_rota }, req.body], 'rotas', response => res.json(response));
+    mongoPool.collection('rotas').updateOne(
+      {_id: new ObjectId(req.params.id_rota)},
+      { $set: req.body },
+      (err, result) => {
+      if(err) {
+        res.send(err);
+        return;
+      }
+      res.send(result);
+    });
   })
   .delete(function(req, res) {
-  	mongoExecute(deleteOne, { id: req.params.id_rota }, 'rotas', response => res.json(response));
+    mongoPool.collection('rotas').deleteOne(
+      {_id: new ObjectId(req.params.id_rota)}, (err, result) => {
+        if(err) {
+          res.send(err);
+          return;
+        }
+        res.send(result);
+    });
   });
 
 //Manipulação de imagens
@@ -269,24 +319,43 @@ router.route('/cars')
 //notificações
 
 router.route('/subs')
-  .post(function(req, res) {
-    notify(req.body.subscription, 'Notificação enviada para: ' + req.body.email);
-    res.send({subscribed: true});
+  .put(function(req, res) {
+    mongoPool.collection('subscriptions').updateOne(
+      {_id: req.body._id},
+      { $set: req.body },
+      { upsert: true },
+      (err, result) => {
+      if(err) {
+        res.send(err);
+        return;
+      }
+      res.send(result);
+    });
   });
 
-function notify(subscription, payload) {
-  var options = {
-    gcmAPIKey: 'AAAANiiw5e4:APA91bFm2hOYB4dD0bQWuHoKFH66sVBB5vIU6vLFSkhQPnuPh18Skj5rN9GP99HUnEjNRyj5Ktz5_v6s0a-9TZKjve8iCOEhwZ10fqaLTZMWqo9fe-WHfiaLKtZvI_fZiN1GP6eRZHDS',
-    TTL: 60
-  };
+router.route('/notify/:user_email')
+  .post(function(req, res) {
+    mongoPool.collection('subscriptions').findOne(
+      {_id: req.params.user_email},
+      (err, result) => {
+      if(err) {
+        res.send({message: 'notification failed'});
+        return;
+      }
 
-  webPush.sendNotification(
-    subscription,
-    payload,
-    options
-  )
-  .catch(err => console.log(err));
-}
+      var options = {};
+
+      webPush.sendNotification(
+        result.subscription, //subscription object
+        req.body.message, //payload
+        options
+      ).catch(err => {
+        console.log(err);
+        return;
+      });
+      res.send({message: 'notificação enviada com êxito'});
+    });
+  });
 
 server.use(router);
 

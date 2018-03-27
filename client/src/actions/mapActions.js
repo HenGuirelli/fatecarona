@@ -1,12 +1,6 @@
 import axios from 'axios'
 import config from '../config.json'
 
-export function renderMap() {
-  return {
-    type: "MAP_RENDER"
-  }
-}
-
 export function alteraRota(rota) {
   return{
     type: "ALTERAR_ROTA",

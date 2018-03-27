@@ -28,9 +28,12 @@ class MainPage extends Component {
   }
 
   subscribeUser() {
+    const convertedVapidKey = this.urlBase64ToUint8Array("BJ1B8Ji8FNMFtm5hLzJbVjgpsV9Ct1dWIv9fpTIcHowwVFliX8W6BcWbvFdBuJFdL0VZzwR9pN1LSaINOGmj52Y")
+
     navigator.serviceWorker.ready.then(reg => {
       reg.pushManager.subscribe({
-        userVisibleOnly: true
+        userVisibleOnly: true,
+        applicationServerKey: convertedVapidKey
       }).then(sub => {
         console.log('Endpoint URL: ', sub.endpoint);
       }).catch(e => {
@@ -41,6 +44,21 @@ class MainPage extends Component {
         }
       });
     })
+  }
+
+  urlBase64ToUint8Array = (base64String) => {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4)
+    const base64 = (base64String + padding)
+      .replace(/-/g, '+')
+      .replace(/_/g, '/')
+
+    const rawData = window.atob(base64)
+    const outputArray = new Uint8Array(rawData.length)
+
+    for (let i = 0; i < rawData.length; ++i) {
+      outputArray[i] = rawData.charCodeAt(i)
+    }
+    return outputArray
   }
 
   render() {
