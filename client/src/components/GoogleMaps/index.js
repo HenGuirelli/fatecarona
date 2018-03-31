@@ -9,10 +9,10 @@ export default class Map extends Component {
   setMap() {
     this.map = new window.google.maps.Map(document.querySelector('.Map'), {
       center: {
-        lat: -23.6234, 
+        lat: -23.6234,
         lng: -46.5552
       },
-      zoom: 10 
+      zoom: 10
     })
     this.dirServ = new window.google.maps.DirectionsService();
     this.dirDisp = new window.google.maps.DirectionsRenderer({
@@ -79,9 +79,7 @@ export default class Map extends Component {
   render () {
 
     return (
-      <div className="pageBase">
-        <div className="Map container pageBase"/>
-      </div>
+        <div className="Map container pageBase" />
     );
   }
 }

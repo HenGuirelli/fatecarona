@@ -39,6 +39,8 @@ a:hover {
 
 .pageBase {
   height: 100%;
+  height: -moz-available;
+  height: stretch;
 }
 
 .App-intro {

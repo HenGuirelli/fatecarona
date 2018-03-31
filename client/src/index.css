@@ -10,8 +10,10 @@ body, html {
 }
 
 .App {
-  margin-top: 58px;
   height: calc(100% - 58px);
+  height: calc(-moz-available - 58px);
+  height: calc(stretch - 58px);
+  margin-top: 58px;
 }
 
 .timePicker input, .datePicker input {

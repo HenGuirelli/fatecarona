@@ -12,14 +12,16 @@ self.addEventListener('notificationclose', function(e) {
 self.addEventListener('notificationclick', function(e) {
   var notification = e.notification;
   var primaryKey = notification.data.primaryKey;
-  var action = e.action;
 
-  if (action === 'close') {
-    notification.close();
-  } else {
-    clients.openWindow('http://localhost:3000/caronas/historico');
-    notification.close();
+  if (e.action !== 'close') {
+    clients.matchAll().then( client => {
+      console.log(clients);
+      client[0].focus();
+    });
+    clients.openWindow('/caronas/historico');
   }
+  
+  notification.close();
 });
 
 self.addEventListener('push', function(e) {
@@ -38,14 +40,10 @@ self.addEventListener('push', function(e) {
     data: {
       dateOfArrival: Date.now(),
       primaryKey: 1
-    },
-    actions: [
-      {action: 'history', title: 'Verificar caronas',
-        icon: 'images/checkmark.png'}
-    ]
+    }
   };
 
   e.waitUntil(
-    self.registration.showNotification('Alguem solicitou uma carona', options)
+    self.registration.showNotification('', options)
   );
 });

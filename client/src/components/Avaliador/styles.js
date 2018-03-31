@@ -1,6 +1,6 @@
 export default {
   root: {
-    paddingTop: '5em',
+    paddingTop: '2em',
   },
   info: {
     marginTop: '2em',

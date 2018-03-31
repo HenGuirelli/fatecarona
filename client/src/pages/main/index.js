@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import AvatarHeader from '../../components/AvatarHeader'
 import { connect } from 'react-redux'
 import { sendSubscription } from '../../actions/notificationActions.js'
-import Plate from '../../components/Plate'
+import InfoVeiculo from '../../components/InfoVeiculo'
 import Vagas from '../../components/Vagas'
 import Avaliador from '../../components/Avaliador'
 
@@ -75,21 +75,30 @@ class MainPage extends Component {
     return (
       <div className="pageBase">
         <AvatarHeader userData={userData}/>
-        <div style={styles.content} className="container-fluid">
-          <div className="row">
-            <div className="col-12 col-xl-6">
-              <Avaliador
-                text="AVALIAÇÃO COMO CARONISTA"
-                score={3.5}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-12 col-xl-6">
-              <Plate />
-            </div>
-            <div className="col-12 col-xl-6">
-              <Vagas />
+        <div className="container">
+          <div style={styles.content}>
+            <Avaliador
+              text="AVALIAÇÃO COMO MOTORISTA"
+              score={3.5}
+            />
+            <center className="row" style={{margin: "40px 0"}}>
+              <div className="col-4">
+                <h1>38</h1>
+                Caronas Tomadas
+              </div>
+              <div className="col-4">
+                <h1>21</h1>
+                Vezes avaliado
+              </div>
+              <div className="col-4">
+                <h1>13</h1>
+                Vezes com 5 estrelas
+              </div>
+            </center>
+            <center><h4>VEÍCULOS</h4></center>
+            <div style={{marginTop: '40px'}}>
+                <InfoVeiculo />
+                <InfoVeiculo />
             </div>
           </div>
         </div>
