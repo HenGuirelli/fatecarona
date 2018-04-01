@@ -38,7 +38,7 @@ var upload = multer({ storage: storage }).single('image');
 var pool = mysql.createPool({
   host     : 'localhost',
   user     : 'root',
-  password : '3847147298',
+  password : 'root',
   database : 'Fatecarona'
 });
 
@@ -312,6 +312,27 @@ router.route('/cars')
           return;
         };
         res.json({ success: true });
+      });
+    });
+  });
+
+//Manipulação de Caronas
+
+router.route('/lift/:user_email')
+  .get(function(req, res) {
+    pool.getConnection(function(err, connection) {
+      if (err) {
+        res.send(err);
+        return;
+      }
+
+      connection.query('SELECT * FROM membros_carona where email = ?',[req.params.user_email], function(err, rows, fields) {
+        connection.release();
+        if (err){
+          res.send(err);
+          return;
+        }
+        res.json(rows);
       });
     });
   });

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import CarIcon  from '../../components/Veiculo/veiculo.png'
+import CarIcon  from '../../components/Veiculo/veiculo_preto.png'
 import ViagIcon from '../../components/Veiculo/viagensfeitas.png'
 import KmIcon from '../../components/Veiculo/kmviagens.png'
 import { updateCar, deleteCar } from '../../actions/carActions'
