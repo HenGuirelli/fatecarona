@@ -22,10 +22,17 @@ export default {
     borderColor: '#ffffff',
     color: '#ffffff',
     fontSize: '12px',
-    width: '100%',
+    width: '80%',
 
   },
   btnContainer: {
     padding:  '0 10px',
+  },
+  carBtn: {
+    borderRadius: '15px',
+    backgroundColor: '#6E4D8B',
+    borderColor: '#a8cf45',
+    color: '#fff',
+    fontSize: '21px',
   }
 }
