@@ -55,13 +55,13 @@ class Perfil extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     let myState = this.state;
-    this.props.dispatch(updateUserData(this.props.userData.email, {
+    this.props.updateUser(this.props.userData.email, {
       apelido: myState.apelido,
       chegada: myState.chegada.toTimeString().substr(0, 8),
       saida: myState.saida.toTimeString().substr(0, 8),
       telefone: myState.telefone,
       img: myState.fileName
-    }));
+    });
     window.displayDialog({msg: "Dados alterados", actions: null}, "/")
   }
 
@@ -198,5 +198,9 @@ export default connect(store => {
     updating: store.user.updating,
     needReload: store.user.needReload,
     error: store.user.error
+  }
+}, dispatch => {
+  return {
+    updateUser: (email, obj) => dispatch(updateUserData(email, obj))
   }
 })(Perfil)

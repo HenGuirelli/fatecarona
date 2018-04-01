@@ -22,12 +22,11 @@ export default class Lift extends Component {
             </div>
           </div>
         </div>
-        <div className="row" style={{position: 'absolute', bottom: 0, width: '100%'}}>
-          <div className="col-6" style={styles.btnContainer}>
-            <input type="button" style={styles.btn} className="btn btn-primary" value="GERENCIAR" />
-          </div>
-          <div className="col-6" style={styles.btnContainer}>
-            <input type="button" style={styles.btn2} className="btn btn-primary" value="ESPIAR MOTORISTA" />
+        <div className="row" style={{paddingTop: '10px'}}>
+          <div className="col-0 col-xl-6"/>
+          <div className="col-12 col-xl-6" style={styles.btnContainer}>
+            <input type="button" style={styles.btn} className="btn" value="GERENCIAR" />
+            <input type="button" style={styles.btn} className="btn" value="ESPIAR MOTORISTA" />
           </div>
         </div>
       </div>

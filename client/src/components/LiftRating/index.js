@@ -9,8 +9,7 @@ export default class Lift extends Component {
 
     const styles = {
       root: {
-        margin: '1em',
-        padding: '1em',
+        margin: '1em'
       }
     }
 
