@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, withRouter } from 'react-router-dom'
+import { Route, withRouter, Switch } from 'react-router-dom'
 import './App.css'
 import NavBar from './components/NavBar'
 import AdicionarRota from './pages/adicionarRota'
@@ -67,20 +67,24 @@ class App extends Component {
     return (
       <div className="App">
         {isLogged ? <NavBar logOut={this.logOut.bind(this)} menuItems={menuItems}/> : null}
-        <Route exact path="/" component={MainPage}/>
-        <Route exact path="/rotas" component={Rotas}/>
-        <Route path="/rotas/alterar" component={AlterarRota}/>
-        <Route path="/rotas/adicionar" component={AdicionarRota}/>
-        <Route path="/perfil" component={Perfil}/>
-        <Route path="/caronas/historico" component={Caronas}/>
-        <Route path="/caronas/request" component={Pedir}/>
-        <Route path="/caronas/offer" component={Oferecer}/>
-        <Route exact path="/veiculos" component={Veiculos}/>
-        <Route path="/veiculos/ativar" component={AtivarVeic}/>
-        <Route path="/veiculos/cadastrar" component={CadVeiculo}/>
-        <Route path="/recuperarsenha" component={Recuperar}/>
-        <Route path="/cadastro" component={Cadastro}/>
-        <Route path="/config" render={() => <Config logOut={this.logOut.bind(this)}/>}/>
+        <Switch>
+          <Route exact path="/" component={MainPage}/>
+          <Route exact path="/rotas" component={Rotas}/>
+          <Route path="/rotas/alterar" component={AlterarRota}/>
+          <Route path="/rotas/adicionar" component={AdicionarRota}/>
+          <Route path="/perfil" component={Perfil}/>
+          <Route path="/caronas/historico" component={Caronas}/>
+          <Route path="/caronas/request" component={Pedir}/>
+          <Route path="/caronas/offer" component={Oferecer}/>
+          <Route exact path="/veiculos" component={Veiculos}/>
+          <Route path="/veiculos/ativar" component={AtivarVeic}/>
+          <Route path="/veiculos/cadastrar" component={CadVeiculo}/>
+          <Route path="/recuperarsenha" component={Recuperar}/>
+          <Route path="/cadastro" component={Cadastro}/>
+          <Route path="/config" render={() => <Config logOut={this.logOut.bind(this)}/>}/>
+          <Route render={() => <div>404 not found</div>} />
+        </Switch>
+        {window.scrollTo(0, 0)}
       </div>
     );
   }

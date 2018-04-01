@@ -20,15 +20,17 @@ class AlterarRota extends Component{
 
   componentDidMount() {
     let rota = this.props.rota.rota
-    this.displayRoute({
-      origin: rota.origin,
-      destination: rota.destination,
-      waypoints: rota.waypoints
-    })
+    if (rota) {
+      this.displayRoute({
+        origin: rota.origin,
+        destination: rota.destination,
+        waypoints: rota.waypoints
+      })
+    }
   }
 
   render(){
-    const {rota} = this.props;
+    const { rota } = this.props;
 
     const styles = {
       textMargin:{
@@ -49,6 +51,8 @@ class AlterarRota extends Component{
         padding:  '0 10px',
       },
     };
+
+    if (!rota.rota) return null
 
     return(
       <div className="pageBase">

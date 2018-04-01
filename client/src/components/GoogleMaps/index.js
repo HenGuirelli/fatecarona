@@ -36,7 +36,7 @@ export default class Map extends Component {
     }, (response, status) => {
       if (status === 'OK') {
         this.dirDisp.setDirections(response)
-        this.renderCircles(response.routes[0].overview_path);
+        //this.renderCircles(response.routes[0].overview_path);
         let routeState = this.props.routeState
         if (routeState) routeState(response);
       } else {
