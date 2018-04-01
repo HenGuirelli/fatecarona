@@ -94,31 +94,31 @@ class CadVeiculos extends Component{
             <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
               <center>
                 <div className="col-6">MARCA</div>
-                <select className="form-control" style={styles.inputOption} defaultValue="default" onChange={this.handleMarca} value={this.state.marca}>
+                <select className="form-control" style={styles.inputOption} onChange={this.handleMarca} value={this.state.marca || 'default'}>
                   <option value="default">Selecione...</option>
-                  <option>FIAT</option>
-                  <option>MERCEDES</option>
+                  <option value="FIAT">FIAT</option>
+                  <option value="MERCEDES">MERCEDES</option>
                 </select>
               </center>
             </div>
             <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
               <center>
                 <div className="col-6">MODELO</div>
-                  <select className="form-control" style={styles.inputOption} defaultValue="default" value={this.state.modelo} onChange={this.handleModelo}>
+                  <select className="form-control" style={styles.inputOption} value={this.state.modelo || 'default'} onChange={this.handleModelo}>
                     <option value="default">Selecione...</option>
-                    <option>SIENA</option>
-                    <option>PALIO</option>
+                    <option value="SIENA">SIENA</option>
+                    <option value="PALIO">PALIO</option>
                   </select>
                 </center>
             </div>
             <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
               <center>
                 <div className="col-6">COR</div>
-                  <select className="form-control" style={styles.inputOption} defaultValue="default" value={this.state.cor} onChange={this.handleCor}>
+                  <select className="form-control" style={styles.inputOption} value={this.state.cor || 'default'} onChange={this.handleCor}>
                     <option value="default">Selecione...</option>
-                    <option>BRANCO</option>
-                    <option>PRETO</option>
-                    <option>VERMELHO</option>
+                    <option value="BRANCO">BRANCO</option>
+                    <option value="PRETO">PRETO</option>
+                    <option value="VERMELHO">VERMELHO</option>
                   </select>
                 </center>
             </div>

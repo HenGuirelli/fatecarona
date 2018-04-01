@@ -62,6 +62,7 @@ class Perfil extends Component {
       telefone: myState.telefone,
       img: myState.fileName
     }));
+    window.displayDialog({msg: "Dados alterados", actions: null}, "/")
   }
 
   render() {

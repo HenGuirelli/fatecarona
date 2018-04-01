@@ -19,7 +19,7 @@ import CadVeiculo from './pages/cadveiculos'
 import Recuperar from './pages/recuperar'
 import Cadastro from './pages/cadastro'
 import { connect } from 'react-redux'
-import { setFirebase, updateUser, unsetUser, insertUser, loadUser } from './actions/userActions'
+import { setFirebase, updateUser, unsetUser } from './actions/userActions'
 import * as firebase from 'firebase'
 import menuItems from './menuItems'
 
@@ -47,16 +47,6 @@ class App extends Component {
     firebase.auth().signOut()
   }
 
-  test() {
-    this.props.dispatch(
-     insertUser({ra: 111111111, nome: 'thiago', email: 'thiago.ramos', genero: 'M', avatar: 'somePath/etc/'})
-    );
-  }
-
-  testLoad() {
-    this.props.dispatch(loadUser());
-  }
-
   render() {
     const { history, user, pending } = this.props
     menuItems.forEach(element => element.selected = false)
@@ -66,7 +56,7 @@ class App extends Component {
     if (pending) return null
 
     let isLogged = false
-    //if localStorage gets more data then this should be trated differently
+    //if localStorage gets more data then this should be treated differently
 
     if (history.location.pathname !== '/recuperarsenha' && history.location.pathname !== '/cadastro'){
       if (!window.localStorage.key(0)) return <Auth history={history} alert={false}/>
@@ -91,16 +81,6 @@ class App extends Component {
         <Route path="/recuperarsenha" component={Recuperar}/>
         <Route path="/cadastro" component={Cadastro}/>
         <Route path="/config" render={() => <Config logOut={this.logOut.bind(this)}/>}/>
-        <Route path="/test" render={() =>
-          <div>
-            <input
-            type="button"
-            onClick={this.test.bind(this)} value="Insert"/>
-            <input
-            type="button"
-            onClick={this.testLoad.bind(this)} value="Select"/>
-          </div>
-        }/>
       </div>
     );
   }

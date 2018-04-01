@@ -3,7 +3,6 @@ import AvatarHeader from '../../components/AvatarHeader'
 import { connect } from 'react-redux'
 import { sendSubscription } from '../../actions/notificationActions.js'
 import InfoVeiculo from '../../components/InfoVeiculo'
-import Vagas from '../../components/Vagas'
 import Avaliador from '../../components/Avaliador'
 
 class MainPage extends Component {

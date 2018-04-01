@@ -16,7 +16,7 @@ export default class Map extends Component {
     })
     this.dirServ = new window.google.maps.DirectionsService();
     this.dirDisp = new window.google.maps.DirectionsRenderer({
-      draggable: true,
+      draggable: false,
       map: this.map,
     });
   }
@@ -37,7 +37,8 @@ export default class Map extends Component {
       if (status === 'OK') {
         this.dirDisp.setDirections(response)
         this.renderCircles(response.routes[0].overview_path);
-        this.props.routeState(response);
+        let routeState = this.props.routeState
+        if (routeState) routeState(response);
       } else {
         alert('Não foi possível estabelecer rota, motivo: ' + status);
       }
