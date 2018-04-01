@@ -1,8 +1,32 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import TrajetoIcon  from '../../components/Rota/trajeto.png'
+import { excluirRota } from '../../actions/mapActions'
+import GoogleMaps from '../../components/GoogleMaps'
 
 class AlterarRota extends Component{
+
+  handleDelete = () => {
+    this.props.dispatch(excluirRota(this.props.rota._id))
+  }
+
+  handleAlter = () => {
+    this.props.history.push('/rotas/adicionar')
+  }
+
+  saveFunc = f => {
+    this.displayRoute = f;
+  }
+
+  componentDidMount() {
+    let rota = this.props.rota.rota
+    this.displayRoute({
+      origin: rota.origin,
+      destination: rota.destination,
+      waypoints: rota.waypoints
+    })
+  }
+
   render(){
     const {rota} = this.props;
 
@@ -29,45 +53,47 @@ class AlterarRota extends Component{
     return(
       <div className="pageBase">
         <div className="container">
-          <form className="form-group">
+          <div className="form-group">
             <center>
-            <div style={{marginTop: '7em'}}>
-              <img style={{width: '3.7em', height: '4em', margin:'0'}} src={TrajetoIcon} alt={"Trajeto Logo"}/>
-            </div>
-            <div style={styles.textMargin}>
-              {rota.desc}
-            </div>
-            <div style={styles.textMargin}>ORIGEM:</div>
-            <div style={styles.textBold}>{rota.origem}</div>
-            <div style={styles.textMargin}>DESTINO:</div>
-            <div style={styles.textBold}>{rota.destino}</div>
-
-            <div style={{width: '30%'}}>
-              <input
-                type="button"
-                data-toggle="collapse"
-                data-target="#collapseExample"
-                aria-expanded="false"
-                aria-controls="collapseExample"
-                value="Pontos de Interesse"
-                className="btn btn-primary"
-                style={styles.btn}
-              />
-            </div>
-            <div className="collapse" id="collapseExample">
-              <select multiple className="form-control" id="exampleFormControlSelect2">
-              </select>
-            </div>
-          </center>
-            <div  className="row">
-              <div className="col-6" style={styles.btnContainer}>
-                  <input type="button" value="Alterar" className="btn btn-primary" style={styles.btn}/>
+              <div style={{marginTop: '7em'}}>
+                <img style={{width: '3.7em', height: '4em', margin:'0'}} src={TrajetoIcon} alt={"Trajeto Logo"}/>
               </div>
-              <div className="col-6" style={styles.btnContainer}>
-              <input type="button" value="Excluir" className="btn btn-primary" style={styles.btn}/>
+              <div style={styles.textMargin}>
+                {rota.nomeRota}
+              </div>
+              <div style={styles.textMargin}>ORIGEM:</div>
+              <div style={styles.textBold}>{rota.rota.origin}</div>
+              <div style={styles.textMargin}>DESTINO:</div>
+              <div style={styles.textBold}>{rota.rota.destination}</div>
+
+              <div>
+                <input
+                  type="button"
+                  data-toggle="collapse"
+                  data-target="#collapseExample"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                  value="Pontos de Interesse"
+                  className="btn btn-primary"
+                  style={styles.btn}
+                />
+              </div>
+              <div className="collapse" id="collapseExample" style={{paddingBottom: '25px'}}>
+                <ul className="list-group">
+                  {rota.rota.waypoints ? rota.rota.waypoints.map((point, key) => <li className="list-group-item" key={key}>{point.location.query}</li>) : null}
+                </ul>
+              </div>
+            </center>
+            <GoogleMaps callback={this.saveFunc} />
+            <div  className="row">
+                <div className="col-6" style={styles.btnContainer}>
+                    <input type="button" value="Alterar" className="btn btn-primary" style={styles.btn} onClick={this.handleAlter}/>
+                </div>
+                <div className="col-6" style={styles.btnContainer}>
+                <input type="button" value="Excluir" className="btn btn-primary" style={styles.btn} onClick={this.handleDelete}/>
+              </div>
             </div>
           </div>
-          </form>
         </div>
       </div>
     )

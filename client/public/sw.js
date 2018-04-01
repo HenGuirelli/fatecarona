@@ -5,8 +5,6 @@ self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('notificationclose', function(e) {
   var notification = e.notification;
   var primaryKey = notification.data.primaryKey;
-
-  console.log('Closed notification: ' + primaryKey);
 });
 
 self.addEventListener('notificationclick', function(e) {
@@ -20,7 +18,7 @@ self.addEventListener('notificationclick', function(e) {
     });
     clients.openWindow('/caronas/historico');
   }
-  
+
   notification.close();
 });
 

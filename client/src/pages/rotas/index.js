@@ -1,23 +1,7 @@
 import React, { Component } from 'react'
 import Rota from '../../components/Rota'
 import { connect } from 'react-redux'
-import { alteraRota } from '../../actions/mapActions'
-
-
-const rotas = [
-  {
-    id: '1',
-    desc: 'Meu trajeto p casa',
-    origem: 'FATEC SÃO CAETANO DO SUL',
-    destino : 'DIADEMA'
-  },
-  {
-    id: '1',
-    desc: 'Meu trajeto p facul',
-    origem: 'DIADEMA',
-    destino : 'FATEC SÃO CAETANO DO SUL'
-  },
-]
+import { alteraRota, buscarRotas } from '../../actions/mapActions'
 
 class Rotas extends Component{
 
@@ -31,6 +15,8 @@ class Rotas extends Component{
   }
 
   render(){
+    const { rotas, userData, needLoad } = this.props
+
     const styles = {
       button: {
         margin: '25px 0',
@@ -50,21 +36,21 @@ class Rotas extends Component{
       }
     }
 
+    if (userData.email && needLoad) this.props.dispatch(buscarRotas(userData.email))
+
     return(
       <div className="pageBase">
         <div className="container">
-            {  rotas.map((rota, key) =>
+            { rotas.length > 0 ? rotas.map((rota, key) =>
               <div className="row" key={key} style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
                 <button className="btn loginBtn" onClick={() => this.handleActivation(rota)}  style={styles.rotaButton}>
                   <Rota
-                    desc={rota.desc}
-                    origem={rota.origem}
-                    destino={rota.destino}
-                    key={rota.id}
+                    desc={rota.nomeRota}
+                    key={rota._id}
                   />
                 </button>
               </div>
-            )}
+            ) : null}
             <input type="button" onClick={this.handleSubmit} value="Adicionar" className="btn loginBtn btn-block" style={styles.button}/>
         </div>
       </div>
@@ -75,6 +61,8 @@ class Rotas extends Component{
 export default connect(store => {
   return {
     user: store.user.user,
-    userData: store.user.userData
+    userData: store.user.userData,
+    rotas: store.map.rotas,
+    needLoad: store.map.needLoad
   }
 })(Rotas)
