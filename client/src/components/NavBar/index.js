@@ -20,7 +20,7 @@ class NavBar extends Component {
     }
 
     return(
-      <nav className="navbar navbar-expand-lg navbar-dark ftc" style={{position: 'fixed', width: '100%', height: '58px', top: 0, left: 0, zIndex: 100}}>
+      <nav className="navbar navbar-expand-lg navbar-dark ftc" style={{position: 'fixed', width: '100%', height: '58px', top: 0, left: 0, zIndex: 100, boxShadow: 'rgba(0, 0, 0, 0.54) 0px 2px 2px 0px'}}>
         <SideMenu callback={this.bindDrawer} handler={this.handleMenuSelect} menuItems={menuItems}/>
         <button style={{position: 'absolute', left: 0, border: 'none'}} className="navbar-toggler" type="button" onClick={() => this.openDrawer()}>
           <span className="navbar-toggler-icon"/>

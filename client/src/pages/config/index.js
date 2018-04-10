@@ -5,33 +5,41 @@ export default class Config extends Component {
     const { logOut } = this.props
 
     const styles = {
-      button1: {
-        width: '90%',
-        margin: '1em 0',
-        backgroundColor: '#A8CF45'
-      },
-      button2: {
+      button: {
         width: '90%',
         margin: '0 0 1em 0',
         backgroundColor: '#6E4D8B',
         color: '#fff',
-        font: 'bold'
+        font: 'bold',
+        cursor: 'pointer'
+      },
+      item: {
+        padding: '1em',
+        borderBottom: '1px solid #d6d6d6',
+        cursor: 'pointer'
       }
     }
 
     return(
       <div className="pageBase">
         <div>
-          <div style={{padding: '1em', borderBottom: '1px solid #d6d6d6'}}>
-            <h4>Serviços conectados:</h4>
+          <div style={styles.item}>
+            <h4>Minha Conta</h4>
           </div>
-          <div style={{padding: '1em', borderBottom: '1px solid #d6d6d6'}}>
-            <h4>Versão:</h4>
-            Beta 1.0
+          <div style={styles.item}>
+            <h4>Segurança e privacidade</h4>
+          </div>
+          <div style={styles.item}>
+            <h4>Notificações</h4>
+          </div>
+          <div style={styles.item}>
+            <h4>Sobre o Fatecarona</h4>
+          </div>
+          <div style={styles.item}>
+            <h4>Central de ajuda</h4>
           </div>
           <center style={{position: 'absolute', bottom: 0, width: '100%'}}>
-            <input type="button" style={styles.button1} className="btn" value="Ajuda/Suporte"/>
-            <input type="button" style={styles.button2} className="btn" value="Logoff" onClick={logOut}/>
+            <input type="button" style={styles.button} className="btn" value="SAIR" onClick={logOut}/>
           </center>
         </div>
       </div>

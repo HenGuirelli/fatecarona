@@ -30,5 +30,6 @@ export default {
   },
   root: {
     backgroundColor: '#6E4D8B',
+    paddingTop: '30px'
   }
 }

@@ -38,7 +38,7 @@ var upload = multer({ storage: storage }).single('image');
 var pool = mysql.createPool({
   host     : 'localhost',
   user     : 'root',
-  password : 'root',
+  password : '3847147298',
   database : 'Fatecarona'
 });
 
@@ -249,7 +249,7 @@ router.route('/images/:file_name')
 router.route('/cars/:user_email')
   .get(function(req, res) {
     pool.getConnection(function(err, connection) {
-      if (err) {
+      if (err) {lift/members/1
         res.send(err);
         return;
       }
@@ -325,10 +325,27 @@ router.route('/lift/:user_email')
         res.send(err);
         return;
       }
-
-      connection.query('SELECT * FROM membros_carona where email = ?',[req.params.user_email], function(err, rows, fields) {
+      connection.query('SELECT * FROM caronas where emailMotorista = ?',[req.params.user_email], function(err, rows, fields) {
         connection.release();
         if (err){
+          res.send(err);
+          return;
+        }
+        res.json(rows);
+      });
+    });
+  });
+
+router.route('/lift/members/:id')
+  .get(function(req, res) {
+    pool.getConnection(function(err, connection) {
+      if (err) {
+        res.send(err);
+        return;
+      }
+      connection.query('SELECT * FROM membros_carona where id = ?',[req.params.id], function(err, rows, fields) {
+        connection.release();
+        if (err) {
           res.send(err);
           return;
         }
