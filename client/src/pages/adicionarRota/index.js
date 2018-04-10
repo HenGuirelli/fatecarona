@@ -29,6 +29,7 @@ class AdicionarRota extends Component {
 
   addWaypoint = () => {
     let waypoints = this.state.waypoints;
+    if (!this.refs.waypoint.value) return
     if (!waypoints.includes(this.refs.waypoint.value)) {
       waypoints.push(this.refs.waypoint.value);
       document.cookie = JSON.stringify(waypoints);
@@ -168,6 +169,6 @@ export default connect(store => {
     userData: store.user.userData,
     dirServ: store.map.dirServ,
     dirDisp: store.map.dirDisp,
-    map: store.map.map,
+    map: store.map.map
   }
 })(AdicionarRota)

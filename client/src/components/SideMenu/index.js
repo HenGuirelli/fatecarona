@@ -38,15 +38,19 @@ export default class SideMenu extends React.Component {
           <img src={headerIcon} alt="" className="img-fluid mx-auto d-block"/>
         </center>
         <Divider style={{backgroundColor: '#FFF', height: '1px'}} />
-        {menuItems.map(item =>
-          <Link to={item.path} onClick={this.handleClose} key={item.path}>
-            <MenuItem
-              style={item.selected ? styles.itemSelected : styles.itemUnselected}
-              primaryText={item.text}
-              leftIcon={<item.icon color={item.selected ? '#000' : '#FFF'}/>}
-            />
-            <Divider style={{backgroundColor: '#FFF', height: '2px'}} />
-          </Link>
+        {menuItems.map(item => {
+            if (item.menu) {
+              return <Link to={item.path} onClick={this.handleClose} key={item.path}>
+                <MenuItem
+                  style={item.selected ? styles.itemSelected : styles.itemUnselected}
+                  primaryText={item.text}
+                  leftIcon={<item.icon color={item.selected ? '#000' : '#FFF'}/>}
+                />
+                <Divider style={{backgroundColor: '#FFF', height: '2px'}} />
+              </Link>
+            }
+            return null
+          }
         )}
       </Drawer>
     );

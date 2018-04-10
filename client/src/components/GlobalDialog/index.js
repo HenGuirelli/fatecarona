@@ -15,6 +15,8 @@ class GlobalDialog extends Component {
   }
 
   displayDialog = (dialog, path) => {
+    if (!dialog.title) dialog.title = null
+    if (!dialog.actions) dialog.actions = null
     dialog.open = true
     this.setState(dialog)
     this.path = path

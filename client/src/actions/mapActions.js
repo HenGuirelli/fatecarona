@@ -8,9 +8,23 @@ export function alteraRota(rota) {
   }
 }
 
+export function buscarRotas(email) {
+  return{
+    type: "BUSCAR_ROTAS",
+    payload: axios.get(config.endpoint + '/routes/' + email)
+  }
+}
+
+export function excluirRota(id) {
+  return{
+    type: "EXCLUIR_ROTA",
+    payload: axios.delete(config.endpoint + '/routes/route/' + id)
+  }
+}
+
 export function storeRoute(route, email, nomeRota) {
   return {
-    type: "STORE_ROUTE",
+    type: "GRAVAR_ROTA",
     payload: axios.post(config.endpoint + '/routes', {
       email,
       nomeRota,

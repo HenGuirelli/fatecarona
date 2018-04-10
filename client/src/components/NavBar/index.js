@@ -12,10 +12,10 @@ class NavBar extends Component {
   };
 
   render() {
-    const { user, userData, menuItems } = this.props
+    const { menuItems, needReload } = this.props
     let item = menuItems.find(item => item.selected)
 
-    if (user.email !== undefined && userData.nome === undefined) {
+    if (needReload) {
       this.props.dispatch(setUserData(this.props.user.email.split('@')[0]));
     }
 
@@ -33,27 +33,15 @@ class NavBar extends Component {
             <img className="App-logo" src={logo} width="30" height="30" alt=""/>{' '}Fatecarona
           </Link>
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/perfil">Editar perfil</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/caronas/request">Quero carona</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/caronas/offer">Oferecer carona</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/rotas">Meus Trajetos</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/caronas/historico">Minhas caronas</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/veiculos">Meus veículos</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="#" onClick={this.props.logOut}>LogOut</Link>
-            </li>
+            {menuItems.map(item => {
+                if (item.menu) {
+                  return <li className="nav-item" key={item.path} style={{fontSize: '15px'}}>
+                    <Link className="nav-link" to={item.path}>{item.text}</Link>
+                  </li>
+                }
+                return null
+              }
+            )}
           </ul>
         </div>
       </nav>
@@ -64,6 +52,6 @@ class NavBar extends Component {
 export default connect(store => {
   return {
     user: store.user.user,
-    userData: store.user.userData
+    needReload: store.user.needReload
   }
 })(NavBar)
