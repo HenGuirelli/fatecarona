@@ -191,7 +191,7 @@ router.route('/routes')
 
 router.route('/routes/:user_email')
   .get(function(req, res) {
-    mongoPool.collection('rotas').findOne({ email: req.params.user_email }, (err, result) => {
+    mongoPool.collection('rotas').find({ email: req.params.user_email }).toArray((err, result) => {
       if(err) {
         res.send(err);
         return;
