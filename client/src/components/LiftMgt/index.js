@@ -7,18 +7,10 @@ import { connect } from 'react-redux'
 
 class Lift extends Component {
   render() {
-    const { userData, text } = this.props
+    const { userData, infomotorista, caronista, data, tipo } = this.props
     window.comp = LiftRating
     return(
       <div className="container" style={styles.root}>
-        <div className="row" style={{borderBottom: '1px solid grey'}}>
-          <LiftRating
-            userData={userData}
-            name="Thiago"
-            rating={4}
-            text="I don't like this"
-          />
-        </div>
         <div className="row">
           <div className="col-3 col-xl-1">
             <Avatar
@@ -27,18 +19,20 @@ class Lift extends Component {
             />
           </div>
           <div className="col-9 col-xl-11">
-            <div>
-              {text}
-            </div>
+            {
+              caronista === 1 ?
+              <div style={styles.descSize}>
+                <span>VOCÊ está aguardando resposta de </span>{infomotorista}
+                <span>para carona em </span>{data} {tipo}
+              </div>
+              :
+              <div style={styles.descSize}>
+                <span>VOCÊ está oferecendo carona em </span> {data} {tipo}
+              </div>
+            }
           </div>
         </div>
-        <div className="row" style={{paddingTop: '10px'}}>
-          <div className="col-0 col-xl-6"/>
-          <div className="col-12 col-xl-6" style={styles.btnContainer}>
-            <input type="button" style={styles.btn} className="btn" value="GERENCIAR" />
-            <input type="button" style={styles.btn} className="btn" value="ESPIAR MOTORISTA" />
-          </div>
-        </div>
+
       </div>
     )
   }

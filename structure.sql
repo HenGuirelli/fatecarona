@@ -51,6 +51,8 @@ create table caronas (
   musica boolean default 0,
   veiculo int,
   qtdVagas tinyint unsigned default 1,
+  tipo varchar(25),
+  status varchar(15),
   foreign key (veiculo) references veiculos(id),
   foreign key (emailMotorista) references membros(email)
 );
@@ -63,14 +65,14 @@ create table membros_carona (
 );
 
 insert into veiculos (placa, email, ativo, marca, modelo, cor) values
-  ('AAA-1111', 'alexandre.santos67', 1, 'Mercedes', 'SLK', 'preto'),
+  ('AAA-1111', 'thiago.ramos9', 1, 'Mercedes', 'SLK', 'preto'),
   ('BBB-2222', 'alexandre.santos67', 1, 'Fiat', 'Palio', 'vermelho'),
-  ('CCC-3333', 'alexandre.santos67', 1, 'Fiat', 'Siena', 'branco');
+  ('CCC-3333', 'alexandre.santos67', 0, 'Fiat', 'Siena', 'branco');
 
-
-insert into caronas (dataCarona, rota, emailMotorista, kilometragem, veiculo, qtdVagas, musica) values
-  (NOW(), 1, 'thiago.ramos9', 12.5, 1, 3, 1),
-  (NOW(), 2, 'thiago.ramos9', 30, 2, 4, 1);
+insert into caronas (dataCarona, rota, emailMotorista, kilometragem, veiculo, qtdVagas, musica, tipo, status) values
+  (NOW(), 1, 'thiago.ramos9', 12.5, 1, 3, 1, "indo para a FATEC", "pendente"),
+  (NOW(), 1, 'alexandre.santos67', 12.5, 1, 3, 1, "indo para a FATEC", "pendente"),
+  (NOW(), 1, 'alexandre.santos67', 12.5, 1, 3, 1, "saindo da FATEC", "em andamento");
 
 insert into membros_carona values
   (1, 'alexandre.santos67'),

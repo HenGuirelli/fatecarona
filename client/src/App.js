@@ -12,6 +12,7 @@ import Perfil from './pages/perfil'
 import Oferecer from './pages/oferecer'
 import Pedir from './pages/pedir'
 import Caronas from './pages/caronas'
+import GerencCaronas from './components/LiftPend'
 import Config from './pages/config'
 import Veiculos from './pages/veiculos'
 import AtivarVeic from './pages/ativarveic'
@@ -67,24 +68,31 @@ class App extends Component {
     return (
       <div className="App">
         {isLogged ? <NavBar logOut={this.logOut.bind(this)} menuItems={menuItems}/> : null}
-        <Switch>
-          <Route exact path="/" component={MainPage}/>
-          <Route exact path="/rotas" component={Rotas}/>
-          <Route path="/rotas/alterar" component={AlterarRota}/>
-          <Route path="/rotas/adicionar" component={AdicionarRota}/>
-          <Route path="/perfil" component={Perfil}/>
-          <Route path="/caronas/historico" component={Caronas}/>
-          <Route path="/caronas/request" component={Pedir}/>
-          <Route path="/caronas/offer" component={Oferecer}/>
-          <Route exact path="/veiculos" component={Veiculos}/>
-          <Route path="/veiculos/ativar" component={AtivarVeic}/>
-          <Route path="/veiculos/cadastrar" component={CadVeiculo}/>
-          <Route path="/recuperarsenha" component={Recuperar}/>
-          <Route path="/cadastro" component={Cadastro}/>
-          <Route path="/config" render={() => <Config logOut={this.logOut.bind(this)}/>}/>
-          <Route render={() => <div>404 not found</div>} />
-        </Switch>
-        {window.scrollTo(0, 0)}
+        <Route exact path="/" component={MainPage}/>
+        <Route exact path="/rotas" component={Rotas}/>
+        <Route path="/rotas/alterar" component={AlterarRota}/>
+        <Route path="/rotas/adicionar" component={AdicionarRota}/>
+        <Route path="/perfil" component={Perfil}/>
+        <Route path="/caronas/historico" component={Caronas}/>
+        <Route path="/caronas/request" component={Pedir}/>
+        <Route path="/caronas/gerenciar" component={GerencCaronas}/>
+        <Route path="/caronas/offer" component={Oferecer}/>
+        <Route exact path="/veiculos" component={Veiculos}/>
+        <Route path="/veiculos/ativar" component={AtivarVeic}/>
+        <Route path="/veiculos/cadastrar" component={CadVeiculo}/>
+        <Route path="/recuperarsenha" component={Recuperar}/>
+        <Route path="/cadastro" component={Cadastro}/>
+        <Route path="/config" render={() => <Config logOut={this.logOut.bind(this)}/>}/>
+        <Route path="/test" render={() =>
+          <div>
+            <input
+            type="button"
+            onClick={this.test.bind(this)} value="Insert"/>
+            <input
+            type="button"
+            onClick={this.testLoad.bind(this)} value="Select"/>
+          </div>
+        }/>
       </div>
     );
   }

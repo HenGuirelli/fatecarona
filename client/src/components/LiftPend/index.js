@@ -1,15 +1,22 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import styles from '../LiftMgt/styles'
 import CadeiranteIcon from '../LiftMgt/cadeirante_roxo.png'
 import FumanteIcon from '../LiftMgt/fumante_roxo.png'
 import MusicIcon from '../LiftMgt/musica_roxo.png'
 import CarIcon from '../Veiculo/veiculo_preto.png'
 import LugarIcon from '../Veiculo/lugares_preto.png'
+import { loadCarbyID } from '../../actions/carActions'
 
 
-export default class LiftPend extends Component {
+class GerencCarona extends Component {
+
+  componentWillMount() {
+    this.props.dispatch(loadCarbyID(this.props.carona.veiculo))
+  }
+
   render() {
-    const {dia, hora, tipo } = this.props
+    const { carona, liftCar } = this.props
 
     const instyle = {
       textStyle:{
@@ -36,12 +43,16 @@ export default class LiftPend extends Component {
     return(
       <div className="container" style={styles.root}>
         <center>
-          <div style={{borderBottom: '1px solid grey', margin: '1em 0'}}>
+          <div style={{borderBottom: '1px solid grey', marginTop: '5em'}}>
             <div>
                 DETALHE DA CARONA
             </div>
             <div style={styles.btnContainer}>
-              <input type="button" style={styles.btn2} className="btn btn-primary" value="Desistir da carona" />
+              {carona.status === "pendente" ?
+                <input type="button" style={styles.btn} className="btn btn-primary" value="Desistir da carona" />
+                :
+                <input type="button" style={styles.btn} className="btn btn-primary" value="Avaliar carona" />
+              }
             </div>
           </div>
 
@@ -51,7 +62,11 @@ export default class LiftPend extends Component {
                 STATUS:
               </div>
               <div className="col-0">
-                PENDENTE
+                {carona.status === "pendente" ?
+                  <span>PENDENTE</span>
+                  :
+                  <span>ATIVA</span>
+                }
               </div>
             </div>
             <div className="row">
@@ -59,7 +74,7 @@ export default class LiftPend extends Component {
                 DIA:
               </div>
               <div className="col-0">
-                {dia}
+                {carona.dataCarona}
               </div>
             </div>
             <div className="row">
@@ -67,7 +82,7 @@ export default class LiftPend extends Component {
                 HORA:
               </div>
               <div className="col-0">
-                {hora}
+                {carona.dataCarona}
               </div>
             </div>
             <div className="row">
@@ -75,7 +90,7 @@ export default class LiftPend extends Component {
                 TIPO:
               </div>
               <div className="col-0">
-                {tipo}
+                {carona.tipo}
               </div>
             </div>
           </div>
@@ -89,16 +104,22 @@ export default class LiftPend extends Component {
               <div className="col-5">
                 <img src={CadeiranteIcon} alt={"Cadeirante Icon"} style={instyle.prefIcons}/>
               </div>
-              <div className="col-0" style={instyle.prefText}>
-                NÃO ACOMODA CADEIRANTE
-              </div>
+              {carona.acessibilidade === 0 ?
+                <div>NÃO ACOMODA CADEIRANTE</div>
+                :
+                <div>ACOMODA CADEIRANTE</div>
+              }
             </div>
             <div className="row" style ={{marginTop: '1em'}}>
               <div className="col-5">
                 <img src={FumanteIcon} alt={"Fumante Icon"} style={instyle.prefIcons}/>
               </div>
               <div className="col-0" style={instyle.prefText}>
-                NÃO FUMAR
+                {carona.fumantes === 0 ?
+                  <div>NÃO FUMAR</div>
+                  :
+                  <div>PERMITIDO FUMAR</div>
+                }
               </div>
             </div>
             <div className="row" style ={{marginTop: '1em'}}>
@@ -106,24 +127,34 @@ export default class LiftPend extends Component {
                 <img src={MusicIcon} alt={"Music Icon"} style={instyle.prefIcons}/>
               </div>
               <div className="col-0" style={instyle.prefText}>
-                PERMITIDO OUVIR MÚSICA
+                {carona.musica === 0 ?
+                  <div>NÃO É PERMITIDO OUVIR MÚSICA</div>
+                  :
+                  <div>PERMITIDO OUVIR MÚSICA</div>
+                }
               </div>
             </div>
-
           </div>
 
           <div style={{borderBottom: '1px solid grey', margin: '1em 0'}}>
             <div>
                 VEÍCULO
             </div>
+
             <div className="row" style ={{marginTop: '1em'}}>
               <div className="col-6">
                   <img style={{width: '4em', height: '1.7em', float:'right'}} src={CarIcon} alt={"Car Icon"}/>
               </div>
               <div className="col-0" style={instyle.prefText}>
-                  FLP-1297
+                {liftCar.map((veiculo, key)=>
+                  <div key={key}>
+                    {veiculo.placa}
+                  </div>
+                )
+                }
               </div>
             </div>
+
             <div className="row">
               <div className="col-6">
                 <div className="row" style={{textAlign:'right'}}>
@@ -131,13 +162,16 @@ export default class LiftPend extends Component {
                     <img style={{width: '1em', height: '1.2em', float: 'right'}} src={LugarIcon} alt={"Lugares Icon"}/>
                   </div>
                   <div className="col-0">
-                    <span >2 Lugares</span>
+                    <span >{carona.qtdVagas} Lugares</span>
                   </div>
                 </div>
               </div>
-              <div>
-                HB20, HYUNDAI
-              </div>
+              {liftCar.map((veiculo, key)=>
+                <div key={key}>
+                  {veiculo.marca}, {veiculo.modelo}
+                </div>
+              )
+              }
             </div>
           </div>
 
@@ -146,3 +180,12 @@ export default class LiftPend extends Component {
     )
   }
 }
+
+export default connect(store => {
+  return {
+    liftCar: store.car.liftCar,
+    userData: store.user.userData,
+    veiculos: store.car.veiculos,
+    carona: store.lift.carona,
+  }
+})(GerencCarona)

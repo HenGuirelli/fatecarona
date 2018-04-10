@@ -22,6 +22,13 @@ export function loadCar(email) {
   }
 }
 
+export function loadCarbyID(carID) {
+  return {
+    type: "LOAD_CAR_BY_ID",
+    payload: axios.get(config.endpoint + "/cars/lift/" + carID)
+  }
+}
+
 export function updateCar(placa, car) {
   return {
     type: "UPDATE_CAR",
