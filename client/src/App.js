@@ -12,6 +12,7 @@ import Perfil from './pages/perfil'
 import Oferecer from './pages/oferecer'
 import Pedir from './pages/pedir'
 import Caronas from './pages/caronas'
+import GerencCaronas from './components/LiftPend'
 import Config from './pages/config'
 import Veiculos from './pages/veiculos'
 import AtivarVeic from './pages/ativarveic'
@@ -84,6 +85,7 @@ class App extends Component {
         <Route path="/perfil" component={Perfil}/>
         <Route path="/caronas/historico" component={Caronas}/>
         <Route path="/caronas/request" component={Pedir}/>
+        <Route path="/caronas/gerenciar" component={GerencCaronas}/>
         <Route path="/caronas/offer" component={Oferecer}/>
         <Route exact path="/veiculos" component={Veiculos}/>
         <Route path="/veiculos/ativar" component={AtivarVeic}/>

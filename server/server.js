@@ -246,6 +246,26 @@ router.route('/images/:file_name')
 
 //Manipulação de Veiculos
 
+router.route('/cars/lift/:car_id')
+  .get(function(req, res) {
+    pool.getConnection(function(err, connection) {
+      if (err) {
+        res.send(err);
+        return;
+      }
+
+      connection.query('SELECT * FROM veiculos where id = ?',[req.params.car_id], function(err, rows, fields) {
+        connection.release();
+        if (err){
+          res.send(err);
+          return;
+        }
+        res.json(rows);
+      });
+    });
+  });
+
+
 router.route('/cars/:user_email')
   .get(function(req, res) {
     pool.getConnection(function(err, connection) {
@@ -264,7 +284,6 @@ router.route('/cars/:user_email')
       });
     });
   });
-
 
 router.route('/cars/action/:car_placa')
 
@@ -318,7 +337,7 @@ router.route('/cars')
 
 //Manipulação de Caronas
 
-router.route('/lift/:user_email')
+router.route('/caronista/:user_email')
   .get(function(req, res) {
     pool.getConnection(function(err, connection) {
       if (err) {
@@ -326,7 +345,7 @@ router.route('/lift/:user_email')
         return;
       }
 
-      connection.query('SELECT * FROM membros_carona where email = ?',[req.params.user_email], function(err, rows, fields) {
+      connection.query('SELECT * FROM membros_carona where emailCaronista = ?',[req.params.user_email], function(err, rows, fields) {
         connection.release();
         if (err){
           res.send(err);
@@ -336,6 +355,44 @@ router.route('/lift/:user_email')
       });
     });
   });
+
+router.route('/lift/motorista/:email_motorista')
+  .get(function(req, res) {
+    pool.getConnection(function(err, connection) {
+      if (err) {
+        res.send(err);
+        return;
+      }
+
+      connection.query('SELECT * FROM caronas where emailMotorista = ?',[req.params.email_motorista], function(err, rows, fields) {
+        connection.release();
+        if (err){
+          res.send(err);
+          return;
+        }
+        res.json(rows);
+      });
+    });
+  });
+
+router.route('/lift/id/:carona_id')
+    .get(function(req, res) {
+      pool.getConnection(function(err, connection) {
+        if (err) {
+          res.send(err);
+          return;
+        }
+
+        connection.query('SELECT * FROM caronas where id = ?',[req.params.carona_id], function(err, rows, fields) {
+          connection.release();
+          if (err){
+            res.send(err);
+            return;
+          }
+          res.json(rows);
+        });
+      });
+    });
 
 //notificações
 
