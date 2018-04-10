@@ -43,15 +43,15 @@ class GerencCarona extends Component {
     return(
       <div className="container" style={styles.root}>
         <center>
-          <div style={{borderBottom: '1px solid grey', margin: '1em 0'}}>
+          <div style={{borderBottom: '1px solid grey', marginTop: '5em'}}>
             <div>
                 DETALHE DA CARONA
             </div>
             <div style={styles.btnContainer}>
               {carona.status === "pendente" ?
-                <input type="button" style={styles.btn2} className="btn btn-primary" value="Desistir da carona" />
+                <input type="button" style={styles.btn} className="btn btn-primary" value="Desistir da carona" />
                 :
-                <input type="button" style={styles.btn2} className="btn btn-primary" value="Avaliar carona" />
+                <input type="button" style={styles.btn} className="btn btn-primary" value="Avaliar carona" />
               }
             </div>
           </div>
