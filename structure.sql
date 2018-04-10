@@ -69,7 +69,6 @@ insert into veiculos (placa, email, ativo, marca, modelo, cor) values
   ('BBB-2222', 'alexandre.santos67', 1, 'Fiat', 'Palio', 'vermelho'),
   ('CCC-3333', 'alexandre.santos67', 0, 'Fiat', 'Siena', 'branco');
 
-
 insert into caronas (dataCarona, rota, emailMotorista, kilometragem, veiculo, qtdVagas, musica, tipo, status) values
   (NOW(), 1, 'thiago.ramos9', 12.5, 1, 3, 1, "indo para a FATEC", "pendente"),
   (NOW(), 1, 'alexandre.santos67', 12.5, 1, 3, 1, "indo para a FATEC", "pendente"),
@@ -77,4 +76,6 @@ insert into caronas (dataCarona, rota, emailMotorista, kilometragem, veiculo, qt
 
 insert into membros_carona values
   (1, 'alexandre.santos67'),
-  (1, 'antonio.souza26');
+  (1, 'antonio.souza26'),
+  (2, 'alexandre.santos67'),
+  (2, 'antonio.souza26');

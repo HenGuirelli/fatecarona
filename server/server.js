@@ -38,7 +38,7 @@ var upload = multer({ storage: storage }).single('image');
 var pool = mysql.createPool({
   host     : 'localhost',
   user     : 'root',
-  password : 'root',
+  password : '3847147298',
   database : 'Fatecarona'
 });
 
@@ -269,7 +269,7 @@ router.route('/cars/lift/:car_id')
 router.route('/cars/:user_email')
   .get(function(req, res) {
     pool.getConnection(function(err, connection) {
-      if (err) {
+      if (err) {lift/members/1
         res.send(err);
         return;
       }
@@ -344,7 +344,6 @@ router.route('/caronista/:user_email')
         res.send(err);
         return;
       }
-
       connection.query('SELECT * FROM membros_carona where emailCaronista = ?',[req.params.user_email], function(err, rows, fields) {
         connection.release();
         if (err){
@@ -355,6 +354,7 @@ router.route('/caronista/:user_email')
       });
     });
   });
+
 
 router.route('/lift/motorista/:email_motorista')
   .get(function(req, res) {
