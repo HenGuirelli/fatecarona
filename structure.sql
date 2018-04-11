@@ -43,7 +43,7 @@ create table avaliacao (
 create table caronas (
   id int auto_increment primary key,
   dataCarona datetime,
-  rota tinyint unsigned,
+  rota varchar(50),
   emailMotorista varchar(40),
   kilometragem numeric(3,1),
   acessibilidade boolean default 0,
@@ -70,9 +70,11 @@ insert into veiculos (placa, email, ativo, marca, modelo, cor) values
   ('CCC-3333', 'alexandre.santos67', 0, 'Fiat', 'Siena', 'branco');
 
 insert into caronas (dataCarona, rota, emailMotorista, kilometragem, veiculo, qtdVagas, musica, tipo, status) values
-  (NOW(), 1, 'thiago.ramos9', 12.5, 1, 3, 1, "indo para a FATEC", "pendente"),
-  (NOW(), 1, 'alexandre.santos67', 12.5, 1, 3, 1, "indo para a FATEC", "pendente"),
-  (NOW(), 1, 'alexandre.santos67', 12.5, 1, 3, 1, "saindo da FATEC", "em andamento");
+  ("2018-04-15 10:08:28", "5abfbb953f4bbe6c741a195b", 'thiago.ramos9', 12.5, 1, 3, 1, "indo para a FATEC", "pendente"),
+  ("2018-04-09 10:08:28", "5abfbb953f4bbe6c741a195b", 'alexandre.santos67', 12.5, 1, 3, 1, "indo para a FATEC", "pendente"),
+  ("2018-04-15 10:08:28", "5acd5e718fc79a2d484721fb", 'alexandre.santos67', 12.5, 1, 3, 1, "saindo da FATEC", "pendente"),
+  ("2018-04-15 10:08:28", "5abfbb953f4bbe6c741a195b", 'alexandre.santos67', 12.5, 1, 3, 1, "saindo da FATEC", "em andamento");
+
 
 insert into membros_carona values
   (1, 'alexandre.santos67'),

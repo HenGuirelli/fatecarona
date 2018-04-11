@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 export default class Map extends Component {
   componentDidMount() {
     this.setMap();
-    this.props.callback(this.displayRoute);
+    this.props.callback(this.displayRoute, this.renderCircles, this.circleContains);
   }
 
   setMap() {
@@ -27,26 +27,31 @@ export default class Map extends Component {
       return;
     }
 
-    this.dirServ.route({
-      origin: route.origin,
-      destination: route.destination,
-      waypoints: route.waypoints,
-      optimizeWaypoints: true,
-      travelMode: 'DRIVING'
-    }, (response, status) => {
-      if (status === 'OK') {
-        this.dirDisp.setDirections(response)
-        //this.renderCircles(response.routes[0].overview_path);
-        let routeState = this.props.routeState
-        if (routeState) routeState(response);
-      } else {
-        alert('Não foi possível estabelecer rota, motivo: ' + status);
+    return new Promise((resolve, reject) => {
+        this.dirServ.route({
+          origin: route.origin,
+          destination: route.destination,
+          waypoints: route.waypoints,
+          optimizeWaypoints: true,
+          travelMode: 'DRIVING'
+        }, (response, status) => {
+          if (status === 'OK') {
+            this.dirDisp.setDirections(response)
+            resolve(response.routes[0].overview_path)
+            let routeState = this.props.routeState
+            if (routeState) routeState(response);
+          } else {
+            reject('Não foi possível estabelecer rota, motivo: ' + status);
+          }
+          reject('')
+        })
       }
-    });
+    )
   };
 
   renderCircles = (path) => {
-    let prev = new window.google.maps.Circle({
+    let circles = []
+    circles[0] = new window.google.maps.Circle({
       strokeColor: '#FF0000',
       strokeOpacity: 0.8,
       strokeWeight: 2,
@@ -56,9 +61,9 @@ export default class Map extends Component {
       center: {lat: path[0].lat(), lng: path[0].lng()},
       radius: 500
     });
-    for (var i = 1; i < path.length; i++) {
-      if (!(this.circleContains(prev, path[i].lat(), path[i].lng()))) {
-        prev = new window.google.maps.Circle({
+    for (var i = 1, index = 1; i < path.length; i++) {
+      if (!(this.circleContains(circles[index - 1], path[i].lat(), path[i].lng()))) {
+        circles[index] = new window.google.maps.Circle({
           strokeColor: '#FF0000',
           strokeOpacity: 0.8,
           strokeWeight: 2,
@@ -67,9 +72,11 @@ export default class Map extends Component {
           map: this.map,
           center: {lat: path[i].lat(), lng: path[i].lng()},
           radius: 500
-        });
+        })
+        index++
       }
     }
+    return circles
   };
 
   circleContains = (circle, lat, lng) => {
@@ -78,9 +85,9 @@ export default class Map extends Component {
   }
 
   render () {
-
+    const { hidden } = this.props
     return (
-        <div className="Map container pageBase" />
+        <div className="Map container pageBase" style={hidden ? {height: '0px'} : null}/>
     );
   }
 }
