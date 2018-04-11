@@ -222,6 +222,16 @@ router.route('/routes/route/:id_rota')
         }
         res.send(result);
     });
+  })
+  .get(function(req, res) {
+    mongoPool.collection('rotas').findOne(
+      {_id: new ObjectId(req.params.id_rota)}, (err, result) => {
+        if(err) {
+          res.send(err);
+          return;
+        }
+        res.send(result);
+    });
   });
 
 //Manipulação de imagens
@@ -384,6 +394,25 @@ router.route('/lift/id/:carona_id')
         }
 
         connection.query('SELECT * FROM caronas where id = ?',[req.params.carona_id], function(err, rows, fields) {
+          connection.release();
+          if (err){
+            res.send(err);
+            return;
+          }
+          res.json(rows);
+        });
+      });
+    });
+
+router.route('/lift')
+    .get(function(req, res) {
+      pool.getConnection(function(err, connection) {
+        if (err) {
+          res.send(err);
+          return;
+        }
+
+        connection.query('SELECT * FROM caronas', function(err, rows, fields) {
           connection.release();
           if (err){
             res.send(err);

@@ -68,31 +68,24 @@ class App extends Component {
     return (
       <div className="App">
         {isLogged ? <NavBar logOut={this.logOut.bind(this)} menuItems={menuItems}/> : null}
-        <Route exact path="/" component={MainPage}/>
-        <Route exact path="/rotas" component={Rotas}/>
-        <Route path="/rotas/alterar" component={AlterarRota}/>
-        <Route path="/rotas/adicionar" component={AdicionarRota}/>
-        <Route path="/perfil" component={Perfil}/>
-        <Route path="/caronas/historico" component={Caronas}/>
-        <Route path="/caronas/request" component={Pedir}/>
-        <Route path="/caronas/gerenciar" component={GerencCaronas}/>
-        <Route path="/caronas/offer" component={Oferecer}/>
-        <Route exact path="/veiculos" component={Veiculos}/>
-        <Route path="/veiculos/ativar" component={AtivarVeic}/>
-        <Route path="/veiculos/cadastrar" component={CadVeiculo}/>
-        <Route path="/recuperarsenha" component={Recuperar}/>
-        <Route path="/cadastro" component={Cadastro}/>
-        <Route path="/config" render={() => <Config logOut={this.logOut.bind(this)}/>}/>
-        <Route path="/test" render={() =>
-          <div>
-            <input
-            type="button"
-            onClick={this.test.bind(this)} value="Insert"/>
-            <input
-            type="button"
-            onClick={this.testLoad.bind(this)} value="Select"/>
-          </div>
-        }/>
+        <Switch>
+          <Route exact path="/" component={MainPage}/>
+          <Route exact path="/rotas" component={Rotas}/>
+          <Route path="/rotas/alterar" component={AlterarRota}/>
+          <Route path="/rotas/adicionar" component={AdicionarRota}/>
+          <Route path="/perfil" component={Perfil}/>
+          <Route path="/caronas/historico" component={Caronas}/>
+          <Route path="/caronas/request" component={Pedir}/>
+          <Route path="/caronas/gerenciar" component={GerencCaronas}/>
+          <Route path="/caronas/offer" component={Oferecer}/>
+          <Route exact path="/veiculos" component={Veiculos}/>
+          <Route path="/veiculos/ativar" component={AtivarVeic}/>
+          <Route path="/veiculos/cadastrar" component={CadVeiculo}/>
+          <Route path="/recuperarsenha" component={Recuperar}/>
+          <Route path="/cadastro" component={Cadastro}/>
+          <Route path="/config" render={() => <Config logOut={this.logOut.bind(this)}/>}/>
+          <Route render={() => <div>four oh four</div>}/>
+        </Switch>
       </div>
     );
   }
