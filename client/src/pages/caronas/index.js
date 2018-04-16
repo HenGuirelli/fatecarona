@@ -78,22 +78,22 @@ class Caronas extends Component {
           <div className="row" >
               {
               caronasbyEmail.length > 0 ? caronasbyEmail.map((carona, key) =>
-              <div className="row" key={key} style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
-                  <LiftMgt
-                    infomotorista={carona.emailMotorista}
-                    caronista = {0}
-                    data={carona.dataCarona}
-                    tipo={carona.tipo}
-                  />
-                <div className="row" style={{bottom: 0, width: '100%'}}>
-                  <div className="col-6" style={styles.btnContainer}>
-                    <input type="button" style={styles.btn} onClick={() => this.handleActivation(carona)} className="btn btn-primary" value="GERENCIAR" />
-                  </div>
-                  <div className="col-6" style={styles.btnContainer}>
-                    <input type="button" style={styles.btn2} onClick ={this.handleSubmit} className="btn btn-primary" value="ESPIAR MOTORISTA" />
+                <div className="row" key={key} style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
+                    <LiftMgt
+                      infomotorista={carona.emailMotorista}
+                      caronista = {0}
+                      data={carona.dataCarona}
+                      tipo={carona.tipo}
+                    />
+                  <div className="row" style={{bottom: 0, width: '100%'}}>
+                    <div className="col-6" style={styles.btnContainer}>
+                      <input type="button" style={styles.btn} onClick={() => this.handleActivation(carona)} className="btn btn-primary" value="GERENCIAR" />
+                    </div>
+                    <div className="col-6" style={styles.btnContainer}>
+                      <input type="button" style={styles.btn2} onClick ={this.handleSubmit} className="btn btn-primary" value="ESPIAR MOTORISTA" />
+                    </div>
                   </div>
                 </div>
-              </div>
               )
               :
               <div>

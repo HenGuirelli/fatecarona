@@ -17,6 +17,10 @@ class GerencCarona extends Component {
 
   render() {
     const { carona, liftCar } = this.props
+    let dataLift = new Date(carona.dataCarona)
+    let dataCarona = (("0" + dataLift.getDate()).slice(-2) + "/" + ("0" + (dataLift.getMonth() + 1)).slice(-2) +
+        "/" + dataLift.getFullYear())
+    let horarioCarona = (dataLift.getUTCHours() + ":" + ("0" + dataLift.getUTCMinutes()).slice(-2))
 
     const instyle = {
       textStyle:{
@@ -41,7 +45,7 @@ class GerencCarona extends Component {
     }
 
     return(
-      <div className="container" style={styles.root}>
+      <div className="container">
         <center>
           <div style={{borderBottom: '1px solid grey', marginTop: '5em'}}>
             <div>
@@ -74,7 +78,7 @@ class GerencCarona extends Component {
                 DIA:
               </div>
               <div className="col-0">
-                {carona.dataCarona}
+                {dataCarona}
               </div>
             </div>
             <div className="row">
@@ -82,7 +86,7 @@ class GerencCarona extends Component {
                 HORA:
               </div>
               <div className="col-0">
-                {carona.dataCarona}
+                {horarioCarona}
               </div>
             </div>
             <div className="row">

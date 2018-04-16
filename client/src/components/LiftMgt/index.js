@@ -8,6 +8,9 @@ import { connect } from 'react-redux'
 class Lift extends Component {
   render() {
     const { userData, infomotorista, caronista, data, tipo } = this.props
+    let dataLift = new Date(data)
+    let dataCarona = (("0" + dataLift.getDate()).slice(-2) + "/" + ("0" + (dataLift.getMonth() + 1)).slice(-2) +
+        "/" + dataLift.getFullYear())
     window.comp = LiftRating
     return(
       <div className="container" style={styles.root}>
@@ -23,11 +26,11 @@ class Lift extends Component {
               caronista === 1 ?
               <div style={styles.descSize}>
                 <span>VOCÊ está aguardando resposta de </span>{infomotorista}
-                <span>para carona em </span>{data} {tipo}
+                <span>para carona em </span>{dataCarona} {tipo}
               </div>
               :
               <div style={styles.descSize}>
-                <span>VOCÊ está oferecendo carona em </span> {data} {tipo}
+                <span>VOCÊ está oferecendo carona em </span> {dataCarona} {tipo}
               </div>
             }
           </div>
