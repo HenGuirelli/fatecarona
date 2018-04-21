@@ -39,6 +39,10 @@ class Caronas extends Component {
       this.handleChange = this.handleChange.bind(this);
     }
 
+    componentWillMount() {
+      this.props.dispatch(loadLiftbyEmail(this.props.userData.email))
+      this.props.dispatch(loadCaronista(this.props.userData.email))
+    }
 
     handleChange(event) {
       this.setState({
@@ -59,11 +63,10 @@ class Caronas extends Component {
         )
       }
 
-      let contEmail = 0;
+      let contEmail = false;
       let byEmail = this.props.caronasbyEmail.map((carona, key) =>
         { if(carona.status === status){
-
-            contEmail = 1;
+            contEmail = true;
             return(
               <div className="row" key={key} style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
                   <LiftMgt
@@ -88,10 +91,10 @@ class Caronas extends Component {
         }
       );
 
-      let contID = 0;
+      let contID = false;
       let byID = this.props.caronasbyID.map((carona, key) =>
         { if(carona.status === status){
-          contID = 1;
+          contID = true;
           return(
             <div className="row" key={key} style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
                 <LiftMgt
@@ -116,27 +119,25 @@ class Caronas extends Component {
         }
         );
 
-        {if (contEmail === 1 && contEmail === 1){
+        {if (!contEmail && !contID){
+          return(
+            <div>Nenhuma carona.</div>
+          )
+        }else
           return(
             <div>
               {byEmail}
               {byID}
             </div>
           )
-        }else
-          return(
-            <div>Nenhuma carona.</div>
-          )
       }
     }
 
 
-  componentWillMount() {
-    this.props.dispatch(loadLiftbyEmail(this.props.userData.email))
-    this.props.dispatch(loadCaronista(this.props.userData.email))
-  }
 
   render() {
+    console.log(this.props.caronistaFull);
+    console.log(this.props.listaCaronista.length);
 
     if (! this.props.caronistaFull && this.props.listaCaronista.length > 0) {
       this.props.listaCaronista.map((caronista) =>
@@ -152,7 +153,7 @@ class Caronas extends Component {
       <div>
 
         <div  className="row btn-group btn-group-toggle" style={{width:'100%'}} >
-          <label className="btn btnLift col-4" for="option1"
+          <label className="btn btnLift col-4" htmlFor="option1"
             href="#radioCollapse">
             <input
               type="radio"
@@ -164,7 +165,7 @@ class Caronas extends Component {
             />
             EM ANDAMENTO
           </label>
-          <label className="btn btnLift col-4" for="option2"
+          <label className="btn btnLift col-4" htmlFor="option2"
             href="#radioCollapse">
             <input
               type="radio"
@@ -176,7 +177,7 @@ class Caronas extends Component {
             />
             HISTÓRICO
           </label>
-          <label className="btn btnLift col-4" for="option3"
+          <label className="btn btnLift col-4" htmlFor="option3"
             href="#radioCollapse">
             <input
               type="radio"

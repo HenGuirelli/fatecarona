@@ -108,6 +108,25 @@ router.route('/users')
     });
   });
 
+router.route('/members/:user_email')
+    .get(function(req, res) {
+      pool.getConnection(function(err, connection) {
+        if (err) {
+          res.send(err);
+          return;
+        }
+
+        connection.query('SELECT * FROM membros where email = ?',[req.params.user_email], function(err, rows, fields) {
+          connection.release();
+          if (err) {
+            res.send(err);
+            return;
+          }
+          res.json(rows[0]);
+        });
+      });
+    })
+
 router.route('/users/:user_email')
   .get(function(req, res) {
     pool.getConnection(function(err, connection) {
@@ -256,6 +275,7 @@ router.route('/images/:file_name')
 
 //Manipulação de Veiculos
 
+//Busca o veiculo da carona pelo ID
 router.route('/cars/lift/:car_id')
   .get(function(req, res) {
     pool.getConnection(function(err, connection) {
@@ -276,10 +296,11 @@ router.route('/cars/lift/:car_id')
   });
 
 
+//Busca todos os veiculos do motorista
 router.route('/cars/:user_email')
   .get(function(req, res) {
     pool.getConnection(function(err, connection) {
-      if (err) {lift/members/1
+      if (err) {
         res.send(err);
         return;
       }
@@ -295,8 +316,9 @@ router.route('/cars/:user_email')
     });
   });
 
-router.route('/cars/action/:car_placa')
 
+//Atualização do status do veiculo
+router.route('/cars/action/:car_placa')
   .put(function(req, res) {
     pool.getConnection(function(err, connection) {
       if (err) {
@@ -314,6 +336,8 @@ router.route('/cars/action/:car_placa')
       });
     });
   })
+
+  //Exclusão do veiculo
   .delete(function(req, res) {
       pool.getConnection(function(err, connection) {
         if (err) res.send(err);
@@ -326,6 +350,7 @@ router.route('/cars/action/:car_placa')
       });
     });
 
+//Inserção de um novo veiculo
 router.route('/cars')
   .post(function(req, res) {
     pool.getConnection(function(err, connection) {
@@ -347,6 +372,27 @@ router.route('/cars')
 
 //Manipulação de Caronas
 
+//Busca os membros da carona pelo ID da caronas
+router.route('/lift/members/:carona_id')
+  .get(function(req, res) {
+    pool.getConnection(function(err, connection) {
+      if (err) {
+        res.send(err);
+        return;
+      }
+      connection.query('SELECT * FROM membros_carona where id = ?',[req.params.carona_id], function(err, rows, fields) {
+        connection.release();
+        if (err){
+          res.send(err);
+          return;
+        }
+        res.json(rows);
+      });
+    });
+  });
+
+
+//Busca ID da carona pelo email do Caronista
 router.route('/caronista/:user_email')
   .get(function(req, res) {
     pool.getConnection(function(err, connection) {
@@ -366,6 +412,7 @@ router.route('/caronista/:user_email')
   });
 
 
+//Busca as caronas dadas pelo Motorista
 router.route('/lift/motorista/:email_motorista')
   .get(function(req, res) {
     pool.getConnection(function(err, connection) {
@@ -385,6 +432,7 @@ router.route('/lift/motorista/:email_motorista')
     });
   });
 
+//Busca a carona pelo ID
 router.route('/lift/id/:carona_id')
     .get(function(req, res) {
       pool.getConnection(function(err, connection) {
@@ -404,6 +452,7 @@ router.route('/lift/id/:carona_id')
       });
     });
 
+//Busca todas as caronas do banco
 router.route('/lift')
     .get(function(req, res) {
       pool.getConnection(function(err, connection) {
