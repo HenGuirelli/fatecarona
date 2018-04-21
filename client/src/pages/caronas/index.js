@@ -4,118 +4,198 @@ import LiftMgt from '../../components/LiftMgt'
 import { connect } from 'react-redux'
 import { loadCaronista, loadLiftbyID, loadLiftbyEmail, carregar } from '../../actions/liftActions'
 
+const styles = {
+  btn: {
+    margin: '25px 0',
+    borderRadius: '8px',
+    backgroundColor: '#6E4D8B',
+    borderColor: '#ffffff',
+    color: '#ffffff',
+    fontSize: '12px',
+    width: '80%',
+    marginLeft: '8%'
+  },
+  btn2: {
+    margin: '25px 0',
+    borderRadius: '8px',
+    backgroundColor: '#6E4D8B',
+    borderColor: '#ffffff',
+    color: '#ffffff',
+    fontSize: '12px',
+    width: '80%',
+  },
+  radiobtn: {
+    display:'none',
+}
+}
 
 class Caronas extends Component {
 
-  liftbyEmail () {
-    this.props.dispatch(loadLiftbyEmail(this.props.userData.email))
-  }
-  liftbyID(){
-    this.props.dispatch(loadCaronista(this.props.userData.email))
-    this.props.listaCaronista.map((caronista) =>
-      this.props.dispatch(loadLiftbyID(caronista.id))
-    )
-  }
+    constructor(props){
+      super(props);
+      this.state = {
+        status: 'andamento'
+      };
+      this.handleChange = this.handleChange.bind(this);
+    }
+
+
+    handleChange(event) {
+      this.setState({
+        status: event.target.value
+      });
+      this.buscaCarona();
+    }
 
     handleActivation = (carona) =>{
       this.props.dispatch(carregar(carona));
       this.props.history.push('/caronas/gerenciar')
     }
 
+    buscaCarona = (status) =>{
+      if (this.props.caronasbyEmail.length === 0 && this.props.caronasbyID.length === 0){
+        return(
+          <div>Nenhuma carona.</div>
+        )
+      }
+
+      let contEmail = 0;
+      let byEmail = this.props.caronasbyEmail.map((carona, key) =>
+        { if(carona.status === status){
+
+            contEmail = 1;
+            return(
+              <div className="row" key={key} style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
+                  <LiftMgt
+                    infomotorista={carona.emailMotorista}
+                    caronista = {0}
+                    data={carona.dataCarona}
+                    tipo={carona.tipo}
+                  />
+                <div className="row" style={{bottom: 0, width: '100%'}}>
+                  <div className="col-6" style={styles.btnContainer}>
+                    <input type="button" style={styles.btn} onClick={() => this.handleActivation(carona)} className="btn btn-primary" value="GERENCIAR" />
+                  </div>
+                  <div className="col-6" style={styles.btnContainer}>
+                    <input type="button" style={styles.btn2} onClick ={this.handleSubmit} className="btn btn-primary" value="ESPIAR MOTORISTA" />
+                  </div>
+                </div>
+              </div>
+            )
+          }else {
+            return(null)
+          }
+        }
+      );
+
+      let contID = 0;
+      let byID = this.props.caronasbyID.map((carona, key) =>
+        { if(carona.status === status){
+          contID = 1;
+          return(
+            <div className="row" key={key} style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
+                <LiftMgt
+                  infomotorista={carona.emailMotorista}
+                  caronista = {1}
+                  data={carona.dataCarona}
+                  tipo={carona.tipo}
+                />
+              <div className="row" style={{bottom: 0, width: '100%'}}>
+                <div className="col-6" style={styles.btnContainer}>
+                  <input type="button" style={styles.btn} onClick={() => this.handleActivation(carona)} className="btn btn-primary" value="GERENCIAR" />
+                </div>
+                <div className="col-6" style={styles.btnContainer}>
+                  <input type="button" style={styles.btn2} onClick ={this.handleSubmit} className="btn btn-primary" value="ESPIAR MOTORISTA" />
+                </div>
+              </div>
+            </div>
+          )
+        }else {
+            return(null)
+          }
+        }
+        );
+
+        {if (contEmail === 1 && contEmail === 1){
+          return(
+            <div>
+              {byEmail}
+              {byID}
+            </div>
+          )
+        }else
+          return(
+            <div>Nenhuma carona.</div>
+          )
+      }
+    }
 
 
   componentWillMount() {
-    this.liftbyEmail();
-    this.liftbyID();
-
+    this.props.dispatch(loadLiftbyEmail(this.props.userData.email))
+    this.props.dispatch(loadCaronista(this.props.userData.email))
   }
 
   render() {
-    //const { userData } = this.props
-    const {caronasbyEmail, caronasbyID} = this.props
 
-    const styles = {
-      btn: {
-        margin: '25px 0',
-        borderRadius: '8px',
-        backgroundColor: '#6E4D8B',
-        borderColor: '#ffffff',
-        color: '#ffffff',
-        fontSize: '12px',
-        width: '80%',
-        marginLeft: '8%'
-      },
-      btn2: {
-        margin: '25px 0',
-        borderRadius: '8px',
-        backgroundColor: '#6E4D8B',
-        borderColor: '#ffffff',
-        color: '#ffffff',
-        fontSize: '12px',
-        width: '80%',
-
-      },
+    if (! this.props.caronistaFull && this.props.listaCaronista.length > 0) {
+      this.props.listaCaronista.map((caronista) =>
+        this.props.dispatch(loadLiftbyID(caronista.id))
+      )
     }
+
+
 
     window.comp = LiftRating
 
     return (
       <div>
 
-        <div className="row btn-group btn-group-toggle" style={{width:'100%'}} data-toggle="buttons">
-          <label className="btn btnLift col-4">
-            <input type="radio" name="options" id="option1" autoComplete="off"/> EM ANDAMENTO
+        <div  className="row btn-group btn-group-toggle" style={{width:'100%'}} >
+          <label className="btn btnLift col-4" for="option1"
+            href="#radioCollapse">
+            <input
+              type="radio"
+              style={styles.radiobtn}
+              name="options" id="option1"
+              value="andamento"
+              checked={this.state.status === "andamento"}
+              onChange={this.handleChange}
+            />
+            EM ANDAMENTO
           </label>
-          <label className="btn btnLift col-4">
-            <input type="radio" name="options" id="option2" autoComplete="off"/> HISTÓRICO
+          <label className="btn btnLift col-4" for="option2"
+            href="#radioCollapse">
+            <input
+              type="radio"
+              style={styles.radiobtn}
+              name="options" id="option2"
+              value="historico"
+              checked={this.state.status === "historico"}
+              onChange={this.handleChange}
+            />
+            HISTÓRICO
           </label>
-          <label className="btn btnLift col-4">
-            <input type="radio" name="options" id="option3" autoComplete="off"/> PENDENTE
+          <label className="btn btnLift col-4" for="option3"
+            href="#radioCollapse">
+            <input
+              type="radio"
+              style={styles.radiobtn}
+              name="options" id="option3"
+              value="pendente"
+              checked={this.state.status === "pendente"}
+              onChange={this.handleChange}
+            />
+            PENDENTE
           </label>
         </div>
 
         <div className="container">
-          <div className="row" >
-              {
-              caronasbyEmail.length > 0 ? caronasbyEmail.map((carona, key) =>
-                <div className="row" key={key} style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
-                    <LiftMgt
-                      infomotorista={carona.emailMotorista}
-                      caronista = {0}
-                      data={carona.dataCarona}
-                      tipo={carona.tipo}
-                    />
-                  <div className="row" style={{bottom: 0, width: '100%'}}>
-                    <div className="col-6" style={styles.btnContainer}>
-                      <input type="button" style={styles.btn} onClick={() => this.handleActivation(carona)} className="btn btn-primary" value="GERENCIAR" />
-                    </div>
-                    <div className="col-6" style={styles.btnContainer}>
-                      <input type="button" style={styles.btn2} onClick ={this.handleSubmit} className="btn btn-primary" value="ESPIAR MOTORISTA" />
-                    </div>
-                  </div>
-                </div>
-              )
-              :
-              <div>
-              </div>
-            }
-            {
-              caronasbyID.length > 0 ? caronasbyID.map((carona, key) =>
-              <div className="row" key={key} style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
-                <button className="btn loginBtn" onClick={() => this.handleActivation(carona)} style={styles.carButton}>
-                  <LiftMgt
-                    infomotorista={carona.emailMotorista}
-                    caronista = {1}
-                    data={carona.dataCarona}
-                    tipo={carona.tipo}
-                  />
-                </button>
-              </div>
-              )
-              :
-              <div>
-              </div>
-            }
+          <div className="row" id="radioCollapse" >
+
+              {this.buscaCarona(this.state.status)}
+
+
           </div>
         </div>
       </div>
@@ -128,6 +208,7 @@ export default connect(store => {
     caronasbyID: store.lift.caronasbyID,
     caronasbyEmail: store.lift.caronasbyEmail,
     listaCaronista: store.lift.listaCaronista,
+    caronistaFull: store.lift.caronistaFull,
     user: store.user.user,
     userData: store.user.userData
   }
