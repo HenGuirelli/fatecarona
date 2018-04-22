@@ -119,7 +119,7 @@ class Caronas extends Component {
         }
         );
 
-        {if (!contEmail && !contID){
+        if (!contEmail && !contID){
           return(
             <div>Nenhuma carona.</div>
           )
@@ -130,7 +130,7 @@ class Caronas extends Component {
               {byID}
             </div>
           )
-      }
+
     }
 
 
