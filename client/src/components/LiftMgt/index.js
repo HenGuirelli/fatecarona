@@ -26,7 +26,7 @@ class Lift extends Component {
               caronista === 1 ?
               <div style={styles.descSize}>
                 <span>VOCÊ está aguardando resposta de </span>{infomotorista}
-                <span>para carona em </span>{dataCarona} {tipo}
+                <span> para carona em </span>{dataCarona} {tipo}
               </div>
               :
               <div style={styles.descSize}>

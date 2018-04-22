@@ -1,26 +1,44 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styles from '../LiftMgt/styles'
+import config from '../../config.json'
+import Avatar from 'material-ui/Avatar'
 import CadeiranteIcon from '../LiftMgt/cadeirante_roxo.png'
 import FumanteIcon from '../LiftMgt/fumante_roxo.png'
 import MusicIcon from '../LiftMgt/musica_roxo.png'
 import CarIcon from '../Veiculo/veiculo_preto.png'
 import LugarIcon from '../Veiculo/lugares_preto.png'
 import { loadCarbyID } from '../../actions/carActions'
+import { loadListMembers, loadMembers } from '../../actions/liftActions'
 
 
 class GerencCarona extends Component {
 
   componentWillMount() {
     this.props.dispatch(loadCarbyID(this.props.carona.veiculo))
+    this.props.dispatch(loadListMembers(this.props.carona.id))
   }
 
   render() {
-    const { carona, liftCar } = this.props
+    let carPlaca, carModelo,carMarca
+    if(this.props.liftCar != undefined){
+      carPlaca = this.props.liftCar.placa
+      carModelo = this.props.liftCar.modelo
+      carMarca = this.props.liftCar.marca
+    }
+    if (! this.props.membrosFull && this.props.listaMembros.length > 0) {
+      this.props.listaMembros.map((membro) =>
+        this.props.dispatch(loadMembers(membro.email))
+      )
+    }
+
+
+    const { carona, liftCar, member, listaMembros, membrosFull } = this.props
     let dataLift = new Date(carona.dataCarona)
     let dataCarona = (("0" + dataLift.getDate()).slice(-2) + "/" + ("0" + (dataLift.getMonth() + 1)).slice(-2) +
         "/" + dataLift.getFullYear())
     let horarioCarona = (dataLift.getUTCHours() + ":" + ("0" + dataLift.getUTCMinutes()).slice(-2))
+
 
     const instyle = {
       textStyle:{
@@ -150,12 +168,7 @@ class GerencCarona extends Component {
                   <img style={{width: '4em', height: '1.7em', float:'right'}} src={CarIcon} alt={"Car Icon"}/>
               </div>
               <div className="col-0" style={instyle.prefText}>
-                {liftCar.map((veiculo, key)=>
-                  <div key={key}>
-                    {veiculo.placa}
-                  </div>
-                )
-                }
+                {carPlaca}
               </div>
             </div>
 
@@ -170,13 +183,28 @@ class GerencCarona extends Component {
                   </div>
                 </div>
               </div>
-              {liftCar.map((veiculo, key)=>
-                <div key={key}>
-                  {veiculo.marca}, {veiculo.modelo}
-                </div>
-              )
-              }
+              {carMarca}, {carModelo}
             </div>
+          </div>
+
+          <div style={{borderBottom: '1px solid grey', margin: '1em 0'}}>
+            <div>
+              QUEM VAI NO CARRO
+            </div>
+            <div className="row">
+              <div className="col-3 col-xl-1">
+                <Avatar
+                  size={50}
+                />
+              </div>
+              <div className="col-9 col-xl-11">
+                <div style={styles.descSize}>
+                  <input type="button" style={styles.btn} className="btn btn-primary" value="Conversar" />
+                </div>
+              </div>
+            </div>
+
+
           </div>
 
         </center>
@@ -187,9 +215,12 @@ class GerencCarona extends Component {
 
 export default connect(store => {
   return {
-    liftCar: store.car.liftCar,
     userData: store.user.userData,
     veiculos: store.car.veiculos,
+    liftCar: store.car.liftCar,
+    listaMembros: store.lift.listaMembros,
+    membrosFull: store.lift.membrosFull,
+    members: store.lift.members,
     carona: store.lift.carona,
   }
 })(GerencCarona)

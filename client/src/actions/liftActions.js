@@ -29,3 +29,17 @@ export function loadLiftbyID(id) {
     payload: axios.get(config.endpoint + "/lift/id/" + id)
   }
 }
+
+export function loadListMembers(id) {
+  return {
+    type: "LOAD_MEMBROS_CARONA",
+    payload: axios.get(config.endpoint + "/lift/members/" + id)
+  }
+}
+
+export function loadMembers(email) {
+  return {
+    type: "LOAD_MEMBER_DATA",
+    payload: axios.get(config.endpoint + "/members/" + email)
+  }
+}
