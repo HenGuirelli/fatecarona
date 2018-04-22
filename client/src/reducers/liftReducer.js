@@ -21,7 +21,7 @@ export default function reducer(state={
        case 'LOAD_CARONA_BY_EMAIL_FULFILLED': {
          return {...state, caronasbyEmail: action.payload.data}
        }
-       case 'LOAD_MEMBROS_CARONA"_FULFILLED': {
+       case 'LOAD_MEMBROS_CARONA_FULFILLED': {
          return {...state, listaMembros: action.payload.data, membrosFull: false}
        }
        case 'LOAD_MEMBER_DATA_FULFILLED': {
@@ -30,7 +30,6 @@ export default function reducer(state={
        default: {
          return state
        }
-
 
     }
 }
