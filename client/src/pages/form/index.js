@@ -73,6 +73,7 @@ class LoginForm extends Component {
         borderRadius: '25px',
       },
       root: {
+        marginTop: '-58px',
         paddingTop: '5em',
         backgroundColor: '#6E4D8B',
         marginBottom: '-5000px',

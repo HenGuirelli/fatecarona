@@ -11,7 +11,6 @@ class Lift extends Component {
     let dataLift = new Date(data)
     let dataCarona = (("0" + dataLift.getDate()).slice(-2) + "/" + ("0" + (dataLift.getMonth() + 1)).slice(-2) +
         "/" + dataLift.getFullYear())
-    window.comp = LiftRating
     return(
       <div className="container" style={styles.root}>
         <div className="row">

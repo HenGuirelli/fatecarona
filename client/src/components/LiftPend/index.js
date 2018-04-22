@@ -21,7 +21,7 @@ class GerencCarona extends Component {
 
   render() {
     let carPlaca, carModelo,carMarca
-    if(this.props.liftCar != undefined){
+    if(this.props.liftCar !== undefined){
       carPlaca = this.props.liftCar.placa
       carModelo = this.props.liftCar.modelo
       carMarca = this.props.liftCar.marca
