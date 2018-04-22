@@ -23,13 +23,6 @@ export function loadLiftbyEmail(emailMotorista) {
   }
 }
 
-export function loadLiftbyID(id) {
-  return {
-    type: "LOAD_CARONA_BY_ID",
-    payload: axios.get(config.endpoint + "/lift/id/" + id)
-  }
-}
-
 export function loadListMembers(id) {
   return {
     type: "LOAD_MEMBROS_CARONA",

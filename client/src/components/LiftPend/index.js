@@ -32,7 +32,7 @@ class GerencCarona extends Component {
       )
     }
 
-    const { carona, members } = this.props
+    const { carona } = this.props
     let dataLift = new Date(carona.dataCarona)
     let dataCarona = (("0" + dataLift.getDate()).slice(-2) + "/" + ("0" + (dataLift.getMonth() + 1)).slice(-2) +
         "/" + dataLift.getFullYear())

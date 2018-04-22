@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import LiftRating from '../../components/LiftRating'
 import LiftMgt from '../../components/LiftMgt'
+import config from '../../config.json'
+import axios from 'axios'
 import { connect } from 'react-redux'
-import { loadCaronista, loadLiftbyID, loadLiftbyEmail, carregar } from '../../actions/liftActions'
+import { carregar } from '../../actions/liftActions'
 
 const styles = {
   btn: {
@@ -34,21 +35,22 @@ class Caronas extends Component {
     constructor(props){
       super(props);
       this.state = {
-        status: 'andamento'
+        status: 'andamento',
+        byID: [],
+        filled: true,
       };
       this.handleChange = this.handleChange.bind(this);
     }
 
     componentWillMount() {
-      this.props.dispatch(loadLiftbyEmail(this.props.userData.email))
-      this.props.dispatch(loadCaronista(this.props.userData.email))
+
+      this.loadCarona()
     }
 
     handleChange(event) {
       this.setState({
         status: event.target.value
       });
-      this.buscaCarona();
     }
 
     handleActivation = (carona) =>{
@@ -56,98 +58,72 @@ class Caronas extends Component {
       this.props.history.push('/caronas/gerenciar')
     }
 
-    buscaCarona = (status) =>{
-      if (this.props.caronasbyEmail.length === 0 && this.props.caronasbyID.length === 0){
-        return(
-          <div>Nenhuma carona.</div>
-        )
-      }
 
-      let contEmail = false;
-      let byEmail = this.props.caronasbyEmail.map((carona, key) =>
-        { if(carona.status === status){
-            contEmail = true;
-            return(
-              <div className="row" key={key} style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
-                  <LiftMgt
-                    infomotorista={carona.emailMotorista}
-                    caronista = {0}
-                    data={carona.dataCarona}
-                    tipo={carona.tipo}
-                  />
-                <div className="row" style={{bottom: 0, width: '100%'}}>
-                  <div className="col-6" style={styles.btnContainer}>
-                    <input type="button" style={styles.btn} onClick={() => this.handleActivation(carona)} className="btn btn-primary" value="GERENCIAR" />
-                  </div>
-                  <div className="col-6" style={styles.btnContainer}>
-                    <input type="button" style={styles.btn2} onClick ={this.handleSubmit} className="btn btn-primary" value="ESPIAR MOTORISTA" />
-                  </div>
-                </div>
-              </div>
-            )
-          }else {
-            return(null)
-          }
+    buscaCaronas = () =>{
+      let byID = this.state.byID
+      switch(this.state.status) {
+        case 'pendente':{
+          return(byID.filter(carona =>
+            carona.status === 'pendente'
+          ))
         }
-      );
-
-      let contID = false;
-      let byID = this.props.caronasbyID.map((carona, key) =>
-        { if(carona.status === status){
-          contID = true;
-          return(
-            <div className="row" key={key} style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
-                <LiftMgt
-                  infomotorista={carona.emailMotorista}
-                  caronista = {1}
-                  data={carona.dataCarona}
-                  tipo={carona.tipo}
-                />
-              <div className="row" style={{bottom: 0, width: '100%'}}>
-                <div className="col-6" style={styles.btnContainer}>
-                  <input type="button" style={styles.btn} onClick={() => this.handleActivation(carona)} className="btn btn-primary" value="GERENCIAR" />
-                </div>
-                <div className="col-6" style={styles.btnContainer}>
-                  <input type="button" style={styles.btn2} onClick ={this.handleSubmit} className="btn btn-primary" value="ESPIAR MOTORISTA" />
-                </div>
-              </div>
-            </div>
-          )
-        }else {
-            return(null)
-          }
+        case 'andamento':{
+          return(byID.filter(carona =>
+            carona.status === 'andamento'
+          ))
         }
-        );
-
-        {if (!contEmail && !contID){
-          return(
-            <div>Nenhuma carona.</div>
-          )
-        }else
-          return(
-            <div>
-              {byEmail}
-              {byID}
-            </div>
-          )
+        case 'historico':{
+          return(byID.filter(carona =>
+            carona.status === 'historico'
+          ))
+        }
+        default:{}
       }
     }
 
+
+    loadCarona = () => {
+      axios.get(config.endpoint + "/lift/motorista/" + this.props.userData.email)
+      .then(resultEmail =>{
+        axios.get(config.endpoint + "/caronista/" + this.props.userData.email)
+        .then((resultCaronista)=>{
+          this.caronasbyID(resultCaronista.data)
+            .then(resultID =>{
+                this.setState({
+                  byID : resultEmail.data.concat(resultID),
+                  filled: false
+                })
+            })
+        })
+
+      })
+    }
+
+
+
+    caronasbyID = (listaCaronista) =>{
+      var caronasID=[];
+        return new Promise((resolve, reject)=>{
+          listaCaronista.forEach((e, index) => {
+            axios.get(config.endpoint + "/lift/id/" + e.id)
+            .then(result => {
+              caronasID.push(result.data[0])
+              if (index === (listaCaronista.length -1)){
+                resolve(caronasID)
+              }
+            })
+            .catch((err) => reject(err.message))
+          })
+        })
+    }
 
 
   render() {
-    console.log(this.props.caronistaFull);
-    console.log(this.props.listaCaronista.length);
 
-    if (! this.props.caronistaFull && this.props.listaCaronista.length > 0) {
-      this.props.listaCaronista.map((caronista) =>
-        this.props.dispatch(loadLiftbyID(caronista.id))
-      )
-    }
+    if (this.state.filled)
+      return null
+    var caronas = this.buscaCaronas();
 
-
-
-    window.comp = LiftRating
 
     return (
       <div>
@@ -194,8 +170,30 @@ class Caronas extends Component {
         <div className="container">
           <div className="row" id="radioCollapse" >
 
-              {this.buscaCarona(this.state.status)}
 
+            {
+              caronas.length > 0 ?
+              caronas.map((carona, key)=>
+                <div className="row" key={key} style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
+                    <LiftMgt
+                      infomotorista={carona.emailMotorista}
+                      caronista = {0}
+                      data={carona.dataCarona}
+                      tipo={carona.tipo}
+                    />
+                  <div className="row" style={{bottom: 0, width: '100%'}}>
+                    <div className="col-6" style={styles.btnContainer}>
+                      <input type="button" style={styles.btn} onClick={() => this.handleActivation(carona)} className="btn btn-primary" value="GERENCIAR" />
+                    </div>
+                    <div className="col-6" style={styles.btnContainer}>
+                      <input type="button" style={styles.btn2} onClick ={this.handleSubmit} className="btn btn-primary" value="ESPIAR MOTORISTA" />
+                    </div>
+                  </div>
+                </div>
+              )
+            :
+            <div>Nenhuma Carona.</div>
+          }
 
           </div>
         </div>
@@ -206,10 +204,8 @@ class Caronas extends Component {
 
 export default connect(store => {
   return {
-    caronasbyID: store.lift.caronasbyID,
     caronasbyEmail: store.lift.caronasbyEmail,
     listaCaronista: store.lift.listaCaronista,
-    caronistaFull: store.lift.caronistaFull,
     user: store.user.user,
     userData: store.user.userData
   }
