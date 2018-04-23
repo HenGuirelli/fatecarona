@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styles from '../LiftMgt/styles'
-import config from '../../config.json'
+//import config from '../../config.json'
 import Avatar from 'material-ui/Avatar'
 import CadeiranteIcon from '../LiftMgt/cadeirante_roxo.png'
 import FumanteIcon from '../LiftMgt/fumante_roxo.png'
@@ -28,12 +28,11 @@ class GerencCarona extends Component {
     }
     if (! this.props.membrosFull && this.props.listaMembros.length > 0) {
       this.props.listaMembros.map((membro) =>
-        this.props.dispatch(loadMembers(membro.email))
+        this.props.dispatch(loadMembers(membro.emailCaronista))
       )
     }
 
-
-    const { carona, liftCar, member, listaMembros, membrosFull } = this.props
+    const { carona } = this.props
     let dataLift = new Date(carona.dataCarona)
     let dataCarona = (("0" + dataLift.getDate()).slice(-2) + "/" + ("0" + (dataLift.getMonth() + 1)).slice(-2) +
         "/" + dataLift.getFullYear())
