@@ -5,7 +5,6 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import { carregar } from '../../actions/liftActions'
 
-
 class Caronas extends Component {
 
     constructor(props){
@@ -13,14 +12,9 @@ class Caronas extends Component {
       this.state = {
         status: 'andamento',
         byID: [],
-        filled: true,
+        loaded: false
       };
       this.handleChange = this.handleChange.bind(this);
-    }
-
-    componentWillMount() {
-
-      this.loadCarona()
     }
 
     handleChange(event) {
@@ -38,19 +32,13 @@ class Caronas extends Component {
       let byID = this.state.byID
       switch(this.state.status) {
         case 'pendente':{
-          return(byID.filter(carona =>
-            carona.status === 'pendente'
-          ))
+          return byID.filter(carona => carona.status === 'pendente')
         }
         case 'andamento':{
-          return(byID.filter(carona =>
-            carona.status === 'andamento'
-          ))
+          return byID.filter(carona => carona.status === 'andamento')
         }
         case 'historico':{
-          return(byID.filter(carona =>
-            carona.status === 'historico'
-          ))
+          return byID.filter(carona => carona.status === 'historico')
         }
         default:{}
       }
@@ -66,7 +54,7 @@ class Caronas extends Component {
             .then(resultID =>{
                 this.setState({
                   byID : resultEmail.data.concat(resultID),
-                  filled: false
+                  loaded: true
                 })
             })
         })
@@ -95,8 +83,32 @@ class Caronas extends Component {
 
   render() {
 
-    if (this.state.filled)
-      return null
+    if (!this.state.loaded && typeof this.props.userData.email !== "undefined") this.loadCarona()
+
+    const styles = {
+      btn: {
+        margin: '25px 0',
+        borderRadius: '8px',
+        backgroundColor: '#6E4D8B',
+        borderColor: '#ffffff',
+        color: '#ffffff',
+        fontSize: '12px',
+        width: '80%',
+        marginLeft: '8%'
+      },
+      btn2: {
+        margin: '25px 0',
+        borderRadius: '8px',
+        backgroundColor: '#6E4D8B',
+        borderColor: '#ffffff',
+        color: '#ffffff',
+        fontSize: '12px',
+        width: '80%',
+      },
+      radiobtn: {
+        display:'none',
+      }
+    }
     var caronas = this.buscaCaronas();
 
     return (
@@ -176,9 +188,6 @@ class Caronas extends Component {
 
 export default connect(store => {
   return {
-    caronasbyEmail: store.lift.caronasbyEmail,
-    listaCaronista: store.lift.listaCaronista,
-    user: store.user.user,
     userData: store.user.userData
   }
 })(Caronas)

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Avatar from 'material-ui/Avatar'
-import LiftRating from '../LiftRating'
 import config from '../../config.json'
 import styles from './styles'
 import { connect } from 'react-redux'
