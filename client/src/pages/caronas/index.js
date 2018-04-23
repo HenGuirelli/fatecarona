@@ -5,30 +5,6 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import { carregar } from '../../actions/liftActions'
 
-const styles = {
-  btn: {
-    margin: '25px 0',
-    borderRadius: '8px',
-    backgroundColor: '#6E4D8B',
-    borderColor: '#ffffff',
-    color: '#ffffff',
-    fontSize: '12px',
-    width: '80%',
-    marginLeft: '8%'
-  },
-  btn2: {
-    margin: '25px 0',
-    borderRadius: '8px',
-    backgroundColor: '#6E4D8B',
-    borderColor: '#ffffff',
-    color: '#ffffff',
-    fontSize: '12px',
-    width: '80%',
-  },
-  radiobtn: {
-    display:'none',
-}
-}
 
 class Caronas extends Component {
 
@@ -57,7 +33,6 @@ class Caronas extends Component {
       this.props.dispatch(carregar(carona));
       this.props.history.push('/caronas/gerenciar')
     }
-
 
     buscaCaronas = () =>{
       let byID = this.state.byID
@@ -124,10 +99,8 @@ class Caronas extends Component {
       return null
     var caronas = this.buscaCaronas();
 
-
     return (
       <div>
-
         <div  className="row btn-group btn-group-toggle" style={{width:'100%'}} >
           <label className="btn btnLift col-4" htmlFor="option1"
             href="#radioCollapse">
@@ -194,7 +167,6 @@ class Caronas extends Component {
             :
             <div>Nenhuma Carona.</div>
           }
-
           </div>
         </div>
       </div>
