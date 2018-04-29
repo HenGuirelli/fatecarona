@@ -74,7 +74,8 @@ insert into caronas (dataCarona, rota, emailMotorista, kilometragem, veiculo, qt
   ("2018-04-09 10:08:28", "5abfbb953f4bbe6c741a195b", 'alexandre.santos67', 12.5, 1, 3, 1, "indo para a FATEC", "pendente"),
   ("2018-04-15 10:08:28", "5acd5e718fc79a2d484721fb", 'alexandre.santos67', 12.5, 1, 3, 1, "saindo da FATEC", "pendente"),
   ("2018-04-15 10:08:28", "5abfbb953f4bbe6c741a195b", 'alexandre.santos67', 12.5, 1, 3, 1, "saindo da FATEC", "pendente"),
-  ("2018-04-22 15:08:28", "5abfbb953f4bbe6c741a195b", 'thiago.ramos9', 12.5, 1, 2, 0, "indo para a FATEC", "andamento");
+  ("2018-04-22 15:08:28", "5abfbb953f4bbe6c741a195b", 'thiago.ramos9', 12.5, 1, 2, 0, "indo para a FATEC", "andamento"),
+  ("2018-12-30 10:08:28", "5abfbb953f4bbe6c741a195b", 'thiago.ramos9', 12.5, 1, 1, 0, "indo para a FATEC", "historico");
 
 insert into membros_carona values
 
@@ -84,4 +85,6 @@ insert into membros_carona values
   (2, 'thiago.ramos9'),
   (2, 'antonio.souza26'),
   (5, 'alexandre.santos67'),
-  (5, 'antonio.souza26');
+  (5, 'antonio.souza26'),
+  (6, 'antonio.souza26'),
+  (6, 'alexandre.santos67');

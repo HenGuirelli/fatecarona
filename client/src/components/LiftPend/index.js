@@ -21,13 +21,6 @@ class GerencCarona extends Component {
     };
   }
 
-
-  componentWillMount() {
-    this.props.dispatch(loadCarbyID(this.props.carona.veiculo))
-    //this.props.dispatch(loadListMembers(this.props.carona.id))
-  }
-
-
   loadMembersData = () =>{
     axios.get(config.endpoint + "/members/" + this.props.carona.emailMotorista)
     .then(resultMotorista => {
@@ -42,7 +35,6 @@ class GerencCarona extends Component {
         })
       })
     })
-
   }
 
   buscarMembros = (listaMembros) =>{
@@ -59,6 +51,11 @@ class GerencCarona extends Component {
     })
     })
   }
+
+  componentWillMount() {
+    this.props.dispatch(loadCarbyID(this.props.carona.veiculo))
+  }
+
 
   render() {
 
@@ -260,7 +257,7 @@ class GerencCarona extends Component {
                 />
               </div>
               <div className="col-3 col-sm-3 col-md-1">
-                {member.apelido}<br />
+                {member.nome.substring(0, member.nome.indexOf(" "))}<br />
                 {member.email === carona.emailMotorista ? <span>Motorista</span> : <span>Caronista</span>}
               </div>
               <div className="col-3">
