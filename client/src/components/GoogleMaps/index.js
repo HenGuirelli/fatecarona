@@ -21,30 +21,29 @@ export default class Map extends Component {
     });
   }
 
-  displayRoute = (route) => {
-
-    if(!route.origin || !route.destination) {
-      return;
-    }
-
+  displayRoute = (route = {}) => {
     return new Promise((resolve, reject) => {
-        this.dirServ.route({
-          origin: route.origin,
-          destination: route.destination,
-          waypoints: route.waypoints,
-          optimizeWaypoints: true,
-          travelMode: 'DRIVING'
-        }, (response, status) => {
-          if (status === 'OK') {
-            this.dirDisp.setDirections(response)
-            resolve(response.routes[0].overview_path)
-            let routeState = this.props.routeState
-            if (routeState) routeState(response);
-          } else {
-            reject('Não foi possível estabelecer rota, motivo: ' + status);
-          }
-          reject('')
-        })
+      if(!route.origin || !route.destination) {
+        reject('Rota inválida!')
+        return
+      }
+      this.dirServ.route({
+        origin: route.origin,
+        destination: route.destination,
+        waypoints: route.waypoints,
+        optimizeWaypoints: true,
+        travelMode: 'DRIVING'
+      }, (response, status) => {
+        if (status === 'OK') {
+          this.dirDisp.setDirections(response)
+          resolve(response.routes[0].overview_path)
+          let routeState = this.props.routeState
+          if (routeState) routeState(response);
+        } else {
+          reject('Não foi possível estabelecer rota, motivo: ' + status);
+        }
+        reject('')
+      })
       }
     )
   };

@@ -72,11 +72,11 @@ insert into veiculos (placa, email, ativo, marca, modelo, cor) values
 insert into caronas (dataCarona, rota, emailMotorista, kilometragem, veiculo, qtdVagas, musica, tipo, status) values
   ("2018-04-15 10:08:28", "5abfbb953f4bbe6c741a195b", 'thiago.ramos9', 12.5, 1, 3, 1, "indo para a FATEC", "andamento"),
   ("2018-04-09 10:08:28", "5abfbb953f4bbe6c741a195b", 'alexandre.santos67', 12.5, 1, 3, 1, "indo para a FATEC", "pendente"),
-  ("2018-04-15 10:08:28", "5acd5e718fc79a2d484721fb", 'alexandre.santos67', 12.5, 1, 3, 1, "saindo da FATEC", "pendente"),
-  ("2018-04-15 10:08:28", "5abfbb953f4bbe6c741a195b", 'alexandre.santos67', 12.5, 1, 3, 1, "saindo da FATEC", "pendente"),
+  ("2018-05-25 10:08:28", "5acd5e718fc79a2d484721fb", 'alexandre.santos67', 12.5, 2, 3, 1, "saindo da FATEC", "pendente"),
+  ("2018-05-25 16:30:00", "5acd5e718fc79a2d484721fb", 'thiago.ramos9', 12.5, 1, 3, 1, "saindo da FATEC", "pendente"),
+  ("2018-05-25 13:15:00", "5acd5e718fc79a2d484721fb", 'antonio.souza26', 12.5, 3, 3, 1, "saindo da FATEC", "pendente"),
+  ("2018-05-25 10:08:28", "5abfbb953f4bbe6c741a195b", 'alexandre.santos67', 12.5, 1, 3, 1, "saindo da FATEC", "pendente"),
   ("2018-04-22 15:08:28", "5abfbb953f4bbe6c741a195b", 'thiago.ramos9', 12.5, 1, 2, 0, "indo para a FATEC", "andamento");
-
-insert into membros_carona values
 
 insert into membros_carona values
   (1, 'alexandre.santos67'),
