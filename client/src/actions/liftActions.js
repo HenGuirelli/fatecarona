@@ -1,11 +1,17 @@
 import axios from 'axios'
 import config from '../config.json'
 
-
 export function carregar(carona) {
   return{
     type: "CARREGAR_CARONA",
     payload: carona
+  }
+}
+
+export function transferResults(caronas) {
+  return{
+    type: "RESULT_CARONAS",
+    payload: caronas
   }
 }
 

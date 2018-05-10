@@ -8,6 +8,7 @@ import CadeiranteIcon from '../../components/LiftMgt/cadeirante_branco.png'
 import SmokingIcon from '../../components/LiftMgt/fumante_branco.png'
 import MusicIcon from '../../components/LiftMgt/musica_branco.png'
 import { buscarRotas } from '../../actions/mapActions'
+import { transferResults } from '../../actions/liftActions'
 import GoogleMaps from '../../components/GoogleMaps'
 import styles from '../oferecer/styles'
 import config from '../../config.json'
@@ -53,14 +54,29 @@ class Pedir extends Component {
     this.circleContains = f3
   }
 
+  isSubmitInvalid = () => {
+    const { data, hora, direcao, trajeto } = this.state
+    if ( data.getDate === undefined || hora.getDate === undefined
+        || direcao === '' || trajeto === 'default') return true
+
+    return false
+  }
+
   handleSubmit = (e) => {
     e.preventDefault()
+
+    if (this.isSubmitInvalid()) {
+      window.displayDialog({title: "Erro:", msg: "Favor preencher todos os campos"})
+      return
+    }
+
     let match = []
     let params = this.state
     let rota = this.props.rotas.find(rota => rota.nomeRota === this.state.trajeto)
     let displayRoute = this.displayRoute
     let renderCircles = this.renderCircles
     let circleContains = this.circleContains
+
     axios.get(config.endpoint + '/lift')
     .then(result => {
       if (result.statusText === "OK") {
@@ -75,6 +91,12 @@ class Pedir extends Component {
 
           return false
         })
+
+        if (match.length === 0) {
+          window.displayDialog({title: "Atenção", msg: "Nenhuma carona encontrada..."})
+          return
+        }
+
         displayRoute(rota.rota)
         .then(path => {
           let subjectCircles = renderCircles(path)
@@ -96,28 +118,32 @@ class Pedir extends Component {
                   if (found) break
                 }
                 if (index === (matchResults.length - 1)) {
-                  console.log(finalMatch)
+                  if (finalMatch.length === 0) {
+                    window.displayDialog({title: "Atenção", msg: "Nenhuma carona encontrada..."})
+                    return
+                  }
+                  this.props.dispatch(transferResults(finalMatch))
+                  this.props.history.push("/caronas/matches")
                 }
               })
             })
           })
-          .catch((msg) => console.log(msg))
         })
       }
     })
   }
 
-  gatherRoutes = (matchResults) => {
+  gatherRoutes = (results) => {
     return new Promise((resolve, reject) => {
-      matchResults.forEach((e, index) => {
+      results.forEach((e, index) => {
         axios.get(config.endpoint + '/routes/route/' + e.rota)
         .then(result => {
           e.rota = result.data
-          if (index === (matchResults.length - 1)) {
-            resolve(matchResults)
+          if (index === (results.length - 1)) {
+            resolve(results)
           }
         })
-        .catch((err) => reject(err.message))
+        .catch(err => reject(err))
       })
     })
   }
