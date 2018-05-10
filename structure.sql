@@ -84,4 +84,6 @@ insert into membros_carona values
   (2, 'thiago.ramos9'),
   (2, 'antonio.souza26'),
   (5, 'alexandre.santos67'),
-  (5, 'antonio.souza26');
+  (5, 'antonio.souza26'),
+  (6, 'antonio.souza26'),
+  (6, 'alexandre.santos67');
