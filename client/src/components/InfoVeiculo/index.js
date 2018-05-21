@@ -4,7 +4,7 @@ import CarIcon  from '../Veiculo/veiculo_preto.png'
 export default class InfoVeiculo extends Component {
   render() {
     return(
-      <div style={{borderBottom: '1px solid #333', marginTop: '21px', paddingBottom: '21px'}}>
+      <div style={{borderTop: '1px solid #333', padding: '21px 0 21px 0'}}>
         <div className="row">
           <div className="col-4" style={{paddingRight: '0', textAlign: 'right'}}>
             <img src={CarIcon} alt="..." style={{maxWidth: '74px', height: 'auto'}}/>

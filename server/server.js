@@ -372,6 +372,23 @@ router.route('/cars')
 
 //Manipulação de Caronas
 
+router.route('/lift/members')
+  .post(function(req, res) {
+    pool.getConnection(function(err, connection) {
+      if (err) {
+        res.send(err);
+        return;
+      }
+      connection.query('INSERT INTO membros_carona SET ?',[req.body], function(err, rows, fields) {
+        connection.release();
+        if (err){
+          res.send(err);
+          return;
+        }
+        res.json({ success: true });
+      });
+    });
+  });
 //Busca os membros da carona pelo ID da caronas
 router.route('/lift/members/:carona_id')
   .get(function(req, res) {
@@ -387,6 +404,22 @@ router.route('/lift/members/:carona_id')
           return;
         }
         res.json(rows);
+      });
+    });
+  })
+  .put(function(req, res) {
+    pool.getConnection(function(err, connection) {
+      if (err) {
+        res.send(err);
+        return;
+      }
+      connection.query('UPDATE membros_carona SET ? WHERE id = ? AND emailCaronista = ?',[{status: req.body.status}, req.params.carona_id, req.body.emailCaronista], function(err, rows, fields) {
+        connection.release();
+        if (err){
+          res.send(err);
+          return;
+        }
+        res.json({success: true});
       });
     });
   });
@@ -473,6 +506,16 @@ router.route('/lift')
     });
 
 //notificações
+router.route('/notifications/:user_email')
+  .get(function(req, res) {
+    mongoPool.collection('notifications').find({ email: req.params.user_email }).toArray((err, result) => {
+      if(err) {
+        res.send(err);
+        return;
+      }
+      res.send(result);
+    });
+  });
 
 router.route('/subs')
   .put(function(req, res) {
@@ -499,7 +542,21 @@ router.route('/notify/:user_email')
         return;
       }
 
+      if ( result.subscription === undefined ) {
+        res.send({message: 'User not subscribed.'});
+        return;
+      }
+
       var options = {};
+
+      mongoPool.collection('notifications').insertOne(
+        {
+          email: req.params.user_email,
+          message: req.body.message,
+          emailRemetente: req.body.emailRemetente,
+          idCarona: req.body.idCarona
+        }
+      )
 
       webPush.sendNotification(
         result.subscription, //subscription object

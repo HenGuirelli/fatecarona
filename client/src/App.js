@@ -12,6 +12,7 @@ import Perfil from './pages/perfil'
 import Oferecer from './pages/oferecer'
 import Pedir from './pages/pedir'
 import Caronas from './pages/caronas'
+import Notifications from './pages/notifications'
 import GerencCaronas from './components/LiftPend'
 import ResultCaronas from './pages/resultCaronas'
 import Config from './pages/config'
@@ -85,6 +86,7 @@ class App extends Component {
           <Route path="/veiculos/cadastrar" component={CadVeiculo}/>
           <Route path="/recuperarsenha" component={Recuperar}/>
           <Route path="/cadastro" component={Cadastro}/>
+          <Route path="/notifications" component={Notifications}/>
           <Route path="/config" render={() => <Config logOut={this.logOut.bind(this)}/>}/>
           <Route render={() => <div>four oh four</div>}/>
         </Switch>

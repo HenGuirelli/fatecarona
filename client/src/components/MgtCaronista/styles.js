@@ -1,7 +1,15 @@
 export default {
   root: {
-    padding: '1em',
-    borderBottom: '2px solid grey'
+    margin: '1em'
+  },
+  btn: {
+    borderRadius: '8px',
+    backgroundColor: '#6E4D8B',
+    borderColor: '#ffffff',
+    color: '#ffffff',
+    fontSize: '11px',
+    margin: '0 1%',
+    width: '48%'
   },
   btnL: {
     margin: '25px 0',
@@ -21,12 +29,5 @@ export default {
     color: '#ffffff',
     fontSize: '12px',
     width: '80%',
-  },
-  btnDialog:{
-    fontSize: '12px',
-    width: '70px',
-    margin: '0 10px',
-    backgroundColor: '#6E4D8B',
-    borderColor: '#6E4D8B'
-  },
+  }
 }

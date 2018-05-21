@@ -22,7 +22,8 @@ class Pedir extends Component {
       hora: {},
       direcao: '',
       trajeto: 'default',
-      prefs: {deficientes: 0, fumantes: 0, musica: 0}
+      prefs: {deficientes: 0, fumantes: 0, musica: 0},
+      searching: false
     };
   }
 
@@ -70,6 +71,8 @@ class Pedir extends Component {
       return
     }
 
+    this.setState({searching: true})
+
     let match = []
     let params = this.state
     let rota = this.props.rotas.find(rota => rota.nomeRota === this.state.trajeto)
@@ -94,6 +97,7 @@ class Pedir extends Component {
 
         if (match.length === 0) {
           window.displayDialog({title: "Atenção", msg: "Nenhuma carona encontrada..."})
+          this.setState({ searching: false })
           return
         }
 
@@ -120,6 +124,7 @@ class Pedir extends Component {
                 if (index === (matchResults.length - 1)) {
                   if (finalMatch.length === 0) {
                     window.displayDialog({title: "Atenção", msg: "Nenhuma carona encontrada..."})
+                    this.setState({ searching: false })
                     return
                   }
                   this.props.dispatch(transferResults(finalMatch))
@@ -154,6 +159,8 @@ class Pedir extends Component {
     const { rotas, userData, needLoad } = this.props
 
     if (userData.email && needLoad) this.props.dispatch(buscarRotas(userData.email))
+
+    if (this.state.searching) return <div>Procurando...</div>
 
     return (
       <div className="pageBase">

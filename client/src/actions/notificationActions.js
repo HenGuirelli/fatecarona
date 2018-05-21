@@ -7,3 +7,10 @@ export function sendSubscription(email, subscription) {
     payload: axios.put(config.endpoint + '/subs', {_id: email, subscription})
   }
 }
+
+export function getNotifications(email) {
+  return {
+    type: 'GET_NOTIFICATIONS',
+    payload: axios.get(config.endpoint + '/notifications/' + email)
+  }
+}

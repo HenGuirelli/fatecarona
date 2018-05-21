@@ -10,39 +10,41 @@ class MainPage extends Component {
     if ('Notification' in window && navigator.serviceWorker) {
       if (Notification.permission === "default") {
         Notification.requestPermission(status => {
-          console.log('Notification permission status:', status);
+          if (status === "granted") {
+            this.subscribeUser(email)
+          }
         });
       } else if (Notification.permission === "granted") {
-        navigator.serviceWorker.getRegistration().then(reg => {
-          reg.pushManager.getSubscription().then(sub => {
-            if (sub === null) {
-              this.subscribeUser();
-            } else {
-              this.props.dispatch(sendSubscription(email, sub));
-            }
-          });
-        });
+        this.subscribeUser(email)
       }
     }
   }
 
-  subscribeUser() {
+  subscribeUser(email) {
     const convertedVapidKey = this.urlBase64ToUint8Array("BJ1B8Ji8FNMFtm5hLzJbVjgpsV9Ct1dWIv9fpTIcHowwVFliX8W6BcWbvFdBuJFdL0VZzwR9pN1LSaINOGmj52Y")
 
-    navigator.serviceWorker.ready.then(reg => {
-      reg.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: convertedVapidKey
-      }).then(sub => {
-        console.log('Endpoint URL: ', sub.endpoint);
-      }).catch(e => {
-        if (Notification.permission === 'denied') {
-          console.warn('Permission for notifications was denied');
+    navigator.serviceWorker.getRegistration().then(reg => {
+      reg.pushManager.getSubscription().then(sub => {
+        if (sub === null) {
+          navigator.serviceWorker.ready.then(reg => {
+            reg.pushManager.subscribe({
+              userVisibleOnly: true,
+              applicationServerKey: convertedVapidKey
+            }).then(sub => {
+              this.props.dispatch(sendSubscription(email, sub))
+            }).catch(e => {
+              if (Notification.permission === 'denied') {
+                console.warn('Permission for notifications was denied');
+              } else {
+                console.error('Unable to subscribe to push', e);
+              }
+            });
+          })
         } else {
-          console.error('Unable to subscribe to push', e);
+          this.props.dispatch(sendSubscription(email, sub))
         }
       });
-    })
+    });
   }
 
   urlBase64ToUint8Array = (base64String) => {
