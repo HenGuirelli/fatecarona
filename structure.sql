@@ -60,6 +60,7 @@ create table caronas (
 create table membros_carona (
   id int,
   emailCaronista varchar(40),
+  status char(9),
   foreign key (emailCaronista) references membros (email),
   foreign key (id) references caronas (id)
 );
@@ -79,9 +80,9 @@ insert into caronas (dataCarona, rota, emailMotorista, kilometragem, veiculo, qt
   ("2018-04-22 15:08:28", "5abfbb953f4bbe6c741a195b", 'thiago.ramos9', 12.5, 1, 2, 0, "indo para a FATEC", "andamento");
 
 insert into membros_carona values
-  (1, 'alexandre.santos67'),
-  (1, 'antonio.souza26'),
-  (2, 'thiago.ramos9'),
-  (2, 'antonio.souza26'),
-  (5, 'alexandre.santos67'),
-  (5, 'antonio.souza26');
+  (1, 'alexandre.santos67', 'aceito'),
+  (1, 'antonio.souza26', 'aceito'),
+  (2, 'thiago.ramos9', 'aceito'),
+  (2, 'antonio.souza26', 'aceito'),
+  (5, 'alexandre.santos67', 'aceito'),
+  (5, 'antonio.souza26', 'aceito');

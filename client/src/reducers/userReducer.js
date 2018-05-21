@@ -2,6 +2,7 @@ export default function reducer(state={
     user: {},
     userData: {},
     firebase: {},
+    notifications: [],
     pending: true,
     error: null,
     updating: false,
@@ -13,6 +14,9 @@ export default function reducer(state={
       }
       case 'UPDATE_USER': {
         return {...state, user: action.payload, pending: false}
+      }
+      case 'GET_NOTIFICATIONS_FULFILLED': {
+        return {...state, notifications: action.payload.data}
       }
       case 'SET_USER_DATA_FULFILLED': {
         return {...state, userData: action.payload.data, needReload: false}

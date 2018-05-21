@@ -58,6 +58,13 @@ export default [
     selected: false
   },
   {
+    path: '/notifications',
+    text: 'NOTIFICAÇÕES',
+    icon: ConfIcon,
+    menu: true,
+    selected: false
+  },
+  {
     path: '/config',
     text: 'CONFIGURAÇÕES',
     icon: ConfIcon,
