@@ -10,5 +10,8 @@ export default {
     fontSize: '11px',
     margin: '0 1%',
     width: '48%'
+  },
+  textMargin:{
+    marginLeft: '2em'  
   }
 }

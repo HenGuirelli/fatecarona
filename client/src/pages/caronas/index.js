@@ -32,7 +32,9 @@ class Caronas extends Component {
       let byID = this.state.byID
       switch(this.state.status) {
         case 'pendente':{
-          return byID.filter(carona => carona.status === 'pendente')
+          return (
+            byID.filter(carona => carona.status === 'pendente')
+          )
         }
         case 'andamento':{
           return byID.filter(carona => carona.status === 'andamento')
@@ -160,19 +162,36 @@ class Caronas extends Component {
               caronas.length > 0 ?
               caronas.map((carona, key)=>
                 <div className="row" key={key} style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
-                    <LiftMgt
-                      infomotorista={carona.emailMotorista}
-                      caronista = {0}
-                      data={carona.dataCarona}
-                      tipo={carona.tipo}
-                    />
+                  {
+                    carona.emailMotorista === this.props.userData.email ?
+                      <LiftMgt
+                        infomotorista={carona.emailMotorista}
+                        caronista = {0}
+                        data={carona.dataCarona}
+                        tipo={carona.tipo}
+                        status={carona.status}
+                      />
+                    :
+                      <LiftMgt
+                        infomotorista={carona.emailMotorista}
+                        caronista = {1}
+                        data={carona.dataCarona}
+                        tipo={carona.tipo}
+                        status={carona.status}
+                      />
+                  }
                   <div className="row" style={{bottom: 0, width: '100%'}}>
                     <div className="col-6" style={styles.btnContainer}>
                       <input type="button" style={styles.btn} onClick={() => this.handleActivation(carona)} className="btn btn-primary" value="GERENCIAR" />
                     </div>
+                    {
+                      carona.status !== 'historico' ?
                     <div className="col-6" style={styles.btnContainer}>
                       <input type="button" style={styles.btn2} onClick ={this.handleSubmit} className="btn btn-primary" value="ESPIAR MOTORISTA" />
                     </div>
+                    :
+                    <div></div>
+                  }
                   </div>
                 </div>
               )
