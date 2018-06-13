@@ -11,9 +11,15 @@ export default function reducer(state={
         return{...state, rotas: action.payload.data, needLoad: false}
       }
       case 'EXCLUIR_ROTA_FULFILLED':{
+        window.displayDialog({title: 'Aviso', msg: 'Rota excluida.'}, '/rotas')
         return{...state, rotas: [], needLoad: true}
       }
       case 'GRAVAR_ROTA_FULFILLED':{
+        window.displayDialog({title: 'Aviso', msg: 'Rota adicionada.'}, '/rotas')
+        return{...state, rotas: [], needLoad: true}
+      }
+      case 'GRAVAR_ROTA_REJECTED':{
+        window.displayDialog({title: 'Aviso', msg: 'Erro ao adicionar rota.'}, '/rotas')
         return{...state, rotas: [], needLoad: true}
       }
       default: {

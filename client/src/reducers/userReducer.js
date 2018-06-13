@@ -42,6 +42,10 @@ export default function reducer(state={
       case 'LOAD_USER_FULFILLED': {
         return {...state, user: action.payload.data[0]}
       }
+      case 'INSERT_USER_FULFILLED': {
+        window.displayDialog({title: 'Aviso', msg: 'Cadastro realizado!'}, '/')
+        return state
+      }
       default: {
         return state
       }
