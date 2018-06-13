@@ -3,11 +3,16 @@ import React, { Component } from 'react'
 export default class Verify extends Component {
 
   sendValidationEmail = () => {
-    this.props.firebase.auth().currentUser.sendEmailVerification().then(function() {
-      window.displayDialog({msg: "E-Mail de verificação enviado com sucesso!"})
-    }).catch(function(error) {
+    const user = this.props.firebase.auth().currentUser
+    user.sendEmailVerification().then(
+      window.displayDialog({msg: "E-Mail de verificação enviado para " + user.email})
+    ).catch(error =>
       window.displayDialog({msg: "Erro ao enviar E-Mail de verificação: " + error.message})
-    });
+    )
+  }
+
+  componentWillMount() {
+    this.sendValidationEmail()
   }
 
   render() {
@@ -36,10 +41,15 @@ export default class Verify extends Component {
           <input
             type="button"
             className="btn btn-block loginBtn"
-            value="Enviar E-mail de Verificação"
+            value="Re-enviar E-mail de Verificação"
             style={styles.button}
             onClick={this.sendValidationEmail}
           />
+          <p>
+            Tente recarregar a página após acessar o email enviado,
+            caso esta mensagem continue aparecendo tente re-enviar o email de verificação
+            pressionando o botão acima.
+          </p>
         </div>
       </div>
     )

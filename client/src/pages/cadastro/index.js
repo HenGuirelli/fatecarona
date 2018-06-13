@@ -55,12 +55,13 @@ class Cadastro extends Component {
       this.props.dispatch(insertUser({
         ra,
         nome,
-        email
+        telefone: cel,
+        email: email.split('@')[0]
       }))
     )
     .catch((error) => {
-      window.displayDialog({title: 'Erro', msg: error.msg})
-    });
+      window.displayDialog({title: 'Erro', msg: error.message})
+    })
   }
 
   render() {
