@@ -503,6 +503,23 @@ router.route('/lift')
           res.json(rows);
         });
       });
+    })
+    .post(function(req, res) {
+      pool.getConnection(function(err, connection) {
+        if (err) {
+          res.send(err);
+          return;
+        }
+
+        connection.query('INSERT INTO caronas SET ?', [req.body], function(err, rows, fields) {
+          connection.release();
+          if (err){
+            res.send(err);
+            return;
+          }
+          res.json({success: true});
+        });
+      });
     });
 
 //notificações

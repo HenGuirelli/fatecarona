@@ -44,7 +44,7 @@ create table caronas (
   dataCarona datetime,
   rota varchar(50),
   emailMotorista varchar(40),
-  kilometragem numeric(3,1),
+  kilometragem numeric(3,1) default 0,
   acessibilidade boolean default 0,
   fumantes boolean default 0,
   musica boolean default 0,

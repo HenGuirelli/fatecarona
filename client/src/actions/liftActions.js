@@ -29,6 +29,13 @@ export function loadLiftbyEmail(emailMotorista) {
   }
 }
 
+export function offerLift(lift) {
+  return {
+    type: "OFERECER_CARONA",
+    payload: axios.post(config.endpoint + "/lift", lift)
+  }
+}
+
 export function loadListMembers(id) {
   return {
     type: "LOAD_MEMBROS_CARONA",
