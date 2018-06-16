@@ -6,6 +6,7 @@ import ProfileIcon from 'material-ui/svg-icons/action/account-circle'
 import ThumbIcon from 'material-ui/svg-icons/action/thumb-up'
 import SpeakIcon from 'material-ui/svg-icons/action/record-voice-over'
 import SmileIcon from 'material-ui/svg-icons/social/sentiment-very-satisfied'
+import NotificationIcon from 'material-ui/svg-icons/social/notifications'
 
 export default [
   {
@@ -60,7 +61,7 @@ export default [
   {
     path: '/notifications',
     text: 'NOTIFICAÇÕES',
-    icon: ConfIcon,
+    icon: NotificationIcon,
     menu: true,
     selected: false
   },
