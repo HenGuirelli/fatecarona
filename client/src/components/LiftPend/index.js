@@ -94,7 +94,6 @@ class GerencCarona extends Component {
       },
       prefIcons:{
         width:'2.2em', height: '2.1em',
-        float: 'right'
       },
       prefText:{
         marginTop: '0.3em'
@@ -139,9 +138,9 @@ class GerencCarona extends Component {
               </div>
               <div className="col-0">
                 {carona.status === "pendente" ?
-                  <span>PENDENTE</span>
+                  <span>Pendente</span>
                   :
-                  <span>ATIVA</span>
+                  <span>Ativa</span>
                 }
               </div>
             </div>
@@ -171,100 +170,95 @@ class GerencCarona extends Component {
             </div>
           </div>
 
-          <div style={{borderBottom: '1px solid grey', margin: '1em 0'}}>
-            <div>
+          <div style={{borderBottom: '1px solid grey', margin: '1em 1em'}}>
+            <div style={{marginBottom: '1em'}}>
                 PREFERÊNCIAS DA CARONA
             </div>
-
             <div className="row" style ={{marginTop: '1em'}}>
-              <div className="col-5">
+              <div className="col">
                 <img src={CadeiranteIcon} alt={"Cadeirante Icon"} style={instyle.prefIcons}/>
-              </div>
-              {carona.acessibilidade === 0 ?
-                <div>NÃO ACOMODA CADEIRANTE</div>
-                :
-                <div>ACOMODA CADEIRANTE</div>
-              }
-            </div>
-            <div className="row" style ={{marginTop: '1em'}}>
-              <div className="col-5">
-                <img src={FumanteIcon} alt={"Fumante Icon"} style={instyle.prefIcons}/>
-              </div>
-              <div className="col-0" style={instyle.prefText}>
-                {carona.fumantes === 0 ?
-                  <div>NÃO FUMAR</div>
+                {carona.acessibilidade === 0 ?
+                  <span>Não acomoda cadeirante</span>
                   :
-                  <div>PERMITIDO FUMAR</div>
+                  <span>Acomoda cadeirante</span>
                 }
               </div>
             </div>
             <div className="row" style ={{marginTop: '1em'}}>
-              <div className="col-5">
-                <img src={MusicIcon} alt={"Music Icon"} style={instyle.prefIcons}/>
-              </div>
-              <div className="col-0" style={instyle.prefText}>
-                {carona.musica === 0 ?
-                  <div>NÃO É PERMITIDO OUVIR MÚSICA</div>
+              <div className="col">
+                <img src={FumanteIcon} alt={"Fumante Icon"} style={instyle.prefIcons}/>
+                {carona.fumantes === 0 ?
+                  <span>Não é permitido de fumar</span>
                   :
-                  <div>PERMITIDO OUVIR MÚSICA</div>
+                  <span>Permitido fumar</span>
+                }
+              </div>
+            </div>
+            <div className="row" style ={{marginTop: '1em'}}>
+              <div className="col">
+                <img src={MusicIcon} alt={"Music Icon"} style={instyle.prefIcons}/>
+                {carona.musica === 0 ?
+                  <span>Não é permitido ouvir música</span>
+                  :
+                  <span>Permitido ouvir música</span>
                 }
               </div>
             </div>
           </div>
 
-          <div style={{borderBottom: '1px solid grey', margin: '1em 0'}}>
-            <div>
-                VEÍCULO
-            </div>
-
-            <div className="row" style ={{marginTop: '1em'}}>
-              <div className="col-6">
-                  <img style={{width: '4em', height: '1.7em', float:'right'}} src={CarIcon} alt={"Car Icon"}/>
+            <div style={{borderBottom: '1px solid grey', margin: '1em 0'}}>
+              <div>
+                  VEÍCULO
               </div>
-              <div className="col-0" style={instyle.prefText}>
-                {carPlaca}
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-6">
-                <div className="row" style={{textAlign:'right'}}>
-                  <div className="col-8 col-sm-8 col-md-9 col-lg-10 col-xl-10">
-                    <img style={{width: '1em', height: '1.2em', float: 'right'}} src={LugarIcon} alt={"Lugares Icon"}/>
-                  </div>
-                  <div className="col-0">
-                    <span >{carona.qtdVagas} Lugares</span>
+              <div className="row" style ={{marginTop: '1em'}}>
+                <div className="col-6">
+                    <img style={{width: '4em', height: '1.7em', float:'right'}} src={CarIcon} alt={"Car Icon"}/><br/>
+                    <img style={{width: '1em', height: '1.2em', float:'right'}} src={LugarIcon} alt={"Lugares Icon"}/>
+                    <span style={{float:'right'}}>{carona.qtdVagas} Lugares</span>
+                </div>
+                <div className="col-6" style={instyle.prefText}>
+                  <div style={{float:'left'}}>
+                    {carPlaca}<br/>
+                    {carMarca}, {carModelo}
                   </div>
                 </div>
               </div>
-              {carMarca}, {carModelo}
+
+              <div className="row">
+                  <div className="col" style={{float:'right'}}>
+                  </div>
+                  <div className="col">
+                  </div>
+              </div>
             </div>
-          </div>
 
-
-          {
-            carona.status !== 'pendente' ?
-            <div>QUEM VAI NO CARRO</div>
-            :
-            <div></div>}
             {
-            this.state.members.map((member, key)=>
-            <div key={key} className="row" style={{marginTop: '1em', borderBottom: '1px solid lightgrey', borderSpacing: '200px'}}>
-              <div  style={{marginLeft: '33%'}} className="col-0">
-                <Avatar
-                  src={member.img ? config.endpoint + "/images/" + member.img : ""}
-                  size={50}
-                />
+              carona.status !== 'pendente' ?
+              <div>QUEM VAI NO CARRO</div>
+              :
+              <div></div>
+            }
+            {
+              carona.status !== 'pendente' ?
+              this.state.members.map((member, key)=>
+              <div key={key} className="row" style={{marginTop: '1em', borderBottom: '1px solid lightgrey', borderSpacing: '200px'}}>
+                <div  style={{marginLeft: '33%'}} className="col-0">
+                  <Avatar
+                    src={member.img ? config.endpoint + "/images/" + member.img : ""}
+                    size={50}
+                  />
+                </div>
+                <div className="col-3">
+                  {member.nome.substring(0, member.nome.indexOf(" "))}<br />
+                  {member.email === carona.emailMotorista ? <span>Motorista</span> : <span>Caronista</span>}
+                </div>
+                <div className="col-3">
+                  <input type="button" style={instyle.btn} className="btn btn-primary" value="Conversar" />
+                </div>
               </div>
-              <div className="col-3 col-sm-3 col-md-1">
-                {member.nome.substring(0, member.nome.indexOf(" "))}<br />
-                {member.email === carona.emailMotorista ? <span>Motorista</span> : <span>Caronista</span>}
-              </div>
-              <div className="col-3">
-                <input type="button" style={instyle.btn} className="btn btn-primary" value="Conversar" />
-              </div>
-            </div>
-            )
+              )
+            :
+            <div></div>
           }
         </center>
       </div>

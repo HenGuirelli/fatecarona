@@ -10,8 +10,7 @@ export default class AvatarHeader extends Component {
     return(
       <div style={styles.root}>
         <center>
-          <div style={styles.apelido}>{userData.apelido}</div>
-          <div style={styles.status}>Oferecendo Carona</div>
+
         </center>
         <div className="container">
           <div className="row" style={styles.background}>
@@ -22,9 +21,12 @@ export default class AvatarHeader extends Component {
               </div>
             </div>
             <center className="col-8">
+
+              <div style={styles.apelido}>{userData.apelido}</div>
+              <div style={styles.status}>Oferecendo Carona</div>
               <Avatar
                 src={userData.img ? config.endpoint + "/images/" + userData.img : ""}
-                size={150}
+                size={90}
                 style={styles.avatar}
               />
             </center>

@@ -7,10 +7,10 @@ export default {
   },
   img: {
     height: 'auto',
-    width: '10em',
+    width: '6em',
   },
   score: {
-    fontSize: '3em',
-    marginTop: '-104px'
+    fontSize: '2em',
+    marginTop: '-64px'
   }
 }

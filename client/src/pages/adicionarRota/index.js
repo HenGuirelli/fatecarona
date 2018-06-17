@@ -75,7 +75,7 @@ class AdicionarRota extends Component {
         backgroundColor: '#6E4D8B',
         borderColor: '#ffffff',
         color: '#ffffff',
-        fontSize: '20px',
+        fontSize: '18px',
         width: '70%',
         marginLeft: '15%'
       },
@@ -93,6 +93,13 @@ class AdicionarRota extends Component {
     return (
       <div className="pageBase">
         <div className="container" style={{paddingTop: '1rem'}}>
+          <div className="form-group" style={{marginTop: '1rem'}}>
+            <label htmlFor="destino">Nome da rota</label>
+            <input
+              className="form-control"
+              ref="nomeRota"
+            />
+          </div>
           <div className="form-group">
             <label>Origem</label>
             <input
@@ -132,32 +139,29 @@ class AdicionarRota extends Component {
                   <option value={waypt} key={key} defaultValue="selected">{waypt}</option>
                 )}
             </select>
-            <input
-              type="button"
-              style={styles.button}
-              className="btn btn-primary btn-block"
-              onClick={this.getSelected}
-              value="Carregar Rota"
-            />
+            <div className="row">
+              <div className="col-6">
+                <input
+                  type="button"
+                  style={styles.button}
+                  className="btn btn-primary btn-block"
+                  onClick={this.getSelected}
+                  value="Carregar Rota"
+                />
+              </div>
+              <div className="col-6">
+                <input
+                  type="button"
+                  style={styles.button}
+                  className="btn btn-primary btn-block"
+                  value="Salvar Rota"
+                  onClick={this.storeRoute}
+                />
+              </div>
+            </div>
           </div>
         </div>
         <GoogleMaps routeState={this.routeState} callback={this.saveFunc}/>
-        <div className="container">
-          <div className="form-group" style={{marginTop: '1rem'}}>
-            <label htmlFor="destino">Nome da rota</label>
-            <input
-              className="form-control"
-              ref="nomeRota"
-            />
-          </div>
-          <input
-            type="button"
-            style={styles.button}
-            className="btn btn-primary btn-block"
-            value="Finalizar"
-            onClick={this.storeRoute}
-          />
-        </div>
       </div>
     );
   }

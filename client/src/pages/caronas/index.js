@@ -14,13 +14,13 @@ class Caronas extends Component {
         byID: [],
         loaded: false
       };
-      this.handleChange = this.handleChange.bind(this);
     }
 
-    handleChange(event) {
+    handleClick(status) {
       this.setState({
-        status: event.target.value
-      });
+        status: status
+      })
+      console.log(status)
     }
 
     handleActivation = (carona) =>{
@@ -89,79 +89,42 @@ class Caronas extends Component {
 
     const styles = {
       btn: {
-        margin: '25px 0',
         borderRadius: '8px',
         backgroundColor: '#6E4D8B',
         borderColor: '#ffffff',
         color: '#ffffff',
         fontSize: '12px',
-        width: '80%',
-        marginLeft: '8%'
+        width:'12em'
       },
-      btn2: {
-        margin: '25px 0',
-        borderRadius: '8px',
-        backgroundColor: '#6E4D8B',
-        borderColor: '#ffffff',
-        color: '#ffffff',
-        fontSize: '12px',
-        width: '80%',
-      },
-      radiobtn: {
-        display:'none',
-      }
     }
     var caronas = this.buscaCaronas();
 
     return (
       <div>
-        <div  className="row btn-group btn-group-toggle" style={{width:'100%'}} >
-          <label className="btn btnLift col-4" htmlFor="option1"
-            href="#radioCollapse">
-            <input
-              type="radio"
-              style={styles.radiobtn}
-              name="options" id="option1"
-              value="andamento"
-              checked={this.state.status === "andamento"}
-              onChange={this.handleChange}
-            />
-            EM ANDAMENTO
-          </label>
-          <label className="btn btnLift col-4" htmlFor="option2"
-            href="#radioCollapse">
-            <input
-              type="radio"
-              style={styles.radiobtn}
-              name="options" id="option2"
-              value="historico"
-              checked={this.state.status === "historico"}
-              onChange={this.handleChange}
-            />
-            HISTÓRICO
-          </label>
-          <label className="btn btnLift col-4" htmlFor="option3"
-            href="#radioCollapse">
-            <input
-              type="radio"
-              style={styles.radiobtn}
-              name="options" id="option3"
-              value="pendente"
-              checked={this.state.status === "pendente"}
-              onChange={this.handleChange}
-            />
-            PENDENTE
-          </label>
-        </div>
+        <ul className="nav nav-pills row" id="pills-tab" role="tablist">
+          <li className="nav-item col-4">
+            <label className="nav-link active" id="pills-andamento-tab" data-toggle="pill" role="tab" aria-selected="true" onClick={() => this.handleClick("andamento")}>
+              <center>Andamento</center>
+            </label>
+          </li>
+          <li className="nav-item col-4">
+            <label className="nav-link" id="pills-historico-tab" data-toggle="pill" role="tab" aria-selected="false" onClick={() => this.handleClick("historico")}>
+              <center>Histórico</center>
+            </label>
+          </li>
+          <li className="nav-item col-4">
+            <label className="nav-link" id="pills-pendente-tab" data-toggle="pill" role="tab" aria-selected="false" onClick={() => this.handleClick("pendente")}>
+              <center>Pendente</center>
+            </label>
+          </li>
+        </ul>
 
-        <div className="container">
-          <div className="row" id="radioCollapse" >
-
-
-            {
-              caronas.length > 0 ?
-              caronas.map((carona, key)=>
-                <div className="row" key={key} style={{padding: '0em 0', margin: '0', borderBottom: '2px solid grey'}}>
+        {
+          caronas.length > 0 ?
+            caronas.map((carona, key)=>
+            <div className="container">
+              <div className="row" key={key} style={{borderBottom: '2px solid grey'}}>
+                <div className="col-12">
                   {
                     carona.emailMotorista === this.props.userData.email ?
                       <LiftMgt
@@ -180,26 +143,26 @@ class Caronas extends Component {
                         status={carona.status}
                       />
                   }
-                  <div className="row" style={{bottom: 0, width: '100%'}}>
-                    <div className="col-6" style={styles.btnContainer}>
-                      <input type="button" style={styles.btn} onClick={() => this.handleActivation(carona)} className="btn btn-primary" value="GERENCIAR" />
-                    </div>
-                    {
-                      carona.status !== 'historico' ?
-                    <div className="col-6" style={styles.btnContainer}>
-                      <input type="button" style={styles.btn2} onClick ={this.handleSubmit} className="btn btn-primary" value="ESPIAR MOTORISTA" />
-                    </div>
-                    :
-                    <div></div>
-                  }
-                  </div>
                 </div>
-              )
-            :
+                <div className="row">
+                  <div className="col-6">
+                    <input type="button" style={styles.btn} onClick={() => this.handleActivation(carona)} className="btn btn-primary" value="GERENCIAR" />
+                  </div>
+                  {
+                    carona.status !== 'historico' ?
+                      <div className="col-6">
+                        <input type="button" style={styles.btn}  onClick ={this.handleSubmit} className="btn btn-primary" value="ESPIAR MOTORISTA" />
+                      </div>
+                    :
+                      <div></div>
+                  }
+                </div>
+              </div>
+            </div>
+            )
+          :
             <div>Nenhuma Carona.</div>
-          }
-          </div>
-        </div>
+        }
       </div>
     )
   }

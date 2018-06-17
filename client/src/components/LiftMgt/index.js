@@ -33,21 +33,21 @@ class Lift extends Component {
     switch(status) {
       case 'pendente':{
         if (caronista)
-          return text = "VOCÊ está aguardando resposta de " + name +" para carona em " + data+ " " + tipo
+          return text = "VOCÊ está aguardando resposta de " + name +" para carona em " + data+ ", " + tipo
         else
-          return text = "VOCÊ está oferecendo carona em " + data+" " + tipo
+          return text = "VOCÊ está oferecendo carona em " + data+", " + tipo
       }
       case 'andamento':{
         if (caronista)
-          return text = "VOCÊ vai pegar carona com " + name +" em " + data+ " " + tipo
+          return text = "VOCÊ vai pegar carona com " + name +" em " + data+ ", " + tipo
         else
-          return text = "VOCÊ vai dar carona carona em " + data+" " + tipo
+          return text = "VOCÊ vai dar carona carona em " + data+", " + tipo
       }
       case 'historico':{
         if (caronista)
-          return text = "VOCÊ pegou carona com " + name +" em " + data+ " " + tipo
+          return text = "VOCÊ pegou carona com " + name +" em " + data+ ", " + tipo
         else
-          return text = "VOCÊ deu carona em " + data+" " + tipo
+          return text = "VOCÊ deu carona em " + data+", " + tipo
       }
       default:{return text}
     }
@@ -71,22 +71,19 @@ class Lift extends Component {
 
     let text = this.getText(this.state.name, caronista, dataCarona, tipo, status)
     return(
-      <div className="container" style={styles.root}>
-        <div className="row">
-          <div className="col-3 col-xl-1">
+        <div className="row" style={{marginTop:'1em'}}>
+          <div className="col-2">
             <Avatar
               src={userData.img ? config.endpoint + "/images/" + userData.img : ""}
               size={50}
             />
           </div>
-          <div className="col-9 col-xl-11">
-            <div style={styles.textMargin}>
+          <div className="col-8">
+            <span style={styles.textMargin}>
               {text}
-            </div>
+            </span>
           </div>
         </div>
-
-      </div>
     )
   }
 }

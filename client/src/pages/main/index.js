@@ -3,7 +3,9 @@ import AvatarHeader from '../../components/AvatarHeader'
 import { connect } from 'react-redux'
 import { sendSubscription } from '../../actions/notificationActions.js'
 import InfoVeiculo from '../../components/InfoVeiculo'
+import CarIcon from '../../components/Veiculo/veiculo_preto.png'
 import Avaliador from '../../components/Avaliador'
+import { loadCar } from '../../actions/carActions'
 
 class MainPage extends Component {
   checkSubscription = (email) => {
@@ -62,13 +64,24 @@ class MainPage extends Component {
     return outputArray
   }
 
+  componentWillMount() {
+    this.props.dispatch(loadCar(this.props.userData.email))
+  }
+
   render() {
-    const { userData } = this.props
+    const { userData, veiculos } = this.props
 
     const styles = {
       content: {
         'backgroundColor': 'white',
       },
+      text:{
+        fontSize: '22px',
+        font: 'bold'
+      },
+      radiobtn: {
+        display:'none',
+      }
     }
 
     if( userData.email !== undefined) this.checkSubscription(userData.email);
@@ -76,30 +89,56 @@ class MainPage extends Component {
     return (
       <div className="pageBase">
         <AvatarHeader userData={userData}/>
+
         <div className="container">
+
+          <ul className="nav nav-pills row" id="pills-tab" role="tablist">
+            <li className="nav-item col-6">
+              <label className="nav-link active" id="pills-andamento-tab" data-toggle="pill" role="tab" aria-selected="true">
+                <center>Caronista</center>
+              </label>
+            </li>
+            <li className="nav-item col-6">
+              <label className="nav-link" id="pills-historico-tab" data-toggle="pill" role="tab" aria-selected="false">
+                <center>Motorista</center>
+              </label>
+            </li>
+          </ul>
+
           <div style={styles.content}>
-            <Avaliador
-              text="AVALIAÇÃO COMO MOTORISTA"
-              score={3.5}
-            />
-            <center className="row" style={{margin: "40px 0"}}>
-              <div className="col-4">
-                <h1>38</h1>
-                Caronas Tomadas
+            <div className="row">
+              <div className="col-6">
+                <Avaliador
+                  text="Avaliação"
+                  score={3.5}
+                />
               </div>
-              <div className="col-4">
-                <h1>21</h1>
-                Vezes avaliado
+              <div className="col-6" style={{marginTop:'1em'}}>
+                <center>
+                  <div style={styles.text}>38</div>
+                  Caronas Realizadas<br/><br/>
+                  <div style={styles.text}>21</div>
+                  Caronas Avaliadas<br/><br/>
+                  <div style={styles.text}>5</div>
+                  Caronas 5 estrelas
+                </center>
               </div>
-              <div className="col-4">
-                <h1>13</h1>
-                Vezes com 5 estrelas
-              </div>
-            </center>
-            <center><h4>VEÍCULOS</h4></center>
+            </div>
             <div style={{marginTop: '40px'}}>
-                <InfoVeiculo />
-                <InfoVeiculo />
+              <center><h4>VEÍCULOS ATIVOS</h4></center>
+              <div >
+                {
+                  veiculos.map((veiculo, key) =>
+                  <div>
+                      <InfoVeiculo
+                        marca={veiculo.marca}
+                        modelo={veiculo.modelo}
+                        placa={veiculo.placa}
+                      />
+                  </div>
+                  )
+                }
+              </div>
             </div>
           </div>
         </div>
@@ -111,6 +150,7 @@ class MainPage extends Component {
 export default connect(store => {
   return {
     user: store.user.user,
-    userData: store.user.userData
+    userData: store.user.userData,
+    veiculos: store.car.veiculos,
   }
 })(MainPage)

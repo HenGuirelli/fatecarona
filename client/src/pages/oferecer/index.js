@@ -12,8 +12,8 @@ import { buscarRotas } from '../../actions/mapActions'
 import { loadCar } from '../../actions/carActions'
 import { offerLift } from '../../actions/liftActions'
 import styles from '../oferecer/styles'
-import config from '../../config.json'
-import axios from 'axios'
+//import config from '../../config.json'
+//import axios from 'axios'
 
 class Oferecer extends Component {
   constructor(props) {
@@ -69,7 +69,7 @@ class Oferecer extends Component {
       window.displayDialog({title: "Erro:", msg: "Favor preencher todos os campos"})
       return
     }
-    const { data, hora, direcao, trajeto, veiculo, prefs } = this.state
+    const { data, hora, direcao, /*trajeto,*/ veiculo, prefs } = this.state
     const { rotas, userData } = this.props
     const lift = {
       dataCarona: data.toISOString().substr(0,10) + ' ' + hora.toTimeString().substr(0, 8),
@@ -158,7 +158,7 @@ class Oferecer extends Component {
                 {veiculos.map((car, key) => {
                   if (car.ativo) {
                     return <center className="col-6" key={key} onClick={() => this.handleVeiculo(car)}>
-                      <label className="btn loginBtn active" style={styles.carBtn}>
+                      <label className="btn loginBtn" style={styles.carBtn}>
                         <input type="radio" id={"opt" + key} autoComplete="off" defaultChecked style={{position: 'absolute', display: 'none'}}/>
                         <img style={{width: '3.5em', height: '1.5em', margin:'0'}} src={CarIcon} alt={"Car Logo"}/>
                       </label>
