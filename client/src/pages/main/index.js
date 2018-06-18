@@ -3,7 +3,6 @@ import AvatarHeader from '../../components/AvatarHeader'
 import { connect } from 'react-redux'
 import { sendSubscription } from '../../actions/notificationActions.js'
 import InfoVeiculo from '../../components/InfoVeiculo'
-import CarIcon from '../../components/Veiculo/veiculo_preto.png'
 import Avaliador from '../../components/Avaliador'
 import { loadCar } from '../../actions/carActions'
 
@@ -125,18 +124,23 @@ class MainPage extends Component {
               </div>
             </div>
             <div style={{marginTop: '40px'}}>
-              <center><h4>VEÍCULOS ATIVOS</h4></center>
-              <div >
+              <center><h4 style={{borderBottom: '1px solid #333', padding: '21px 0 21px 0'}}>VEÍCULOS ATIVOS</h4></center>
+              <div className="row">
                 {
-                  veiculos.map((veiculo, key) =>
-                  <div>
+                veiculos.length > 0 ?  veiculos.map((veiculo, key) =>
+                  veiculo.ativo === 1 ?
+                  <div className="col-6" key={key}>
                       <InfoVeiculo
                         marca={veiculo.marca}
                         modelo={veiculo.modelo}
                         placa={veiculo.placa}
                       />
                   </div>
-                  )
+                  :
+                  <div></div>
+                )
+                :
+                <div>Não há veiculo ativo.</div>
                 }
               </div>
             </div>

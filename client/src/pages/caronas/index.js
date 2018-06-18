@@ -122,7 +122,7 @@ class Caronas extends Component {
         {
           caronas.length > 0 ?
             caronas.map((carona, key)=>
-            <div className="container">
+            <div key={key} className="container">
               <div className="row" key={key} style={{borderBottom: '2px solid grey'}}>
                 <div className="col-12">
                   {

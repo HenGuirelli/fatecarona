@@ -38,7 +38,7 @@ var upload = multer({ storage: storage }).single('image');
 var pool = mysql.createPool({
   host     : 'localhost',
   user     : 'root',
-  password : '3847147298',
+  password : 'root',
   database : 'Fatecarona'
 });
 
@@ -340,11 +340,17 @@ router.route('/cars/action/:car_placa')
   //Exclusão do veiculo
   .delete(function(req, res) {
       pool.getConnection(function(err, connection) {
-        if (err) res.send(err);
+        if (err) {
+          res.send(err);
+          return;
+        }
 
         connection.query('DELETE FROM veiculos WHERE placa = ?', [req.params.car_placa], function(err, rows, fields) {
           connection.release();
-          if (err) res.send(err);
+          if (err) {
+            res.send(err);
+            return;
+          }
           res.json({ message: 'Veículo ' + req.params.car_placa + ' excluido.'});
         });
       });

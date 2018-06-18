@@ -5,7 +5,7 @@ export default class InfoVeiculo extends Component {
   render() {
     const { marca, modelo, placa } = this.props
     return(
-      <div style={{borderTop: '1px solid #333', padding: '21px 0 21px 0'}}>
+      <div >
         <div className="row">
           <div className="col-4" style={{paddingRight: '0', textAlign: 'right'}}>
             <img src={CarIcon} alt="..." style={{maxWidth: '74px', height: 'auto'}}/>
