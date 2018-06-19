@@ -20,7 +20,6 @@ class Caronas extends Component {
       this.setState({
         status: status
       })
-      console.log(status)
     }
 
     handleActivation = (carona) =>{
