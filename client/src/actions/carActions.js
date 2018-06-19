@@ -42,3 +42,17 @@ export function deleteCar(placa) {
     payload: axios.delete(config.endpoint + "/cars/action/" + placa)
   }
 }
+
+export function loadMarca(marca) {
+  return {
+    type: "LOAD_MARCA",
+    payload: axios.get(config.endpoint + "/cars/marcas/" +marca)
+  }
+}
+
+export function loadModelo(id) {
+  return {
+    type: "LOAD_MODELO",
+    payload: axios.get(config.endpoint + "/cars/modelos/" +id)
+  }
+}

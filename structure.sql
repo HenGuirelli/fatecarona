@@ -64,6 +64,27 @@ create table membros_carona (
   foreign key (id) references caronas (id)
 );
 
+create table carro_marca (
+  id int auto_increment primary key,
+  marca varchar(30)
+);
+
+insert into carro_marca (marca) values
+  ('Chevrolet'), ('Fiat'), ('Ford'), ('Hyundai'), ('Volkswagen');
+
+create table carro_modelo (
+  id int,
+  modelo varchar(30),
+  foreign key (id) references carro_marca (id)
+);
+
+insert into carro_modelo values
+  (1, 'Celta'), (1, 'Corsa'), (1, 'Onix'), (1, 'Opala'), (1, 'Prisma'),
+  (2, 'Argo'), (2, 'Marea'), (2, 'Palio'), (2, 'Punto'), (2, 'Uno'),
+  (3, 'Del Rey'), (3, 'Fiesta'), (3, 'Ka'), (3, 'Pampa'), (3, 'Verona'),
+  (4, 'Creta'), (4, 'HB20'), (4, 'HB20S'), (4, 'ix35'), (4, 'Tucson'),
+  (5, 'Fox'), (5, 'Gol'), (5, 'Jeta'), (5, 'Polo'), (5, 'Saveiro');
+
 insert into veiculos (placa, email, ativo, marca, modelo, cor) values
   ('BBB-2222', 'alexandre.santos67', 1, 'Fiat', 'Palio', 'vermelho'),
   ('CCC-3333', 'alexandre.santos67', 0, 'Fiat', 'Siena', 'branco');

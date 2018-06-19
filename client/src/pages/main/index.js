@@ -68,7 +68,7 @@ class MainPage extends Component {
   }
 
   render() {
-    const { userData, veiculos } = this.props
+    const { userData, veiculos, needLoad } = this.props
 
     const styles = {
       content: {
@@ -80,30 +80,33 @@ class MainPage extends Component {
       },
       radiobtn: {
         display:'none',
+      },
+      tab:{
+        backgroundColor: '#D2D3D5',
+        height: '2.5em'
       }
     }
 
     if( userData.email !== undefined) this.checkSubscription(userData.email);
+    if (userData.email && needLoad) this.props.dispatch(loadCar(userData.email))
 
     return (
       <div className="pageBase">
         <AvatarHeader userData={userData}/>
 
+        <ul className="nav nav-pills row" id="pills-tab" role="tablist" style={styles.tab}>
+          <li className="nav-item col-6">
+            <label className="nav-link active" id="pills-andamento-tab" data-toggle="pill" role="tab" aria-selected="true">
+              <center>Caronista</center>
+            </label>
+          </li>
+          <li className="nav-item col-6">
+            <label className="nav-link" id="pills-historico-tab" data-toggle="pill" role="tab" aria-selected="false">
+              <center>Motorista</center>
+            </label>
+          </li>
+        </ul>
         <div className="container">
-
-          <ul className="nav nav-pills row" id="pills-tab" role="tablist">
-            <li className="nav-item col-6">
-              <label className="nav-link active" id="pills-andamento-tab" data-toggle="pill" role="tab" aria-selected="true">
-                <center>Caronista</center>
-              </label>
-            </li>
-            <li className="nav-item col-6">
-              <label className="nav-link" id="pills-historico-tab" data-toggle="pill" role="tab" aria-selected="false">
-                <center>Motorista</center>
-              </label>
-            </li>
-          </ul>
-
           <div style={styles.content}>
             <div className="row">
               <div className="col-6">
@@ -129,7 +132,7 @@ class MainPage extends Component {
                 {
                 veiculos.length > 0 ?  veiculos.map((veiculo, key) =>
                   veiculo.ativo === 1 ?
-                  <div className="col-6" key={key}>
+                  <div key={key} className="col-md-6" style={{marginTop:'1.5em'}}>
                       <InfoVeiculo
                         marca={veiculo.marca}
                         modelo={veiculo.modelo}
@@ -156,5 +159,6 @@ export default connect(store => {
     user: store.user.user,
     userData: store.user.userData,
     veiculos: store.car.veiculos,
+    needLoad: store.car.needLoad,
   }
 })(MainPage)

@@ -96,12 +96,16 @@ class Caronas extends Component {
         fontSize: '12px',
         width:'12em'
       },
+      tab:{
+        backgroundColor: '#D2D3D5',
+        height: '2.5em'
+      },
     }
     var caronas = this.buscaCaronas();
 
     return (
       <div>
-        <ul className="nav nav-pills row" id="pills-tab" role="tablist">
+        <ul className="nav nav-pills row" id="pills-tab" role="tablist" style={styles.tab}>
           <li className="nav-item col-4">
             <label className="nav-link active" id="pills-andamento-tab" data-toggle="pill" role="tab" aria-selected="true" onClick={() => this.handleClick("andamento")}>
               <center>Andamento</center>
@@ -118,7 +122,6 @@ class Caronas extends Component {
             </label>
           </li>
         </ul>
-
         {
           caronas.length > 0 ?
             caronas.map((carona, key)=>
@@ -144,18 +147,20 @@ class Caronas extends Component {
                       />
                   }
                 </div>
-                <div className="row">
-                  <div className="col-6">
-                    <input type="button" style={styles.btn} onClick={() => this.handleActivation(carona)} className="btn btn-primary" value="GERENCIAR" />
-                  </div>
-                  {
-                    carona.status !== 'historico' ?
-                      <div className="col-6">
-                        <input type="button" style={styles.btn}  onClick ={this.handleSubmit} className="btn btn-primary" value="ESPIAR MOTORISTA" />
+                <div className="container">
+                  <div className="row justify-content-center">
+                      <div className="col" style={{textAlign:'right'}}>
+                        <input type="button" style={styles.btn} onClick={() => this.handleActivation(carona)} className="btn btn-primary" value="GERENCIAR" />
                       </div>
-                    :
-                      <div></div>
-                  }
+                      <div className="col">
+                        {
+                         carona.status !== 'historico' ?
+                             <input type="button" style={styles.btn}  onClick ={this.handleSubmit} className="btn btn-primary" value="ESPIAR MOTORISTA" />
+                         :
+                           <div></div>
+                         }
+                      </div>
+                    </div>
                 </div>
               </div>
             </div>

@@ -72,13 +72,13 @@ class Lift extends Component {
     let text = this.getText(this.state.name, caronista, dataCarona, tipo, status)
     return(
         <div className="row" style={{marginTop:'1em'}}>
-          <div className="col-2">
+          <div className="col-2" style={{textAlign:'right'}}>
             <Avatar
               src={userData.img ? config.endpoint + "/images/" + userData.img : ""}
               size={50}
             />
           </div>
-          <div className="col-8">
+          <div className="col-10">
             <span style={styles.textMargin}>
               {text}
             </span>

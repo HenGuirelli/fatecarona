@@ -13,6 +13,7 @@ class CadVeiculos extends Component{
     };
   }
 
+
   handlePlaca = (event) =>{
     this.setState({placa: event.target.value.toUpperCase()})
   }
@@ -94,10 +95,13 @@ class CadVeiculos extends Component{
             <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
               <center>
                 <div className="col-6">MARCA</div>
-                <select className="form-control" style={styles.inputOption} onChange={this.handleMarca} value={this.state.marca || 'default'}>
+                <select className="form-control" style={styles.inputOption} value={this.state.marca || 'default'} onChange={this.handleMarca}>
                   <option value="default">Selecione...</option>
-                  <option value="FIAT">FIAT</option>
-                  <option value="MERCEDES">MERCEDES</option>
+                  <option value="Chevrolet">Chevrolet</option>
+                  <option value="Fiat">Fiat</option>
+                  <option value="Ford">Ford</option>
+                  <option value="Hyundai">Hyundai</option>
+                  <option value="Volkswagen">Volkswagen</option>
                 </select>
               </center>
             </div>
@@ -134,6 +138,6 @@ export default connect(store => {
   return {
     user: store.user.user,
     userData: store.user.userData,
-    veiculos: store.car.veiculos
+    veiculos: store.car.veiculos,
   }
 })(CadVeiculos)

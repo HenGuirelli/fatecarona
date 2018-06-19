@@ -21,7 +21,7 @@ class Veiculos extends Component{
 
 
   render(){
-    const {veiculos} = this.props
+    const {veiculos, needLoad, userData} = this.props
 
     const styles = {
       button: {
@@ -42,6 +42,8 @@ class Veiculos extends Component{
         fontSize: '15px'
       }
     }
+
+    if (userData.email && needLoad) this.props.dispatch(loadCar(userData.email))
 
       return(
         <div className="pageBase">
@@ -76,6 +78,7 @@ export default connect(store => {
   return {
     veiculo: store.car.veiculo,
     veiculos: store.car.veiculos,
-    userData: store.user.userData
+    userData: store.user.userData,
+    needLoad: store.car.needLoad,
   }
 })(Veiculos)
