@@ -340,11 +340,17 @@ router.route('/cars/action/:car_placa')
   //Exclusão do veiculo
   .delete(function(req, res) {
       pool.getConnection(function(err, connection) {
-        if (err) res.send(err);
+        if (err) {
+          res.send(err);
+          return;
+        }
 
         connection.query('DELETE FROM veiculos WHERE placa = ?', [req.params.car_placa], function(err, rows, fields) {
           connection.release();
-          if (err) res.send(err);
+          if (err) {
+            res.send(err);
+            return;
+          }
           res.json({ message: 'Veículo ' + req.params.car_placa + ' excluido.'});
         });
       });
@@ -591,6 +597,60 @@ server.use(router);
 
 var httpsServer = https.createServer(credentials, server);
 var httpServer  = http.createServer(server);
+
+// Socket I/O Chat
+
+var io = require('socket.io')(httpServer);
+
+io.on('connection', (socket) => {
+  socket.emit('connected');
+  // once a client has connected, we expect to get a ping from them saying what room they want to join
+  socket.on('room', (room) => {
+      socket.join(room);
+      socket.room = room;
+  });
+  // when the client emits 'new message', this listens and executes
+  socket.on('new message', message => {
+    // we tell the clients to execute 'new message'
+    io.to(socket.room).emit('new message', {
+      username: socket.username,
+      message
+    });
+  });
+
+  // when the client emits 'add user', this listens and executes
+  socket.on('add user', username => {
+    // we store the username in the socket session for this client
+    socket.username = username;
+    socket.emit('login');
+    // echo globally (all clients) that a person has connected
+    io.to(socket.room).emit('user joined', {
+      username: socket.username
+    });
+  });
+
+  // when the client emits 'typing', we broadcast it to others
+  socket.on('typing', () => {
+    io.to(socket.room).emit('typing', {
+      username: socket.username
+    });
+  });
+
+  // when the client emits 'stop typing', we broadcast it to others
+  socket.on('stop typing', () => {
+    io.to(socket.room).emit('stop typing', {
+      username: socket.username
+    });
+  });
+
+  // when the user disconnects.. perform this
+  socket.on('disconnect', () => {
+    // echo globally that this client has left
+    io.to(socket.room).emit('user left', {
+      username: socket.username
+    });
+  });
+});
 
 httpsServer.listen(8443);
 httpServer.listen(8080);

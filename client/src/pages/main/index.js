@@ -3,7 +3,6 @@ import AvatarHeader from '../../components/AvatarHeader'
 import { connect } from 'react-redux'
 import { sendSubscription } from '../../actions/notificationActions.js'
 import InfoVeiculo from '../../components/InfoVeiculo'
-import CarIcon from '../../components/Veiculo/veiculo_preto.png'
 import Avaliador from '../../components/Avaliador'
 import { loadCar } from '../../actions/carActions'
 
