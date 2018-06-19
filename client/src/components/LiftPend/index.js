@@ -6,6 +6,7 @@ import axios from 'axios'
 import Avatar from 'material-ui/Avatar'
 import CadeiranteIcon from '../LiftMgt/cadeirante_roxo.png'
 import FumanteIcon from '../LiftMgt/fumante_roxo.png'
+import SocketIOChat from '../SocketIOChat'
 import MusicIcon from '../LiftMgt/musica_roxo.png'
 import CarIcon from '../Veiculo/veiculo_preto.png'
 import LugarIcon from '../Veiculo/lugares_preto.png'
@@ -252,13 +253,21 @@ class GerencCarona extends Component {
                   {member.nome.substring(0, member.nome.indexOf(" "))}<br />
                   {member.email === carona.emailMotorista ? <span>Motorista</span> : <span>Caronista</span>}
                 </div>
-                <div className="col-3">
-                  <input type="button" style={instyle.btn} className="btn btn-primary" value="Conversar" />
-                </div>
               </div>
               )
             :
-            <div></div>
+            null
+          }
+          {
+            carona.status === 'andamento' ?
+            <div style={{borderTop: '1px solid grey'}}>
+              <div>CHAT</div>
+              <div className="row" style={{marginTop: '1em', borderBottom: '1px solid lightgrey', borderSpacing: '200px'}}>
+                <SocketIOChat idSala={"carona" + carona.id}/>
+              </div>
+            </div>
+            :
+            null
           }
         </center>
       </div>
