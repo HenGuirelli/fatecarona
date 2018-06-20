@@ -22,7 +22,7 @@ import CadVeiculo from './pages/cadveiculos'
 import Recuperar from './pages/recuperar'
 import Cadastro from './pages/cadastro'
 import { connect } from 'react-redux'
-import { setFirebase, updateUser, unsetUser } from './actions/userActions'
+import { setFirebase, updateUser, unsetUser,setUserData } from './actions/userActions'
 import * as firebase from 'firebase'
 import menuItems from './menuItems'
 
@@ -40,6 +40,7 @@ class App extends Component {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.props.dispatch(updateUser(user))
+        this.props.dispatch(setUserData(this.props.user.email.split('@')[0]));
       } else {
         this.props.dispatch(unsetUser())
       }
