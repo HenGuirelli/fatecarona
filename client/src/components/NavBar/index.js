@@ -2,22 +2,16 @@ import React, { Component } from 'react'
 import logo from './logo.ico'
 import SideMenu from '../SideMenu'
 import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { setUserData } from '../../actions/userActions'
 
-class NavBar extends Component {
+export default class NavBar extends Component {
 
   bindDrawer = f => {
     this.openDrawer = f;
   };
 
   render() {
-    const { menuItems, needReload } = this.props
+    const { menuItems } = this.props
     let item = menuItems.find(item => item.selected)
-
-    if (needReload) {
-      this.props.dispatch(setUserData(this.props.user.email.split('@')[0]));
-    }
 
     return(
       <nav className="navbar navbar-expand-lg navbar-dark ftc" style={{position: 'fixed', width: '100%', height: '58px', top: 0, left: 0, zIndex: 100, boxShadow: 'rgba(0, 0, 0, 0.54) 0px 2px 2px 0px'}}>
@@ -48,10 +42,3 @@ class NavBar extends Component {
     );
   }
 }
-
-export default connect(store => {
-  return {
-    user: store.user.user,
-    needReload: store.user.needReload
-  }
-})(NavBar)

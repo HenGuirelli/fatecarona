@@ -31,7 +31,7 @@ export default function reducer(state={
         return {...state, error: action.payload, updating: false}
       }
       case 'UNSET_USER': {
-        return {...state, user: {}, pending: false}
+        return {...state, user: {}, userData: {}, pending: false}
       }
       case 'USER_LOGIN_PENDING': {
         return {...state, pending: true}
