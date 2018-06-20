@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import Avaliador from '../../components/Avaliador'
-import { connect } from 'react-redux'
 import CadeiranteIcon from '../../components/LiftMgt/cadeirante_roxo.png'
 import SmokingIcon from '../../components/LiftMgt/fumante_roxo.png'
 import MusicIcon from '../../components/LiftMgt/musica_roxo.png'
 import config from '../../config.json'
 import axios from 'axios'
-class Caronista extends Component {
+export default class Caronista extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -14,27 +13,37 @@ class Caronista extends Component {
       music: 0,
       defic: 0,
       qtdCaronas: 0,
-      loaded: false
+      loaded: false,
+      transporte: '',
+      transpLoaded: false
     };
   }
 
 
-  filterTransporte = () =>{
-    var userData = this.props.userData
+
+  filterTransporte = (email) =>{
     var transporte = ''
-    if (userData.metro) transporte = "Metrô"
-    if (userData.andando) transporte = transporte.concat(" Andando")
-    if (userData.onibus) transporte = transporte.concat(" Ônibus")
-    if (userData.trem) transporte = transporte.concat(" Trem")
-    return transporte.split(" ")
+    axios.get(config.endpoint + "/members/" + email)
+      .then(result =>{
+        let userData = result.data
+        if (userData.metro) transporte = "Metrô"
+        if (userData.andando) transporte = transporte.concat(" Andando")
+        if (userData.onibus) transporte = transporte.concat(" Ônibus")
+        if (userData.trem) transporte = transporte.concat(" Trem")
+        if (this.state.transporte === '')
+          this.setState({
+            transporte: transporte.split(" "),
+            transpLoaded: true
+          })
+      })
   }
 
-  loadCarona = () => {
+  loadCarona = (email) => {
     var fumante=0
     var music=0
     var defic=0
     var qtdCaronas=0
-    axios.get(config.endpoint + "/caronista/" + this.props.userData.email)
+    axios.get(config.endpoint + "/caronista/" + email)
     .then(resultMembroCaronas =>{
       return new Promise((resolve, reject)=>{
         resultMembroCaronas.data.forEach((e, index) => {
@@ -90,8 +99,11 @@ class Caronista extends Component {
         fontSize: '21px',
       },
     }
-    var transporte = this.filterTransporte()
-    if (!this.state.loaded && typeof this.props.userData.email !== "undefined") this.loadCarona()
+    const {userEmail} = this.props
+    if (!this.state.loaded && !this.state.transpLoaded){
+      this.loadCarona(userEmail)
+      this.filterTransporte(userEmail)
+    }
     return(
       <div className="container">
         <div style={styles.content}>
@@ -122,11 +134,13 @@ class Caronista extends Component {
               GERALMENTE VEM DE...
             </div>
             {
-              transporte.map((e, key)=>
+               this.state.transporte !== '' ? this.state.transporte.map((e, key)=>
                 <div className="col-12" key={key} style={{marginTop:'0.5em'}}>
                   {e}
                 </div>
               )
+              :
+              null
             }
           </center>
           <center className="row" style={{marginTop:'1em'}}>
@@ -158,10 +172,3 @@ class Caronista extends Component {
     )
   }
 }
-
-export default connect(store => {
-  return {
-    user: store.user.user,
-    userData: store.user.userData,
-  }
-})(Caronista)

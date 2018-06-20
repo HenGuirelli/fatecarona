@@ -9,6 +9,7 @@ import Auth from './pages/form'
 import MainPage from './pages/main'
 import Verify from './pages/verify'
 import Perfil from './pages/perfil'
+import EspiarPerfil from './pages/espiarperfil'
 import Oferecer from './pages/oferecer'
 import Pedir from './pages/pedir'
 import Caronas from './pages/caronas'
@@ -76,7 +77,8 @@ class App extends Component {
           <Route exact path="/rotas" component={Rotas}/>
           <Route path="/rotas/alterar" component={AlterarRota}/>
           <Route path="/rotas/adicionar" component={AdicionarRota}/>
-          <Route path="/perfil" component={Perfil}/>
+          <Route exact path="/perfil" component={Perfil}/>
+          <Route path="/perfil/espiar" component={EspiarPerfil}/>
           <Route path="/caronas/historico" component={Caronas}/>
           <Route path="/caronas/request" component={Pedir}/>
           <Route path="/caronas/matches" component={ResultCaronas}/>

@@ -15,11 +15,11 @@ class Motorista extends Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(loadCar(this.props.userData.email))
+    this.props.dispatch(loadCar(this.props.userEmail))
   }
 
   loadCarona = () => {
-    axios.get(config.endpoint + "/lift/motorista/" + this.props.userData.email)
+    axios.get(config.endpoint + "/lift/motorista/" + this.props.userEmail)
     .then(result =>{
       this.setState({
         loaded: true,
@@ -48,10 +48,10 @@ class Motorista extends Component {
         textAlign: 'center'
       }
     }
-    const { userData, veiculos, needLoad } = this.props
+    const { userEmail, veiculos, needLoad } = this.props
 
 
-    if (userData.email && needLoad) this.props.dispatch(loadCar(userData.email))
+    if (needLoad) this.props.dispatch(loadCar(userEmail))
     if (!this.state.loaded && typeof this.props.userData.email !== "undefined") this.loadCarona()
 
 

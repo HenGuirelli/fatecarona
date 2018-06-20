@@ -1,18 +1,10 @@
 import React, { Component } from 'react'
-import AvatarHeader from '../../components/AvatarHeader'
 import { connect } from 'react-redux'
 import { sendSubscription } from '../../actions/notificationActions.js'
-import PerfilCaronista from '../../components/PerfilCaronista'
-import PerfilMotorista from '../../components/PerfilMotorista'
+import Home from '../../components/Home'
 
 
 class MainPage extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      perfil: 'caronista'
-    };
-  }
   checkSubscription = (email) => {
     if ('Notification' in window && navigator.serviceWorker) {
       if (Notification.permission === "default") {
@@ -69,50 +61,16 @@ class MainPage extends Component {
     return outputArray
   }
 
-  handleClick(perfil) {
-    this.setState({
-      perfil: perfil
-    })
-  }
-
-
   render() {
-    const { userData} = this.props
-
-    const styles = {
-      content: {
-        'backgroundColor': 'white',
-      },
-      tab:{
-        backgroundColor: '#D2D3D5',
-        height: '2.5em'
-      }
-    }
+    const {userData} = this.props
 
     if( userData.email !== undefined) this.checkSubscription(userData.email);
 
     return (
       <div className="pageBase">
-        <AvatarHeader userData={userData}/>
-
-        <ul className="nav nav-pills row" id="pills-tab" role="tablist" style={styles.tab}>
-          <li className="nav-item col-6">
-            <label className="nav-link active" id="pills-andamento-tab" data-toggle="pill" role="tab" aria-selected="true" onClick={() => this.handleClick("caronista")}>
-              <center>Caronista</center>
-            </label>
-          </li>
-          <li className="nav-item col-6">
-            <label className="nav-link" id="pills-historico-tab" data-toggle="pill" role="tab" aria-selected="false" onClick={() => this.handleClick("motorista")}>
-              <center>Motorista</center>
-            </label>
-          </li>
-        </ul>
-        {
-          this.state.perfil === 'caronista' ?
-            <PerfilCaronista />
-          :
-            <PerfilMotorista />
-        }
+        <Home
+          userEmail = {userData.email}
+        />
       </div>
     )
   }
@@ -122,7 +80,5 @@ export default connect(store => {
   return {
     user: store.user.user,
     userData: store.user.userData,
-    veiculos: store.car.veiculos,
-    needLoad: store.car.needLoad,
   }
 })(MainPage)

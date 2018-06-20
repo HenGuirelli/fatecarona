@@ -27,6 +27,11 @@ class Caronas extends Component {
       this.props.history.push('/caronas/gerenciar')
     }
 
+    handleEspiar = (carona) => {
+      this.props.dispatch(carregar(carona));
+      this.props.history.push('/perfil/espiar')
+    }
+
     buscaCaronas = () =>{
       let byID = this.state.byID
       switch(this.state.status) {
@@ -153,8 +158,8 @@ class Caronas extends Component {
                       </div>
                       <div className="col">
                         {
-                         carona.status !== 'historico' ?
-                             <input type="button" style={styles.btn}  onClick ={this.handleSubmit} className="btn btn-primary" value="ESPIAR MOTORISTA" />
+                         carona.status !== 'historico' && carona.emailMotorista !== this.props.userData.email ?
+                             <input type="button" style={styles.btn}  onClick ={() => this.handleEspiar(carona)} className="btn btn-primary" value="ESPIAR MOTORISTA" />
                          :
                            <div></div>
                          }
