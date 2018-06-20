@@ -12,7 +12,11 @@ class Veiculos extends Component{
   }
 
   handleSubmit = () =>{
-    this.props.history.push('/veiculos/cadastrar')
+    if (this.props.userData.cnh !== null)
+      this.props.history.push('/veiculos/cadastrar')
+    else {
+      window.displayDialog({msg: "Para cadastrar um veículo é necessário cadastrar o número da CNH"}, '/perfil')
+    }
   }
 
   componentWillMount() {
