@@ -37,7 +37,6 @@ class SocketIOChat extends Component {
     const socket = socketIOClient(config.endpoint);
     const { userData, idSala } = this.props
     socket.on('connected', () => {
-      console.log(idSala)
       socket.emit('room', idSala)
       socket.emit('add user', userData.apelido)
     })

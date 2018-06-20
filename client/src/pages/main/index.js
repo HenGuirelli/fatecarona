@@ -127,14 +127,17 @@ class MainPage extends Component {
               <center><h4>VEÍCULOS ATIVOS</h4></center>
               <div >
                 {
-                  veiculos.map((veiculo, key) =>
-                  <div>
-                      <InfoVeiculo
-                        marca={veiculo.marca}
-                        modelo={veiculo.modelo}
-                        placa={veiculo.placa}
-                      />
-                  </div>
+                  veiculos.map((veiculo, key) => {
+                    if (veiculo.ativo) {
+                      return <InfoVeiculo
+                              marca={veiculo.marca}
+                              modelo={veiculo.modelo}
+                              placa={veiculo.placa}
+                              key={key}
+                            />
+                    }
+                    return null
+                  }
                   )
                 }
               </div>
