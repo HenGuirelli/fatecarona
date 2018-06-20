@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import AvatarHeader from '../../components/AvatarHeader'
-import { connect } from 'react-redux'
 import PerfilCaronista from '../../components/PerfilCaronista'
 import PerfilMotorista from '../../components/PerfilMotorista'
 
 
-class Home extends Component {
+export default class Home extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -21,7 +20,7 @@ class Home extends Component {
 
 
   render() {
-    const {userData, userEmail} = this.props
+    const {userEmail} = this.props
 
     const styles = {
       content: {
@@ -63,10 +62,3 @@ class Home extends Component {
     )
   }
 }
-
-export default connect(store => {
-  return {
-    user: store.user.user,
-    userData: store.user.userData,
-  }
-})(Home)

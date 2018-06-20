@@ -15,7 +15,6 @@ export default class AvatarHeader extends Component {
 
 
   loadDriver = (email) =>{
-    var transporte = ''
     axios.get(config.endpoint + "/members/" + email)
       .then(result =>{
         console.log(result)
