@@ -23,10 +23,10 @@ create table membros(
 
 );
 
-insert into membros (ra, nome, telefone, apelido, curso, email, img, chegada, saida) values
-  (1680481522013, "Thiago Cardoso Ramos", "011111111111","Proagace", "ADS","thiago.ramos9", "avatar.jpg", "13:00:00", "18:00:00"),
-  (1680481522006, "Alexandre Cassiano dos Santos", "011955931212","Xandele", "ADS","alexandre.santos67", "avatar.jpg", "13:00:00", "18:00:00"),
-  (1680481522040, "Antonio Ernando Siqueira de Souza Filho", "011955931212","Toninho", "ADS","antonio.souza26", "avatar.jpg", "13:00:00", "18:00:00");
+insert into membros (ra, nome, telefone, apelido, curso, email, img, chegada, saida, cnh, validadeCNH, categoriaCNH) values
+  (1680481522013, "Thiago Cardoso Ramos", "011111111111","Proagace", "ADS","thiago.ramos9", "avatar.jpg", "13:00:00", "18:00:00", 15910851193, '2018/07/04', 'B'),
+  (1680481522006, "Alexandre Cassiano dos Santos", "011955931212","Xandele", "ADS","alexandre.santos67", "avatar.jpg", "13:00:00", "18:00:00", 15910431593, '2018/07/04', 'B'),
+  (1680481522040, "Antonio Ernando Siqueira de Souza Filho", "011955931212","Toninho", "ADS","antonio.souza26", "avatar.jpg", "13:00:00", "18:00:00", 15910851593, '2018/07/04', 'B');
 
 create table veiculos(
   id int auto_increment primary key,
@@ -89,11 +89,11 @@ create table carro_modelo(
 );
 
 insert into carro_modelo values
-  (1, 'Corsa'),
-  (2, 'Uno'),
-  (3, 'Ka'),
-  (4, 'HB20'),
-  (5, 'Gol');
+  (1, 'Celta'), (1, 'Corsa'), (1, 'Onix'), (1, 'Opala'), (1, 'Spin'),
+  (2, 'Idea'), (2, 'Marea'), (2, 'Palio'), (2, 'Siena'), (2, 'Uno'),
+  (3, 'Escort'), (3, 'Fiesta'), (3, 'Focus'), (3, 'Ka'),(3, 'Ranger'),
+  (4, 'Azera'), (4, 'Creta'), (4, 'Elantra'), (4, 'HB20'), (4, 'IX35'),
+  (5, 'Gol'), (5, 'Golf'), (5, 'Passat'), (5, 'Polo'), (5, 'Voyage');
 
 insert into veiculos (placa, email, ativo, marca, modelo, cor) values
   ('BBB-2222', 'alexandre.santos67', 1, 'Fiat', 'Palio', 'vermelho'),
