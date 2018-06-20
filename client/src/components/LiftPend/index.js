@@ -86,6 +86,9 @@ class GerencCarona extends Component {
         fontWeight: 'bold',
         textAlign: 'right'
       },
+      textStyle2:{
+        textAlign: 'left'
+      },
       iconBG: {
         borderRadius: '45%',
         backgroundColor: '#6E4D8B',
@@ -137,7 +140,7 @@ class GerencCarona extends Component {
               <div className="col-6" style={instyle.textStyle}>
                 STATUS:
               </div>
-              <div className="col-0">
+              <div className="col-6" style={instyle.textStyle2}>
                 {carona.status === "pendente" ?
                   <span>Pendente</span>
                   :
@@ -149,7 +152,7 @@ class GerencCarona extends Component {
               <div className="col-6" style={instyle.textStyle}>
                 DIA:
               </div>
-              <div className="col-0">
+              <div className="col-6" style={instyle.textStyle2}>
                 {dataCarona}
               </div>
             </div>
@@ -157,7 +160,7 @@ class GerencCarona extends Component {
               <div className="col-6" style={instyle.textStyle}>
                 HORA:
               </div>
-              <div className="col-0">
+              <div className="col-6" style={instyle.textStyle2}>
                 {horarioCarona}
               </div>
             </div>
@@ -165,7 +168,7 @@ class GerencCarona extends Component {
               <div className="col-6" style={instyle.textStyle}>
                 TIPO:
               </div>
-              <div className="col-0">
+              <div className="col-6" style={instyle.textStyle2}>
                 {carona.tipo}
               </div>
             </div>
@@ -176,18 +179,22 @@ class GerencCarona extends Component {
                 PREFERÊNCIAS DA CARONA
             </div>
             <div className="row" style ={{marginTop: '1em'}}>
-              <div className="col">
+              <div className="col-4" style={instyle.textStyle}>
                 <img src={CadeiranteIcon} alt={"Cadeirante Icon"} style={instyle.prefIcons}/>
+              </div>
+              <div className="col-8" style={instyle.textStyle2}>
                 {carona.acessibilidade === 0 ?
                   <span>Não acomoda cadeirante</span>
                   :
                   <span>Acomoda cadeirante</span>
                 }
               </div>
-            </div>
+          </div>
             <div className="row" style ={{marginTop: '1em'}}>
-              <div className="col">
+              <div className="col-4" style={instyle.textStyle}>
                 <img src={FumanteIcon} alt={"Fumante Icon"} style={instyle.prefIcons}/>
+              </div>
+              <div className="col-8" style={instyle.textStyle2}>
                 {carona.fumantes === 0 ?
                   <span>Não é permitido de fumar</span>
                   :
@@ -196,8 +203,10 @@ class GerencCarona extends Component {
               </div>
             </div>
             <div className="row" style ={{marginTop: '1em'}}>
-              <div className="col">
+              <div className="col-4" style={instyle.textStyle}>
                 <img src={MusicIcon} alt={"Music Icon"} style={instyle.prefIcons}/>
+              </div>
+              <div className="col-8" style={instyle.textStyle2}>
                 {carona.musica === 0 ?
                   <span>Não é permitido ouvir música</span>
                   :
@@ -212,24 +221,21 @@ class GerencCarona extends Component {
                   VEÍCULO
               </div>
               <div className="row" style ={{marginTop: '1em'}}>
-                <div className="col-6">
-                    <img style={{width: '4em', height: '1.7em', float:'right'}} src={CarIcon} alt={"Car Icon"}/><br/>
-                    <img style={{width: '1em', height: '1.2em', float:'right'}} src={LugarIcon} alt={"Lugares Icon"}/>
-                    <span style={{float:'right'}}>{carona.qtdVagas} Lugares</span>
+                <div className="col-6" style={instyle.textStyle}>
+                  <img style={{width: '4em', height: '1.7em'}} src={CarIcon} alt={"Car Icon"}/><br/>
                 </div>
-                <div className="col-6" style={instyle.prefText}>
-                  <div style={{float:'left'}}>
-                    {carPlaca}<br/>
-                    {carMarca}, {carModelo}
-                  </div>
+                <div className="col-6" style={instyle.textStyle2}>
+                  {carPlaca}<br/>
                 </div>
               </div>
-
               <div className="row">
-                  <div className="col" style={{float:'right'}}>
-                  </div>
-                  <div className="col">
-                  </div>
+                <div className="col-6" style={instyle.textStyle}>
+                  <img style={{width: '1em', height: '1.2em'}} src={LugarIcon} alt={"Lugares Icon"}/>
+                  <span>{carona.qtdVagas} Lugares</span>
+                </div>
+                <div className="col-6" style={instyle.textStyle2}>
+                  {carMarca}, {carModelo}
+                </div>
               </div>
             </div>
 
@@ -243,16 +249,22 @@ class GerencCarona extends Component {
               carona.status !== 'pendente' ?
               this.state.members.map((member, key)=>
               <div key={key} className="row" style={{marginTop: '1em', borderBottom: '1px solid lightgrey', borderSpacing: '200px'}}>
-                <div  style={{marginLeft: '33%'}} className="col-0">
+                <div className="col-3" style={instyle.textStyle}>
                   <Avatar
                     src={member.img ? config.endpoint + "/images/" + member.img : ""}
                     size={50}
                   />
                 </div>
-                <div className="col-3">
+                <div className="col-4">
                   {member.nome.substring(0, member.nome.indexOf(" "))}<br />
                   {member.email === carona.emailMotorista ? <span>Motorista</span> : <span>Caronista</span>}
                 </div>
+<<<<<<< HEAD
+                <div className="col-5" style={instyle.textStyle2}>
+                  <input type="button" style={instyle.btn} className="btn btn-primary" value="Conversar" />
+                </div>
+=======
+>>>>>>> d82f0b8756e583f1a967ca7fad26d5200583de0b
               </div>
               )
             :

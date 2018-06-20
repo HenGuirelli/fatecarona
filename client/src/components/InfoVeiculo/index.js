@@ -5,13 +5,13 @@ export default class InfoVeiculo extends Component {
   render() {
     const { marca, modelo, placa } = this.props
     return(
-      <div style={{borderTop: '1px solid #333', padding: '21px 0 21px 0'}}>
+      <div >
         <div className="row">
-          <div className="col-4" style={{paddingRight: '0', textAlign: 'right'}}>
+          <div className="col-6" style={{paddingRight: '0', textAlign: 'right'}}>
             <img src={CarIcon} alt="..." style={{maxWidth: '74px', height: 'auto'}}/>
             <div>{placa}</div>
           </div>
-          <div className="col-8">
+          <div className="col-6">
             <div style={{fontSize: "15px"}}>{marca}, {modelo}</div>
             <div>Já fez 4 viagens</div>
           </div>

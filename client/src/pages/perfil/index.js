@@ -180,8 +180,8 @@ class Perfil extends Component {
             </div>
             <div style={styles.title}>PERFIL DE MOTORISTA</div>
             <select className="form-control" defaultValue="default">
-              <option value="default">SIM, SOU UM MOTORISTA</option>
-              <option>NÃO SOU UM MOTORISTA</option>
+              <option>SIM, SOU UM MOTORISTA</option>
+              <option value="default">NÃO SOU UM MOTORISTA</option>
             </select>
             <input type="submit" value="Salvar" className="btn loginBtn form-control" style={styles.button}/>
           </form>

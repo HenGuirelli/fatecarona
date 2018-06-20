@@ -38,7 +38,7 @@ var upload = multer({ storage: storage }).single('image');
 var pool = mysql.createPool({
   host     : 'localhost',
   user     : 'root',
-  password : '3847147298',
+  password : 'root',
   database : 'Fatecarona'
 });
 
@@ -375,6 +375,45 @@ router.route('/cars')
       });
     });
   });
+
+//Marca / Modelo dos carros
+router.route('/cars/marcas/:marca')
+  .get(function(req, res) {
+    pool.getConnection(function(err, connection) {
+      if (err) {
+        res.send(err);
+        return;
+      }
+
+      connection.query('SELECT * FROM carro_marca where marca = ?', [req.params.marca], function(err, rows, fields) {
+        connection.release();
+        if (err){
+          res.send(err);
+          return;
+        }
+        res.json(rows);
+      });
+    });
+  });
+
+  router.route('/cars/modelos/:id')
+    .get(function(req, res) {
+      pool.getConnection(function(err, connection) {
+        if (err) {
+          res.send(err);
+          return;
+        }
+
+        connection.query('SELECT * FROM carro_modelo where id = ?',[req.params.id], function(err, rows, fields) {
+          connection.release();
+          if (err){
+            res.send(err);
+            return;
+          }
+          res.json(rows);
+        });
+      });
+    });
 
 //Manipulação de Caronas
 
