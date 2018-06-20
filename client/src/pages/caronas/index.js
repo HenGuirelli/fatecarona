@@ -146,7 +146,7 @@ class Caronas extends Component {
                       />
                   }
                 </div>
-                <div className="container">
+                <div className="container" style={{marginBottom:'1em'}}>
                   <div className="row justify-content-center">
                       <div className="col" style={{textAlign:'right'}}>
                         <input type="button" style={styles.btn} onClick={() => this.handleActivation(carona)} className="btn btn-primary" value="GERENCIAR" />

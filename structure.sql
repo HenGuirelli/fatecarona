@@ -11,7 +11,16 @@ create table membros(
   genero char(1) default 'M',
   img varchar(50),
   chegada time,
-  saida time
+  saida time,
+  motorista boolean default 0,
+  metro boolean default 0,
+  andando boolean default 0,
+  onibus boolean default 0,
+  trem boolean default 0,
+  cnh bigint,
+  validadeCNH date,
+  categoriaCNH char(2)
+
 );
 
 insert into membros (ra, nome, telefone, apelido, curso, email, img, chegada, saida) values
@@ -64,6 +73,27 @@ create table membros_carona (
   foreign key (emailCaronista) references membros (email),
   foreign key (id) references caronas (id)
 );
+
+create table carro_marca(
+  id int auto_increment primary key,
+  marca varchar(30)
+);
+
+insert into carro_marca (marca) values
+  ('Chevrolet'), ('Fiat'), ('Ford'), ('Hyundai'), ('Volkswagen');
+
+create table carro_modelo(
+  id int,
+  modelo varchar(30),
+  foreign key (id) references carro_marca (id)
+);
+
+insert into carro_modelo values
+  (1, 'Corsa'),
+  (2, 'Uno'),
+  (3, 'Ka'),
+  (4, 'HB20'),
+  (5, 'Gol');
 
 insert into veiculos (placa, email, ativo, marca, modelo, cor) values
   ('BBB-2222', 'alexandre.santos67', 1, 'Fiat', 'Palio', 'vermelho'),
