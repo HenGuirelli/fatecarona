@@ -24,7 +24,7 @@ create table membros(
 );
 
 insert into membros (ra, nome, telefone, apelido, curso, email, img, chegada, saida, cnh, validadeCNH, categoriaCNH) values
-  (1680481522013, "Thiago Cardoso Ramos", "011111111111","Proagace", "ADS","thiago.ramos9", "avatar.jpg", "13:00:00", "18:00:00", 15910851193, '2018/07/04', 'B'),
+  (1680481522013, "Thiago Cardoso Ramos", "011111111111","Proagace", "ADS","thiago.ramos9", "avatar.jpg", "13:00:00", "18:00:00", null, null, null),
   (1680481522006, "Alexandre Cassiano dos Santos", "011955931212","Xandele", "ADS","alexandre.santos67", "avatar.jpg", "13:00:00", "18:00:00", 15910431593, '2018/07/04', 'B'),
   (1680481522040, "Antonio Ernando Siqueira de Souza Filho", "011955931212","Toninho", "ADS","antonio.souza26", "avatar.jpg", "13:00:00", "18:00:00", 15910851593, '2018/07/04', 'B');
 
@@ -100,14 +100,14 @@ insert into veiculos (placa, email, ativo, marca, modelo, cor) values
   ('CCC-3333', 'alexandre.santos67', 0, 'Fiat', 'Siena', 'branco');
 
 insert into caronas (dataCarona, rota, emailMotorista, kilometragem, veiculo, qtdVagas, musica, tipo, status) values
-  ("2018-07-09 10:08:28", "5abfbb953f4bbe6c741a195b", 'alexandre.santos67', 12.5, 1, 3, 1, "indo para a FATEC", "pendente"),
-  ("2018-07-25 10:08:28", "5acd5e718fc79a2d484721fb", 'alexandre.santos67', 12.5, 2, 3, 1, "saindo da FATEC", "pendente"),
+  ("2018-07-09 10:08:28", "5abfbb953f4bbe6c741a195b", 'alexandre.santos67', 12.5, 1, 3, 1, "indo para a FATEC", "andamento"),
+  ("2018-07-20 10:08:28", "5acd5e718fc79a2d484721fb", 'alexandre.santos67', 12.5, 2, 3, 1, "saindo da FATEC", "historico"),
   ("2018-07-25 13:15:00", "5acd5e718fc79a2d484721fb", 'antonio.souza26', 12.5, 2, 0, 1, "saindo da FATEC", "pendente"),
-  ("2018-07-25 10:08:28", "5abfbb953f4bbe6c741a195b", 'alexandre.santos67', 12.5, 1, 3, 1, "saindo da FATEC", "pendente");
+  ("2018-07-30 10:08:28", "5abfbb953f4bbe6c741a195b", 'alexandre.santos67', 12.5, 1, 3, 1, "saindo da FATEC", "pendente");
 
 insert into membros_carona values
-  (1, 'alexandre.santos67', 'aceito'),
+  (1, 'thiago.ramos9', 'aceito'),
   (1, 'antonio.souza26', 'aceito'),
   (2, 'antonio.souza26', 'aceito'),
   (3, 'alexandre.santos67', 'aceito'),
-  (3, 'antonio.souza26', 'aceito');
+  (3, 'thiago.ramos9', 'aceito');
