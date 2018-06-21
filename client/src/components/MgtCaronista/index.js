@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Avatar from 'material-ui/Avatar'
-import { connect } from 'react-redux'
 import config from '../../config.json'
 import styles from './styles'
 import axios from 'axios'
@@ -16,15 +15,20 @@ export default class MgtCaronista extends Component {
       emailCaronista: infoNotification.emailRemetente
     })
     .then(() => {
-      window.displayDialog({msg: "Notificação enviada."})
-    })
-    /*.then(() => {
       axios.post(config.endpoint + '/notify/' + infoNotification.emailRemetente, {
         message: userData.nome + (answer ? " aceitou" : " rejeitou") + " sua solicitação.",
         emailRemetente: userData.email,
         imgRemetente: userData.img
       })
-    })/*/
+    })
+    .then(() => {
+      axios.put(config.endpoint + '/lift/id/' + infoNotification.idCarona, {
+        status: 'andamento'
+      })
+      .then(() => {
+        window.displayDialog({msg: "Notificação enviada."})
+      })
+    })
   }
 
   handleEspiar = (email) => {
@@ -62,7 +66,7 @@ export default class MgtCaronista extends Component {
             />
           </div>
           <div className="col-4">
-            <input type="button" style={styles.btn}  onClick ={() => this.handleEspiar(infoNotification.emailRemetente)} className="btn btn-primary" value="ESPIAR MOTORISTA" />
+            <input type="button" style={styles.btnR}  onClick ={() => this.handleEspiar(infoNotification.emailRemetente)} className="btn btn-primary" value="ESPIAR MOTORISTA" />
           </div>
 
 

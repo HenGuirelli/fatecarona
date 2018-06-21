@@ -528,7 +528,25 @@ router.route('/lift/id/:carona_id')
           res.json(rows);
         });
       });
+    })
+    .put(function(req, res) {
+      pool.getConnection(function(err, connection) {
+        if (err) {
+          res.send(err);
+          return;
+        }
+
+        connection.query('UPDATE caronas SET ? WHERE id = ?',[req.body, req.params.carona_id], function(err, rows, fields) {
+          connection.release();
+          if (err){
+            res.send(err);
+            return;
+          }
+          res.json({success: true});
+        });
+      });
     });
+
 
 //Busca todas as caronas do banco
 router.route('/lift')

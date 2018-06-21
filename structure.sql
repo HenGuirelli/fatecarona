@@ -99,7 +99,7 @@ insert into veiculos (placa, email, ativo, marca, modelo, cor) values
   ('BBB-2222', 'alexandre.santos67', 1, 'Fiat', 'Palio', 'vermelho'),
   ('CCC-3333', 'alexandre.santos67', 0, 'Fiat', 'Siena', 'branco');
 
-insert into caronas (dataCarona, rota, emailMotorista, kilometragem, veiculo, qtdVagas, musica, tipo, status) values
+/*insert into caronas (dataCarona, rota, emailMotorista, kilometragem, veiculo, qtdVagas, musica, tipo, status) values
   ("2018-07-09 10:08:28", "5abfbb953f4bbe6c741a195b", 'alexandre.santos67', 12.5, 1, 3, 1, "indo para a FATEC", "andamento"),
   ("2018-07-20 10:08:28", "5acd5e718fc79a2d484721fb", 'alexandre.santos67', 12.5, 2, 3, 1, "saindo da FATEC", "historico"),
   ("2018-07-25 13:15:00", "5acd5e718fc79a2d484721fb", 'antonio.souza26', 12.5, 2, 0, 1, "saindo da FATEC", "pendente"),
@@ -110,4 +110,4 @@ insert into membros_carona values
   (1, 'antonio.souza26', 'aceito'),
   (2, 'antonio.souza26', 'aceito'),
   (3, 'alexandre.santos67', 'aceito'),
-  (3, 'thiago.ramos9', 'aceito');
+  (3, 'thiago.ramos9', 'aceito');*/

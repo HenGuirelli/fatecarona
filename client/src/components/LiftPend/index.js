@@ -12,6 +12,7 @@ import CarIcon from '../Veiculo/veiculo_preto.png'
 import LugarIcon from '../Veiculo/lugares_preto.png'
 import { loadCarbyID } from '../../actions/carActions'
 import GoogleMaps from '../../components/GoogleMaps'
+import { Rating } from 'material-ui-rating'
 
 class GerencCarona extends Component {
   constructor(props){
@@ -57,6 +58,29 @@ class GerencCarona extends Component {
     })
   }
 
+  filterCarona = () =>{
+    switch(this.props.carona.status) {
+      case 'pendente':{
+        return  <input type="button" style={styles.btn} className="btn btn-primary" value="Desistir da carona" />
+      }
+      case 'andamento':{
+        return (
+          <div className="row">
+            <div className="col-12" style={{marginTop: '0.5em'}}>
+              <input type="button" style={styles.btn} className="btn btn-primary" value="Desistir da carona" />
+            </div>
+            <div className="col-12" style={{marginTop: '0.5em'}}>
+              <input type="button" style={styles.btn} className="btn btn-primary" value="Finalizar carona" onClick={() => this.finalizarCarona(this.props.carona.id)} />
+            </div>
+          </div>
+        )
+      }
+      case 'historico':{
+        return null
+      }
+      default:{}
+    }
+  }
 
   filterMembrosCarona = () =>{
     switch(this.props.carona.status) {
@@ -73,7 +97,15 @@ class GerencCarona extends Component {
     }
   }
 
-
+  finalizarCarona = (id) =>{
+    axios.put(config.endpoint + '/lift/id/' + id, {
+      status: 'historico'
+    })
+    .then(() => {
+      window.displayDialog({msg: "Carona finalizada."})
+      this.props.history.push('/caronas/historico')
+    })
+  }
 
 
   componentWillMount() {
@@ -97,6 +129,10 @@ class GerencCarona extends Component {
     })
   }
 
+  handleTeste = () =>{
+    console.log("Teste")
+  }
+
   render() {
 
     if (!this.state.loaded && typeof this.props.carona.id !== "undefined") this.loadMembersData()
@@ -107,11 +143,6 @@ class GerencCarona extends Component {
       carModelo = this.props.liftCar.modelo
       carMarca = this.props.liftCar.marca
     }
-    /*if (! this.props.membrosFull && this.props.listaMembros.length > 0) {
-      this.props.listaMembros.map((membro) =>
-        this.props.dispatch(loadMembers(membro.emailCaronista))
-      )
-    }*/
 
     const { carona } = this.props
     let dataLift = new Date(carona.dataCarona)
@@ -166,14 +197,7 @@ class GerencCarona extends Component {
             </div>
             <div style={styles.btnContainer}>
               {
-                carona.status === 'historico' ?
-                <div>
-                  <input type="button" style={styles.btn} className="btn btn-primary" value="Avaliar carona" />
-                </div>
-                :
-                <div>
-                  <input type="button" style={styles.btn} className="btn btn-primary" value="Desistir da carona" />
-                </div>
+                this.filterCarona()
               }
             </div>
           </div>
@@ -290,15 +314,24 @@ class GerencCarona extends Component {
                 carona.status !== 'pendente' ?
                 this.state.members.map((member, key)=>
                   <div key={key} className="row" style={{padding: '1em'}}>
-                    <div className="col-6" style={instyle.textStyle}>
+                    <div className="col-4" style={instyle.textStyle}>
                       <Avatar
                         src={member.img ? config.endpoint + "/images/" + member.img : ""}
                         size={50}
                       />
                     </div>
-                    <div className="col-6" style={instyle.textStyle2}>
+                    <div className="col-4" >
                       {member.nome.substring(0, member.nome.indexOf(" "))}<br />
                       {member.email === carona.emailMotorista ? <span>Motorista</span> : <span>Caronista</span>}
+                    </div>
+                    <div className="col-4" style={instyle.textStyle2}>
+                      <Rating
+                        value={1}
+                        readOnly={false}
+                        style={{margin: '-12px 0 0 -12px'}}
+                        itemStyle={{width: '0.5em'}}
+                        onChange={() => this.handleTeste()}
+                      />
                     </div>
                   </div>
                   )
