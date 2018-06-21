@@ -17,7 +17,7 @@ class Notifications extends Component {
       <div>
         {
           notifications.length > 0 ?
-          notifications.map((e, key) => <MgtCaronista key={key} infoNotification={e} userData={userData}/>) :
+          notifications.map((e, key) => <MgtCaronista key={key}  infoNotification={e} userData={userData}/>) :
           <div>Não há notificações</div>
         }
       </div>

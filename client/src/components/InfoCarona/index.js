@@ -3,13 +3,13 @@ import Avatar from 'material-ui/Avatar'
 import { connect } from 'react-redux'
 import styles from './styles'
 import config from '../../config.json'
-import { carregar } from '../../actions/liftActions'
+import { espiarMembro } from '../../actions/liftActions'
 import axios from 'axios'
 
 class InfoCarona extends Component {
 
   handleEspiar = (carona) => {
-    this.props.dispatch(carregar(carona));
+    this.props.dispatch(espiarMembro(carona.emailMotorista));
     this.props.history.push('/perfil/espiar')
   }
 

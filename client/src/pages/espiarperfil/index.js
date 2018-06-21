@@ -7,11 +7,10 @@ class EspiarPerfil extends Component {
 
   render() {
     const {membroEspiado} = this.props
-    console.log(membroEspiado.email)
     return (
       <div className="pageBase">
         <Home
-          userEmail = {membroEspiado}
+          userData = {membroEspiado}
         />
       </div>
     )

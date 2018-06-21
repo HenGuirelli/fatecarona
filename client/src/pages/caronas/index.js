@@ -23,12 +23,12 @@ class Caronas extends Component {
     }
 
     handleActivation = (carona) =>{
-      this.props.dispatch(espiarMembro(carona.emailMotorista));
+      this.props.dispatch(carregar(carona));
       this.props.history.push('/caronas/gerenciar')
     }
 
     handleEspiar = (carona) => {
-      this.props.dispatch(carregar(carona));
+      this.props.dispatch(espiarMembro(carona.emailMotorista));
       this.props.history.push('/perfil/espiar')
     }
 

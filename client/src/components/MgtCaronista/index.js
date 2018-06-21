@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import Avatar from 'material-ui/Avatar'
+import { connect } from 'react-redux'
 import config from '../../config.json'
 import styles from './styles'
 import axios from 'axios'
+import { espiarMembro } from '../../actions/liftActions'
 
 export default class MgtCaronista extends Component {
 
@@ -25,6 +27,11 @@ export default class MgtCaronista extends Component {
     })/*/
   }
 
+  handleEspiar = (email) => {
+    this.props.dispatch(espiarMembro(email));
+    this.props.history.push('/perfil/espiar')
+  }
+
   render() {
     const { infoNotification } = this.props
 
@@ -44,16 +51,21 @@ export default class MgtCaronista extends Component {
           </div>
         </div>
         <div className="row" style={{bottom: 0, width: '100%'}}>
-          <div className="col-6">
+          <div className="col-4">
             <input type="button" style={styles.btnL} className="btn btn-primary" value="ACEITAR"
               onClick={() => this.handleResponse(true)}
             />
           </div>
-          <div className="col-6">
+          <div className="col-4">
             <input type="button" style={styles.btnR} className="btn btn-primary" value="RECUSAR"
               onClick={() => this.handleResponse(false)}
             />
           </div>
+          <div className="col-4">
+            <input type="button" style={styles.btn}  onClick ={() => this.handleEspiar(infoNotification.emailRemetente)} className="btn btn-primary" value="ESPIAR MOTORISTA" />
+          </div>
+
+
         </div>
       </div>
     )
