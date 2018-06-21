@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import AvatarHeader from '../../components/AvatarHeader'
 import { connect } from 'react-redux'
 import { sendSubscription } from '../../actions/notificationActions.js'
-import InfoVeiculo from '../../components/InfoVeiculo'
-import Avaliador from '../../components/Avaliador'
-import { loadCar } from '../../actions/carActions'
+import Home from '../../components/Home'
+
 
 class MainPage extends Component {
   checkSubscription = (email) => {
@@ -63,92 +61,16 @@ class MainPage extends Component {
     return outputArray
   }
 
-  componentWillMount() {
-    this.props.dispatch(loadCar(this.props.userData.email))
-  }
-
   render() {
-    const { userData, veiculos, needLoad } = this.props
-
-    const styles = {
-      content: {
-        'backgroundColor': 'white',
-      },
-      text:{
-        fontSize: '22px',
-        font: 'bold'
-      },
-      radiobtn: {
-        display:'none',
-      },
-      tab:{
-        backgroundColor: '#D2D3D5',
-        height: '2.5em'
-      }
-    }
+    const {userData} = this.props
 
     if( userData.email !== undefined) this.checkSubscription(userData.email);
-    if (userData.email && needLoad) this.props.dispatch(loadCar(userData.email))
 
     return (
       <div className="pageBase">
-        <AvatarHeader userData={userData}/>
-
-        <ul className="nav nav-pills row" id="pills-tab" role="tablist" style={styles.tab}>
-          <li className="nav-item col-6">
-            <label className="nav-link active" id="pills-andamento-tab" data-toggle="pill" role="tab" aria-selected="true">
-              <center>Caronista</center>
-            </label>
-          </li>
-          <li className="nav-item col-6">
-            <label className="nav-link" id="pills-historico-tab" data-toggle="pill" role="tab" aria-selected="false">
-              <center>Motorista</center>
-            </label>
-          </li>
-        </ul>
-        <div className="container">
-          <div style={styles.content}>
-            <div className="row">
-              <div className="col-6">
-                <Avaliador
-                  text="Avaliação"
-                  score={3.5}
-                />
-              </div>
-              <div className="col-6" style={{marginTop:'1em'}}>
-                <center>
-                  <div style={styles.text}>38</div>
-                  Caronas Realizadas<br/><br/>
-                  <div style={styles.text}>21</div>
-                  Caronas Avaliadas<br/><br/>
-                  <div style={styles.text}>5</div>
-                  Caronas 5 estrelas
-                </center>
-              </div>
-            </div>
-            <div style={{marginTop: '40px'}}>
-              <center><h4 style={{borderBottom: '1px solid #333', padding: '21px 0 21px 0'}}>VEÍCULOS ATIVOS</h4></center>
-              <div className="row">
-                {
-                veiculos.length > 0 ?  veiculos.map((veiculo, key) =>
-                  veiculo.ativo === 1 ?
-                  <div key={key} className="col-md-6" style={{marginTop:'1.5em'}}>
-                      <InfoVeiculo
-                        marca={veiculo.marca}
-                        modelo={veiculo.modelo}
-                        placa={veiculo.placa}
-                      />
-                  </div>
-                  :
-                  <div></div>
-                )
-                :
-                <div>Não há veiculo ativo.</div>
-                }
-              </div>
-            </div>
-          </div>
-        </div>
+        <Home
+          userEmail = {userData.email}
+        />
       </div>
     )
   }
@@ -158,7 +80,5 @@ export default connect(store => {
   return {
     user: store.user.user,
     userData: store.user.userData,
-    veiculos: store.car.veiculos,
-    needLoad: store.car.needLoad,
   }
 })(MainPage)

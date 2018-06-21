@@ -2,10 +2,34 @@ import React, { Component } from 'react'
 import Avatar from 'material-ui/Avatar'
 import config from '../../config.json'
 import styles from './styles'
+import axios from 'axios'
 
 export default class AvatarHeader extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      userData: '',
+      loaded: false,
+    };
+  }
+
+
+  loadDriver = (email) =>{
+    axios.get(config.endpoint + "/members/" + email)
+      .then(result =>{
+        console.log(result)
+        if (this.state.userData === '')
+          this.setState({
+            userData: result.data,
+            loaded: true
+          })
+      })
+  }
+
   render() {
-    const { userData } = this.props
+    const { userEmail } = this.props
+    var userData = this.state.userData
+    if(!this.state.loaded) this.loadDriver(userEmail)
 
     return(
       <div style={styles.root}>

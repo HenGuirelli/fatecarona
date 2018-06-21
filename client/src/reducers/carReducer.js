@@ -16,12 +16,6 @@ export default function reducer(state={
        case 'LOAD_CAR_BY_ID_FULFILLED':{
          return {...state, liftCar: action.payload.data[0]}
        }
-       case 'LOAD_MARCA_FULFILLED': {
-         return {...state, marcas: action.payload.data, needLoad:false}
-       }
-       case 'LOAD_MODELO_FULFILLED': {
-         return {...state, modelos: action.payload.data, needLoad:false}
-       }
        default: {
          return state
        }

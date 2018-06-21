@@ -53,6 +53,25 @@ class GerencCarona extends Component {
     })
   }
 
+
+  filterMembrosCarona = () =>{
+    switch(this.props.carona.status) {
+      case 'pendente':{
+        return null
+      }
+      case 'andamento':{
+        return <div>QUEM VAI NO CARRO</div>
+      }
+      case 'historico':{
+        return <div>QUEM FOI NO CARRO</div>
+      }
+      default:{}
+    }
+  }
+
+
+
+
   componentWillMount() {
     this.props.dispatch(loadCarbyID(this.props.carona.veiculo))
   }
@@ -127,10 +146,15 @@ class GerencCarona extends Component {
                 DETALHE DA CARONA
             </div>
             <div style={styles.btnContainer}>
-              {carona.status === "pendente" ?
-                <input type="button" style={styles.btn} className="btn btn-primary" value="Desistir da carona" />
+              {
+                carona.status === 'historico' ?
+                <div>
+                  <input type="button" style={styles.btn} className="btn btn-primary" value="Avaliar carona" />
+                </div>
                 :
-                <input type="button" style={styles.btn} className="btn btn-primary" value="Avaliar carona" />
+                <div>
+                  <input type="button" style={styles.btn} className="btn btn-primary" value="Desistir da carona" />
+                </div>
               }
             </div>
           </div>
@@ -240,22 +264,19 @@ class GerencCarona extends Component {
             </div>
 
             {
-              carona.status !== 'pendente' ?
-              <div>QUEM VAI NO CARRO</div>
-              :
-              <div></div>
+              this.filterMembrosCarona()
             }
             {
               carona.status !== 'pendente' ?
               this.state.members.map((member, key)=>
               <div key={key} className="row" style={{marginTop: '1em', borderBottom: '1px solid lightgrey', borderSpacing: '200px'}}>
-                <div className="col-3" style={instyle.textStyle}>
+                <div className="col-6" style={instyle.textStyle}>
                   <Avatar
                     src={member.img ? config.endpoint + "/images/" + member.img : ""}
                     size={50}
                   />
                 </div>
-                <div className="col-4">
+                <div className="col-6" style={instyle.textStyle2}>
                   {member.nome.substring(0, member.nome.indexOf(" "))}<br />
                   {member.email === carona.emailMotorista ? <span>Motorista</span> : <span>Caronista</span>}
                 </div>

@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { insertCar } from '../../actions/carActions'
+import config from '../../config.json'
+import axios from 'axios'
+
 
 class CadVeiculos extends Component{
   constructor(props) {
@@ -9,7 +12,8 @@ class CadVeiculos extends Component{
       placa: '',
       marca: '',
       modelo: '',
-      cor: ''
+      cor: '',
+      modelos: [],
     };
   }
 
@@ -25,6 +29,20 @@ class CadVeiculos extends Component{
   }
   handleCor = (event) => {
     this.setState({cor: event.target.value})
+  }
+
+
+  loadModelo = () => {
+    axios.get(config.endpoint + "/cars/marcas/" + this.state.marca)
+    .then(result =>{
+      axios.get(config.endpoint + "/cars/modelos/" + result.data[0].id)
+      .then(resultModelos =>{
+        this.setState({
+          modelos: resultModelos.data
+        })
+      })
+    })
+
   }
 
   handleSubmit = () => {
@@ -43,6 +61,11 @@ class CadVeiculos extends Component{
   }
 
   render(){
+
+    if (this.state.marca !== '') this.loadModelo();
+
+    var modelos = this.state.modelos;
+
     const styles = {
       button: {
         margin: '25px 0',
@@ -108,10 +131,11 @@ class CadVeiculos extends Component{
             <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
               <center>
                 <div className="col-6">MODELO</div>
-                  <select className="form-control" style={styles.inputOption} value={this.state.modelo || 'default'} onChange={this.handleModelo}>
+                  <select className="form-control" style={styles.inputOption}  value={this.state.modelo || 'default'} onChange={this.handleModelo}>
                     <option value="default">Selecione...</option>
-                    <option value="SIENA">SIENA</option>
-                    <option value="PALIO">PALIO</option>
+                    {modelos ? modelos.map((modelo, key) =>
+                      <option value={modelo.modelo} key={key}>{modelo.modelo}</option>
+                    ) : null}
                   </select>
                 </center>
             </div>
