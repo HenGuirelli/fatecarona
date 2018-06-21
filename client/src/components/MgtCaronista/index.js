@@ -14,15 +14,15 @@ export default class MgtCaronista extends Component {
       emailCaronista: infoNotification.emailRemetente
     })
     .then(() => {
+      window.displayDialog({msg: "Notificação enviada."})
+    })
+    /*.then(() => {
       axios.post(config.endpoint + '/notify/' + infoNotification.emailRemetente, {
         message: userData.nome + (answer ? " aceitou" : " rejeitou") + " sua solicitação.",
         emailRemetente: userData.email,
         imgRemetente: userData.img
       })
-      .then(() => {
-        window.displayDialog({msg: "Notificação enviada."})
-      })
-    })
+    })/*/
   }
 
   render() {

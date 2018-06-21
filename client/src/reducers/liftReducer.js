@@ -1,5 +1,6 @@
 export default function reducer(state={
     carona: {},
+    membroEspiado: {},
     listaCaronista:[],
     caronasbyEmail: [],
     listaMembros: [],
@@ -9,6 +10,9 @@ export default function reducer(state={
     switch (action.type) {
       case 'CARREGAR_CARONA':{
         return{...state, carona: action.payload}
+      }
+      case 'ESPIAR_MEMBRO_FULFILLED':{
+        return{...state, membroEspiado: action.payload.data}
       }
       case 'RESULT_CARONAS':{
         return{...state, resultCaronas: action.payload}

@@ -6,11 +6,12 @@ import Home from '../../components/Home'
 class EspiarPerfil extends Component {
 
   render() {
-    const {carona} = this.props
+    const {membroEspiado} = this.props
+    console.log(membroEspiado.email)
     return (
       <div className="pageBase">
         <Home
-          userEmail = {carona.emailMotorista}
+          userEmail = {membroEspiado}
         />
       </div>
     )
@@ -19,6 +20,6 @@ class EspiarPerfil extends Component {
 
 export default connect(store => {
   return {
-    carona: store.lift.carona,
+    membroEspiado: store.lift.membroEspiado,
   }
 })(EspiarPerfil)

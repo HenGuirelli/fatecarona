@@ -61,7 +61,7 @@ class ResultCaronas extends Component {
 
     return (
       <div className="pageBase container">
-        { caronas.map((lift, key) => <InfoCarona key={key} carona={lift}/>)}
+        { caronas.map((lift, key) => <InfoCarona key={key} history={this.props.history} carona={lift}/>)}
       </div>
     )
   }

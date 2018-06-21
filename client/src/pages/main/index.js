@@ -69,7 +69,7 @@ class MainPage extends Component {
     return (
       <div className="pageBase">
         <Home
-          userData = {userData}
+          userEmail = {userData.email}
         />
       </div>
     )

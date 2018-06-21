@@ -20,7 +20,7 @@ export default class Home extends Component {
 
 
   render() {
-    const { userData } = this.props
+    const { userEmail } = this.props
 
     const styles = {
       content: {
@@ -34,9 +34,8 @@ export default class Home extends Component {
 
     return (
       <div className="pageBase">
-        <AvatarHeader userEmail={userData.email}/>
-      {
-        userData.motorista === 1 ?
+        <AvatarHeader userEmail={userEmail}/>
+
           <ul className="nav nav-pills row" id="pills-tab" role="tablist" style={styles.tab}>
             <li className="col-6" style={{padding: 0, border: '2px solid white'}}>
               <label className="nav-link active" id="pills-andamento-tab" data-toggle="pill" role="tab" aria-selected="true" onClick={() => this.handleClick("caronista")}>
@@ -49,17 +48,14 @@ export default class Home extends Component {
               </label>
             </li>
           </ul>
-          :
-          null
-      }
         {
           this.state.perfil === 'caronista' ?
             <PerfilCaronista
-              userEmail = {userData.email}
+              userEmail = {userEmail}
             />
           :
             <PerfilMotorista
-              userEmail = {userData.email}
+              userEmail = {userEmail}
             />
         }
       </div>

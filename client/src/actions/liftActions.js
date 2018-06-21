@@ -8,6 +8,13 @@ export function carregar(carona) {
   }
 }
 
+export function espiarMembro(email) {
+  return{
+    type: "ESPIAR_MEMBRO",
+    payload: axios.get(config.endpoint + "/users/" + email)
+  }
+}
+
 export function transferResults(caronas) {
   return{
     type: "RESULT_CARONAS",
