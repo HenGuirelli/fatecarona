@@ -11,7 +11,7 @@ import MusicIcon from '../LiftMgt/musica_roxo.png'
 import CarIcon from '../Veiculo/veiculo_preto.png'
 import LugarIcon from '../Veiculo/lugares_preto.png'
 import { loadCarbyID } from '../../actions/carActions'
-
+import GoogleMaps from '../../components/GoogleMaps'
 
 class GerencCarona extends Component {
   constructor(props){
@@ -20,6 +20,10 @@ class GerencCarona extends Component {
       members: [],
       loaded: false
     };
+  }
+
+  saveFunc = f => {
+    this.displayRoute = f;
   }
 
   loadMembersData = () =>{
@@ -76,6 +80,22 @@ class GerencCarona extends Component {
     this.props.dispatch(loadCarbyID(this.props.carona.veiculo))
   }
 
+  componentDidMount() {
+    const { carona } = this.props
+    if (!carona.rota) return
+    document.getElementById('collapseMap').className = 'collapse show'
+    axios.get(config.endpoint + '/routes/route/' + carona.rota)
+    .then(result => {
+      const { origin, destination, waypoints } = result.data.rota
+      this.displayRoute({
+        origin,
+        destination,
+        waypoints
+      }).then(() => {
+        setTimeout(() => document.getElementById('collapseMap').className = 'collapse', 100);
+      })
+    })
+  }
 
   render() {
 
@@ -141,7 +161,7 @@ class GerencCarona extends Component {
     return(
       <div className="container">
         <center>
-          <div style={{borderBottom: '1px solid grey', marginTop: '5em'}}>
+          <div style={{borderBottom: '1px solid grey', marginTop: '5em', paddingBottom: '25px'}}>
             <div>
                 DETALHE DA CARONA
             </div>
@@ -159,7 +179,7 @@ class GerencCarona extends Component {
             </div>
           </div>
 
-          <div style={{borderBottom: '1px solid grey', margin: '1em ' }}>
+          <div style={{borderBottom: '1px solid grey', padding: '1em ' }}>
             <div className="row">
               <div className="col-6" style={instyle.textStyle}>
                 STATUS:
@@ -198,7 +218,7 @@ class GerencCarona extends Component {
             </div>
           </div>
 
-          <div style={{borderBottom: '1px solid grey', margin: '1em 1em'}}>
+          <div style={{borderBottom: '1px solid grey', padding: '1em 1em'}}>
             <div style={{marginBottom: '1em'}}>
                 PREFERÊNCIAS DA CARONA
             </div>
@@ -240,7 +260,7 @@ class GerencCarona extends Component {
             </div>
           </div>
 
-            <div style={{borderBottom: '1px solid grey', margin: '1em 0'}}>
+            <div style={{borderBottom: '1px solid grey', padding: '1em 0'}}>
               <div>
                   VEÍCULO
               </div>
@@ -263,36 +283,57 @@ class GerencCarona extends Component {
               </div>
             </div>
 
-            {
-              this.filterMembrosCarona()
-            }
-            {
-              carona.status !== 'pendente' ?
-              this.state.members.map((member, key)=>
-              <div key={key} className="row" style={{marginTop: '1em', borderBottom: '1px solid lightgrey', borderSpacing: '200px'}}>
-                <div className="col-6" style={instyle.textStyle}>
-                  <Avatar
-                    src={member.img ? config.endpoint + "/images/" + member.img : ""}
-                    size={50}
-                  />
-                </div>
-                <div className="col-6" style={instyle.textStyle2}>
-                  {member.nome.substring(0, member.nome.indexOf(" "))}<br />
-                  {member.email === carona.emailMotorista ? <span>Motorista</span> : <span>Caronista</span>}
-                </div>
-                <div className="col-5" style={instyle.textStyle2}>
-                  <input type="button" style={instyle.btn} className="btn btn-primary" value="Conversar" />
-                </div>
-              </div>
-              )
-            :
-            null
-          }
+            <div style={{borderBottom: '1px solid grey', padding: '1em 0'}}>
+              {
+                this.filterMembrosCarona()
+              }
+              {
+                carona.status !== 'pendente' ?
+                this.state.members.map((member, key)=>
+                  <div key={key} className="row" style={{padding: '1em'}}>
+                    <div className="col-6" style={instyle.textStyle}>
+                      <Avatar
+                        src={member.img ? config.endpoint + "/images/" + member.img : ""}
+                        size={50}
+                      />
+                    </div>
+                    <div className="col-6" style={instyle.textStyle2}>
+                      {member.nome.substring(0, member.nome.indexOf(" "))}<br />
+                      {member.email === carona.emailMotorista ? <span>Motorista</span> : <span>Caronista</span>}
+                    </div>
+                  </div>
+                  )
+                :
+                null
+              }
+            </div>
+          <div>
+            <input
+              type="button"
+              data-toggle="collapse"
+              data-target="#collapseMap"
+              aria-expanded="false"
+              aria-controls="collapseMap"
+              value="Visualizar rota"
+              className="btn btn-primary"
+              style={{
+                fontSize: '14px',
+                fontWeight: 'bold',
+                width: '100%',
+                backgroundColor: '#6E4D8B',
+                borderColor: '#6E4D8B',
+                margin: '25px 0'
+              }}
+            />
+          </div>
+          <div className="collapse" id="collapseMap">
+            <GoogleMaps callback={this.saveFunc}/>
+          </div>
           {
             carona.status === 'andamento' ?
-            <div style={{borderTop: '1px solid grey'}}>
+            <div style={{padding: '1em 0', borderTop: '1px solid grey'}}>
               <div>CHAT</div>
-              <div className="row" style={{marginTop: '1em', borderBottom: '1px solid lightgrey', borderSpacing: '200px'}}>
+              <div>
                 <SocketIOChat idSala={"carona" + carona.id}/>
               </div>
             </div>

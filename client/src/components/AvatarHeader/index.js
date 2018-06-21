@@ -8,29 +8,21 @@ export default class AvatarHeader extends Component {
   constructor(props){
     super(props);
     this.state = {
-      userData: '',
-      loaded: false,
+      userData: {},
     };
   }
 
-
-  loadDriver = (email) =>{
-    axios.get(config.endpoint + "/members/" + email)
+  loadDriver = (userEmail) =>{
+    axios.get(config.endpoint + "/members/" + userEmail)
       .then(result =>{
-        console.log(result)
-        if (this.state.userData === '')
-          this.setState({
-            userData: result.data,
-            loaded: true
-          })
+          this.setState({ userData: result.data })
       })
   }
 
   render() {
+    const { userData } = this.state
     const { userEmail } = this.props
-    var userData = this.state.userData
-    if(!this.state.loaded) this.loadDriver(userEmail)
-
+    if (userData.img === undefined && userEmail !== undefined) this.loadDriver(userEmail)
     return(
       <div style={styles.root}>
         <center>

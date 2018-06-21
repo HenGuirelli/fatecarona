@@ -40,6 +40,7 @@ class InfoCarona extends Component {
       axios.post(config.endpoint + '/notify/' + carona.emailMotorista, {
         message: userData.apelido + ' solicitou vaga na carona de ' + new Date(carona.dataCarona).toLocaleDateString('pt-BR'),
         emailRemetente: userData.email,
+        imgRemetente: userData.img,
         idCarona: carona.id
       })
       .then(() => {

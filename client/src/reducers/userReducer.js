@@ -6,7 +6,7 @@ export default function reducer(state={
     pending: true,
     error: null,
     updating: false,
-    needReload: true,
+    needReload: false,
   }, action) {
     switch (action.type) {
       case 'SET_FIREBASE': {

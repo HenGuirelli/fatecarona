@@ -6,7 +6,9 @@ export default {
   },
   avatar: {
     border: '3px solid white',
-    marginTop: '11px',
+    marginTop: '19px',
+    position: 'inherit',
+    zIndex: 1
   },
   status: {
     color: '#A8CF45',
@@ -30,6 +32,6 @@ export default {
   },
   root: {
     backgroundColor: '#6E4D8B',
-    paddingTop: '30px'
+    paddingTop: '8px'
   }
 }
