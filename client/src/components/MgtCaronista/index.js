@@ -20,7 +20,8 @@ export default class MgtCaronista extends Component {
         imgRemetente: userData.img
       })
       .then(() => {
-        window.displayDialog({msg: "Notificação enviada."})
+        axios.put(config.endpoint + '/notifications/' + infoNotification._id, {read: true})
+        .then(() => window.displayDialog({msg: "Notificação enviada."}))
       })
     })
   }

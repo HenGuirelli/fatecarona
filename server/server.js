@@ -528,6 +528,23 @@ router.route('/lift/id/:carona_id')
           res.json(rows);
         });
       });
+    })
+    .put(function(req, res) {
+      pool.getConnection(function(err, connection) {
+        if (err) {
+          res.send(err);
+          return;
+        }
+
+        connection.query('UPDATE caronas SET ? WHERE id = ?',[req.body, req.params.carona_id], function(err, rows, fields) {
+          connection.release();
+          if (err){
+            res.send(err);
+            return;
+          }
+          res.json({success: true});
+        });
+      });
     });
 
 //Busca todas as caronas do banco
@@ -582,7 +599,7 @@ router.route('/notifications/:user_email')
 router.route('/subs')
   .put(function(req, res) {
     mongoPool.collection('subscriptions').updateOne(
-      {_id: req.body._id},
+      {_id: new ObjectId(req.body._id)},
       { $set: req.body },
       { upsert: true },
       (err, result) => {
@@ -594,8 +611,32 @@ router.route('/subs')
     });
   });
 
+router.route('/notifications/:id')
+  .put(function(req, res) {
+    mongoPool.collection('notifications').updateOne(
+      {_id: new ObjectId(req.params.id)},
+      { $set: req.body },
+      (err, result) => {
+      if(err) {
+        res.send(err);
+        return;
+      }
+      res.json({success: true});
+    });
+  });
+
 router.route('/notify/:user_email')
   .post(function(req, res) {
+    mongoPool.collection('notifications').insertOne(
+      {
+        email: req.params.user_email,
+        message: req.body.message,
+        emailRemetente: req.body.emailRemetente,
+        imgRemetente: req.body.imgRemetente,
+        idCarona: req.body.idCarona
+      }
+    )
+
     mongoPool.collection('subscriptions').findOne(
       {_id: req.params.user_email},
       (err, result) => {
@@ -604,22 +645,12 @@ router.route('/notify/:user_email')
         return;
       }
 
-      if ( result.subscription === undefined ) {
+      if ( !result ) {
         res.send({message: 'User not subscribed.'});
         return;
       }
 
       var options = {};
-
-      mongoPool.collection('notifications').insertOne(
-        {
-          email: req.params.user_email,
-          message: req.body.message,
-          emailRemetente: req.body.emailRemetente,
-          imgRemetente: req.body.imgRemetente,
-          idCarona: req.body.idCarona
-        }
-      )
 
       webPush.sendNotification(
         result.subscription, //subscription object
