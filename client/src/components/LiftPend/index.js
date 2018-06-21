@@ -259,12 +259,9 @@ class GerencCarona extends Component {
                   {member.nome.substring(0, member.nome.indexOf(" "))}<br />
                   {member.email === carona.emailMotorista ? <span>Motorista</span> : <span>Caronista</span>}
                 </div>
-<<<<<<< HEAD
                 <div className="col-5" style={instyle.textStyle2}>
                   <input type="button" style={instyle.btn} className="btn btn-primary" value="Conversar" />
                 </div>
-=======
->>>>>>> d82f0b8756e583f1a967ca7fad26d5200583de0b
               </div>
               )
             :

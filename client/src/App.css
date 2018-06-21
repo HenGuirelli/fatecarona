@@ -16,6 +16,21 @@
   outline: none;
 }
 
+.btnChat {
+  background-color: rgb(110, 77, 139);
+  color: white;
+  border-radius: 8px;
+  margin-left: 5px;
+  margin-right: 10px;
+  outline: none;
+}
+
+.btnChat:active {
+  background-color: white;
+  color: rgb(110, 77, 139);
+  border: 1px solid rgb(110, 77, 139);
+}
+
 .textInput {
   border: 2px solid #6E4D8B;
 }
@@ -45,9 +60,4 @@ a:hover {
 
 .App-intro {
   font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }
