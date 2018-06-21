@@ -72,11 +72,11 @@ class Motorista extends Component {
                 Caronas Realizadas
               </center>
               <center className="col-4">
-                <div style={styles.text}>"Estatico"21</div>
+                <div style={styles.text}>21</div>
                 Caronas Avaliadas
               </center>
               <center className="col-4">
-                <div style={styles.text}>"Estatico"5</div>
+                <div style={styles.text}>5</div>
                 Caronas 5 estrelas
               </center>
           </div>
@@ -85,16 +85,17 @@ class Motorista extends Component {
             <div className="row">
               {
               veiculos.length > 0 ?  veiculos.map((veiculo, key) =>
-                veiculo.ativo === 1 ?
                 <div key={key} className="col-md-6" style={{marginTop:'1.5em'}}>
-                    <InfoVeiculo
-                      marca={veiculo.marca}
-                      modelo={veiculo.modelo}
-                      placa={veiculo.placa}
-                    />
+                  {
+                    veiculo.ativo === 1 ?
+                      <InfoVeiculo
+                        marca={veiculo.marca}
+                        modelo={veiculo.modelo}
+                        placa={veiculo.placa}
+                      />
+                    : null
+                  }
                 </div>
-                :
-                <div></div>
               )
               :
               <div>Não há veiculo ativo.</div>

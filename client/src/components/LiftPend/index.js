@@ -97,8 +97,7 @@ class GerencCarona extends Component {
     let dataLift = new Date(carona.dataCarona)
     let dataCarona = (("0" + dataLift.getDate()).slice(-2) + "/" + ("0" + (dataLift.getMonth() + 1)).slice(-2) +
         "/" + dataLift.getFullYear())
-    let horarioCarona = (dataLift.getUTCHours() + ":" + ("0" + dataLift.getUTCMinutes()).slice(-2))
-
+    let horarioCarona = (dataLift.getHours() + ":" + ("0" + dataLift.getMinutes()).slice(-2))
 
     const instyle = {
       textStyle:{

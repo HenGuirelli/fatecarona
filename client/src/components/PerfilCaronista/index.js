@@ -121,28 +121,30 @@ export default class Caronista extends Component {
                 Caronas Realizadas
               </center>
               <center className="col-4">
-                <div style={styles.text}>"Estatico"21</div>
+                <div style={styles.text}>21</div>
                 Caronas Avaliadas
               </center>
               <center className="col-4">
-                <div style={styles.text}>"Estatico"5</div>
+                <div style={styles.text}>5</div>
                 Caronas 5 estrelas
               </center>
           </div>
-          <center className="row" style={{padding: '2em 0', borderBottom: '2px solid grey'}}>
-            <div className="col-12">
-              GERALMENTE VEM DE...
-            </div>
-            {
-               this.state.transporte !== '' ? this.state.transporte.map((e, key)=>
-                <div className="col-12" key={key} style={{marginTop:'0.5em'}}>
-                  {e}
+          {
+            this.state.transporte !== '' && this.state.transporte[0] !== '' ?
+              <center className="row" style={{padding: '2em 0', borderBottom: '2px solid grey'}}>
+                <div className="col-12">
+                  GERALMENTE VEM DwsE...
                 </div>
-              )
-              :
-              null
-            }
-          </center>
+                {
+                   this.state.transporte.map((e, key)=>
+                    <div className="col-12" key={key} style={{marginTop:'0.5em'}}>
+                      {e}
+                    </div>
+                  )
+                }
+              </center>
+          : null
+          }
           <center className="row" style={{marginTop:'1em'}}>
             <div className="col-12">
               MAIORES BUSCAS
