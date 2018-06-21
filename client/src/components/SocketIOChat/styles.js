@@ -21,5 +21,9 @@ export default {
     overflow: 'auto',
     display: 'flex',
     flexDirection: 'column-reverse'
+  },
+  textBox: {
+    width: '100%',
+    borderRadius: '8px'
   }
 }

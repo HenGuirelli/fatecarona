@@ -52,7 +52,7 @@ class SocketIOChat extends Component {
     const { log } = this.state
     const { userData } = this.props
     return(
-      <form onSubmit={this.sendMessage} style={{width: '100%'}}>
+      <form onSubmit={this.sendMessage} style={{width: '100%', marginBottom: '25px'}}>
         <div style={styles.container}>
           {log.map((e, key) => {
             if (e.user === userData.apelido) {
@@ -66,12 +66,18 @@ class SocketIOChat extends Component {
             </div>
           }).reverse()}
         </div>
-        <input
-          style={{width: '100%'}}
-          placeholder="Digite aqui..."
-          onChange={this.handleMessage}
-          value={this.state.message}
-        />
+        <div className="input-group" style={{margin: '5px'}}>
+          <input
+            style={styles.textBox}
+            placeholder="Digite aqui..."
+            onChange={this.handleMessage}
+            value={this.state.message}
+            className="form-control"
+          />
+          <div className="input-group-append">
+            <button className="btn btnChat" type="submit">Enviar</button>
+          </div>
+        </div>
       </form>
     )
   }
