@@ -20,7 +20,7 @@ export default class Home extends Component {
 
 
   render() {
-    const {userEmail} = this.props
+    const { userData } = this.props
 
     const styles = {
       content: {
@@ -34,28 +34,32 @@ export default class Home extends Component {
 
     return (
       <div className="pageBase">
-        <AvatarHeader userEmail={userEmail}/>
-
-        <ul className="nav nav-pills row" id="pills-tab" role="tablist" style={styles.tab}>
-          <li className="nav-item col-6">
-            <label className="nav-link active" id="pills-andamento-tab" data-toggle="pill" role="tab" aria-selected="true" onClick={() => this.handleClick("caronista")}>
-              <center>Caronista</center>
-            </label>
-          </li>
-          <li className="nav-item col-6">
-            <label className="nav-link" id="pills-historico-tab" data-toggle="pill" role="tab" aria-selected="false" onClick={() => this.handleClick("motorista")}>
-              <center>Motorista</center>
-            </label>
-          </li>
-        </ul>
+        <AvatarHeader userEmail={userData.email}/>
+      {
+        userData.motorista === 1 ?
+          <ul className="nav nav-pills row" id="pills-tab" role="tablist" style={styles.tab}>
+            <li className="col-6" style={{padding: 0, border: '2px solid white'}}>
+              <label className="nav-link active" id="pills-andamento-tab" data-toggle="pill" role="tab" aria-selected="true" onClick={() => this.handleClick("caronista")}>
+                <center>Caronista</center>
+              </label>
+            </li>
+            <li className="col-6" style={{padding: 0, border: '2px solid white', borderLeft: 'none'}}>
+              <label className="nav-link" id="pills-historico-tab" data-toggle="pill" role="tab" aria-selected="false" onClick={() => this.handleClick("motorista")}>
+                <center>Motorista</center>
+              </label>
+            </li>
+          </ul>
+          :
+          null
+      }
         {
           this.state.perfil === 'caronista' ?
             <PerfilCaronista
-              userEmail = {userEmail}
+              userEmail = {userData.email}
             />
           :
             <PerfilMotorista
-              userEmail = {userEmail}
+              userEmail = {userData.email}
             />
         }
       </div>

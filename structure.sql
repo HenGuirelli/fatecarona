@@ -25,8 +25,8 @@ create table membros(
 
 insert into membros (ra, nome, telefone, apelido, curso, email, img, chegada, saida, cnh, validadeCNH, categoriaCNH) values
   (1680481522013, "Thiago Cardoso Ramos", "011111111111","Proagace", "ADS","thiago.ramos9", "avatar.jpg", "13:00:00", "18:00:00", null, null, null),
-  (1680481522006, "Alexandre Cassiano dos Santos", "011955931212","Xandele", "ADS","alexandre.santos67", "avatar.jpg", "13:00:00", "18:00:00", 15910431593, '2018/07/04', 'B'),
-  (1680481522040, "Antonio Ernando Siqueira de Souza Filho", "011955931212","Toninho", "ADS","antonio.souza26", "avatar.jpg", "13:00:00", "18:00:00", 15910851593, '2018/07/04', 'B');
+  (1680481522006, "Alexandre Cassiano dos Santos", "011955931212","Xandele", "ADS","alexandre.santos67", "avatar.jpg", "13:00:00", "18:00:00", 15910431593, '2018-07-04', 'B'),
+  (1680481522040, "Antonio Ernando Siqueira de Souza Filho", "011955931212","Toninho", "ADS","antonio.souza26", "avatar.jpg", "13:00:00", "18:00:00", 15910851593, '2018-07-04', 'B');
 
 create table veiculos(
   id int auto_increment primary key,

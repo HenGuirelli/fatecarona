@@ -38,7 +38,7 @@ var upload = multer({ storage: storage }).single('image');
 var pool = mysql.createPool({
   host     : 'localhost',
   user     : 'root',
-  password : 'root',
+  password : '3847147298',
   database : 'Fatecarona'
 });
 
@@ -616,13 +616,17 @@ router.route('/notify/:user_email')
           email: req.params.user_email,
           message: req.body.message,
           emailRemetente: req.body.emailRemetente,
+          imgRemetente: req.body.imgRemetente,
           idCarona: req.body.idCarona
         }
       )
 
       webPush.sendNotification(
         result.subscription, //subscription object
-        req.body.message, //payload
+        JSON.stringify({
+          img: req.body.imgRemetente,
+          msg: req.body.message
+        }), //payload
         options
       ).catch(err => {
         console.log(err);

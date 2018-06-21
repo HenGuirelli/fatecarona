@@ -41,7 +41,7 @@ class App extends Component {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.props.dispatch(updateUser(user))
-        this.props.dispatch(setUserData(this.props.user.email.split('@')[0]));
+        this.props.dispatch(setUserData(user.email.split('@')[0]));
       } else {
         this.props.dispatch(unsetUser())
       }
@@ -53,12 +53,13 @@ class App extends Component {
   }
 
   render() {
-    const { history, user, pending } = this.props
+    const { history, user, pending, needReload } = this.props
     menuItems.forEach(element => element.selected = false)
     let item = menuItems.find(element => element.path === history.location.pathname)
     if (item) item.selected = true
 
     if (pending) return null
+    if (needReload) this.props.dispatch(setUserData(user.email.split('@')[0]))
 
     let isLogged = false
     //if localStorage gets more data then this should be treated differently
@@ -101,6 +102,7 @@ class App extends Component {
 export default withRouter(connect(store => {
   return {
     user: store.user.user,
+    needReload: store.user.needReload,
     pending: store.user.pending,
   }
 })(App))

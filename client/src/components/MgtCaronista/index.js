@@ -5,12 +5,6 @@ import styles from './styles'
 import axios from 'axios'
 
 export default class MgtCaronista extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      dadosCaronista: undefined
-    }
-  }
 
   handleResponse = (answer) => {
     const { infoNotification, userData } = this.props
@@ -21,7 +15,9 @@ export default class MgtCaronista extends Component {
     })
     .then(() => {
       axios.post(config.endpoint + '/notify/' + infoNotification.emailRemetente, {
-        message: userData.nome + (answer ? " aceitou" : " rejeitou") + " sua solicitação."
+        message: userData.nome + (answer ? " aceitou" : " rejeitou") + " sua solicitação.",
+        emailRemetente: userData.email,
+        imgRemetente: userData.img
       })
       .then(() => {
         window.displayDialog({msg: "Notificação enviada."})
@@ -29,27 +25,15 @@ export default class MgtCaronista extends Component {
     })
   }
 
-  getUserData = (email) => {
-    axios.get(config.endpoint + '/users/' + email)
-    .then(result => {
-      this.setState({dadosCaronista: result.data})
-    })
-  }
-
-  componentWillMount() {
-    this.getUserData(this.props.infoNotification.emailRemetente)
-  }
-
   render() {
     const { infoNotification } = this.props
-    const { dadosCaronista } = this.state
 
     return(
       <div className="container" style={styles.root}>
         <div className="row">
           <div className="col-3 col-xl-1">
             <Avatar
-              src={dadosCaronista ? config.endpoint + "/images/" + dadosCaronista.img : ""}
+              src={infoNotification.imgRemetente ? config.endpoint + "/images/" + infoNotification.imgRemetente : ""}
               size={50}
             />
           </div>

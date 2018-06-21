@@ -20,7 +20,7 @@ class Perfil extends Component {
       chegada: aux1 ? new Date(null, null, null, aux1[0], aux1[1]) : null,
       saida: aux2 ? new Date(null, null, null, aux2[0], aux2[1]) : null,
       telefone: props.userData.telefone || '',
-      motorista: props.userData.motorista || '',
+      motorista: props.userData.motorista || 0,
       trem: props.userData.trem || '0',
       metro: props.userData.metro || '0',
       onibus: props.userData.onibus || '0',
@@ -51,7 +51,7 @@ class Perfil extends Component {
   };
 
   handleMotorista = (event) => {
-    this.setState({motorista: event.target.value})
+    this.setState({motorista: Number.parseInt(event.target.value, 2)})
   };
 
   handleCnh = (event) => {
@@ -274,11 +274,11 @@ class Perfil extends Component {
             </div>
             <div style={styles.title}>PERFIL DE MOTORISTA</div>
             <select className="form-control" style={inStyles.inputOption2} value={this.state.motorista} onChange={this.handleMotorista}>
-              <option value='1'>SIM, SOU UM MOTORISTA</option>
-              <option value='0'>NÃO SOU UM MOTORISTA</option>
+              <option value={1}>SIM, SOU UM MOTORISTA</option>
+              <option value={0}>NÃO SOU UM MOTORISTA</option>
             </select>
             {
-              this.state.motorista === '1' ?
+              this.state.motorista === 1 ?
                 <div  style={{marginTop: '1em', padding: '2em 0', borderBottom: '2px solid grey'}}>
                   <div className="row" >
                     <div className="col-6"  style={{textAlign:'left'}}>
