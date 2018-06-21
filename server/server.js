@@ -600,7 +600,7 @@ router.route('/notifications/:user_email')
 router.route('/subs')
   .put(function(req, res) {
     mongoPool.collection('subscriptions').updateOne(
-      {_id: new ObjectId(req.body._id)},
+      {_id: req.body._id},
       { $set: req.body },
       { upsert: true },
       (err, result) => {
