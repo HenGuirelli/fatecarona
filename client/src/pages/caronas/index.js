@@ -3,7 +3,7 @@ import LiftMgt from '../../components/LiftMgt'
 import config from '../../config.json'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { carregar } from '../../actions/liftActions'
+import { carregar, espiarMembro } from '../../actions/liftActions'
 
 class Caronas extends Component {
 
@@ -28,7 +28,7 @@ class Caronas extends Component {
     }
 
     handleEspiar = (carona) => {
-      this.props.dispatch(carregar(carona));
+      this.props.dispatch(espiarMembro(carona.emailMotorista));
       this.props.history.push('/perfil/espiar')
     }
 
