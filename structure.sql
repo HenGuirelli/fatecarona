@@ -45,6 +45,7 @@ create table avaliacao (
   mensagem varchar(140),
   avaliador varchar(40),
   avaliado varchar(40),
+  motorista boolean,
   foreign key (avaliado) references membros(email),
   foreign key (avaliador) references membros(email)
 );

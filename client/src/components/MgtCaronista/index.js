@@ -20,7 +20,6 @@ export default class MgtCaronista extends Component {
         emailRemetente: userData.email,
         imgRemetente: userData.img
       })
-<<<<<<< HEAD
     })
     .then(() => {
       axios.put(config.endpoint + '/lift/id/' + infoNotification.idCarona, {
@@ -28,11 +27,6 @@ export default class MgtCaronista extends Component {
       })
       .then(() => {
         window.displayDialog({msg: "Notificação enviada."})
-=======
-      .then(() => {
-        axios.put(config.endpoint + '/notifications/' + infoNotification._id, {read: true})
-        .then(() => window.displayDialog({msg: "Notificação enviada."}))
->>>>>>> f5748065bd03a01e4b3e39f3b4e8482b01b42f71
       })
     })
   }

@@ -14,6 +14,23 @@ import { loadCarbyID } from '../../actions/carActions'
 import GoogleMaps from '../../components/GoogleMaps'
 import { Rating } from 'material-ui-rating'
 
+
+const style = {
+  btn:{
+    fontSize: '12px',
+    width: '100%',
+    backgroundColor: '#6E4D8B',
+    borderColor: '#6E4D8B'
+  },
+  btnDialog:{
+    fontSize: '12px',
+    width: '70px',
+    margin: '0 15px',
+    backgroundColor: '#6E4D8B',
+    borderColor: '#6E4D8B'
+  },
+}
+
 class GerencCarona extends Component {
   constructor(props){
     super(props);
@@ -21,6 +38,32 @@ class GerencCarona extends Component {
       members: [],
       loaded: false
     };
+  }
+
+  showConfirmation = () => {
+    window.displayDialog({
+      title: 'Avaliação',
+      actions: [
+        <Rating
+          value={5}
+          readOnly={true}
+          style={{textAlign:'center'}}
+          itemStyle={{width: '0.5em'}}
+        />,
+        <input
+          placeholder="Adicionar Comentário"
+          //value={this.state.senha}
+          type="text"
+          className="form-control"
+        />,
+        <input
+          type="button"
+          value="Avaliar"
+          className="btn btn-primary"
+          style={style.btnDialog}
+        />,
+      ]
+    })
   }
 
   saveFunc = f => {
@@ -129,8 +172,10 @@ class GerencCarona extends Component {
     })
   }
 
-  handleTeste = () =>{
-    console.log("Teste")
+
+
+  handleTeste = (star, avaliado, avaliador) =>{
+    this.showConfirmation()
   }
 
   render() {
@@ -144,7 +189,7 @@ class GerencCarona extends Component {
       carMarca = this.props.liftCar.marca
     }
 
-    const { carona } = this.props
+    const { carona, userData } = this.props
     let dataLift = new Date(carona.dataCarona)
     let dataCarona = (("0" + dataLift.getDate()).slice(-2) + "/" + ("0" + (dataLift.getMonth() + 1)).slice(-2) +
         "/" + dataLift.getFullYear())
@@ -297,8 +342,10 @@ class GerencCarona extends Component {
               </div>
               <div className="row">
                 <div className="col-6" style={instyle.textStyle}>
-                  <img style={{width: '1em', height: '1.2em'}} src={LugarIcon} alt={"Lugares Icon"}/>
-                  <span>{carona.qtdVagas} Lugares</span>
+                  {
+                    //<img style={{width: '1em', height: '1.2em'}} src={LugarIcon} alt={"Lugares Icon"}/>
+                    //<span>{carona.qtdVagas} Lugares</span>
+                  }
                 </div>
                 <div className="col-6" style={instyle.textStyle2}>
                   {carMarca}, {carModelo}
@@ -330,7 +377,7 @@ class GerencCarona extends Component {
                         readOnly={false}
                         style={{margin: '-12px 0 0 -12px'}}
                         itemStyle={{width: '0.5em'}}
-                        onChange={() => this.handleTeste()}
+                        onChange={(value) => this.handleTeste(value, carona, userData)}
                       />
                     </div>
                   </div>
