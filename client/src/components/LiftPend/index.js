@@ -9,9 +9,9 @@ import FumanteIcon from '../LiftMgt/fumante_roxo.png'
 import SocketIOChat from '../SocketIOChat'
 import MusicIcon from '../LiftMgt/musica_roxo.png'
 import CarIcon from '../Veiculo/veiculo_preto.png'
-import LugarIcon from '../Veiculo/lugares_preto.png'
+//import LugarIcon from '../Veiculo/lugares_preto.png'
 import { loadCarbyID } from '../../actions/carActions'
-import { insertAvalicao } from '../../actions/liftActions'
+import { insertAvalicao, delCaronaPendMotorista, delCaronaPendCaronista } from '../../actions/liftActions'
 import GoogleMaps from '../../components/GoogleMaps'
 import { Rating } from 'material-ui-rating'
 
@@ -127,17 +127,27 @@ class GerencCarona extends Component {
     })
   }
 
+  desistirCaronaPend = (carona) =>{
+    if (this.props.userData.email === carona.emailMotorista){
+      this.props.dispatch(delCaronaPendMotorista(carona.id))
+      this.props.history.push('historico')
+    }
+    else {
+      this.props.dispatch(delCaronaPendCaronista(carona.id))
+      this.props.history.push('historico')
+
+    }
+
+  }
+
   filterCarona = () =>{
     switch(this.props.carona.status) {
       case 'pendente':{
-        return  <input type="button" style={styles.btn} className="btn btn-primary" value="Desistir da carona" />
+        return  <input type="button" style={styles.btn} className="btn btn-primary" onClick={() => this.desistirCaronaPend(this.props.carona)}  value="Desistir da carona" />
       }
       case 'andamento':{
         return (
           <div className="row">
-            <div className="col-12" style={{marginTop: '0.5em'}}>
-              <input type="button" style={styles.btn} className="btn btn-primary" value="Desistir da carona" />
-            </div>
             <div className="col-12" style={{marginTop: '0.5em'}}>
               <input type="button" style={styles.btn} className="btn btn-primary" value="Finalizar carona" onClick={() => this.finalizarCarona(this.props.carona.id)} />
             </div>

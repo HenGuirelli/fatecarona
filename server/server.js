@@ -38,7 +38,7 @@ var upload = multer({ storage: storage }).single('image');
 var pool = mysql.createPool({
   host     : 'localhost',
   user     : 'root',
-  password : '3847147298',
+  password : 'root',
   database : 'Fatecarona'
 });
 
@@ -467,7 +467,24 @@ router.route('/lift/members/:carona_id')
         res.json({success: true});
       });
     });
-  });
+  })
+  .delete(function(req, res) {
+      pool.getConnection(function(err, connection) {
+        if (err) {
+          res.send(err);
+          return;
+        }
+
+        connection.query('DELETE FROM membros_carona WHERE id = ?', [req.params.carona_id], function(err, rows, fields) {
+          connection.release();
+          if (err) {
+            res.send(err);
+            return;
+          }
+          res.json({ message: '' + req.params.user_email +' Desistiu da carona.'});
+        });
+      });
+    });
 
 
 //Busca ID da carona pelo email do Caronista
@@ -490,6 +507,7 @@ router.route('/caronista/:user_email')
   });
 
 
+
 //Busca as caronas dadas pelo Motorista
 router.route('/lift/motorista/:email_motorista')
   .get(function(req, res) {
@@ -508,7 +526,8 @@ router.route('/lift/motorista/:email_motorista')
         res.json(rows);
       });
     });
-  });
+  })
+
 
 //Busca a carona pelo ID
 router.route('/lift/id/:carona_id')
@@ -545,7 +564,24 @@ router.route('/lift/id/:carona_id')
           res.json({success: true});
         });
       });
-    });
+    })
+    .delete(function(req, res) {
+        pool.getConnection(function(err, connection) {
+          if (err) {
+            res.send(err);
+            return;
+          }
+
+          connection.query('DELETE FROM caronas WHERE id = ?', [req.params.carona_id], function(err, rows, fields) {
+            connection.release();
+            if (err) {
+              res.send(err);
+              return;
+            }
+            res.json({ message: 'Carona cancelada.'});
+          });
+        });
+      });
 
 
 //Busca todas as caronas do banco
