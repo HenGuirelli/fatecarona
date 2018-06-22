@@ -9,7 +9,7 @@ import FumanteIcon from '../LiftMgt/fumante_roxo.png'
 import SocketIOChat from '../SocketIOChat'
 import MusicIcon from '../LiftMgt/musica_roxo.png'
 import CarIcon from '../Veiculo/veiculo_preto.png'
-import LugarIcon from '../Veiculo/lugares_preto.png'
+//import LugarIcon from '../Veiculo/lugares_preto.png'
 import { loadCarbyID } from '../../actions/carActions'
 import { insertAvalicao, delCaronaPendMotorista, delCaronaPendCaronista } from '../../actions/liftActions'
 import GoogleMaps from '../../components/GoogleMaps'
@@ -148,9 +148,6 @@ class GerencCarona extends Component {
       case 'andamento':{
         return (
           <div className="row">
-            <div className="col-12" style={{marginTop: '0.5em'}}>
-              <input type="button" style={styles.btn} className="btn btn-primary" value="Desistir da carona" />
-            </div>
             <div className="col-12" style={{marginTop: '0.5em'}}>
               <input type="button" style={styles.btn} className="btn btn-primary" value="Finalizar carona" onClick={() => this.finalizarCarona(this.props.carona.id)} />
             </div>
