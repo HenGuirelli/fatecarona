@@ -71,9 +71,9 @@ export function delCaronaPendMotorista(idCarona) {
   }
 }
 
-export function delCaronaPendCaronista(idCarona) {
+export function delCaronaPendCaronista(idCarona, emailCaronista) {
   return {
-    type: "DELETE_PEND_CARONA_MOTORISTA",
-    payload: axios.delete(config.endpoint + "/lift/members/" + idCarona)
+    type: "DELETE_PEND_CARONA_CARONISTA",
+    payload: axios.delete(config.endpoint + "/lift/members/" + idCarona + "/" + emailCaronista)
   }
 }

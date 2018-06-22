@@ -12,35 +12,35 @@ export default class MgtCaronista extends Component {
       axios.put(config.endpoint + '/lift/members/' + infoNotification.idCarona, {
         status: 'aceito',
         emailCaronista: infoNotification.emailRemetente
-      })
-      .then(() => {
-        axios.put(config.endpoint + '/lift/id/' + infoNotification.idCarona, {
-          status: 'andamento'
-        })
-        .then(() => {
-          axios.post(config.endpoint + '/notify/' + infoNotification.emailRemetente, {
-            message: userData.nome + " aceitou sua solicitação.",
-            emailRemetente: userData.email,
-            imgRemetente: userData.img
-          })
-        })
-        .then(() => {
+      }).then(() => {
           axios.put(config.endpoint + '/lift/id/' + infoNotification.idCarona, {
             status: 'andamento'
-          })
-          .then(() => {
-            axios.put(config.endpoint + '/notifications/' + infoNotification._id, {read: true})
-            .then(() => window.displayDialog({msg: "Notificação enviada."}, '/'))
-          })
+          }).then(() => {
+              axios.post(config.endpoint + '/notify/' + infoNotification.emailRemetente, {
+                message: userData.nome + " aceitou sua solicitação.",
+                emailRemetente: userData.email,
+                imgRemetente: userData.img
+              }).then(() => {
+                  axios.put(config.endpoint + '/notifications/' + infoNotification._id, {read: true})
+                  .then(() => window.displayDialog({msg: "Notificação enviada."}, '/'))
+                })
+            })
         })
-        return
-      }
-      axios.put(config.endpoint + '/notifications/' + infoNotification._id, {read: true})
-      .then(() => window.displayDialog({msg: "Notificação enviada."}))
+      return
     }
 
-    axios.put(config.endpoint + '/notifications/' + infoNotification._id, {read: true})
-    .then(() => window.displayDialog({msg: "Notificação enviada."}, '/'))
+    axios.delete(config.endpoint + "/lift/members/" + infoNotification.idCarona + "/" + infoNotification.emailRemetente)
+    .then(() => {
+      axios.post(config.endpoint + '/notify/' + infoNotification.emailRemetente, {
+      message: userData.nome + " rejeitou sua solicitação.",
+      emailRemetente: userData.email,
+      imgRemetente: userData.img
+    }).then(() => {
+        axios.put(config.endpoint + '/notifications/' + infoNotification._id, {read: true})
+        .then(() => window.displayDialog({msg: "Notificação enviada."}, '/'))
+      })
+    })
+    
   }
 
   render() {

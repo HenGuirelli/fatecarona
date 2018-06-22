@@ -133,7 +133,7 @@ class GerencCarona extends Component {
       this.props.history.push('historico')
     }
     else {
-      this.props.dispatch(delCaronaPendCaronista(carona.id))
+      this.props.dispatch(delCaronaPendCaronista(carona.id, this.props.userData.email))
       this.props.history.push('historico')
 
     }
