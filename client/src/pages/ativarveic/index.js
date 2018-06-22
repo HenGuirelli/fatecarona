@@ -60,10 +60,9 @@ class AtivarVeic extends Component{
   }
 
   handleDelete = (placa) => {
-    this.props.dispatch(deleteCar(placa))
-    this.props.history.push('/veiculos')
-    window.closeDialog()
-  }
+      this.props.dispatch(deleteCar(placa))
+      window.displayDialog({title: 'Aviso', msg: 'O veículo com placa ' + placa + ' foi excluido!'}, '/veiculos')
+    }
 
   showConfirmation = () => {
     window.displayDialog({

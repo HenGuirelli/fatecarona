@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Avatar from 'material-ui/Avatar'
 import config from '../../config.json'
-import styles from './styles'
+//import styles from './styles'
 import axios from 'axios'
 import { espiarMembro } from '../../actions/liftActions'
 
@@ -39,10 +39,21 @@ export default class MgtCaronista extends Component {
   render() {
     const { infoNotification } = this.props
 
+    const styles = {
+      btn: {
+        borderRadius: '8px',
+        backgroundColor: '#6E4D8B',
+        borderColor: '#ffffff',
+        color: '#ffffff',
+        fontSize: '12px',
+        width:'12em'
+      }
+    }
+
     return(
       <div className="container" style={styles.root}>
-        <div className="row">
-          <div className="col-3 col-xl-1">
+        <div className="row" style={{marginTop:'2em'}}>
+          <div className="col-3 col-xl-1" style={{textAlign:'right'}}>
             <Avatar
               src={infoNotification.imgRemetente ? config.endpoint + "/images/" + infoNotification.imgRemetente : ""}
               size={50}
@@ -55,18 +66,20 @@ export default class MgtCaronista extends Component {
           </div>
         </div>
         <div className="row" style={{bottom: 0, width: '100%'}}>
-          <div className="col-4">
-            <input type="button" style={styles.btnL} className="btn btn-primary" value="ACEITAR"
+          <div className="col-6" style={{textAlign: 'right'}}>
+            <input type="button" style={styles.btn} className="btn btn-primary" value="ACEITAR"
               onClick={() => this.handleResponse(true)}
             />
           </div>
-          <div className="col-4">
-            <input type="button" style={styles.btnR} className="btn btn-primary" value="RECUSAR"
+          <div className="col-6">
+            <input type="button" style={styles.btn} className="btn btn-primary" value="RECUSAR"
               onClick={() => this.handleResponse(false)}
             />
+          <div className="row" style={{bottom: 0, width: '100%'}}>
+            <div className="col-12">
+              <input type="button" style={styles.btn}  onClick ={() => this.handleEspiar(infoNotification.emailRemetente)} className="btn btn-primary" value="ESPIAR MOTORISTA" />
+            </div>
           </div>
-          <div className="col-4">
-            <input type="button" style={styles.btnR}  onClick ={() => this.handleEspiar(infoNotification.emailRemetente)} className="btn btn-primary" value="ESPIAR MOTORISTA" />
           </div>
 
 

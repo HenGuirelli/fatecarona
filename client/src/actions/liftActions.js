@@ -15,6 +15,13 @@ export function espiarMembro(email) {
   }
 }
 
+export function insertAvalicao(avaliacao) {
+  return {
+    type: "INSERT_AVALICAO",
+    payload: axios.post(config.endpoint + "/avaliacao", avaliacao)
+  }
+}
+
 export function transferResults(caronas) {
   return{
     type: "RESULT_CARONAS",

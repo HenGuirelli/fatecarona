@@ -11,6 +11,7 @@ import MusicIcon from '../LiftMgt/musica_roxo.png'
 import CarIcon from '../Veiculo/veiculo_preto.png'
 import LugarIcon from '../Veiculo/lugares_preto.png'
 import { loadCarbyID } from '../../actions/carActions'
+import { insertAvalicao } from '../../actions/liftActions'
 import GoogleMaps from '../../components/GoogleMaps'
 import { Rating } from 'material-ui-rating'
 
@@ -25,7 +26,6 @@ const style = {
   btnDialog:{
     fontSize: '12px',
     width: '70px',
-    margin: '0 15px',
     backgroundColor: '#6E4D8B',
     borderColor: '#6E4D8B'
   },
@@ -36,23 +36,47 @@ class GerencCarona extends Component {
     super(props);
     this.state = {
       members: [],
-      loaded: false
+      loaded: false,
+      comentario: '',
+      star: 1,
+      avalicaoReadonly: false,
     };
   }
+  saveAvalicao = (star, avaliado, avaliador) =>{
+    var motorista=0
+    let fivestars=0
+    if (this.props.carona.emailCaronista === avaliado) motorista = 1
+    if (star === 5) fivestars = 1
+    this.props.dispatch(insertAvalicao({
+        estrelas: star,
+        mensagem: this.state.comentario ,
+        avaliador: avaliador,
+        avaliado: avaliado,
+        motorista: motorista,
+        fivestars: fivestars,
+      }))
+      window.displayDialog({msg: "Avaliação realizada."})
+      this.setState({avalicaoReadonly: true})
+  }
 
-  showConfirmation = () => {
+  handleComentario = (event) => {
+    this.setState({comentario: event.target.value})
+  };
+
+  handleAvalicao = (star, avaliado, avaliador) => {
     window.displayDialog({
       title: 'Avaliação',
       actions: [
         <Rating
-          value={5}
+          value={star}
           readOnly={true}
           style={{textAlign:'center'}}
           itemStyle={{width: '0.5em'}}
         />,
         <input
           placeholder="Adicionar Comentário"
-          //value={this.state.senha}
+          onChange={this.handleComentario}
+          //value={this.state.comentario}
           type="text"
           className="form-control"
         />,
@@ -61,9 +85,11 @@ class GerencCarona extends Component {
           value="Avaliar"
           className="btn btn-primary"
           style={style.btnDialog}
+          onClick={() => this.saveAvalicao(star, avaliado, avaliador)}
         />,
       ]
     })
+    this.setState({star: star})
   }
 
   saveFunc = f => {
@@ -173,10 +199,6 @@ class GerencCarona extends Component {
   }
 
 
-
-  handleTeste = (star, avaliado, avaliador) =>{
-    this.showConfirmation()
-  }
 
   render() {
 
@@ -371,15 +393,20 @@ class GerencCarona extends Component {
                       {member.nome.substring(0, member.nome.indexOf(" "))}<br />
                       {member.email === carona.emailMotorista ? <span>Motorista</span> : <span>Caronista</span>}
                     </div>
+                    {
+                      carona.emailMotorista !== member.email ?
                     <div className="col-4" style={instyle.textStyle2}>
                       <Rating
-                        value={1}
-                        readOnly={false}
+                        value={this.state.star}
+                        readOnly={this.state.avalicaoReadonly}
                         style={{margin: '-12px 0 0 -12px'}}
                         itemStyle={{width: '0.5em'}}
-                        onChange={(value) => this.handleTeste(value, carona, userData)}
+                        onChange={(value) => this.handleAvalicao(value, member.email, userData.email)}
                       />
                     </div>
+                    :
+                    null
+                  }
                   </div>
                   )
                 :
