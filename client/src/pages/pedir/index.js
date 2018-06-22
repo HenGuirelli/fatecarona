@@ -90,7 +90,7 @@ class Pedir extends Component {
           dataAlvo.setMinutes(params.hora.getMinutes())
           // eslint-disable-next-line
           if (params.prefs['deficientes'] == carona.acessibilidade && params.prefs['fumantes'] == carona.fumantes && params.prefs['musica'] == carona.musica &&
-              params.direcao === carona.tipo && dataCarona.getTime() >= dataAlvo.getTime()) return true
+              params.direcao === carona.tipo && dataCarona.getTime() >= dataAlvo.getTime() && carona.emailMotorista !== this.props.userData.email) return true
 
           return false
         })
@@ -153,6 +153,10 @@ class Pedir extends Component {
     })
   }
 
+  setTimer = () => {
+    setTimeout(() => this.setState({searching: false}), 5000)
+  }
+
   render() {
 
     const now = new Date()
@@ -160,7 +164,10 @@ class Pedir extends Component {
 
     if (userData.email && needLoad) this.props.dispatch(buscarRotas(userData.email))
 
-    if (this.state.searching) return <div>Procurando...</div>
+    if (this.state.searching) return <div>
+      Procurando...
+      {this.setTimer()}
+    </div>
 
     return (
       <div className="pageBase">

@@ -21,7 +21,6 @@ export default class Home extends Component {
 
   render() {
     const { userData } = this.props
-    console.log(userData)
 
     const styles = {
       content: {
@@ -29,7 +28,8 @@ export default class Home extends Component {
       },
       tab:{
         backgroundColor: '#D2D3D5',
-        height: '2.5em'
+        height: '2.5em',
+        margin: 0
       }
     }
 

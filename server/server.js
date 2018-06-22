@@ -38,7 +38,7 @@ var upload = multer({ storage: storage }).single('image');
 var pool = mysql.createPool({
   host     : 'localhost',
   user     : 'root',
-  password : 'root',
+  password : '3847147298',
   database : 'Fatecarona'
 });
 
@@ -599,7 +599,7 @@ router.route('/notifications/:user_email')
 router.route('/subs')
   .put(function(req, res) {
     mongoPool.collection('subscriptions').updateOne(
-      {_id: new ObjectId(req.body._id)},
+      {_id: req.body._id},
       { $set: req.body },
       { upsert: true },
       (err, result) => {
