@@ -24,7 +24,7 @@ export default class SideMenu extends React.Component {
   }
 
   render() {
-    const { menuItems } = this.props
+    const { menuItems, logOut, userData } = this.props
 
     return (
       <Drawer
@@ -40,6 +40,18 @@ export default class SideMenu extends React.Component {
         <Divider style={{backgroundColor: '#FFF', height: '1px'}} />
         {menuItems.map(item => {
             if (item.menu) {
+              if (item.text === 'LOGOUT') {
+                return <Link to='' onClick={logOut} key={item.path}>
+                  <MenuItem
+                    style={item.selected ? styles.itemSelected : styles.itemUnselected}
+                    primaryText={item.text}
+                    leftIcon={<item.icon color={item.selected ? '#000' : '#FFF'}/>}
+                  />
+                  <Divider style={{backgroundColor: '#FFF', height: '2px'}} />
+                </Link>
+              } else if (item.text === 'OFERECER CARONA' && userData.motorista !== 1) {
+                return null
+              }
               return <Link to={item.path} onClick={this.handleClose} key={item.path}>
                 <MenuItem
                   style={item.selected ? styles.itemSelected : styles.itemUnselected}

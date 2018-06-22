@@ -49,11 +49,44 @@ class App extends Component {
   }
 
   logOut() {
-    firebase.auth().signOut()
+    window.displayDialog({
+      title: 'AVISO', 
+      msg: 'Deseja realmente sair?', 
+      actions: [
+        <input
+          type="button"
+          value="Sim"
+          className="btn btn-primary"
+          style={{
+            fontSize: '12px',
+            width: '70px',
+            margin: '0 10px',
+            backgroundColor: '#6E4D8B',
+            borderColor: '#6E4D8B'
+          }}
+          onClick={() => {
+            window.closeDialog()
+            firebase.auth().signOut()
+          }}
+        />,
+        <input
+          type="button"
+          value="Não"
+          className="btn btn-primary"
+          style={{
+            fontSize: '12px',
+            width: '70px',
+            margin: '0 10px',
+            backgroundColor: '#6E4D8B',
+            borderColor: '#6E4D8B'
+          }}
+          onClick={window.closeDialog}
+        />
+      ]})
   }
 
   render() {
-    const { history, user, pending, needReload } = this.props
+    const { history, user, pending, needReload, userData } = this.props
     menuItems.forEach(element => element.selected = false)
     let item = menuItems.find(element => element.path === history.location.pathname)
     if (item) item.selected = true
@@ -72,7 +105,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        {isLogged ? <NavBar logOut={this.logOut.bind(this)} menuItems={menuItems}/> : null}
+        {isLogged ? <NavBar logOut={this.logOut.bind(this)} userData={userData} menuItems={menuItems} /> : null}
         <Switch>
           <Route exact path="/" component={MainPage}/>
           <Route exact path="/rotas" component={Rotas}/>
@@ -102,6 +135,7 @@ class App extends Component {
 export default withRouter(connect(store => {
   return {
     user: store.user.user,
+    userData: store.user.userData,
     needReload: store.user.needReload,
     pending: store.user.pending,
   }

@@ -9,13 +9,15 @@ export default class NavBar extends Component {
     this.openDrawer = f;
   };
 
+
+
   render() {
-    const { menuItems } = this.props
+    const { menuItems, logOut, userData } = this.props
     let item = menuItems.find(item => item.selected)
 
     return(
       <nav className="navbar navbar-expand-lg navbar-dark ftc" style={{position: 'fixed', width: '100%', height: '58px', top: 0, left: 0, zIndex: 100, boxShadow: 'rgba(0, 0, 0, 0.54) 0px 2px 2px 0px'}}>
-        <SideMenu callback={this.bindDrawer} handler={this.handleMenuSelect} menuItems={menuItems}/>
+        <SideMenu callback={this.bindDrawer} userData={userData} logOut={logOut} handler={this.handleMenuSelect} menuItems={menuItems}/>
         <button style={{position: 'absolute', left: 0, border: 'none'}} className="navbar-toggler" type="button" onClick={() => this.openDrawer()}>
           <span className="navbar-toggler-icon"/>
         </button>
@@ -29,6 +31,13 @@ export default class NavBar extends Component {
           <ul className="navbar-nav mr-auto">
             {menuItems.map(item => {
                 if (item.menu) {
+                  if (item.text === 'LOGOUT') {
+                    return <li className="nav-item" key={item.path} style={{fontSize: '15px'}}>
+                      <div className="nav-link" onClick={logOut}>{item.text}</div>
+                    </li>
+                  } else if (item.text === 'OFERECER CARONA' && userData.motorista !== 1) {
+                    return null
+                  }
                   return <li className="nav-item" key={item.path} style={{fontSize: '15px'}}>
                     <Link className="nav-link" to={item.path}>{item.text}</Link>
                   </li>
