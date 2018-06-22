@@ -7,38 +7,38 @@ import axios from 'axios'
 export default class MgtCaronista extends Component {
 
   handleResponse = (answer) => {
-    const { infoNotification, userData } = this.props
-    if (answer) {
-      axios.put(config.endpoint + '/lift/members/' + infoNotification.idCarona, {
-        status: 'aceito',
-        emailCaronista: infoNotification.emailRemetente
-      })
-    })
-    .then(() => {
-      axios.put(config.endpoint + '/lift/id/' + infoNotification.idCarona, {
-        status: 'andamento'
-      })
-      .then(() => {
-        axios.post(config.endpoint + '/notify/' + infoNotification.emailRemetente, {
-          message: userData.nome + " aceitou sua solicitação.",
-          emailRemetente: userData.email,
-          imgRemetente: userData.img
-        })
-      })
-      .then(() => {
-        axios.put(config.endpoint + '/lift/id/' + infoNotification.idCarona, {
-          status: 'andamento'
+      const { infoNotification, userData } = this.props
+      if (answer) {
+        axios.put(config.endpoint + '/lift/members/' + infoNotification.idCarona, {
+          status: 'aceito',
+          emailCaronista: infoNotification.emailRemetente
         })
         .then(() => {
-          axios.put(config.endpoint + '/notifications/' + infoNotification._id, {read: true})
-          .then(() => window.displayDialog({msg: "Notificação enviada."}))
+          axios.put(config.endpoint + '/lift/id/' + infoNotification.idCarona, {
+            status: 'andamento'
+          })
+          .then(() => {
+            axios.post(config.endpoint + '/notify/' + infoNotification.emailRemetente, {
+              message: userData.nome + " aceitou sua solicitação.",
+              emailRemetente: userData.email,
+              imgRemetente: userData.img
+            })
+          })
+          .then(() => {
+            axios.put(config.endpoint + '/lift/id/' + infoNotification.idCarona, {
+              status: 'andamento'
+            })
+            .then(() => {
+              axios.put(config.endpoint + '/notifications/' + infoNotification._id, {read: true})
+              .then(() => window.displayDialog({msg: "Notificação enviada."}))
+            })
+          })
         })
-      })
-      return
+        return
+      }
+      axios.put(config.endpoint + '/notifications/' + infoNotification._id, {read: true})
+      .then(() => window.displayDialog({msg: "Notificação enviada."}))
     }
-    axios.put(config.endpoint + '/notifications/' + infoNotification._id, {read: true})
-    .then(() => window.displayDialog({msg: "Notificação enviada."}))
-  }
 
   render() {
     const { infoNotification } = this.props

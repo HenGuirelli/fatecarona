@@ -63,3 +63,17 @@ export function loadMembers(email) {
     payload: axios.get(config.endpoint + "/members/" + email)
   }
 }
+
+export function delCaronaPendMotorista(idCarona) {
+  return {
+    type: "DELETE_PEND_CARONA_MOTORISTA",
+    payload: axios.delete(config.endpoint + "/lift/id/" + idCarona)
+  }
+}
+
+export function delCaronaPendCaronista(idCarona) {
+  return {
+    type: "DELETE_PEND_CARONA_MOTORISTA",
+    payload: axios.delete(config.endpoint + "/lift/members/" + idCarona)
+  }
+}
