@@ -3,10 +3,11 @@ export default {
     color: 'white',
     fontWeight: 'bold',
     fontSize: '20px',
+    marginTop: '20px'
   },
   avatar: {
     border: '3px solid white',
-    marginTop: '19px',
+    marginTop: '22px',
     position: 'inherit',
     zIndex: 1
   },

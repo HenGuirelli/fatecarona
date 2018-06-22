@@ -175,7 +175,7 @@ class Perfil extends Component {
                 <div style={{width: '9em', position: 'absolute', top: '52px', left: '144px'}}>
                   <input style={styles.file} type="file" id="file" accept="image/*" ref="img" onChange={this.handleImage}/>
                   <label htmlFor="file" style={styles.fileLabel} className="btn btn-primary">Alterar foto</label>
-                  <div style={{textAlign: 'left', overflowWrap: 'break-word'}}>{this.state.fileName}</div>
+                  <div style={{textAlign: 'left', overflowWrap: 'break-word', display: 'none'}}>{this.state.fileName}</div>
                 </div>
               </div>
             </div>
