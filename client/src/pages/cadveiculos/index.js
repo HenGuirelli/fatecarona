@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { insertCar } from '../../actions/carActions'
+import MaskedInput from 'react-maskedinput'
 import config from '../../config.json'
 import axios from 'axios'
 
@@ -19,6 +20,7 @@ class CadVeiculos extends Component{
 
 
   handlePlaca = (event) =>{
+    if (event.target.value.length > 8) return
     this.setState({placa: event.target.value.toUpperCase()})
   }
   handleMarca = (event) =>{
@@ -106,9 +108,9 @@ class CadVeiculos extends Component{
             <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
               <center>
                 <div className="col-6">PLACA</div>
-                <input
-                  placeholder='AAA-0000'
+                <MaskedInput 
                   style={styles.inputText}
+                  mask='AAA-1111'
                   className="form-control"
                   value={this.state.placa}
                   onChange={this.handlePlaca}

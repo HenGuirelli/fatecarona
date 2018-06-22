@@ -4,7 +4,7 @@ create database Fatecarona;
 create table membros(
   ra bigint not null primary key,
   nome varchar(40) not null,
-  telefone char(12) not null,
+  telefone char(15) not null,
   apelido varchar(20),
   curso char(5),
   email varchar(40) not null unique,

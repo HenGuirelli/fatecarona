@@ -5,6 +5,7 @@ import config from '../../config.json'
 import TimePicker from 'material-ui/TimePicker'
 import DatePicker from 'material-ui/DatePicker';
 import DateIcon from 'material-ui/svg-icons/action/date-range'
+import MaskedInput from 'react-maskedinput'
 import styles from './styles'
 import { updateUserData } from '../../actions/userActions'
 
@@ -55,6 +56,7 @@ class Perfil extends Component {
   };
 
   handleCnh = (event) => {
+    if (event.target.value.length > 11) return
     this.setState({cnh: event.target.value})
   };
 
@@ -225,9 +227,8 @@ class Perfil extends Component {
               <div className="row" style={{marginTop: '1em', padding: '2em 0', borderBottom: '2px solid grey'}}>
                 <div className="col-12"  style={{textAlign:'left'}}>
                   <span>Telefone</span>
-                  <input
-                    type="number"
-                    min="0"
+                  <MaskedInput 
+                    mask='(11) 11111-1111'
                     style={styles.inputNumber}
                     value={this.state.telefone}
                     onChange={this.handlePhone}

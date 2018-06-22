@@ -30,14 +30,14 @@ export default class MgtCaronista extends Component {
           })
           .then(() => {
             axios.put(config.endpoint + '/notifications/' + infoNotification._id, {read: true})
-            .then(() => window.displayDialog({msg: "Notificação enviada."}))
+            .then(() => window.displayDialog({msg: "Notificação enviada."}, '/'))
           })
         })
       })
       return
     }
     axios.put(config.endpoint + '/notifications/' + infoNotification._id, {read: true})
-    .then(() => window.displayDialog({msg: "Notificação enviada."}))
+    .then(() => window.displayDialog({msg: "Notificação enviada."}, '/'))
   }
 
   render() {
