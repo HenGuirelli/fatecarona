@@ -13,25 +13,25 @@ export default class MgtCaronista extends Component {
         status: 'aceito',
         emailCaronista: infoNotification.emailRemetente
       })
-    })
-    .then(() => {
-      axios.put(config.endpoint + '/lift/id/' + infoNotification.idCarona, {
-        status: 'andamento'
-      })
-      .then(() => {
-        axios.post(config.endpoint + '/notify/' + infoNotification.emailRemetente, {
-          message: userData.nome + " aceitou sua solicitação.",
-          emailRemetente: userData.email,
-          imgRemetente: userData.img
-        })
-      })
       .then(() => {
         axios.put(config.endpoint + '/lift/id/' + infoNotification.idCarona, {
           status: 'andamento'
         })
         .then(() => {
-          axios.put(config.endpoint + '/notifications/' + infoNotification._id, {read: true})
-          .then(() => window.displayDialog({msg: "Notificação enviada."}))
+          axios.post(config.endpoint + '/notify/' + infoNotification.emailRemetente, {
+            message: userData.nome + " aceitou sua solicitação.",
+            emailRemetente: userData.email,
+            imgRemetente: userData.img
+          })
+        })
+        .then(() => {
+          axios.put(config.endpoint + '/lift/id/' + infoNotification.idCarona, {
+            status: 'andamento'
+          })
+          .then(() => {
+            axios.put(config.endpoint + '/notifications/' + infoNotification._id, {read: true})
+            .then(() => window.displayDialog({msg: "Notificação enviada."}))
+          })
         })
       })
       return
