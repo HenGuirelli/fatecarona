@@ -76,8 +76,7 @@ class AdicionarRota extends Component {
         borderColor: '#ffffff',
         color: '#ffffff',
         fontSize: '18px',
-        width: '70%',
-        marginLeft: '15%'
+        width: '8em',
       },
       buttonLittle: {
         borderRadius: '8px',

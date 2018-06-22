@@ -19,7 +19,7 @@ class Notifications extends Component {
           notifications.filter(e => e.read !== true).length > 0 ?
           notifications.map((e, key) => {
             if (e.read !== true) {
-              return <MgtCaronista key={key} infoNotification={e} userData={userData}/>
+              return <MgtCaronista key={key} dispatch={this.props.dispatch} history={this.props.history} infoNotification={e} userData={userData}/>
             }
             return null
           }) :

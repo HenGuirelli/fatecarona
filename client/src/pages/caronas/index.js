@@ -63,6 +63,7 @@ class Caronas extends Component {
                   loaded: true
                 })
             })
+            .catch((err) => console.log(err))
         })
 
       })
@@ -73,6 +74,7 @@ class Caronas extends Component {
     caronasbyID = (listaCaronista) =>{
       var caronasID=[];
         return new Promise((resolve, reject)=>{
+          if (listaCaronista.length === 0) resolve(caronasID)
           listaCaronista.forEach((e, index) => {
             axios.get(config.endpoint + "/lift/id/" + e.id)
             .then(result => {

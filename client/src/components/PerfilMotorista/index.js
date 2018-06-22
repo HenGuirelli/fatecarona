@@ -10,12 +10,42 @@ class Motorista extends Component {
     super(props);
     this.state = {
       qtdCaronas: 0,
-      loaded: false
+      loaded: false,
+      avaliacaoLoaded: false,
+      avaliacao: 0,
+      qtdAvaliacoes: 0,
+      fivestars: 0
     };
   }
 
   componentWillMount() {
     this.props.dispatch(loadCar(this.props.userEmail))
+  }
+
+  loadAvaliacao = () =>{
+      let total = 0
+      let somaStar = 0
+      let fivestar=0
+      axios.get(config.endpoint + "/avaliacao/" + this.props.userEmail)
+      .then(result => {
+        result.data.forEach((e, i) =>{
+          if(e.motorista === 1){
+            somaStar+= e.estrelas
+            total++
+          }
+          if(e.fivestars === 1) fivestar++
+        })
+        if(total !== 0){
+          somaStar /= total
+          if (this.state.avaliacao === 0)
+            this.setState({
+              avaliacao: parseFloat(somaStar.toFixed(1)),
+              qtdAvaliacoes: total,
+              avaliacaoLoaded: true,
+              fivestars: fivestar
+            })
+        }
+      })
   }
 
   loadCarona = () => {
@@ -53,7 +83,7 @@ class Motorista extends Component {
 
     if (needLoad) this.props.dispatch(loadCar(userEmail))
     if (!this.state.loaded && typeof this.props.userData.email !== "undefined") this.loadCarona()
-
+    if (userEmail !== undefined && !this.state.avaliacao) this.loadAvaliacao()
 
     return(
       <div className="container">
@@ -62,7 +92,7 @@ class Motorista extends Component {
             <div className="col-12">
               <Avaliador
                 text="Avaliação"
-                score={3.5}
+                score={this.state.avaliacao}
               />
             </div>
           </div>
@@ -72,11 +102,11 @@ class Motorista extends Component {
                 Caronas Realizadas
               </center>
               <center className="col-4">
-                <div style={styles.text}>21</div>
+                <div style={styles.text}>{this.state.qtdAvaliacoes}</div>
                 Caronas Avaliadas
               </center>
               <center className="col-4">
-                <div style={styles.text}>5</div>
+                <div style={styles.text}>{this.state.fivestars}</div>
                 Caronas 5 estrelas
               </center>
           </div>

@@ -547,6 +547,7 @@ router.route('/lift/id/:carona_id')
       });
     });
 
+
 //Busca todas as caronas do banco
 router.route('/lift')
     .get(function(req, res) {
@@ -583,6 +584,45 @@ router.route('/lift')
         });
       });
     });
+
+//Avaliação
+router.route('/avaliacao/:emailAvaliado')
+    .get(function(req, res) {
+      pool.getConnection(function(err, connection) {
+        if (err) {
+          res.send(err);
+          return;
+        }
+
+        connection.query('SELECT * FROM avaliacao where avaliado = ? ' ,[req.params.emailAvaliado], function(err, rows, fields) {
+          connection.release();
+          if (err){
+            res.send(err);
+            return;
+          }
+          res.json(rows);
+        });
+      });
+    });
+
+router.route('/avaliacao')
+  .post(function(req, res) {
+    pool.getConnection(function(err, connection) {
+      if(err) {
+        res.send(err);
+        return;
+      }
+
+      connection.query('INSERT INTO avaliacao SET ?', req.body, function(err, rows, fields) {
+        connection.release();
+        if (err) {
+          res.send(err);
+          return;
+        };
+        res.json({ success: true });
+      });
+    });
+  });
 
 //notificações
 router.route('/notifications/:user_email')

@@ -15,7 +15,11 @@ export default class Caronista extends Component {
       qtdCaronas: 0,
       loaded: false,
       transporte: '',
-      transpLoaded: false
+      transpLoaded: false,
+      avaliacaoLoaded: false,
+      avaliacao: 0,
+      qtdAvaliacoes: 0,
+      fivestars: 0
     };
   }
 
@@ -35,6 +39,32 @@ export default class Caronista extends Component {
             transporte: transporte.split(" "),
             transpLoaded: true
           })
+      })
+  }
+
+  loadAvaliacao = () =>{
+      let total = 0
+      let somaStar = 0
+      let fivestar=0
+      axios.get(config.endpoint + "/avaliacao/" + this.props.userEmail)
+      .then(result => {
+        result.data.forEach((e, i) =>{
+          if(e.motorista === 0){
+            somaStar+= e.estrelas
+            total++
+          }
+          if(e.fivestars === 1) fivestar++
+        })
+        if(total !== 0){
+          somaStar /= total
+          if (this.state.avaliacao === 0)
+            this.setState({
+              avaliacao: parseFloat(somaStar.toFixed(1)),
+              qtdAvaliacoes: total,
+              avaliacaoLoaded: true,
+              fivestars: fivestar
+            })
+        }
       })
   }
 
@@ -104,6 +134,7 @@ export default class Caronista extends Component {
       this.loadCarona(userEmail)
       this.filterTransporte(userEmail)
     }
+    if (userEmail !== undefined && !this.state.avaliacao) this.loadAvaliacao()
     return(
       <div className="container">
         <div style={styles.content}>
@@ -111,7 +142,7 @@ export default class Caronista extends Component {
             <div className="col-12">
               <Avaliador
                 text="Avaliação"
-                score={3.5}
+                score={this.state.avaliacao}
               />
             </div>
           </div>
@@ -121,11 +152,11 @@ export default class Caronista extends Component {
                 Caronas Realizadas
               </center>
               <center className="col-4">
-                <div style={styles.text}>21</div>
+                <div style={styles.text}>{this.state.qtdAvaliacoes}</div>
                 Caronas Avaliadas
               </center>
               <center className="col-4">
-                <div style={styles.text}>5</div>
+                <div style={styles.text}>{this.state.fivestars}</div>
                 Caronas 5 estrelas
               </center>
           </div>
@@ -133,7 +164,7 @@ export default class Caronista extends Component {
             this.state.transporte !== '' && this.state.transporte[0] !== '' ?
               <center className="row" style={{padding: '2em 0', borderBottom: '2px solid grey'}}>
                 <div className="col-12">
-                  GERALMENTE VEM DwsE...
+                  GERALMENTE VEM DE...
                 </div>
                 {
                    this.state.transporte.map((e, key)=>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Avatar from 'material-ui/Avatar'
 import config from '../../config.json'
-import styles from './styles'
+//import styles from './styles'
 import axios from 'axios'
 
 export default class MgtCaronista extends Component {
@@ -12,6 +12,11 @@ export default class MgtCaronista extends Component {
       axios.put(config.endpoint + '/lift/members/' + infoNotification.idCarona, {
         status: 'aceito',
         emailCaronista: infoNotification.emailRemetente
+      })
+    })
+    .then(() => {
+      axios.put(config.endpoint + '/lift/id/' + infoNotification.idCarona, {
+        status: 'andamento'
       })
       .then(() => {
         axios.post(config.endpoint + '/notify/' + infoNotification.emailRemetente, {
@@ -38,10 +43,21 @@ export default class MgtCaronista extends Component {
   render() {
     const { infoNotification } = this.props
 
+    const styles = {
+      btn: {
+        borderRadius: '8px',
+        backgroundColor: '#6E4D8B',
+        borderColor: '#ffffff',
+        color: '#ffffff',
+        fontSize: '12px',
+        width:'12em'
+      }
+    }
+
     return(
       <div className="container" style={styles.root}>
-        <div className="row">
-          <div className="col-3 col-xl-1">
+        <div className="row" style={{marginTop:'2em'}}>
+          <div className="col-3 col-xl-1" style={{textAlign:'right'}}>
             <Avatar
               src={infoNotification.imgRemetente ? config.endpoint + "/images/" + infoNotification.imgRemetente : ""}
               size={50}
