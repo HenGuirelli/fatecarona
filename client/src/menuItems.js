@@ -1,12 +1,13 @@
 import PlaceIcon from 'material-ui/svg-icons/maps/place'
 import CarIcon from 'material-ui/svg-icons/maps/directions-car'
-import ConfIcon from 'material-ui/svg-icons/action/settings'
+//import ConfIcon from 'material-ui/svg-icons/action/settings'
 import HomeIcon from 'material-ui/svg-icons/action/home'
 import ProfileIcon from 'material-ui/svg-icons/action/account-circle'
 import ThumbIcon from 'material-ui/svg-icons/action/thumb-up'
 import SpeakIcon from 'material-ui/svg-icons/action/record-voice-over'
 import SmileIcon from 'material-ui/svg-icons/social/sentiment-very-satisfied'
 import NotificationIcon from 'material-ui/svg-icons/social/notifications'
+import ExitIcon from 'material-ui/svg-icons/action/exit-to-app'
 
 export default [
   {
@@ -65,10 +66,17 @@ export default [
     menu: true,
     selected: false
   },
-  {
+  /*{
     path: '/config',
     text: 'CONFIGURAÇÕES',
     icon: ConfIcon,
+    menu: true,
+    selected: false
+  },*/
+  {
+    path: '',
+    text: 'LOGOUT',
+    icon: ExitIcon,
     menu: true,
     selected: false
   },
