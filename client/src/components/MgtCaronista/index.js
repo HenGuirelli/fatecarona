@@ -76,15 +76,18 @@ export default class MgtCaronista extends Component {
           infoNotification.idCarona === null ?
           null :
           <div className="row" style={{bottom: 0, width: '100%'}}>
-            <div className="col-6">
-              <input type="button" style={styles.btnL} className="btn btn-primary" value="ACEITAR"
+            <div className="col-6" style={{textAlign: 'right'}}>
+              <input type="button" style={styles.btn} className="btn btn-primary" value="ACEITAR"
                 onClick={() => this.handleResponse(true)}
               />
             </div>
             <div className="col-6">
-              <input type="button" style={styles.btnR} className="btn btn-primary" value="RECUSAR"
+              <input type="button" style={styles.btn} className="btn btn-primary" value="RECUSAR"
                 onClick={() => this.handleResponse(false)}
               />
+            </div>
+            <div className="col-12">
+              <input type="button" style={styles.btn}  onClick ={() => this.handleEspiar(infoNotification.emailRemetente)} className="btn btn-primary" value="ESPIAR MOTORISTA" />
             </div>
           </div>
         }
