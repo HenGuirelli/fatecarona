@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { insertUser } from '../../actions/userActions'
 import logo from '../../pages/form/login_fatecarona.svg'
+import MaskedInput from 'react-maskedinput'
 
 class Cadastro extends Component {
   constructor() {
@@ -32,6 +33,7 @@ class Cadastro extends Component {
   };
 
   handleRA = (event) => {
+    if (event.target.value.length > 13) return
     this.setState({ra: event.target.value})
   };
 
@@ -43,7 +45,7 @@ class Cadastro extends Component {
       return
     }
     if (!email.match('@fatec.sp.gov.br')) {
-      window.displayDialog({msg: 'Utilize um email institucional! ex:"@fatec.sp.gov.br"'})
+      window.displayDialog({msg: 'Utilize um email institucional! ex:"aluno.sobrenome@fatec.sp.gov.br"'})
       return
     }
     if (!/[0-9]{5}-[0-9]{4}/.test(cel)) {
@@ -96,13 +98,15 @@ class Cadastro extends Component {
           <form onSubmit={this.handleSubmit} className="form-group">
               <input
                 placeholder='RA'
+                type="number"
+                min="0"
                 style={styles.inputText}
                 value={this.state.ra}
                 onChange={this.handleRA}
                 className="form-control"
               />
               <input
-                placeholder='E-mail, exemplo: "foo.bar1@fatec.sp.gov.br"'
+                placeholder='E-mail Institucional ex: "aluno.sobrenome@fatec.sp.gov.br"'
                 style={styles.inputText}
                 value={this.state.email}
                 onChange={this.handleEmail}
@@ -123,8 +127,9 @@ class Cadastro extends Component {
                 type="password"
                 className="form-control"
               />
-              <input
+              <MaskedInput
                 placeholder="Nº Celular"
+                mask='(11) 11111-1111'
                 style={styles.inputText}
                 value={this.state.cel}
                 onChange={this.handleCel}
