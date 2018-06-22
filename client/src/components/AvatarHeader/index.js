@@ -39,7 +39,6 @@ export default class AvatarHeader extends Component {
             <center className="col-8">
 
               <div style={styles.apelido}>{userData.apelido}</div>
-              <div style={styles.status}>Oferecendo Carona</div>
               <Avatar
                 src={userData.img ? config.endpoint + "/images/" + userData.img : ""}
                 size={90}
