@@ -1,6 +1,7 @@
 export default {
   root: {
-    margin: '1em'
+    padding: '1em',
+    height: '9em'
   },
   btn: {
     borderRadius: '8px',

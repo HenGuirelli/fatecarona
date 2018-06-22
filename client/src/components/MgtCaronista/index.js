@@ -3,22 +3,15 @@ import Avatar from 'material-ui/Avatar'
 import config from '../../config.json'
 //import styles from './styles'
 import axios from 'axios'
-import { espiarMembro } from '../../actions/liftActions'
 
 export default class MgtCaronista extends Component {
 
   handleResponse = (answer) => {
     const { infoNotification, userData } = this.props
-    let status = answer ? 'aceito' : 'rejeitado'
-    axios.put(config.endpoint + '/lift/members/' + infoNotification.idCarona, {
-      status,
-      emailCaronista: infoNotification.emailRemetente
-    })
-    .then(() => {
-      axios.post(config.endpoint + '/notify/' + infoNotification.emailRemetente, {
-        message: userData.nome + (answer ? " aceitou" : " rejeitou") + " sua solicitação.",
-        emailRemetente: userData.email,
-        imgRemetente: userData.img
+    if (answer) {
+      axios.put(config.endpoint + '/lift/members/' + infoNotification.idCarona, {
+        status: 'aceito',
+        emailCaronista: infoNotification.emailRemetente
       })
     })
     .then(() => {
@@ -26,14 +19,25 @@ export default class MgtCaronista extends Component {
         status: 'andamento'
       })
       .then(() => {
-        window.displayDialog({msg: "Notificação enviada."})
+        axios.post(config.endpoint + '/notify/' + infoNotification.emailRemetente, {
+          message: userData.nome + " aceitou sua solicitação.",
+          emailRemetente: userData.email,
+          imgRemetente: userData.img
+        })
       })
-    })
-  }
-
-  handleEspiar = (email) => {
-    this.props.dispatch(espiarMembro(email));
-    this.props.history.push('/perfil/espiar')
+      .then(() => {
+        axios.put(config.endpoint + '/lift/id/' + infoNotification.idCarona, {
+          status: 'andamento'
+        })
+        .then(() => {
+          axios.put(config.endpoint + '/notifications/' + infoNotification._id, {read: true})
+          .then(() => window.displayDialog({msg: "Notificação enviada."}))
+        })
+      })
+      return
+    }
+    axios.put(config.endpoint + '/notifications/' + infoNotification._id, {read: true})
+    .then(() => window.displayDialog({msg: "Notificação enviada."}))
   }
 
   render() {
@@ -65,25 +69,22 @@ export default class MgtCaronista extends Component {
             </div>
           </div>
         </div>
-        <div className="row" style={{bottom: 0, width: '100%'}}>
-          <div className="col-6" style={{textAlign: 'right'}}>
-            <input type="button" style={styles.btn} className="btn btn-primary" value="ACEITAR"
-              onClick={() => this.handleResponse(true)}
-            />
-          </div>
-          <div className="col-6">
-            <input type="button" style={styles.btn} className="btn btn-primary" value="RECUSAR"
-              onClick={() => this.handleResponse(false)}
-            />
+        {
+          infoNotification.idCarona === null ?
+          null :
           <div className="row" style={{bottom: 0, width: '100%'}}>
-            <div className="col-12">
-              <input type="button" style={styles.btn}  onClick ={() => this.handleEspiar(infoNotification.emailRemetente)} className="btn btn-primary" value="ESPIAR MOTORISTA" />
+            <div className="col-6">
+              <input type="button" style={styles.btnL} className="btn btn-primary" value="ACEITAR"
+                onClick={() => this.handleResponse(true)}
+              />
+            </div>
+            <div className="col-6">
+              <input type="button" style={styles.btnR} className="btn btn-primary" value="RECUSAR"
+                onClick={() => this.handleResponse(false)}
+              />
             </div>
           </div>
-          </div>
-
-
-        </div>
+        }
       </div>
     )
   }
