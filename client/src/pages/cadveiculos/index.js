@@ -71,11 +71,13 @@ class CadVeiculos extends Component{
     const styles = {
       button: {
         margin: '25px 0',
-        borderRadius: '15px',
+        borderRadius: '8px',
         backgroundColor: '#6E4D8B',
-        borderColor: '#a8cf45',
-        color: '#a8cf45',
-        fontSize: '25px',
+        borderColor: '#ffffff',
+        color: '#ffffff',
+        fontSize: '20px',
+        width: '70%',
+        marginLeft: '15%'
       },
       inputText: {
         borderRadius: '10px',
@@ -108,7 +110,7 @@ class CadVeiculos extends Component{
             <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
               <center>
                 <div className="col-6">PLACA</div>
-                <MaskedInput 
+                <MaskedInput
                   style={styles.inputText}
                   mask='AAA-1111'
                   className="form-control"
