@@ -29,14 +29,15 @@ import menuItems from './menuItems'
 
 class App extends Component {
   componentWillMount() {
-    firebase.initializeApp({
-      "apiKey": "AIzaSyA9RLVdFNQblRw4NrVOViAGVvzGsd3EpxE",
-      "authDomain": "fatecarona.firebaseapp.com",
-      "databaseURL": "https://fatecarona.firebaseio.com",
-      "projectId": "fatecarona",
-      "storageBucket": "fatecarona.appspot.com",
-      "messagingSenderId": "232610915822"
-    })
+    var config = {
+      apiKey: "AIzaSyAL9_rCAmIgN6kji3JQS9BJz6hYAbCah1w",
+      authDomain: "fatecarona-a0467.firebaseapp.com",
+      databaseURL: "https://fatecarona-a0467.firebaseio.com",
+      projectId: "fatecarona-a0467",
+      storageBucket: "fatecarona-a0467.appspot.com",
+      messagingSenderId: "827695530976"
+    };
+    firebase.initializeApp(config);  
     this.props.dispatch(setFirebase(firebase))
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
