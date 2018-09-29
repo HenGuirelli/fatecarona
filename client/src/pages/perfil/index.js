@@ -333,16 +333,13 @@ class Perfil extends Component {
   }
 }
 
-export default connect(store => {
-  return {
+export default connect(store => ({
     user: store.user.user,
     userData: store.user.userData,
     updating: store.user.updating,
     needReload: store.user.needReload,
     error: store.user.error
-  }
-}, dispatch => {
-  return {
+  }), dispatch => ({
     updateUser: (email, obj) => dispatch(updateUserData(email, obj))
-  }
-})(Perfil)
+  })
+)(Perfil)

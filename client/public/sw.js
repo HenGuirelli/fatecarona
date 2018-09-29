@@ -33,7 +33,7 @@ self.addEventListener('push', function(e) {
 
   var options = {
     body: body.msg,
-    icon: "http://192.168.0.100:8080/images/" + body.img, //Cannot use external config file =/
+    icon: "http://192.168.25.125:8080/images/" + body.img, //Cannot use external config file =/
     vibrate: [100, 50, 100],
     data: {
       dateOfArrival: Date.now(),

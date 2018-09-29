@@ -39,4 +39,8 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
-registerServiceWorker();
+try{
+  registerServiceWorker();
+}catch(error){
+  console.log('erro registerServiceWorker')
+}
