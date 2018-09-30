@@ -8,6 +8,8 @@ import DateIcon from 'material-ui/svg-icons/action/date-range'
 import MaskedInput from 'react-maskedinput'
 import styles from './styles'
 import { updateUserData } from '../../actions/userActions'
+import Sessao from '../../components/Sessao';
+
 
 class Perfil extends Component {
   constructor(props) {
@@ -160,26 +162,27 @@ class Perfil extends Component {
     }
     if (updating) return <div>Loading...</div>
     else if (needReload) return <div>Informações atualizadas!</div>
+    //{position: 'relative', width: '300px', margin: '0 auto'}
+    //style={{padding: '2em 0', borderBottom: '2px solid grey'}}
+    //this.state.motorista === 1 ?
     return (
       <div className="pageBase">
         <div className="container">
           <form onSubmit={this.handleSubmit} className="form-group">
-            <div style={{padding: '2em 0', borderBottom: '2px solid grey'}}>
-              <div style={{position: 'relative', width: '300px', margin: '0 auto'}}>
-                <Avatar
-                  id="avatar"
-                  src={this.state.img}
-                  size={150}
-                  style={{zIndex: 1, position: 'relative', border: '3px solid #fff'}}
-                />
-                <div style={{width: '9em', position: 'absolute', top: '52px', left: '144px'}}>
-                  <input style={styles.file} type="file" id="file" accept="image/*" ref="img" onChange={this.handleImage}/>
-                  <label htmlFor="file" style={styles.fileLabel} className="btn btn-primary">Alterar foto</label>
-                  <div style={{textAlign: 'left', overflowWrap: 'break-word', display: 'none'}}>{this.state.fileName}</div>
-                </div>
+            <Sessao style={{position: 'relative'}}>
+              <Avatar
+                id="avatar"
+                src={this.state.img}
+                size={150}
+                style={{zIndex: 1, position: 'relative', border: '3px solid #fff'}}
+              />
+              <div style={{width: '9em', position: 'absolute', top: '52px', left: '144px'}}>
+                <input style={styles.file} type="file" id="file" accept="image/*" ref="img" onChange={this.handleImage}/>
+                <label htmlFor="file" style={styles.fileLabel} className="btn btn-primary">Alterar foto</label>
+                <div style={{textAlign: 'left', overflowWrap: 'break-word', display: 'none'}}>{this.state.fileName}</div>
               </div>
-            </div>
-            <div style={{padding: '2em 0', borderBottom: '2px solid grey'}}>
+            </Sessao>
+            <Sessao>
               APELIDO
               <input
                 style={styles.inputText}
@@ -187,8 +190,8 @@ class Perfil extends Component {
                 onChange={this.handleApelido}
                 className="form-control textInput"
               />
-            </div>
-            <div style={{padding: '2em 0', borderBottom: '2px solid grey'}}>
+            </Sessao>
+            <Sessao >
               <div style={{marginBottom: '25px'}}>MINHA ROTINA</div>
               <div className="row">
                 <div className="col-6">
@@ -222,22 +225,20 @@ class Perfil extends Component {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="container">
-              <div className="row" style={{marginTop: '1em', padding: '2em 0', borderBottom: '2px solid grey'}}>
-                <div className="col-12"  style={{textAlign:'left'}}>
-                  <span>Telefone</span>
-                  <MaskedInput 
-                    mask='(11) 11111-1111'
-                    style={styles.inputNumber}
-                    value={this.state.telefone}
-                    onChange={this.handlePhone}
-                    className="form-control textInput"
-                  />
-                </div>
-              </div>
+            </Sessao>
 
-              <div style={{padding: '2em 0', borderBottom: '2px solid grey'}}>
+            <Sessao>
+                <span>Telefone</span>
+                <MaskedInput 
+                  mask='(11) 11111-1111'
+                  style={styles.inputNumber}
+                  value={this.state.telefone}
+                  onChange={this.handlePhone}
+                  className="form-control textInput"
+                />
+            </Sessao>
+
+            <Sessao>
                 GERALMENTE DE...
                 <div className="row" style={{marginTop: '2em'}}>
                   <div className="col-6">
@@ -271,16 +272,15 @@ class Perfil extends Component {
                     </select>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div style={styles.title}>PERFIL DE MOTORISTA</div>
-            <select className="form-control" style={inStyles.inputOption2} value={this.state.motorista} onChange={this.handleMotorista}>
-              <option value={1}>SIM, SOU UM MOTORISTA</option>
-              <option value={0}>NÃO SOU UM MOTORISTA</option>
-            </select>
-            {
-              this.state.motorista === 1 ?
-                <div  style={{marginTop: '1em', padding: '2em 0', borderBottom: '2px solid grey'}}>
+              </Sessao>
+            <Sessao>
+              <div >PERFIL DE MOTORISTA</div>
+              <select className="form-control" style={inStyles.inputOption2} value={this.state.motorista} onChange={this.handleMotorista}>
+                <option value={1}>SIM, SOU UM MOTORISTA</option>
+                <option value={0}>NÃO SOU UM MOTORISTA</option>
+              </select>
+              
+                <div style={ this.state.motorista === 1 ? {marginTop: '2em'} : {display: 'none'} }>
                   <div className="row" >
                     <div className="col-6"  style={{textAlign:'left'}}>
                       Número da CNH
@@ -321,10 +321,7 @@ class Perfil extends Component {
                     </div>
                   </div>
                 </div>
-
-              :
-              null
-            }
+            </Sessao>
             <input type="submit" value="Salvar" className="btn loginBtn form-control" style={styles.button}/>
           </form>
         </div>

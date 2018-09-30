@@ -7,9 +7,10 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import store from './store'
 import GlobalDialog from  './components/GlobalDialog'
+import './css/config.css'
 
 // Needed for onTouchTap used by some material-ui components
 // http://stackoverflow.com/a/34015469/988941

@@ -1,0 +1,11 @@
+:root {
+    --cor-principal: #6e4d8b;
+    --cor-secundaria: white;
+    --cor-terciaria: gray;
+    --cor-selecionado: #A8CF45;
+}
+
+/* A barra do menu retira metade da margin*/
+.sessao-card:first-child {
+    margin-top: 5em;
+}
