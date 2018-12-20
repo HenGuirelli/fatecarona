@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { insertUser } from '../../actions/userActions'
 import logo from '../../pages/form/login_fatecarona.svg'
 import MaskedInput from 'react-maskedinput'
+import config from '../../config.json'
+import axios from 'axios'
 
 class Cadastro extends Component {
   constructor() {
@@ -51,21 +53,22 @@ class Cadastro extends Component {
     if (!/[0-9]{5}-[0-9]{4}/.test(cel)) {
       window.displayDialog({msg: 'Numero com formato inválido. ex:"99999-9999"'})
       return
-    }
+    }	
     this.props.firebase.auth().createUserWithEmailAndPassword(email, senha)
-    .then(
+    .then(a => {
       this.props.dispatch(insertUser({
         ra,
         nome,
         telefone: cel,
         email: email.split('@')[0]
       }))
-    )
+	})
     .catch((error) => {
       window.displayDialog({title: 'Erro', msg: error.message})
     })
   }
 
+ 
   render() {
     const styles = {
       button: {

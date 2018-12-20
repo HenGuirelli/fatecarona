@@ -1,0 +1,14 @@
+.sessao-card {
+    background-color: var(--cor-secundaria);
+    display: block;
+    box-sizing: border-box;
+}
+
+.sessao-card:after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 3px;
+    margin: 2.5em 0;
+    background: var(--cor-terciaria);
+}

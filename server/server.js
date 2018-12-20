@@ -38,7 +38,7 @@ var upload = multer({ storage: storage }).single('image');
 var pool = mysql.createPool({
   host     : 'localhost',
   user     : 'root',
-  password : '3847147298',
+  password : 'password',
   database : 'Fatecarona'
 });
 
@@ -94,9 +94,8 @@ router.route('/users')
     pool.getConnection(function(err, connection) {
       if(err) {
         res.send(err);
-        return;
+        throw err;
       }
-
       connection.query('INSERT INTO membros SET ?', req.body, function(err, rows, fields) {
         connection.release();
         if (err) {

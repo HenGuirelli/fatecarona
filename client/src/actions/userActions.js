@@ -2,6 +2,7 @@ import axios from 'axios'
 import config from '../config.json'
 
 export function insertUser(user) {
+  console.log('insert action')
   return {
     type: "INSERT_USER",
     payload: axios.post(config.endpoint + "/users", user)
@@ -23,6 +24,7 @@ export function setFirebase(firebase) {
 }
 
 export function updateUser(user) {
+  console.log('update user ', user)
   return {
     type: "UPDATE_USER",
     payload: user
@@ -37,6 +39,7 @@ export function setUserData(email) {
 }
 
 export function updateUserData(email, userData) {
+  console.log('update user data', userData)
   return {
     type: "UPDATE_USER_DATA",
     payload: axios.put(config.endpoint + "/users/" + email, userData)
