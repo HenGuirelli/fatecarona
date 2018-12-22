@@ -3,16 +3,18 @@ import * as map from '../../actions/mapActions'
 import GoogleMaps from '../../components/GoogleMaps'
 import { connect } from 'react-redux'
 
+const TIME_TO_SAVE = 1000
+
 class AdicionarRota extends Component {
   constructor(props) {
-    super(props);
-    this.state = {waypoints: [], route: {}};
+    super(props)
+    this.state = {waypoints: [], route: {}}
   }
 
   componentWillMount() {
     if (document.cookie) {
-      let wpts = JSON.parse(document.cookie);
-      this.setState({waypoints: wpts});
+      let wpts = JSON.parse(document.cookie)
+      this.setState({waypoints: wpts})
     }
   }
 
@@ -28,43 +30,45 @@ class AdicionarRota extends Component {
   }
 
   addWaypoint = () => {
-    let waypoints = this.state.waypoints;
+    let waypoints = this.state.waypoints
     if (!this.refs.waypoint.value) return
     if (!waypoints.includes(this.refs.waypoint.value)) {
-      waypoints.push(this.refs.waypoint.value);
-      document.cookie = JSON.stringify(waypoints);
-      this.setState({waypoints});
+      waypoints.push(this.refs.waypoint.value)
+      document.cookie = JSON.stringify(waypoints)
+      this.setState({waypoints})
     }
-    this.refs.waypoint.value = "";
+    this.refs.waypoint.value = ""
   }
 
   routeState = (route) => {
     this.setState({route})
   }
 
-  storeRoute = () => {
-    this.props.dispatch(map.storeRoute(this.state.route ,this.props.userData.email, this.refs.nomeRota.value));
-  };
-
   saveFunc = f => {
-    this.displayRoute = f;
+    this.displayRoute = f
   }
 
-  getSelected = () => {
-    let wpts = [];
-    let checkBoxArray = document.getElementById("waypoints");
+  storeAndSaveRoute = (save) => {
+    let wpts = []
+    let checkBoxArray = document.getElementById("waypoints")
     for (var i = 0; i < checkBoxArray.length; i++) {
-      if(checkBoxArray.options[i].selected) {
-        wpts.push({
-          location: checkBoxArray[i].value
-        })
-      }
-    }
-    this.displayRoute({
-      origin: this.refs.origem.value,
-      destination: this.refs.destino.value,
-      waypoints: wpts
-    })
+		if(checkBoxArray.options[i].selected) {
+			wpts.push({
+				location: checkBoxArray[i].value
+			})
+		}
+	}
+	this.displayRoute({
+		origin: this.refs.origem.value,
+		destination: this.refs.destino.value,
+		waypoints: wpts
+	})
+	if (save){
+		setTimeout(() => 
+			this.props.dispatch(
+				map.storeRoute(this.state.route ,this.props.userData.email, this.refs.nomeRota.value)
+			), TIME_TO_SAVE)
+  	}
   }
 
   render () {
@@ -144,7 +148,7 @@ class AdicionarRota extends Component {
                   type="button"
                   style={styles.button}
                   className="btn btn-primary btn-block"
-                  onClick={this.getSelected}
+                  onClick={() => this.storeAndSaveRoute(false)}
                   value="Carregar Rota"
                 />
               </div>
@@ -154,7 +158,7 @@ class AdicionarRota extends Component {
                   style={styles.button}
                   className="btn btn-primary btn-block"
                   value="Salvar Rota"
-                  onClick={this.storeRoute}
+                  onClick={() => this.storeAndSaveRoute(true)}
                 />
               </div>
             </div>
@@ -162,7 +166,7 @@ class AdicionarRota extends Component {
         </div>
         <GoogleMaps routeState={this.routeState} callback={this.saveFunc}/>
       </div>
-    );
+    )
   }
 }
 
