@@ -1,8 +1,13 @@
 :root {
-    --cor-principal: #6e4d8b;
-    --cor-secundaria: white;
+    --primary-color: #6e4d8b;
+    --secondary-color: white;
     --cor-terciaria: gray;
     --cor-selecionado: #A8CF45;
+
+    --border-radius: 100px;
+
+    --text-size-normal: 12sp;
+    --text-size-subtitle: 14sp;
 }
 
 /* A barra do menu retira metade da margin*/
