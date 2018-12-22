@@ -38,7 +38,7 @@ var upload = multer({ storage: storage }).single('image');
 var pool = mysql.createPool({
   host     : 'localhost',
   user     : 'root',
-  password : 'password',
+  password : '',
   database : 'Fatecarona'
 });
 
@@ -809,13 +809,16 @@ io.on('connection', (socket) => {
   });
 });
 
-httpsServer.listen(8443);
-httpServer.listen(8080);
+const httpPort = 8081
+const httpsPort = 8443
+
+httpsServer.listen(httpsPort);
+httpServer.listen(httpPort);
 
 /*http.createServer(function (req, res) {
     res.writeHead(301, {"Location": "https://" + req.headers['host'] + req.url});
     res.end();
 }).listen(80);*/
 
-console.log("Servidor HTTP rodando na porta 8080.");
-console.log("Servidor HTTPS rodando na porta 8443.");
+console.log(`Servidor HTTP rodando na porta ${httpPort}.`);
+console.log(`Servidor HTTPS rodando na porta ${httpsPort}.`);
