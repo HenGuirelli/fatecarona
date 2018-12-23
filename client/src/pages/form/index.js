@@ -87,7 +87,7 @@ class LoginForm extends Component {
       <div style={styles.root}>
         <img src={logo} alt="" className="img-fluid mx-auto d-block"/>
         <div className="container">
-          <form onSubmit={this.handleSubmit} className="form-group">
+          <form onSubmit={this.handleSubmit} className="">
               <input
                 placeholder="Usuário"
                 style={styles.inputText}
@@ -111,26 +111,20 @@ class LoginForm extends Component {
             />
 
           </form>
-          <div className="row">
-            <div className="col-4">
-              <input
-                type="button"
-                className="btn btn-block loginBtn"
-                style={styles.buttonRecuperar}
-                value="?"
-                onClick={this.abrirRecuperar}
-              />
-            </div>
-            <div className="col-8">
-              <input
+            <input
                 type="button"
                 className="btn btn-block loginBtn"
                 style={styles.button}
                 value="Cadastrar"
                 onClick={this.abrirCadastro}
-              />
-            </div>
-          </div>
+            />
+            <input
+                type="button"
+                className="btn btn-block loginBtn"
+                style={styles.buttonRecuperar}
+                value="Esqueci a senha"
+                onClick={this.abrirRecuperar}
+            />
         </div>
       </div>
     );
