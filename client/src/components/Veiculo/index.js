@@ -23,7 +23,6 @@ export default class Veiculo extends Component {
         <div className="row">
           <div className="col-1">
             <img style={{width: '4em', height: '1.7em', margin:'0'}} src={CarIcon} alt={"Car Logo"}/>
-            <div style={{marginLeft:'10px', color:'#a8cf45'}}>{ativo ? 'Ativo' : ''}</div>
           </div>
           <div className="col">
             <div style={styles.descSize}>{marca},{modelo}</div>

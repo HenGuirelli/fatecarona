@@ -21,6 +21,7 @@ const styles = {
   },
   btnContainer: {
     padding:  '0 10px',
+    width: '100%'
   },
   marginStyle:{
     marginTop: '2em'
@@ -133,14 +134,7 @@ class AtivarVeic extends Component{
               </div>
             </div>
             <div  className="row">
-              <div className="col-6" style={styles.btnContainer}>
-                {veiculo.ativo === 1 ?
-                  <input type="button" onClick={() => this.handleDesativar(veiculo.placa)}  value="Desativar" className="btn btn-primary" style={styles.btn}/>
-                  :
-                  <input type="button" onClick={() => this.handleAtivar(veiculo.placa)} value="Ativar" className="btn btn-primary" style={styles.btn}/>
-                }
-              </div>
-              <div className="col-6" style={styles.btnContainer}>
+              <div className="" style={styles.btnContainer}>
                 <input type="button" value="Excluir" className="btn btn-primary" style={styles.btn} onClick={this.showConfirmation}/>
               </div>
             </div>
