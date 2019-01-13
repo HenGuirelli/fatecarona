@@ -4,20 +4,23 @@ const TIPO = {
     ERRO: 'ERRO',
     AVISO: 'AVISO',
     SUCESSO: 'SUCESSO',
-    DEFAULT: 'DEFAULT'
+    DEFAULT: 'DEFAULT',
+    SIM_NAO: 'SIM_NAO'
 }
 
-const popUpFactory = props => {
+const PopUpFactory = (props, redirect) => {
     const { tipo, ...resto } = props
     switch (tipo) {
         case TIPO.ERRO:
-            return erro(resto)
+            return withRedirect(erro(resto))(redirect)
         case TIPO.AVISO:
-            return aviso(resto)
+            return withRedirect(aviso(resto))(redirect)
         case TIPO.SUCESSO:
-            return sucesso(resto)
+            return withRedirect(sucesso(resto))(redirect)
+        case TIPO.SIM_NAO:
+            return simNao(resto)
         default:
-            return _default(resto)
+            return withRedirect(_default(resto))(redirect)
     }    
 }
 
@@ -25,6 +28,27 @@ const aviso = props => () => sweetalert({  ...props, icon: 'warning' })
 const erro = props => () => sweetalert({ ...props, icon: 'error' })
 const sucesso = props => () => sweetalert({ ...props, icon: 'success' })
 const _default = props => () => sweetalert({ ...props })
+const simNao = props => {
+    const { sim, nao } = props
+    return  sweetalert({ ...props , dangerMode: true, buttons: ['Não', 'Sim']})
+            .then((result) => {
+                if(result){
+                    sim()
+                }else if (nao){
+                    nao()
+                }
+            })
+}
 
-export { popUpFactory, TIPO }
+const withRedirect = popup => {
+    return (path) => {
+        popup().then(value => {
+            if (path){ window.location = path }
+        })
+    }
+}
+
+
+export default PopUpFactory
+export { TIPO }
 
