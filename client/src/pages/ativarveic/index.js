@@ -4,6 +4,7 @@ import CarIcon  from '../../components/Veiculo/veiculo_preto.png'
 import ViagIcon from '../../components/Veiculo/viagensfeitas.png'
 import KmIcon from '../../components/Veiculo/kmviagens.png'
 import { updateCar, deleteCar } from '../../actions/carActions'
+import popUp, { TIPO } from '../../components/PopUp'
 
 const styles = {
   btn:{
@@ -47,44 +48,29 @@ class AtivarVeic extends Component{
       }
     )
     if (cont === 2){
-      window.displayDialog({msg: 'Somente 2 carros podem estár ativos sumultaneamente!'})
+      popUp({tipo: TIPO.ERRO, text: 'Somente 2 carros podem estár ativos sumultaneamente!'})
       return;
     }else{
       this.props.dispatch(updateCar(placa, { ativo: 1 }))
-      window.displayDialog({msg: 'O veículo está ativo!'}, '/veiculos')
+      popUp({tipo: TIPO.SUCESSO, text: 'O veículo está ativo!'}, '/veiculos')
     }
   }
 
   handleDesativar = (placa) => {
     this.props.dispatch(updateCar(placa, { ativo: 0 }))
-    window.displayDialog({msg: 'O veículo foi desativado!'}, '/veiculos')
+    popUp({tipo: TIPO.SUCESSO,text: 'O veículo foi desativado!'}, '/veiculos')
   }
 
   handleDelete = (placa) => {
     this.props.dispatch(deleteCar(placa))
-    window.displayDialog({title: 'Aviso', msg: 'O veículo com placa ' + placa + ' foi excluido!'}, '/veiculos')
+    popUp({tipo: TIPO.SUCESSO, title: 'Aviso', text: 'O veículo com placa ' + placa + ' foi excluido!'}, '/veiculos')
   }
 
   showConfirmation = () => {
-    window.displayDialog({
-      title: 'Excluir',
-      msg: 'Tem certeza de que deseja excluir o veículo e todos os dados acumulados ?',
-      actions: [
-        <input
-          type="button"
-          value="Sim"
-          className="btn btn-primary"
-          style={styles.btnDialog}
-          onClick={() => this.handleDelete(this.props.veiculo.placa)}
-        />,
-        <input
-          type="button"
-          value="Não"
-          className="btn btn-primary"
-          style={styles.btnDialog}
-          onClick={window.closeDialog}
-        />
-      ]
+    popUp({
+      tipo: TIPO.SIM_NAO,
+      text: 'Tem certeza de que deseja excluir o veículo e todos os dados acumulados ?',
+      sim: () => this.handleDelete(this.props.veiculo.placa)
     })
   }
 

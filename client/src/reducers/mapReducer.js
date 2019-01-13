@@ -1,3 +1,5 @@
+import popUp, { TIPO } from '../components/PopUp'
+
 export default function reducer(state={
     rota: {},
     rotas: [],
@@ -11,15 +13,15 @@ export default function reducer(state={
         return{...state, rotas: action.payload.data, needLoad: false}
       }
       case 'EXCLUIR_ROTA_FULFILLED':{
-        window.displayDialog({title: 'Aviso', msg: 'Rota excluida.'}, '/rotas')
+        popUp({tipo: TIPO.AVISO, text: 'Rota excluida.'}, '/rotas')
         return{...state, rotas: [], needLoad: true}
       }
       case 'GRAVAR_ROTA_FULFILLED':{
-        window.displayDialog({title: 'Aviso', msg: 'Rota adicionada.'}, '/rotas')
+        popUp({tipo: TIPO.AVISO, text: 'Rota adicionada.'}, '/rotas')
         return{...state, rotas: [], needLoad: true}
       }
       case 'GRAVAR_ROTA_REJECTED':{
-        window.displayDialog({title: 'Aviso', msg: 'Erro ao adicionar rota.'}, '/rotas')
+        popUp({tipo: TIPO.AVISO, text: 'Erro ao adicionar rota.'}, '/rotas')
         return{...state, rotas: [], needLoad: true}
       }
       default: {

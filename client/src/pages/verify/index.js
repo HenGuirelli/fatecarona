@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
+import popUp, { TIPO } from '../../components/PopUp'
 
 export default class Verify extends Component {
 
   sendValidationEmail = () => {
     const user = this.props.firebase.auth().currentUser
     user.sendEmailVerification().then(
-      window.displayDialog({msg: "E-Mail de verificação enviado para " + user.email})
+      popUp({tipo: TIPO.SUCESSO, text: "E-Mail de verificação enviado para " + user.email})
     ).catch(error =>
-      window.displayDialog({msg: "Erro ao enviar E-Mail de verificação: " + error.message})
+      popUp({tipo: TIPO.ERRO, text: "Erro ao enviar E-Mail de verificação: " + error.message})
     )
   }
 

@@ -4,7 +4,7 @@ import { insertCar } from '../../actions/carActions'
 import MaskedInput from 'react-maskedinput'
 import config from '../../config.json'
 import axios from 'axios'
-
+import popUp, { TIPO } from '../../components/PopUp'
 
 class CadVeiculos extends Component{
   constructor(props) {
@@ -49,7 +49,7 @@ class CadVeiculos extends Component{
 
   handleSubmit = () => {
     if (this.props.veiculos.length === 5){
-      window.displayDialog({msg: "Você já chegou ao limite máximo de veículos!"})
+      popUp({tipo: TIPO.ERRO, text: "Você já chegou ao limite máximo de veículos!"})
       return;
     }
     this.props.dispatch(insertCar({
@@ -59,7 +59,7 @@ class CadVeiculos extends Component{
         modelo: this.state.modelo,
         cor: this.state.cor
       }))
-      window.displayDialog({msg: "Veículo adicionado!"}, '/veiculos')
+      popUp({tipo: TIPO.SUCESSO, text: "Veículo adicionado!"}, '/veiculos')
   }
 
   render(){

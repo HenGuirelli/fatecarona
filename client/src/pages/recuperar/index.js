@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import logo from '../../pages/form/login_fatecarona.svg'
+import popUp, { TIPO } from '../../components/PopUp'
 
 class Recuperar extends Component {
   constructor() {
@@ -18,21 +19,21 @@ class Recuperar extends Component {
     e.preventDefault()
     let email = this.state.email
     if (!email) {
-      window.displayDialog({msg: 'Favor inserir um email.'})
+      popUp({tipo: TIPO.ERRO, text: 'Favor inserir um email.'})
       return
     }
     if (!email.match('@fatec.sp.gov.br')) {
       email = email + '@fatec.sp.gov.br'
     }
     this.props.firebase.auth().sendPasswordResetEmail(email).then(function() {
-      window.displayDialog({
+      popUp({tipo: TIPO.SUCESSO, 
         title: 'E-mail enviado',
-        msg: 'E-mail de recuperação enviado. Continue a operação verificando sua caixa de mensagens'
+        text: 'E-mail de recuperação enviado. Continue a operação verificando sua caixa de mensagens'
       }, '/')
     }).catch(function(error) {
-      window.displayDialog({
+      popUp({tipo: TIPO.ERRO, 
         title: 'E-mail incorreto',
-        msg: 'Digite um e-mail cadastrado em nosso sistema'
+        text: 'Digite um e-mail cadastrado em nosso sistema'
       })
     })
   }

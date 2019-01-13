@@ -42,7 +42,7 @@ class SocketIOChat extends Component {
     })
     socket.on('new message', (data) => {
       const { log } = this.state
-      log.push({user: data.username, msg: data.message})
+      log.push({user: data.username, text: data.message})
       this.setState({log})
     })
     this.setState({socket})

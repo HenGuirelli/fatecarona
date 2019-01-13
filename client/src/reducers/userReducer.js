@@ -1,3 +1,5 @@
+import popUp, { TIPO } from '../components/PopUp'
+
 export default function reducer(state={
     user: {},
     userData: {},
@@ -43,7 +45,7 @@ export default function reducer(state={
         return {...state, user: action.payload.data[0]}
       }
       case 'INSERT_USER_FULFILLED': {
-        window.displayDialog({title: 'Aviso', msg: 'Cadastro realizado!'}, '/')
+        popUp({tipo: TIPO.AVISO, text: 'Cadastro realizado!'}, '/')
         return state
       }
       case 'INSERT_USER': {

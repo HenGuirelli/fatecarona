@@ -26,6 +26,7 @@ import { connect } from 'react-redux'
 import { setFirebase, updateUser, unsetUser,setUserData } from './actions/userActions'
 import * as firebase from 'firebase'
 import menuItems from './menuItems'
+import popUpFactory, { TIPO } from './components/PopUp'
 
 class App extends Component {
   componentWillMount() {
@@ -49,40 +50,11 @@ class App extends Component {
   }
 
   logOut() {
-    window.displayDialog({
-      title: 'AVISO', 
-      msg: 'Deseja realmente sair?', 
-      actions: [
-        <input
-          type="button"
-          value="Sim"
-          className="btn btn-primary"
-          style={{
-            fontSize: '12px',
-            width: '70px',
-            margin: '0 10px',
-            backgroundColor: '#6E4D8B',
-            borderColor: '#6E4D8B'
-          }}
-          onClick={() => {
-            window.closeDialog()
-            firebase.auth().signOut()
-          }}
-        />,
-        <input
-          type="button"
-          value="Não"
-          className="btn btn-primary"
-          style={{
-            fontSize: '12px',
-            width: '70px',
-            margin: '0 10px',
-            backgroundColor: '#6E4D8B',
-            borderColor: '#6E4D8B'
-          }}
-          onClick={window.closeDialog}
-        />
-      ]})
+    popUpFactory({ 
+      tipo: TIPO.SIM_NAO, 
+      text: 'Deseja realmente sair?',
+      sim: () => { firebase.auth().signOut() }
+    })
   }
 
   render() {

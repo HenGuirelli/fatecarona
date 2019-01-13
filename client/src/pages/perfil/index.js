@@ -9,7 +9,7 @@ import MaskedInput from 'react-maskedinput'
 import styles from './styles'
 import { updateUserData } from '../../actions/userActions'
 import Sessao from '../../components/Sessao';
-
+import popUp, { TIPO } from '../../components/PopUp'
 
 class Perfil extends Component {
   constructor(props) {
@@ -116,7 +116,7 @@ class Perfil extends Component {
       validadeCNH: myState.validadeCNH.toISOString().substr(0,10),
       categoriaCNH: myState.categoriaCNH
     });
-    window.displayDialog({msg: "Dados alterados", actions: null}, "/")
+    popUp({tipo: TIPO.SUCESSO, text: "Dados alterados", actions: null}, "/")
   }
 
   render() {

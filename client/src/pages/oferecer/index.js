@@ -14,6 +14,7 @@ import { offerLift } from '../../actions/liftActions'
 import styles from '../oferecer/styles'
 //import config from '../../config.json'
 //import axios from 'axios'
+import popUp, { TIPO } from '../../components/PopUp'
 
 class Oferecer extends Component {
   constructor(props) {
@@ -66,7 +67,7 @@ class Oferecer extends Component {
     e.preventDefault()
 
     if (this.isSubmitInvalid()) {
-      window.displayDialog({title: "Erro:", msg: "Favor preencher todos os campos"})
+      popUp({tipo: TIPO.ERRO, text: "Favor preencher todos os campos"})
       return
     }
     const { data, hora, direcao, /*trajeto,*/ veiculo, prefs } = this.state

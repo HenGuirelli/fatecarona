@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Veiculo from '../../components/Veiculo'
 import { connect } from 'react-redux'
 import { ativar, loadCar } from '../../actions/carActions'
-
+import popUp, { TIPO } from '../../components/PopUp'
 
 class Veiculos extends Component{
 
@@ -15,7 +15,7 @@ class Veiculos extends Component{
     if (this.props.userData.cnh !== null)
       this.props.history.push('/veiculos/cadastrar')
     else {
-      window.displayDialog({msg: "Para cadastrar um veículo é necessário cadastrar o número da CNH"}, '/perfil')
+      popUp({tipo: TIPO.AVISO, text: "Para cadastrar um veículo é necessário cadastrar o número da CNH"}, '/perfil')
     }
   }
 
