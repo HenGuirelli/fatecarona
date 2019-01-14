@@ -4,8 +4,8 @@ const TIPO = {
     ERRO: 'ERRO',
     AVISO: 'AVISO',
     SUCESSO: 'SUCESSO',
-    DEFAULT: 'DEFAULT',
-    SIM_NAO: 'SIM_NAO'
+    SIM_NAO: 'SIM_NAO',
+    DEFAULT: 'DEFAULT'
 }
 
 const PopUpFactory = (props, redirect) => {

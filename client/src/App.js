@@ -26,7 +26,7 @@ import { connect } from 'react-redux'
 import { setFirebase, updateUser, unsetUser,setUserData } from './actions/userActions'
 import * as firebase from 'firebase'
 import menuItems from './menuItems'
-import popUpFactory, { TIPO } from './components/PopUp'
+import popUp, { TIPO } from './components/PopUp'
 
 class App extends Component {
   componentWillMount() {
@@ -50,7 +50,7 @@ class App extends Component {
   }
 
   logOut() {
-    popUpFactory({ 
+    popUp({ 
       tipo: TIPO.SIM_NAO, 
       text: 'Deseja realmente sair?',
       sim: () => { firebase.auth().signOut() }
