@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import logo from './login_fatecarona.svg'
 import { connect } from 'react-redux'
 import { logIn } from '../../actions/userActions'
+import popUp, { TIPO } from '../../components/PopUp'
 
 class LoginForm extends Component {
   constructor() {
@@ -31,7 +32,7 @@ class LoginForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault()
       if(this.state.email.length === 0 || this.state.password.length === 0) {
-        window.displayDialog({msg: 'Favor inserir email e senha'})
+        popUp({tipo: TIPO.ERRO, text: 'Favor inserir email e senha'})
         return
       }
       let email = this.state.email
@@ -46,7 +47,7 @@ class LoginForm extends Component {
   }
 
   componentDidMount() {
-    if (this.props.error) window.displayDialog({msg: 'Usuário e/ou senha inválidos!'})
+    if (this.props.error) popUp({tipo: TIPO.ERRO, text: 'Usuário e/ou senha inválidos!'})
   }
 
   render() {

@@ -14,6 +14,8 @@ import styles from '../oferecer/styles'
 import config from '../../config.json'
 import axios from 'axios'
 
+import popUp, { TIPO } from '../../components/PopUp'
+
 class Pedir extends Component {
   constructor(props) {
     super(props);
@@ -67,7 +69,7 @@ class Pedir extends Component {
     e.preventDefault()
 
     if (this.isSubmitInvalid()) {
-      window.displayDialog({title: "Erro:", msg: "Favor preencher todos os campos"})
+      popUp({ tipo: TIPO.ERRO, text: 'Favor preencher todos os campos' })
       return
     }
 
@@ -96,7 +98,7 @@ class Pedir extends Component {
         })
 
         if (match.length === 0) {
-          window.displayDialog({title: "Atenção", msg: "Nenhuma carona encontrada..."})
+          popUp({tipo: TIPO.ERRO, title: "Atenção", text: "Nenhuma carona encontrada..."})
           this.setState({ searching: false })
           return
         }
@@ -123,7 +125,7 @@ class Pedir extends Component {
                 }
                 if (index === (matchResults.length - 1)) {
                   if (finalMatch.length === 0) {
-                    window.displayDialog({title: "Atenção", msg: "Nenhuma carona encontrada..."})
+                    popUp({tipo: TIPO.ERRO, title: "Atenção", text: "Nenhuma carona encontrada..."})
                     this.setState({ searching: false })
                     return
                   }

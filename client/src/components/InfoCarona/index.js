@@ -5,6 +5,7 @@ import styles from './styles'
 import config from '../../config.json'
 import { espiarMembro } from '../../actions/liftActions'
 import axios from 'axios'
+import popUp, { TIPO } from '../PopUp'
 
 class InfoCarona extends Component {
 
@@ -14,25 +15,10 @@ class InfoCarona extends Component {
   }
 
   requestLift = () => {
-    window.displayDialog({
-      title: "Eu quero",
-      msg: "Deseja pegar essa carona?",
-      actions: [
-        <input
-          type="button"
-          value="Sim"
-          className="btn btn-primary"
-          style={styles.btnDialog}
-          onClick={this.handleRequest}
-        />,
-        <input
-          type="button"
-          value="Não"
-          className="btn btn-primary"
-          style={styles.btnDialog}
-          onClick={window.closeDialog}
-        />
-      ]
+    popUp({
+      tipo: TIPO.SIM_NAO,
+      text: "Deseja pegar essa carona?",
+      sim: () => {this.handleRequest}
     })
   }
 
@@ -51,15 +37,16 @@ class InfoCarona extends Component {
         idCarona: carona.id
       })
       .then(() => {
-        window.displayDialog({
-          title: 'Eu quero',
-          msg: 'Solicitação enviada, aguarde a resposta do motorista.'
+        popUp({
+          tipo: TIPO.SUCESSO,
+          text: 'Solicitação enviada, aguarde a resposta do motorista.'
         })
       })
     })
     .catch(() => {
-      window.displayDialog({
-        msg: 'Erro ao solicitar carona.'
+      popUp({
+        tipo: TIPO.ERRO,
+        text: 'Erro ao solicitar carona.'
       })
     })
   }
@@ -72,7 +59,7 @@ class InfoCarona extends Component {
     let horaCarona = dataLift.toTimeString().substr(0, 8)
     return(
       <div className="row" style={styles.root}>
-        <div className="row" onClick={() => {window.displayDialog({msg: "Test"})}}>
+        <div className="row" onClick={() => {popUp({ tipo: TIPO.SUCESSO, text: "Test"})}}>
           <div className="col-3 col-xl-1">
             <Avatar
               src={carona.motorista.img ? config.endpoint + "/images/" + carona.motorista.img : ""}

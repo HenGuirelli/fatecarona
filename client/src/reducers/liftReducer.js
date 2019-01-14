@@ -1,3 +1,5 @@
+import popUp, { TIPO }  from '../components/PopUp'
+
 export default function reducer(state={
     carona: {},
     membroEspiado: {},
@@ -30,11 +32,11 @@ export default function reducer(state={
        return {...state, members: action.payload.data}
       }
       case 'OFERECER_CARONA_FULFILLED': {
-        window.displayDialog({title: 'Aviso', msg: 'Oferecimento de carona realizado!'}, '/caronas/historico')
+        popUp({tipo: TIPO.AVISO,  text: 'Oferecimento de carona realizado!'}, '/caronas/historico')
        return state
       }
       case 'OFERECER_CARONA_REJECTED': {
-        window.displayDialog({title: 'Aviso', msg: 'Erro no oferecimento de carona.'}, '/')
+        popUp({tipo: TIPO.AVISO,  text: 'Erro no oferecimento de carona.'}, '/')
        return state
       }
       default: {

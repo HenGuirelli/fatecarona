@@ -14,7 +14,7 @@ import { loadCarbyID } from '../../actions/carActions'
 import { insertAvalicao, delCaronaPendMotorista, delCaronaPendCaronista } from '../../actions/liftActions'
 import GoogleMaps from '../../components/GoogleMaps'
 import { Rating } from 'material-ui-rating'
-
+import popUp, { TIPO } from '../PopUp'
 
 const style = {
   btn:{
@@ -55,7 +55,10 @@ class GerencCarona extends Component {
         motorista: motorista,
         fivestars: fivestars,
       }))
-      window.displayDialog({msg: "Avaliação realizada."})
+      popUp({
+        tipo: TIPO.SUCESSO,
+        text: "Avaliação realizada."
+      })
       this.setState({avalicaoReadonly: true})
   }
 
@@ -181,7 +184,10 @@ class GerencCarona extends Component {
       status: 'historico'
     })
     .then(() => {
-      window.displayDialog({msg: "Carona finalizada."})
+      popUp({
+        tipo: TIPO.SUCESSO,
+        text: "Carona finalizada."
+      })
       this.props.history.push('/caronas/historico')
     })
   }

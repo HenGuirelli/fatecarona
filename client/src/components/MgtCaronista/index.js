@@ -4,6 +4,7 @@ import config from '../../config.json'
 import styles from './styles'
 import axios from 'axios'
 import { espiarMembro } from '../../actions/liftActions'
+import popUp, { TIPO } from '../PopUp'
 
 export default class MgtCaronista extends Component {
 
@@ -23,7 +24,7 @@ export default class MgtCaronista extends Component {
                 imgRemetente: userData.img
               }).then(() => {
                   axios.put(config.endpoint + '/notifications/' + infoNotification._id, {read: true})
-                  .then(() => window.displayDialog({msg: "Notificação enviada."}, '/'))
+                  .then(() => popUp({tipo: TIPO.SUCESSO, text: "Notificação enviada."}, '/'))
                 })
             })
         })
@@ -38,7 +39,7 @@ export default class MgtCaronista extends Component {
       imgRemetente: userData.img
     }).then(() => {
         axios.put(config.endpoint + '/notifications/' + infoNotification._id, {read: true})
-        .then(() => window.displayDialog({msg: "Notificação enviada."}, '/'))
+        .then(() => popUp({tipo: TIPO.SUCESSO, text: "Notificação enviada."}, '/'))
       })
     })
     

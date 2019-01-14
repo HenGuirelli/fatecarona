@@ -4,6 +4,7 @@ import { insertUser } from '../../actions/userActions'
 import logo from '../../pages/form/login_fatecarona.svg'
 import Input from '../../components/Form/Input'
 import './style.css'
+import popUp, { TIPO } from '../../components/PopUp'
 
 class Cadastro extends Component {
   constructor(props){
@@ -24,15 +25,15 @@ class Cadastro extends Component {
 	const { email, password, name, cel, ra, confirmPassword } = this.state
    
     if (!email.match('@fatec.sp.gov.br')) {
-      window.displayDialog({msg: 'Utilize um email institucional! ex:"aluno.sobrenome@fatec.sp.gov.br"'})
+      popUp({tipo: TIPO.ERRO, text: 'Utilize um email institucional! ex:"aluno.sobrenome@fatec.sp.gov.br"'})
       return
     }
     if (!/[0-9]{5}-[0-9]{4}/.test(cel)) {
-      window.displayDialog({msg: 'Numero com formato inválido. ex:"99999-9999"'})
+      popUp({tipo: TIPO.ERRO, text: 'Numero com formato inválido. ex:"99999-9999"'})
       return
 	}
 	if (confirmPassword !== password){
-		window.displayDialog({msg: 'As senhas não coincidem'})
+		popUp({tipo: TIPO.ERRO, text: 'As senhas não coincidem'})
 		return
 	}
     this.props.firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -45,7 +46,7 @@ class Cadastro extends Component {
       }))
 	})
     .catch((error) => {
-      window.displayDialog({title: 'Erro', msg: error.message})
+     popUp({tipo: TIPO.ERRO, title: 'Erro', text: error.message})
     })
   }
 
