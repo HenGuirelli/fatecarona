@@ -38,7 +38,7 @@ var upload = multer({ storage: storage }).single('image');
 var pool = mysql.createPool({
   host     : 'localhost',
   user     : 'root',
-  password : '',
+  password : 'bob@123',
   database : 'Fatecarona'
 });
 
@@ -739,7 +739,7 @@ router.route('/notify/:user_email')
         result.subscription, //subscription object
         JSON.stringify({
           img: req.body.imgRemetente,
-          msg: req.body.message
+          text: req.body.message
         }), //payload
         options
       ).catch(err => {
