@@ -18,7 +18,7 @@ class InfoCarona extends Component {
     popUp({
       tipo: TIPO.SIM_NAO,
       text: "Deseja pegar essa carona?",
-      sim: () => {this.handleRequest}
+      sim: () => {this.handleRequest()}
     })
   }
 

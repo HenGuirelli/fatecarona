@@ -151,7 +151,7 @@ class GerencCarona extends Component {
       case 'andamento':{
         return (
           <div className="row">
-            <div className="col-12" style={{marginTop: '0.5em'}}>
+            <div className="col-12" style={{marginTop: '0.5em',  width: '100%'}}>
               <input type="button" style={styles.btn} className="btn btn-primary" value="Finalizar carona" onClick={() => this.finalizarCarona(this.props.carona.id)} />
             </div>
           </div>
@@ -274,17 +274,6 @@ class GerencCarona extends Component {
     return(
       <div className="container">
         <center>
-          <div style={{borderBottom: '1px solid grey', marginTop: '5em', paddingBottom: '25px'}}>
-            <div>
-                DETALHE DA CARONA
-            </div>
-            <div style={styles.btnContainer}>
-              {
-                this.filterCarona()
-              }
-            </div>
-          </div>
-
           <div style={{borderBottom: '1px solid grey', padding: '1em ' }}>
             <div className="row">
               <div className="col-6" style={instyle.textStyle}>
@@ -462,6 +451,16 @@ class GerencCarona extends Component {
             :
             null
           }
+          <div style={{borderBottom: '1px solid grey', paddingBottom: '25px'}}>
+            <div>
+                DETALHE DA CARONA
+            </div>
+            <div style={styles.btnContainer}>
+              {
+                this.filterCarona()
+              }
+            </div>
+          </div>
         </center>
       </div>
     )
