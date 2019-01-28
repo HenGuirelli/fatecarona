@@ -146,13 +146,8 @@ class CadVeiculos extends Component{
             <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
               <center>
                 <div className="col-6">COR</div>
-                  <select className="form-control" style={styles.inputOption} value={this.state.cor || 'default'} onChange={this.handleCor}>
-                    <option value="default">Selecione...</option>
-                    <option value="BRANCO">BRANCO</option>
-                    <option value="PRETO">PRETO</option>
-                    <option value="VERMELHO">VERMELHO</option>
-                  </select>
-                </center>
+                  <input className="form-control" style={styles.inputOption} value={this.state.cor || ''} onChange={this.handleCor} />
+              </center>
             </div>
             <input type="button" value="Adicionar" onClick={this.handleSubmit} className="btn loginBtn form-control" style={styles.button}/>
           </form>
