@@ -5,6 +5,39 @@ import MaskedInput from 'react-maskedinput'
 import config from '../../config.json'
 import axios from 'axios'
 import popUp, { TIPO } from '../../components/PopUp'
+import Autosuggest from 'react-autosuggest';
+
+import './style.css'
+
+let marcas = [
+  { marca: 'carregando...' }
+];
+
+function escapeRegexCharacters(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function getSuggestions(value) {
+  const escapedValue = escapeRegexCharacters(value.trim());
+  
+  if (escapedValue === '') {
+    return [];
+  }
+
+  const regex = new RegExp('^' + escapedValue, 'i');
+
+  return marcas.filter(language => regex.test(language.marca));
+}
+
+function getSuggestionValue(suggestion) {
+  return suggestion.marca;
+}
+
+function renderSuggestion(suggestion) {
+  return (
+    <span>{suggestion.marca}</span>
+  );
+}
 
 class CadVeiculos extends Component{
   constructor(props) {
@@ -15,6 +48,7 @@ class CadVeiculos extends Component{
       modelo: '',
       cor: '',
       modelos: [],
+      suggestions: []
     };
   }
 
@@ -23,8 +57,8 @@ class CadVeiculos extends Component{
     if (event.target.value.length > 8) return
     this.setState({placa: event.target.value.toUpperCase()})
   }
-  handleMarca = (event) =>{
-    this.setState({marca: event.target.value})
+  handleMarca = (event, {newValue}) =>{
+    this.setState({marca: newValue})
   }
   handleModelo = (event) => {
     this.setState({modelo: event.target.value})
@@ -33,18 +67,35 @@ class CadVeiculos extends Component{
     this.setState({cor: event.target.value})
   }
 
+  loadMarcas = () => {
+    axios.get(config.endpoint + "/cars/marcas/*")
+    .then(result => {
+      marcas = result.data
+      console.log(result)
+    })
+  }
 
   loadModelo = () => {
     axios.get(config.endpoint + "/cars/marcas/" + this.state.marca)
     .then(result =>{
-      axios.get(config.endpoint + "/cars/modelos/" + result.data[0].id)
-      .then(resultModelos =>{
-        this.setState({
-          modelos: resultModelos.data
+      try{
+        axios.get(config.endpoint + "/cars/modelos/" + result.data[0].id)
+        .then(resultModelos =>{
+          this.setState({
+            modelos: resultModelos.data
+          })
         })
-      })
+      }catch(err){
+        this.setState({
+          modelos: []
+        })
+      }
     })
 
+  }
+
+  componentDidMount(){
+    this.loadMarcas()
   }
 
   handleSubmit = () => {
@@ -62,8 +113,20 @@ class CadVeiculos extends Component{
       popUp({tipo: TIPO.SUCESSO, text: "Veículo adicionado!"}, '/veiculos')
   }
 
-  render(){
+  onSuggestionsFetchRequested = ({ value }) => {
+    this.setState({
+      suggestions: getSuggestions(value)
+    });
+  };
 
+  onSuggestionsClearRequested = () => {
+    this.setState({
+      suggestions: []
+    });
+  };
+
+  render(){
+    const { suggestions } = this.state;
     if (this.state.marca !== '') this.loadModelo();
 
     var modelos = this.state.modelos;
@@ -122,14 +185,14 @@ class CadVeiculos extends Component{
             <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
               <center>
                 <div className="col-6">MARCA</div>
-                <select className="form-control" style={styles.inputOption} value={this.state.marca || 'default'} onChange={this.handleMarca}>
-                  <option value="default">Selecione...</option>
-                  <option value="Chevrolet">Chevrolet</option>
-                  <option value="Fiat">Fiat</option>
-                  <option value="Ford">Ford</option>
-                  <option value="Hyundai">Hyundai</option>
-                  <option value="Volkswagen">Volkswagen</option>
-                </select>
+                <Autosuggest
+                  suggestions={suggestions}
+                  onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                  onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                  getSuggestionValue={getSuggestionValue}
+                  renderSuggestion={renderSuggestion}
+                  inputProps={{className:"form-control", style:styles.inputOption, value:this.state.marca || '', onChange:this.handleMarca}}
+                />                
               </center>
             </div>
             <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
