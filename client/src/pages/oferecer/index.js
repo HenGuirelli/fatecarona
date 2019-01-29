@@ -96,7 +96,7 @@ class Oferecer extends Component {
 
     const now = new Date()
     const { rotas, userData, needLoad, veiculos } = this.props
-
+    console.log(veiculos)
     if (userData.email && needLoad) this.props.dispatch(buscarRotas(userData.email))
 
     return (
@@ -156,19 +156,20 @@ class Oferecer extends Component {
             <div style={{paddingBottom: '2em', margin: '0 1px', borderBottom: '2px solid grey'}}>
               <center style={styles.title}>VEÍCULO</center>
               <div  className="btn-group btn-group-toggle form-control" data-toggle="buttons" style={{border: 'none'}}>
-                {veiculos.map((car, key) => {
-                  if (car.ativo) {
-                    return <center className="col-6" key={key} onClick={() => this.handleVeiculo(car)}>
-                      <label className="btn loginBtn" style={styles.carBtn}>
-                        <input type="radio" id={"opt" + key} autoComplete="off" defaultChecked style={{position: 'absolute', display: 'none'}}/>
-                        <img style={{width: '3.5em', height: '1.5em', margin:'0'}} src={CarIcon} alt={"Car Logo"}/>
-                      </label>
-                      <div>{car.placa}</div>
-                    </center>
+                <div >
+                  {veiculos.map((car, key) => {
+                      return (
+                        <center className="col-6" key={key} onClick={() => this.handleVeiculo(car)}>
+                        <label className="btn loginBtn" style={styles.carBtn}>
+                          <input type="radio" id={"opt" + key} autoComplete="off" defaultChecked style={{position: 'absolute', display: 'none'}}/>
+                          <img style={{width: '3.5em', height: '1.5em', margin:'0'}} src={CarIcon} alt={"Car Logo"}/>
+                        </label>
+                        <div>{car.placa}</div>
+                      </center>
+                      )
+                  })
                   }
-                  return null
-                })
-                }
+                </div>
               </div>
             </div>
             <div style={{paddingBottom: '2em', margin: '0 1px', borderBottom: '2px solid grey'}}>

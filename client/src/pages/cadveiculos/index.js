@@ -5,6 +5,79 @@ import MaskedInput from 'react-maskedinput'
 import config from '../../config.json'
 import axios from 'axios'
 import popUp, { TIPO } from '../../components/PopUp'
+import Autosuggest from 'react-autosuggest';
+
+import './style.css'
+
+let marcas = [
+  { id: 0, marca: 'carregando...' }
+];
+
+let modelos = [
+  { id: 0, modelo: 'carregando...' }
+]
+
+// Marca
+function escapeRegexCharactersMarca(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function getSuggestionsMarca(value) {
+  const escapedValue = escapeRegexCharactersMarca(value.trim());
+  
+  if (escapedValue === '') {
+    return [];
+  }
+
+  const regex = new RegExp('^' + escapedValue, 'i');
+
+  return marcas.filter(language => regex.test(language.marca));
+}
+
+function getSuggestionValueMarca(suggestion) {
+  return suggestion.marca;
+}
+
+function renderSuggestionMarca(suggestion) {
+  return (
+    <span>{suggestion.marca}</span>
+  );
+}
+
+function getIdByNameMarca(name){
+  try {
+    return marcas.filter(marca => marca.marca === name)[0].id
+  } catch(err){
+    return 0
+  }
+}
+
+// Modelo
+function escapeRegexCharactersModelo(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function getSuggestionsModelo(value) {
+  const escapedValue = escapeRegexCharactersModelo(value.trim());
+  
+  if (escapedValue === '') {
+    return [];
+  }
+
+  const regex = new RegExp('^' + escapedValue, 'i');
+
+  return modelos.filter(language => regex.test(language.modelo));
+}
+
+function getSuggestionValueModelo(suggestion) {
+  return suggestion.modelo;
+}
+
+function renderSuggestionModelo(suggestion) {
+  return (
+    <span>{suggestion.modelo}</span>
+  );
+}
 
 class CadVeiculos extends Component{
   constructor(props) {
@@ -14,7 +87,8 @@ class CadVeiculos extends Component{
       marca: '',
       modelo: '',
       cor: '',
-      modelos: [],
+      suggestionsMarca: [],
+      suggestionsModelo: []
     };
   }
 
@@ -23,28 +97,46 @@ class CadVeiculos extends Component{
     if (event.target.value.length > 8) return
     this.setState({placa: event.target.value.toUpperCase()})
   }
-  handleMarca = (event) =>{
-    this.setState({marca: event.target.value})
+  handleMarca = (event, {newValue}) =>{
+    this.setState({marca: newValue})
+    this.loadModelo(getIdByNameMarca(newValue));
   }
-  handleModelo = (event) => {
-    this.setState({modelo: event.target.value})
+  handleModelo = (event, {newValue}) => {
+    this.setState({modelo:  newValue})
   }
   handleCor = (event) => {
     this.setState({cor: event.target.value})
   }
 
+  loadMarcas = async () => {
+    axios.get(config.endpoint + "/cars/marcas/*")
+    .then(result => {
+      marcas = result.data
+    })
+  }
 
-  loadModelo = () => {
+  loadModelo = (idMarca) => {
     axios.get(config.endpoint + "/cars/marcas/" + this.state.marca)
     .then(result =>{
-      axios.get(config.endpoint + "/cars/modelos/" + result.data[0].id)
-      .then(resultModelos =>{
-        this.setState({
-          modelos: resultModelos.data
+      try{
+        axios.get(config.endpoint + "/cars/modelos/" + idMarca)
+        .then(result =>{
+          modelos = result.data
+          this.setState({
+            modelos: result.data
+          })
         })
-      })
+      }catch(err){
+        this.setState({
+          modelos: []
+        })
+      }
     })
 
+  }
+
+  componentDidMount(){
+    this.loadMarcas()
   }
 
   handleSubmit = () => {
@@ -62,11 +154,35 @@ class CadVeiculos extends Component{
       popUp({tipo: TIPO.SUCESSO, text: "Veículo adicionado!"}, '/veiculos')
   }
 
+  // Marca
+  onSuggestionsFetchRequestedMarca = ({ value }) => {
+    this.setState({
+      suggestionsMarca: getSuggestionsMarca(value)
+    });
+  };
+
+  onSuggestionsClearRequestedMarca = () => {
+    this.setState({
+      suggestionsMarca: []
+    });
+  };
+
+  //Modelo
+  onSuggestionsFetchRequestedModelo = ({ value }) => {
+    this.setState({
+      suggestionsModelo: getSuggestionsModelo(value)
+    });
+  };
+
+  onSuggestionsClearRequestedModelo = () => {
+    this.setState({
+      suggestionsModelo: []
+    });
+  };
+
   render(){
-
-    if (this.state.marca !== '') this.loadModelo();
-
-    var modelos = this.state.modelos;
+    const { suggestionsMarca, suggestionsModelo } = this.state;
+    //if (this.state.marca !== '') this.loadModelo();
 
     const styles = {
       button: {
@@ -122,37 +238,34 @@ class CadVeiculos extends Component{
             <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
               <center>
                 <div className="col-6">MARCA</div>
-                <select className="form-control" style={styles.inputOption} value={this.state.marca || 'default'} onChange={this.handleMarca}>
-                  <option value="default">Selecione...</option>
-                  <option value="Chevrolet">Chevrolet</option>
-                  <option value="Fiat">Fiat</option>
-                  <option value="Ford">Ford</option>
-                  <option value="Hyundai">Hyundai</option>
-                  <option value="Volkswagen">Volkswagen</option>
-                </select>
+                <Autosuggest
+                  suggestions={suggestionsMarca}
+                  onSuggestionsFetchRequested={this.onSuggestionsFetchRequestedMarca}
+                  onSuggestionsClearRequested={this.onSuggestionsClearRequestedMarca}
+                  getSuggestionValue={getSuggestionValueMarca}
+                  renderSuggestion={renderSuggestionMarca}
+                  inputProps={{className:"form-control", style:styles.inputOption, value:this.state.marca || '', onChange:this.handleMarca}}
+                />
               </center>
             </div>
             <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
               <center>
                 <div className="col-6">MODELO</div>
-                  <select className="form-control" style={styles.inputOption}  value={this.state.modelo || 'default'} onChange={this.handleModelo}>
-                    <option value="default">Selecione...</option>
-                    {modelos ? modelos.map((modelo, key) =>
-                      <option value={modelo.modelo} key={key}>{modelo.modelo}</option>
-                    ) : null}
-                  </select>
+                  <Autosuggest
+                    suggestions={suggestionsModelo}
+                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequestedModelo}
+                    onSuggestionsClearRequested={this.onSuggestionsClearRequestedModelo}
+                    getSuggestionValue={getSuggestionValueModelo}
+                    renderSuggestion={renderSuggestionModelo}
+                    inputProps={{className:"form-control", style:styles.inputOption, value:this.state.modelo || '', onChange:this.handleModelo}}
+                  />
                 </center>
             </div>
             <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
               <center>
                 <div className="col-6">COR</div>
-                  <select className="form-control" style={styles.inputOption} value={this.state.cor || 'default'} onChange={this.handleCor}>
-                    <option value="default">Selecione...</option>
-                    <option value="BRANCO">BRANCO</option>
-                    <option value="PRETO">PRETO</option>
-                    <option value="VERMELHO">VERMELHO</option>
-                  </select>
-                </center>
+                  <input className="form-control" style={styles.inputOption} value={this.state.cor || ''} onChange={this.handleCor} />
+              </center>
             </div>
             <input type="button" value="Adicionar" onClick={this.handleSubmit} className="btn loginBtn form-control" style={styles.button}/>
           </form>
