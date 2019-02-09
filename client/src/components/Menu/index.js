@@ -14,8 +14,8 @@ import menuContent from './menuContent'
 import { Link } from 'react-router-dom'
 
 const withLink = item =>  (
-	<Link to={item.route}>
-		<ListItem button key={item.text}>
+	<Link to={item.route} key={item.text}>
+		<ListItem button >
 			<ListItemIcon> { item.icon } </ListItemIcon>
 			<ListItemText primary={item.text} />
 		</ListItem>
