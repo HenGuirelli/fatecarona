@@ -3,7 +3,7 @@ import CarIcon  from '../Veiculo/veiculo_preto.png'
 
 export default class InfoVeiculo extends Component {
   render() {
-    const { marca, modelo, placa } = this.props
+    const { marca, modelo, placa, viagens } = this.props
     return(
       <div >
         <div className="row">
@@ -13,7 +13,7 @@ export default class InfoVeiculo extends Component {
           </div>
           <div className="col-6">
             <div style={{fontSize: "15px"}}>{marca}, {modelo}</div>
-            <div>Já fez 4 viagens</div>
+            <div>Já fez {viagens} viagens</div>
           </div>
         </div>
       </div>

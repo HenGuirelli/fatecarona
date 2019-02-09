@@ -1,0 +1,16 @@
+.score-carona {
+    display: flex;
+    margin-top: 2.3em;
+    justify-content: space-around;
+}
+
+.score-buscas {
+    display: flex;
+    margin-top: 2.3em;
+    justify-content: space-around;
+}
+
+.score-buscas .avatar {
+    width: 70px;
+    height: 70px;
+}
