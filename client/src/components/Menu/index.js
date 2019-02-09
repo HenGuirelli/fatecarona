@@ -10,15 +10,24 @@ import MenuIcon from '@material-ui/icons/Menu'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import InboxIcon from '@material-ui/icons/MoveToInbox'
-import MailIcon from '@material-ui/icons/Mail'
-import menuContent from './menuContent.json'
+import menuContent from './menuContent'
 import { Link } from 'react-router-dom'
 
-const icons = {
-  'Home': <MailIcon />,
-  'Editar Perfil': <InboxIcon />
-}
+const withLink = item =>  (
+	<Link to={item.route}>
+		<ListItem button key={item.text}>
+			<ListItemIcon> { item.icon } </ListItemIcon>
+			<ListItemText primary={item.text} />
+		</ListItem>
+	</Link>
+)
+
+const withAction = item => (
+	<ListItem button key={item.text} onClick={item.action}>
+		<ListItemIcon> { item.icon } </ListItemIcon>
+		<ListItemText primary={item.text} />
+	</ListItem>
+)
 
 class Menu extends React.Component {
   state = {
@@ -36,19 +45,12 @@ class Menu extends React.Component {
   render() {
     const { open } = this.state
 	const sideList = (
-	<Fragment>		
-		<Divider />
-		<List>
-			{menuContent.itens.map((item, index) => (
-			<Link to={item.route}>
-				<ListItem button key={item.text}>
-				<ListItemIcon> { icons[item.text] } </ListItemIcon>
-				<ListItemText primary={item.text} />
-				</ListItem>
-			</Link>
-			))}
-		</List>
-	</Fragment>
+		<Fragment>		
+			<Divider />
+			<List>
+				{menuContent.map((item, index) => (	item.route ? withLink(item) : withAction(item) ))}
+			</List>
+		</Fragment>
 	)
 
     return (
