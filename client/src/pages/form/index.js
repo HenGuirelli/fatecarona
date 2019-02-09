@@ -2,16 +2,15 @@ import React, { Component } from 'react'
 import logo from './login_fatecarona.svg'
 import { logIn } from '../../actions/userActions'
 import popUp, { TIPO } from '../../components/PopUp'
-import TextFieldOutlined from '../../components/Form/TextField'
 import { Typography } from '@material-ui/core'
 import './style.css'
-import ContainedButton from '../../components/Form/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
+import ContainedButton from '../../components/Form/Button'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
 
-import Avatar from '@material-ui/core/Avatar';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Avatar from '@material-ui/core/Avatar'
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import { OutlinedTextField } from '../../components/Form/TextField'
 
 class LoginForm extends Component {
   constructor() {
@@ -63,10 +62,8 @@ class LoginForm extends Component {
 						Login
 					</Typography>
 					<CardContent>
-						<TextFieldOutlined label="Email" className="component"/>
-						<br />
-						<TextFieldOutlined label="Senha" type="password" onChange={this.handlePasswrod} className="component" />
-						<br />
+						<OutlinedTextField label="Email" className="component" block/>
+						<OutlinedTextField label="Senha" type="password" onChange={this.handlePasswrod} className="component" block/>
 					</CardContent>
 					<CardContent>
 						<ContainedButton color="primary" className="component button" onClick={() => console.log('button clicked')}>Logar</ContainedButton>

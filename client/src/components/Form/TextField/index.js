@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import TextField from '@material-ui/core/TextField';
 
-class LoginTextField extends React.Component {
+class DefaultTextFieldCore extends React.Component {
   state = {
     value: ''
   };
+
+  constructor(props, variant){
+    super(props)
+    this.variant = variant
+  }
 
   handleChange = event => {
     this.setState({
@@ -19,14 +24,32 @@ class LoginTextField extends React.Component {
   render() {
     const { onChange, ...props } = this.props
     return (
+      <Fragment>
         <TextField
           value={this.state.value}
           onChange={this.handleChange}
-          variant="outlined"
+          variant={this.variant}
           { ...props }
         />
+        { this.props.block ? <br /> : null }
+      </Fragment>
     );
   }
 }
 
-export default LoginTextField;
+class OutlinedTextField extends DefaultTextFieldCore {
+  constructor(props){
+    super(props, 'outlined')
+  }
+}
+
+class DefaultTextField extends DefaultTextFieldCore {
+  constructor(props){
+    super(props, 'standard')
+  }
+}
+
+export {
+  OutlinedTextField,
+  DefaultTextField
+}

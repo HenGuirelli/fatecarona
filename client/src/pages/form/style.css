@@ -1,10 +1,7 @@
 .login .component {
-    width: 60%;
+    margin-top: var(--margin-form-components);
+    width: var(--width-form-components);
     min-width: 280px;
-}
-
-.login .component {
-    margin-top: 1.3em;
 }
 
 .login .card {

@@ -1,6 +1,9 @@
 :root {
   --primary-main: #673ab7;
   --secondary-main: #f44336;
+
+  --margin-form-components: 1.3em;
+  --width-form-components: 60%;
 }
 .centralize {
   margin: 0 auto !important;
@@ -11,5 +14,5 @@
 }
 
 body {
-  background-color: var(--primary-main);
+  background-color: #fafafa;
 }
