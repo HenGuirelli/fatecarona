@@ -1,63 +1,15 @@
-.App-title {
-  font-size: 1.5em;
+:root {
+  --primary-main: #673ab7;
+  --secondary-main: #f44336;
+}
+.centralize {
+  margin: 0 auto !important;
 }
 
-.ftc {
-  background-color: #6E4D8B;
+.centralize-content {
+  text-align: center;
 }
 
-.btnLift {
-  font-size: 13px;
-  border: 1px solid #d3d3d3;
-}
-
-.btnLift:hover {
-  background-color: #a8cf45;
-  outline: none;
-}
-
-.btnChat {
-  background-color: rgb(110, 77, 139);
-  color: white;
-  border-radius: 8px;
-  margin-left: 5px;
-  margin-right: 10px;
-  outline: none;
-}
-
-.btnChat:active {
-  background-color: white;
-  color: rgb(110, 77, 139);
-  border: 1px solid rgb(110, 77, 139);
-}
-
-.textInput {
-  border: 2px solid #6E4D8B;
-}
-
-.active,
-.loginBtn:active {
-  background-color: #a8cf45 !important;
-  color: #6E4D8B !important;
-}
-
-@media (min-width: 600px) {
-  .formLogin {
-    width: 600px;
-    margin: 0 auto;
-  }
-}
-
-a:hover {
-  text-decoration: none;
-}
-
-.pageBase {
-  height: 100%;
-  height: -moz-available;
-  height: stretch;
-}
-
-.App-intro {
-  font-size: large;
+body {
+  background-color: var(--primary-main);
 }

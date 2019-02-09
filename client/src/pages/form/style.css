@@ -1,0 +1,20 @@
+.login .component {
+    width: 60%;
+    min-width: 280px;
+}
+
+.login .component {
+    margin-top: 1.3em;
+}
+
+.login .card {
+    max-width: 640px;
+    padding: 25px;
+    margin: 0 auto;
+    margin-top: 10%;
+}
+
+.login .avatar {    
+    background-color: var(--secondary-main);
+    margin: 0 auto;
+}

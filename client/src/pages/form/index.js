@@ -1,8 +1,17 @@
 import React, { Component } from 'react'
 import logo from './login_fatecarona.svg'
-import { connect } from 'react-redux'
 import { logIn } from '../../actions/userActions'
 import popUp, { TIPO } from '../../components/PopUp'
+import TextFieldOutlined from '../../components/Form/TextField'
+import { Typography } from '@material-ui/core'
+import './style.css'
+import ContainedButton from '../../components/Form/Button';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+
+import Avatar from '@material-ui/core/Avatar';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 class LoginForm extends Component {
   constructor() {
@@ -15,10 +24,6 @@ class LoginForm extends Component {
 
   handleEmail = (event) => {
     this.setState({email: event.target.value.toLowerCase()})
-  };
-
-  handlePassword = (event) => {
-    this.setState({password: event.target.value})
   };
 
   abrirCadastro = () => {
@@ -41,102 +46,40 @@ class LoginForm extends Component {
       }
       this.props.dispatch(logIn(email, this.state.password, this.props.firebase))
   }
-
-  componentWillMount() {
-    this.props.history.push('/')
-  }
-
-  componentDidMount() {
-    if (this.props.error) popUp({tipo: TIPO.ERRO, text: 'Usuário e/ou senha inválidos!'})
+  
+  handlePasswrod = event => {
+    console.log(event.target.value)
   }
 
   render() {
-    const styles = {
-      button: {
-        margin: '5px 0',
-        borderRadius: '25px',
-        backgroundColor: 'transparent',
-        borderColor: '#a8cf45',
-        color: '#a8cf45',
-        fontSize: '25px',
-      },
-      buttonRecuperar: {
-        margin: '5px 0',
-        borderRadius: '25px',
-        backgroundColor: 'transparent',
-        borderColor: '#a8cf45',
-        color: '#a8cf45',
-        fontSize: '25px',
-
-      },
-      inputText: {
-        margin: '25px 0',
-        borderRadius: '25px',
-      },
-      root: {
-        marginTop: '-58px',
-        paddingTop: '5em',
-        backgroundColor: '#6E4D8B',
-        marginBottom: '-5000px',
-        paddingBottom: '5000px',
-        overflow: 'hidden'
-      }
-    }
-
-    //const { initState, firebase, user } = this.props
     return (
-      <div style={styles.root}>
-        <img src={logo} alt="" className="img-fluid mx-auto d-block"/>
-        <div className="container">
-          <form onSubmit={this.handleSubmit} className="">
-              <input
-                placeholder="Usuário"
-                style={styles.inputText}
-                value={this.state.email}
-                onChange={this.handleEmail}
-                className="form-control"
-              />
-              <input
-                placeholder="Senha"
-                style={styles.inputText}
-                value={this.state.password}
-                onChange={this.handlePassword}
-                type="password"
-                className="form-control"
-              />
-            <input
-              type="submit"
-              className="btn btn-block loginBtn"
-              style={styles.button}
-              value="Entrar"
-            />
-
-          </form>
-            <input
-                type="button"
-                className="btn btn-block loginBtn"
-                style={styles.button}
-                value="Cadastrar"
-                onClick={this.abrirCadastro}
-            />
-            <input
-                type="button"
-                className="btn btn-block loginBtn"
-                style={styles.buttonRecuperar}
-                value="Esqueci a senha"
-                onClick={this.abrirRecuperar}
-            />
-        </div>
-      </div>
+		<main className="login">
+			<Typography component='div' align='center'>
+				<Card className="card">
+          <Avatar className="avatar">
+						<LockOutlinedIcon />
+					</Avatar>
+					<Typography component='h1' variant='h5'>
+						Login
+					</Typography>
+					<CardContent>
+						<TextFieldOutlined label="Email" className="component"/>
+						<br />
+						<TextFieldOutlined label="Senha" type="password" onChange={this.handlePasswrod} className="component" />
+						<br />
+					</CardContent>
+					<CardContent>
+						<ContainedButton color="primary" className="component button" onClick={() => console.log('button clicked')}>Logar</ContainedButton>
+						<br />
+						<ContainedButton color="primary" className="component button" onClick={() => console.log('button clicked')}>Cadastrar</ContainedButton>
+						<br />
+						<ContainedButton color="primary" variant="outlined" className="component button" onClick={() => console.log('button clicked')}>Esqueci minha senha</ContainedButton>
+					</CardContent>
+				</Card>
+			</Typography>
+		</main>
     );
   }
 }
 
-export default connect(store => {
-  return {
-    initState: store.user.initState,
-    firebase: store.user.firebase,
-    user: store.user.user,
-    error: store.user.error,
-  }
-})(LoginForm)
+export default LoginForm

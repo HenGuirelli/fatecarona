@@ -27,27 +27,10 @@ import { setFirebase, updateUser, unsetUser,setUserData } from './actions/userAc
 import * as firebase from 'firebase'
 import menuItems from './menuItems'
 import popUp, { TIPO } from './components/PopUp'
+import 'typeface-roboto'
 
-class App extends Component {
-  componentWillMount() {
-    firebase.initializeApp({
-      "apiKey": "AIzaSyA9RLVdFNQblRw4NrVOViAGVvzGsd3EpxE",
-      "authDomain": "fatecarona.firebaseapp.com",
-      "databaseURL": "https://fatecarona.firebaseio.com",
-      "projectId": "fatecarona",
-      "storageBucket": "fatecarona.appspot.com",
-      "messagingSenderId": "232610915822"
-    })
-    this.props.dispatch(setFirebase(firebase))
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.props.dispatch(updateUser(user))
-        this.props.dispatch(setUserData(user.email.split('@')[0]));
-      } else {
-        this.props.dispatch(unsetUser())
-      }
-    })
-  }
+
+class App extends Component { 
 
   logOut() {
     popUp({ 
@@ -58,28 +41,12 @@ class App extends Component {
   }
 
   render() {
-    const { history, user, pending, needReload, userData } = this.props
-    menuItems.forEach(element => element.selected = false)
-    let item = menuItems.find(element => element.path === history.location.pathname)
-    if (item) item.selected = true
-
-    if (pending) return null
-    if (needReload) this.props.dispatch(setUserData(user.email.split('@')[0]))
-
-    let isLogged = false
-    //if localStorage gets more data then this should be treated differently
-
-    if (history.location.pathname !== '/recuperarsenha' && history.location.pathname !== '/cadastro'){
-      if (!window.localStorage.key(0)) return <Auth history={history} alert={false}/>
-      if (!user.emailVerified) return <Verify firebase={firebase} logOut={this.logOut.bind(this)}/>
-      isLogged = true;
-    }
-
+   
     return (
-      <div className="App">
-        {isLogged ? <NavBar logOut={this.logOut.bind(this)} userData={userData} menuItems={menuItems} /> : null}
+      <div className="App">       
         <Switch>
           <Route exact path="/" component={MainPage}/>
+          <Route exact path="/login" component={Auth}/>
           <Route exact path="/rotas" component={Rotas}/>
           <Route path="/rotas/alterar" component={AlterarRota}/>
           <Route path="/rotas/adicionar" component={AdicionarRota}/>
