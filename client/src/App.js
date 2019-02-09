@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Route, withRouter, Switch } from 'react-router-dom'
 import './App.css'
-import NavBar from './components/NavBar'
 import AdicionarRota from './pages/adicionarRota'
 import Rotas from './pages/rotas'
 import AlterarRota from './pages/alterarota'
@@ -29,6 +28,8 @@ import menuItems from './menuItems'
 import popUp, { TIPO } from './components/PopUp'
 import 'typeface-roboto'
 
+import Menu from './components/Menu'
+
 
 class App extends Component { 
 
@@ -43,7 +44,8 @@ class App extends Component {
   render() {
    
     return (
-      <div className="App">       
+      <div className="App">
+        <Menu />  
         <Switch>
           <Route exact path="/" component={MainPage}/>
           <Route exact path="/login" component={Auth}/>

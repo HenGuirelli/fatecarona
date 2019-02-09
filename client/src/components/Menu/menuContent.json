@@ -1,0 +1,40 @@
+{
+    "itens": [
+        {
+            "text": "Home",
+            "route": "/"
+        },
+        {
+            "text": "Editar Perfil",
+            "route": "/perfil"
+        },
+        {
+            "text": "Quero Carona",
+            "route": "/"
+        },
+        {
+            "text": "Oferecer Carona",
+            "route": "/"
+        },
+        {
+            "text": "Meus Trajetos",
+            "route": "/"
+        },
+        {
+            "text": "Minhas Caronas",
+            "route": "/"
+        },
+        {
+            "text": "Meus Veiculos",
+            "route": "/"
+        },
+        {
+            "text": "Notificações",
+            "route": "/"
+        },
+        {
+            "text": "Logout",
+            "route": "/"
+        }
+    ]
+}
