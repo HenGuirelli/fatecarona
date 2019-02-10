@@ -1,0 +1,7 @@
+.list-veiculo .avatar {
+    width: 80px;
+}
+
+.list-veiculo .item:not(:first-child) {
+    margin-top: 1.3em;
+}
