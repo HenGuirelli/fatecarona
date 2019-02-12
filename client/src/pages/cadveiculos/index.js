@@ -9,6 +9,8 @@ import Autosuggest from 'react-autosuggest';
 
 import './style.css'
 
+const mask = 'AAA-1111'
+
 let marcas = [
   { id: 0, marca: 'carregando...' }
 ];
@@ -275,10 +277,4 @@ class CadVeiculos extends Component{
   }
 }
 
-export default connect(store => {
-  return {
-    user: store.user.user,
-    userData: store.user.userData,
-    veiculos: store.car.veiculos,
-  }
-})(CadVeiculos)
+export default CadVeiculos

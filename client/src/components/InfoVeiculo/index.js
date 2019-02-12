@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import CarIcon  from '../Veiculo/veiculo_preto.png'
+import CarIcon  from '../ListVeiculo/veiculo_preto.png'
 
 export default class InfoVeiculo extends Component {
   render() {

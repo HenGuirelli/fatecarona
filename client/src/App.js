@@ -17,7 +17,6 @@ import GerencCaronas from './components/LiftPend'
 import ResultCaronas from './pages/resultCaronas'
 import Config from './pages/config'
 import Veiculos from './pages/veiculos'
-import AtivarVeic from './pages/ativarveic'
 import CadVeiculo from './pages/cadveiculos'
 import Recuperar from './pages/recuperar'
 import Cadastro from './pages/cadastro'
@@ -60,7 +59,6 @@ class App extends Component {
           <Route path="/caronas/gerenciar" component={GerencCaronas}/>
           <Route path="/caronas/offer" component={Oferecer}/>
           <Route exact path="/veiculos" component={Veiculos}/>
-          <Route path="/veiculos/ativar" component={AtivarVeic}/>
           <Route path="/veiculos/cadastrar" component={CadVeiculo}/>
           <Route path="/recuperarsenha" component={Recuperar}/>
           <Route path="/cadastro" component={Cadastro}/>
