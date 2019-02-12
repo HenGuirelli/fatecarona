@@ -57,3 +57,9 @@
     background-color: #ddd;
   }
   
+  .cadastro-veiculo > .veiculos .component {
+    display: flex;
+    margin-top: 1.3em !important;
+    min-width: 250px;
+    width: 60%;
+  }

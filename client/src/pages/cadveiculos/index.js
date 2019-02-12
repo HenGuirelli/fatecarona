@@ -6,6 +6,8 @@ import config from '../../config.json'
 import axios from 'axios'
 import popUp, { TIPO } from '../../components/PopUp'
 import Autosuggest from 'react-autosuggest';
+import { FormattedInput, OutlinedTextField } from '../../components/Form/TextField'
+import Button from '../../components/Form/Button'
 
 import './style.css'
 
@@ -184,95 +186,28 @@ class CadVeiculos extends Component{
 
   render(){
     const { suggestionsMarca, suggestionsModelo } = this.state;
-    //if (this.state.marca !== '') this.loadModelo();
-
-    const styles = {
-      button: {
-        margin: '25px 0',
-        borderRadius: '8px',
-        backgroundColor: '#6E4D8B',
-        borderColor: '#ffffff',
-        color: '#ffffff',
-        fontSize: '20px',
-        width: '70%',
-        marginLeft: '15%'
-      },
-      inputText: {
-        borderRadius: '10px',
-        borderWidth: '1.5px',
-        borderColor: '#6E4D8B',
-        width: '8em',
-        textAlign:'center'
-      },
-      inputOption: {
-        width: '80%',
-        borderRadius: '7px',
-        borderWidth: '1px',
-        borderColor: '#6E4D8B'
-      },
-      inputNumber: {
-        width: '10em',
-      },
-      borderNumber:{
-        borderRadius: '7px',
-        borderWidth: '1px',
-        borderColor: '#6E4D8B',
-        textAlign: 'center',
-        width: '5em'
-      }
-    }
+  
     return(
-      <div className="pageBase">
-        <div className="container">
-          <form className="form-group">
-            <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
-              <center>
-                <div className="col-6">PLACA</div>
-                <MaskedInput
-                  style={styles.inputText}
-                  mask='AAA-1111'
-                  className="form-control"
-                  value={this.state.placa}
-                  onChange={this.handlePlaca}
-                />
-              </center>
-            </div>
-            <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
-              <center>
-                <div className="col-6">MARCA</div>
-                <Autosuggest
-                  suggestions={suggestionsMarca}
-                  onSuggestionsFetchRequested={this.onSuggestionsFetchRequestedMarca}
-                  onSuggestionsClearRequested={this.onSuggestionsClearRequestedMarca}
-                  getSuggestionValue={getSuggestionValueMarca}
-                  renderSuggestion={renderSuggestionMarca}
-                  inputProps={{className:"form-control", style:styles.inputOption, value:this.state.marca || '', onChange:this.handleMarca}}
-                />
-              </center>
-            </div>
-            <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
-              <center>
-                <div className="col-6">MODELO</div>
-                  <Autosuggest
-                    suggestions={suggestionsModelo}
-                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequestedModelo}
-                    onSuggestionsClearRequested={this.onSuggestionsClearRequestedModelo}
-                    getSuggestionValue={getSuggestionValueModelo}
-                    renderSuggestion={renderSuggestionModelo}
-                    inputProps={{className:"form-control", style:styles.inputOption, value:this.state.modelo || '', onChange:this.handleModelo}}
-                  />
-                </center>
-            </div>
-            <div style={{padding: '2em 0', margin: '0 1px', borderBottom: '2px solid grey'}}>
-              <center>
-                <div className="col-6">COR</div>
-                  <input className="form-control" style={styles.inputOption} value={this.state.cor || ''} onChange={this.handleCor} />
-              </center>
-            </div>
-            <input type="button" value="Adicionar" onClick={this.handleSubmit} className="btn loginBtn form-control" style={styles.button}/>
-          </form>
-        </div>
-      </div>
+		<div className='cadastro-veiculo'>
+			<div className='veiculos'>
+				<FormattedInput 
+					label='PLACA' 
+					mask={[/[A-Z]/, /[A-Z]/, /[A-Z]/, '-', /[1-9]/, /[1-9]/, /[1-9]/, /[1-9]/ ]}
+					variant='outlined'			
+					className='component centralize'
+				/>
+				<OutlinedTextField label='Marca'
+					className='component centralize'
+				/>
+				<OutlinedTextField label='Modelo' 
+					className='component centralize'
+				/>
+				<OutlinedTextField label='Cor' 
+					className='component centralize'
+				/>
+				<Button className='component centralize'> Adicionar </Button>
+			</div>
+		</div>    
     )
   }
 }
