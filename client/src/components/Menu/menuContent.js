@@ -32,7 +32,7 @@ const itens =
     },
     {
         text: "Meus Veiculos",
-        route: "/"
+        route: "/veiculos"
     },
     {
         text: "Notificações",

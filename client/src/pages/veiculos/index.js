@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Veiculo from '../../components/ListVeiculo'
+import Veiculo from '../../components/Veiculo/ListVeiculo'
 import { connect } from 'react-redux'
 import { ativar, loadCar } from '../../actions/carActions'
 import popUp, { TIPO } from '../../components/PopUp'
