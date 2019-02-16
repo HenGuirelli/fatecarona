@@ -1,16 +1,18 @@
-import React, { Fragment } from 'react';
-import TextField from '@material-ui/core/TextField';
-
-import MaskedInput from 'react-text-mask';
-import NumberFormat from 'react-number-format';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
+import React, { Fragment } from 'react'
+import TextField from '@material-ui/core/TextField'
+import MenuItem from '@material-ui/core/MenuItem'
+import MaskedInput from 'react-text-mask'
+import './style.css'
+import Input from '@material-ui/core/Input'
+import Select from '@material-ui/core/Select'
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
+import OutlinedInput from '@material-ui/core/OutlinedInput'
 
 class DefaultTextFieldCore extends React.Component {
   state = {
     value: ''
-  };
+  }
 
   constructor(props, variant){
     super(props)
@@ -20,12 +22,12 @@ class DefaultTextFieldCore extends React.Component {
   handleChange = event => {
     this.setState({
       value: event.target.value,
-    });
+    })
 
     const { onChange } = this.props
     if (onChange)
         onChange(event)
-  };
+  }
 
   render() {
     const { onChange, ...props } = this.props
@@ -39,7 +41,7 @@ class DefaultTextFieldCore extends React.Component {
         />
         { this.props.block ? <br /> : null }
       </Fragment>
-    );
+    )
   }
 }
 
@@ -57,34 +59,34 @@ class DefaultTextField extends DefaultTextFieldCore {
 
 const TextMaskCustom = (props) => {
     console.log(props)
-    const { inputRef, ...other } = props;
+    const { inputRef, ...other } = props
 
     return (
       <MaskedInput
         {...other}
         ref={ref => {
-          inputRef(ref ? ref.inputElement : null);
+          inputRef(ref ? ref.inputElement : null)
         }}
         mask={[/[A-Z]/, /[A-Z]/, /[A-Z]/, '-', /[1-9]/, /[1-9]/, /[1-9]/, /[1-9]/ ]}
         placeholderChar={'\u2000'}
         showMask
       />
-    );
+    )
   }
 
 class FormattedInput extends React.Component {
   state = {
     value: '',
-  };
+  }
 
   handleChange = event => {
     this.setState({
       value: event.target.value,
-    });
-  };
+    })
+  }
 
   render() {
-    const { textmask, value } = this.state;
+    const { textmask, value } = this.state
     const { label, mask, ...restProps } = this.props
 
     return (
@@ -95,12 +97,90 @@ class FormattedInput extends React.Component {
           inputComponent={TextMaskCustom}
           { ...restProps }
         />
-    );
+    )
   }
+}
+
+// TODO: implements masked textInputs
+class TelephoneInput extends React.Component {
+	render() {
+		return <FormattedInput {...this.props} variant='outlined' mask={[/[A-Z]/, /[A-Z]/, /[A-Z]/, '-', /[1-9]/, /[1-9]/, /[1-9]/, /[1-9]/ ]}/>
+	}
+}
+
+/// defaultValue, label
+const TimePicker = (props) => {
+	const { className, ...restProps } = props
+	return (
+		<TextField
+			type='time'
+			InputLabelProps={{
+				shrink: true,
+			}}
+			inputProps={{
+				step: 300, // 5 min
+			}}
+			variant='outlined'
+			className={`time-picker ${className}`}
+			{ ...restProps }
+		/>
+	)
+}
+
+
+const fillZeros = (length, value) => '0'.repeat(length - value.length) + value
+
+const DatePicker = (props) => {
+	const { className, ...restProps } = props
+
+	let today = new Date();
+	let dd = today.getDate();
+	let mm = today.getMonth() + 1; // january is 0
+	let yyyy = today.getFullYear();
+
+	return (
+		<TextField
+			type='date'
+			InputLabelProps={{
+				shrink: true,
+			}}
+			variant='outlined'
+			className={`time-picker ${className}`}
+			defaultValue={`${yyyy}-${fillZeros(2, mm.toString())}-${fillZeros(2, dd.toString())}`}
+			{ ...restProps }
+		/>
+	)
+}
+
+class ComboBox extends React.Component {
+	state = { value: '' }
+
+	handleChange = (event) => this.setState({ value: event.target.value })
+
+	render(){
+		const { options, label } = this.props
+		return (
+			<FormControl>
+				<InputLabel>{ label }</InputLabel>
+				<Select
+					className='combo-box'
+					value={this.state.value}
+					onChange={this.handleChange}
+					input={<OutlinedInput labelWidth={200} />}
+				>
+					{options.map((option, index) => <MenuItem key={`menu-item-${index}`} value={option}> {option} </MenuItem>)}
+				</Select>
+			</FormControl>
+		)
+	}
 }
 
 export {
   OutlinedTextField,
   DefaultTextField,
-  FormattedInput
+  FormattedInput,
+  TimePicker,
+  DatePicker,
+  TelephoneInput,
+  ComboBox
 }
