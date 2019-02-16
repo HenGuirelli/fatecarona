@@ -49,7 +49,8 @@ class Motorista extends React.Component {
             <Divider light />
                 
             <div className='carros'>
-                { this.getAllCars().map(carro => InfoVeiculoWrapper(<InfoVeiculo marca={carro.marca} modelo={carro.modelo} placa={carro.placa} />))}
+                { this.getAllCars().map((carro, index) => 
+                    InfoVeiculoWrapper(<InfoVeiculo key={`home-carro-${index}`} marca={carro.marca} modelo={carro.modelo} placa={carro.placa} />))}
             </div>
             </Fragment>
         )

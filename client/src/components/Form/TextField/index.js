@@ -8,6 +8,7 @@ import Select from '@material-ui/core/Select'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import OutlinedInput from '@material-ui/core/OutlinedInput'
+import { fillZeros } from '../../../utils'
 
 class DefaultTextFieldCore extends React.Component {
   state = {
@@ -126,9 +127,6 @@ const TimePicker = (props) => {
 		/>
 	)
 }
-
-
-const fillZeros = (length, value) => '0'.repeat(length - value.length) + value
 
 const DatePicker = (props) => {
 	const { className, ...restProps } = props
