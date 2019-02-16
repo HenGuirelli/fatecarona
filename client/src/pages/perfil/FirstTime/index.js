@@ -2,14 +2,14 @@ import React, { Fragment } from 'react'
 import Step from '@material-ui/core/Step'
 import Stepper from '@material-ui/core/Stepper'
 import StepLabel from '@material-ui/core/StepLabel'
-import DadosPessoais from '../../../components/perfil/DadosPessoais';
-import PerfilMotorista from '../../../components/perfil/motorista';
+import DadosPessoais from '../../../components/perfil/DadosPessoais'
+import PerfilMotorista from '../../../components/perfil/motorista'
 import Button from '../../../components/Form/Button'
 import MobileStepper from '@material-ui/core/MobileStepper'
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
+import { Paper, Typography } from '@material-ui/core'
 import './style.css'
-import { Paper, Typography } from '@material-ui/core';
 
 const steps = ['Dados Pessoais', 'Motorista', 'Carros', 'Trajetos']
 
@@ -31,7 +31,7 @@ const FinalPage = props => (
 )
 
 const DesktopStepper = props => (
-    <Fragment>
+    <div className='desktop-stepper'>
         <Stepper activeStep={props.activeStep} className='stepper-first-time'>
             {steps.map(label => (
                 <Step key={label} className='step-item'>
@@ -41,9 +41,17 @@ const DesktopStepper = props => (
         </Stepper>
         { props.children }
         <br />
-        <Button onClick={props.handlePrevious} disabled={props.previousButtonDisabled}> Anterior </Button>
-        <Button onClick={props.handleNext} disabled={props.nextButtonDisabled}> Próximo </Button>
-    </Fragment>
+        <div className='buttons-desktop'>
+            <Button onClick={props.handlePrevious} disabled={props.previousButtonDisabled}> 
+                <KeyboardArrowLeft />
+                Anterior 
+            </Button>
+            <Button onClick={props.handleNext} disabled={props.nextButtonDisabled}> 
+                Próximo 
+                <KeyboardArrowRight />
+            </Button>
+        </div>
+    </div>
 )
 
 const MyMobileStepper = props => (
@@ -67,7 +75,7 @@ const MyMobileStepper = props => (
                 backButton={
                 <Button size="small" onClick={props.handlePrevious} disabled={props.previousButtonDisabled}>
                     <KeyboardArrowLeft />
-                    Atenrior
+                    Anterior
                 </Button>
                 }
         />
@@ -91,17 +99,16 @@ class FirstTime extends React.Component {
     }
     
     componentDidMount() {
-        this.updateWindowDimensions();
-        window.addEventListener('resize', this.updateWindowDimensions);
+        this.updateWindowDimensions()
+        window.addEventListener('resize', this.updateWindowDimensions)
     }
   
     componentWillUnmount() {
-        window.removeEventListener('resize', this.updateWindowDimensions);
+        window.removeEventListener('resize', this.updateWindowDimensions)
     }
   
     updateWindowDimensions() {        
-        this.setState({ width: window.innerWidth, height: window.innerHeight });
-        console.log(this.state.width)
+        this.setState({ width: window.innerWidth, height: window.innerHeight })
     }
 
     handleNext = event => {
@@ -122,36 +129,35 @@ class FirstTime extends React.Component {
 
     render(){
         const { activeStep } = this.state
-        return (
-            <Fragment>
-                { this.state.width <= mobileStepperWidth ? 
-                    <MyMobileStepper 
-                        activeStep={activeStep} 
-                        handlePrevious={this.handlePrevious}
-                        handleNext={this.handleNext}
-                        nextButtonDisabled={this.state.nextButtonDisabled}
-                        previousButtonDisabled={this.state.previousButtonDisabled}
-                        label={steps[activeStep]}
-                    > 
-                        { getStepContent(activeStep) } 
-                    </MyMobileStepper> 
-                    :
-                    <DesktopStepper 
-                        activeStep={activeStep}
-                        handlePrevious={this.handlePrevious}
-                        handleNext={this.handleNext}
-                        nextButtonDisabled={this.state.nextButtonDisabled}
-                        previousButtonDisabled={this.state.previousButtonDisabled}
-                    >
-                        { getStepContent(activeStep) }
-                    </DesktopStepper> 
-                }
+        
+        const isMobile = this.state.width <= mobileStepperWidth
 
-                
-
-                <br />
-            </Fragment>
-        )
+        if (isMobile){
+            return (
+                <MyMobileStepper 
+                    activeStep={activeStep} 
+                    handlePrevious={this.handlePrevious}
+                    handleNext={this.handleNext}
+                    nextButtonDisabled={this.state.nextButtonDisabled}
+                    previousButtonDisabled={this.state.previousButtonDisabled}
+                    label={steps[activeStep]}
+                > 
+                    { getStepContent(activeStep) } 
+                </MyMobileStepper> 
+            )
+        }else {
+            return (
+                <DesktopStepper 
+                    activeStep={activeStep}
+                    handlePrevious={this.handlePrevious}
+                    handleNext={this.handleNext}
+                    nextButtonDisabled={this.state.nextButtonDisabled}
+                    previousButtonDisabled={this.state.previousButtonDisabled}
+                >
+                    { getStepContent(activeStep) }
+                </DesktopStepper> 
+            )
+        }
     }
 }
 
