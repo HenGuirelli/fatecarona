@@ -1,18 +1,7 @@
 import React, { Component } from 'react'
 import Veiculo from '../../components/Veiculo/ListVeiculo'
-import { connect } from 'react-redux'
 import { ativar, loadCar } from '../../actions/carActions'
 import popUp, { TIPO } from '../../components/PopUp'
-
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-
 import Button from '../../components/Form/Button'
 import './style.css'
 
@@ -54,17 +43,18 @@ class Veiculos extends Component{
   }
 
 
-  render(){
-    return (
-      <div className='page-veiculos'>
-        <Veiculo veiculos={veiculos} />
-        <center>
-          <Button className='btn-adicionar'> Adicionar </Button>
-        </center>
-      </div>
-    )      
-    }
-  }
-
+	render(){
+		return (
+		<div className='page-veiculos'>
+			<Veiculo veiculos={veiculos} />
+			<center>
+					<Button onClick={() => window.location.href = '/veiculos/adicionar'} className='btn-adicionar'>
+						Adicionar 
+					</Button>
+			</center>
+		</div>
+		)      
+	}
+}
 
 export default Veiculos
