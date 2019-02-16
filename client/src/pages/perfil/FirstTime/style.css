@@ -1,16 +1,17 @@
-.stepper-first-time {
-    display: flex;    
-    flex-wrap: wrap;
-    /* align-items: flex-start; */
-    justify-content: unset;
-    padding: 10px;
-
-}
-
-.step-item {
-    width: 100px;
-}
-
 .profile-mobile-header {
     padding: 10px;
+}
+
+.desktop-stepper .buttons-desktop {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.3em;
+}
+
+.profile-desktop-paper {
+    width: 60%;
+    min-width: 500px;
+    margin: 0 auto;
+    margin-top: 1.3em;
+    padding: 20px;
 }

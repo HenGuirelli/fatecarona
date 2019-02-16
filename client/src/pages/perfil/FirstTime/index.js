@@ -31,27 +31,29 @@ const FinalPage = props => (
 )
 
 const DesktopStepper = props => (
-    <div className='desktop-stepper'>
-        <Stepper activeStep={props.activeStep} className='stepper-first-time'>
-            {steps.map(label => (
-                <Step key={label} className='step-item'>
-                    <StepLabel>{label}</StepLabel>
-                </Step>
-            ))}
-        </Stepper>
-        { props.children }
-        <br />
-        <div className='buttons-desktop'>
-            <Button onClick={props.handlePrevious} disabled={props.previousButtonDisabled}> 
-                <KeyboardArrowLeft />
-                Anterior 
-            </Button>
-            <Button onClick={props.handleNext} disabled={props.nextButtonDisabled}> 
-                Próximo 
-                <KeyboardArrowRight />
-            </Button>
+    <Paper className='profile-desktop-paper'>
+        <div className='desktop-stepper'>
+            <Stepper activeStep={props.activeStep} className='stepper-first-time'>
+                {steps.map(label => (
+                    <Step key={label} className='step-item'>
+                        <StepLabel>{label}</StepLabel>
+                    </Step>
+                ))}
+            </Stepper>
+            { props.children }
+            <br />
+            <div className='buttons-desktop'>
+                <Button onClick={props.handlePrevious} disabled={props.previousButtonDisabled}> 
+                    <KeyboardArrowLeft />
+                    Anterior 
+                </Button>
+                <Button onClick={props.handleNext} disabled={props.nextButtonDisabled}> 
+                    Próximo 
+                    <KeyboardArrowRight />
+                </Button>
+            </div>
         </div>
-    </div>
+    </Paper>
 )
 
 const MyMobileStepper = props => (
