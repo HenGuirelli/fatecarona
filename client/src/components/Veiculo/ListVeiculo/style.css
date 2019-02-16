@@ -1,5 +1,6 @@
 .list-veiculo .avatar {
     width: 80px;
+    height: 40px; 
 }
 
 .list-veiculo .item:not(:first-child) {

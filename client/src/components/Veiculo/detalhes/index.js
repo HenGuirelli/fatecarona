@@ -5,18 +5,18 @@ import { Typography } from '@material-ui/core'
 import Button from '../../../components/Form/Button'
 
 class DetalhesVeiculos extends React.Component {
+    constructor(props){
+        super(props)
+    }
+
     render(){
         const { marca, modelo, placa } = this.props
+
         return (
             <div className='veiculos-detalhe'>
-                <div className='icon'>
-                    <img src={CarIcon} className='icon' />
-                    <Typography component='span' variant='subtitle1'> 
-                        { placa }
-                    </Typography>
-                </div>
                 <div>
                     <Typography component='span' variant='subtitle1'>
+                        { placa } <br />
                         MARCA: {marca} <br/>
                         MODELO: {modelo}
                     </Typography>
