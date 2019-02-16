@@ -20,7 +20,7 @@ const itens =
     },
     {
         text: "Oferecer Carona",
-        route: "/"
+        route: "/caronas/oferecer"
     },
     {
         text: "Meus Trajetos",

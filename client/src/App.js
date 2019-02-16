@@ -57,7 +57,7 @@ class App extends Component {
           <Route path="/caronas/request" component={Pedir}/>
           <Route path="/caronas/matches" component={ResultCaronas}/>
           <Route path="/caronas/gerenciar" component={GerencCaronas}/>
-          <Route path="/caronas/offer" component={Oferecer}/>
+          <Route path="/caronas/oferecer" component={Oferecer}/>
           <Route exact path="/veiculos" component={Veiculos}/>
           <Route path="/veiculos/cadastrar" component={CadVeiculo}/>
           <Route path="/recuperarsenha" component={Recuperar}/>
