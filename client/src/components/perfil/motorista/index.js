@@ -5,14 +5,16 @@ import RadioGroup from '@material-ui/core/RadioGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormControl from '@material-ui/core/FormControl'
 import FormLabel from '@material-ui/core/FormLabel'
+import Typography from '@material-ui/core/Typography'
+import './style.css'
 
 const CNHOptions = ['A', 'B', 'AB', 'C', 'D']
 
 const SouMotorista = props => (
     <Fragment>
-        <DefaultTextField type='number' label='Número CNH' variant='outlined' />
-        <ComboBox options={CNHOptions} label='Selecione...' variant='outlined' />
-        <DatePicker variant='outlined' label='Validade CNH'/>
+        <DefaultTextField type='number' label='Número CNH' variant='outlined' className='component' block />
+        <ComboBox options={CNHOptions} label='Selecione...' variant='outlined' className='component' block />
+        <DatePicker variant='outlined' label='Validade CNH' className='component' block />
     </Fragment>
 )
 
@@ -28,8 +30,8 @@ class PerfilMotorista extends React.Component {
     
     render(){
         return (
-            <Fragment>
-                <FormControl component="fieldset" >
+            <div className='profile-motorista centralize'>
+                <FormControl component="fieldset" className='content-radios'>
                     <FormLabel component="legend">Motorista</FormLabel>
                     <RadioGroup
                         aria-label="Motorista"
@@ -49,10 +51,10 @@ class PerfilMotorista extends React.Component {
                         />
                     </RadioGroup>
                 </FormControl>
-
-                { this.state.motorista ? <SouMotorista /> : null }
-                
-            </Fragment>
+                <div className='sou-motorista'>
+                    { this.state.motorista ? <SouMotorista /> : null }
+                </div>
+            </div>
 
         )
     }

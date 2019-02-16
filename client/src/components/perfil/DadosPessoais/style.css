@@ -1,0 +1,15 @@
+.profile-dados-pessoais .component {
+    width: 200px;
+}
+
+.profile-dados-pessoais .component {
+    margin-top: 1.3em;
+}
+
+.profile-dados-pessoais .component:last-child {
+    margin-bottom: 1.3em;
+}
+
+.profile-dados-pessoais {
+    margin: 0 auto;
+}

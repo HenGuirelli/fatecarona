@@ -109,19 +109,29 @@ class TelephoneInput extends React.Component {
 	}
 }
 
+const Picker = props => (
+	<Fragment>
+		<TextField
+			type={props.type}
+			InputLabelProps={{
+				shrink: true,
+			}}
+			variant='outlined'
+			{ ...props }
+		/>
+		{ props.block ? <br /> : null }
+	</Fragment>
+)
+
 /// defaultValue, label
 const TimePicker = (props) => {
 	const { className, ...restProps } = props
 	return (
-		<TextField
+		<Picker
 			type='time'
-			InputLabelProps={{
-				shrink: true,
-			}}
 			inputProps={{
 				step: 300, // 5 min
 			}}
-			variant='outlined'
 			className={`time-picker ${className}`}
 			{ ...restProps }
 		/>
@@ -137,12 +147,8 @@ const DatePicker = (props) => {
 	let yyyy = today.getFullYear();
 
 	return (
-		<TextField
+		<Picker
 			type='date'
-			InputLabelProps={{
-				shrink: true,
-			}}
-			variant='outlined'
 			className={`time-picker ${className}`}
 			defaultValue={`${yyyy}-${fillZeros(2, mm.toString())}-${fillZeros(2, dd.toString())}`}
 			{ ...restProps }
@@ -156,19 +162,23 @@ class ComboBox extends React.Component {
 	handleChange = (event) => this.setState({ value: event.target.value })
 
 	render(){
-		const { options, label } = this.props
+		const { options, label, ...restProps } = this.props
 		return (
+		<Fragment>
 			<FormControl>
-				<InputLabel>{ label }</InputLabel>
-				<Select
-					className='combo-box'
-					value={this.state.value}
-					onChange={this.handleChange}
-					input={<OutlinedInput labelWidth={200} />}
-				>
-					{options.map((option, index) => <MenuItem key={`menu-item-${index}`} value={option}> {option} </MenuItem>)}
-				</Select>
+			<InputLabel>{ label }</InputLabel>
+			<Select
+				className='combo-box'
+				value={this.state.value}
+				onChange={this.handleChange}
+				input={<OutlinedInput labelWidth={200} />}
+				{ ...restProps }
+			>
+				{options.map((option, index) => <MenuItem key={`menu-item-${index}`} value={option}> {option} </MenuItem>)}
+			</Select>
 			</FormControl>
+			{ this.props.block ? <br /> : null }
+		</Fragment>
 		)
 	}
 }

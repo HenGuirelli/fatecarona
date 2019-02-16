@@ -1,24 +1,14 @@
-import React, { Component, Fragment } from 'react'
-import DadosPessoais from '../../components/perfil/DadosPessoais'
-import { Divider } from '@material-ui/core';
-import PerfilMotorista from '../../components/perfil/motorista';
+import React, { Component } from 'react'
 import FirstTime from './FirstTime'
-
-const DefaultPage = props => (
-	<Fragment>
-		<DadosPessoais />
-		<Divider />
-		<PerfilMotorista />
-	</Fragment>
-)
+import DefaultPage from './DefaultPage'
 
 class Perfil extends Component {
 	constructor(props) {
-		super(props);  
+		super(props)  
 	}
 
 	render() {
-		const { fistTimeEditingProfile = true } = this.props
+		const { fistTimeEditingProfile = false } = this.props
 		return ( 
 			fistTimeEditingProfile ? <FirstTime /> : <DefaultPage />
 		)
