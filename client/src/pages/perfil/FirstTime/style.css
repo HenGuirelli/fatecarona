@@ -1,0 +1,16 @@
+.stepper-first-time {
+    display: flex;    
+    flex-wrap: wrap;
+    /* align-items: flex-start; */
+    justify-content: unset;
+    padding: 10px;
+
+}
+
+.step-item {
+    width: 100px;
+}
+
+.profile-mobile-header {
+    padding: 10px;
+}

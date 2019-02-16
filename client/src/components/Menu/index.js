@@ -65,7 +65,7 @@ class Menu extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
-              Path Atual
+              Rota Atual
             </Typography>
           </Toolbar>
         </AppBar>
