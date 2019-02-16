@@ -16,7 +16,7 @@ const itens =
     },
     {
         text: "Quero Carona",
-        route: "/"
+        route: "/caronas/pedir"
     },
     {
         text: "Oferecer Carona",
