@@ -48,7 +48,7 @@ class Veiculos extends Component{
 		<div className='page-veiculos'>
 			<Veiculo veiculos={veiculos} />
 			<center>
-					<Button onClick={() => window.location.href = '/veiculos/adicionar'} className='btn-adicionar'>
+					<Button onClick={() => window.location.href = '/veiculos/cadastrar'} className='btn-adicionar'>
 						Adicionar 
 					</Button>
 			</center>
