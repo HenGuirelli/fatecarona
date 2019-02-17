@@ -22,7 +22,7 @@ class DetalhesVeiculos extends React.Component {
                     </Typography>
                 </div>
 
-                <Button> Excluir </Button>
+                <Button variant='outlined'> Excluir </Button>
             </div>
         )
     }
