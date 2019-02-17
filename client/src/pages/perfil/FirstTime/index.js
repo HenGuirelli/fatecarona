@@ -9,9 +9,65 @@ import MobileStepper from '@material-ui/core/MobileStepper'
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import { Paper, Typography } from '@material-ui/core'
+import CadVeiculos from '../../cadveiculos'
+import AdicionarRota from '../../adicionarRota'
+import Snackbar from '@material-ui/core/Snackbar'
+import IconButton from '@material-ui/core/IconButton'
+import CloseIcon from '@material-ui/icons/Close'
 import './style.css'
 
 const steps = ['Dados Pessoais', 'Motorista', 'Carros', 'Trajetos']
+const SnackVeiculoMessage = 'Caso você não seja motorista, deixe essa página em branco.'
+
+class CadVeiculoSnack extends React.Component {
+    state = {
+        open: false,
+    }
+    
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+        return
+        }
+    
+        this.setState({ open: false })
+    }
+    
+    componentDidMount() {
+        this.setState({ open: true })
+    }
+
+    render() {
+        return (
+        <div>
+            <CadVeiculos withButton={false} />
+            <Snackbar
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+            }}
+            open={this.state.open}
+            autoHideDuration={6000}
+            onClose={this.handleClose}
+            ContentProps={{
+                'aria-describedby': 'message-id',
+            }}
+            message={<span id="message-id">{ SnackVeiculoMessage }</span>}
+            action={[
+                <IconButton
+                    key="close"
+                    aria-label="Close"
+                    color="inherit"
+                    onClick={this.handleClose}
+                >
+                <CloseIcon />
+                </IconButton>,
+            ]}
+            />
+        </div>
+        )
+    }
+      
+} 
 
 const getStepContent = index => {
     switch (index){
@@ -19,6 +75,10 @@ const getStepContent = index => {
             return <DadosPessoais />
         case 1:
             return <PerfilMotorista />
+        case 2:
+            return <CadVeiculoSnack />
+        case 3:
+            return <AdicionarRota withButton={false} />
         case 4:
             return <FinalPage />
         default:

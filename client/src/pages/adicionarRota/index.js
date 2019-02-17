@@ -37,6 +37,7 @@ class AdicionarRota extends Component {
 	}
 
 	render () {
+		const { withButton = true } = this.props
 		return (
 			<main className='adicionar-rota'>
 				<Typography align='center'>
@@ -49,7 +50,7 @@ class AdicionarRota extends Component {
 					</div>
 					<CustomTable data={this.state.data} header={['Pontos de Interesse']} className='component' />
 
-					<Button className='component'> Salvar </Button>
+					{ withButton ? <Button className='component'> Salvar </Button> : null }
 				</Typography>
 			</main>
 		)

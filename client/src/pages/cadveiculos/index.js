@@ -186,7 +186,8 @@ class CadVeiculos extends Component{
 
   render(){
     const { suggestionsMarca, suggestionsModelo } = this.state;
-  
+    const {  withButton = true } = this.props
+    console.log(withButton)
     return(
 		<div className='cadastro-veiculo'>
 			<div className='veiculos'>
@@ -205,7 +206,7 @@ class CadVeiculos extends Component{
 				<OutlinedTextField label='Cor' 
 					className='component centralize'
 				/>
-				<Button className='component centralize'> Adicionar </Button>
+        { withButton ? <Button className='component centralize'> Adicionar </Button> : null }
 			</div>
 		</div>    
     )
