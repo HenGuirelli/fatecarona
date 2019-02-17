@@ -24,7 +24,7 @@ const itens =
     },
     {
         text: "Meus Trajetos",
-        route: "/"
+        route: "/rotas"
     },
     {
         text: "Minhas Caronas",
