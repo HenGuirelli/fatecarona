@@ -36,6 +36,11 @@ class AdicionarRota extends Component {
 		/** @type {!HTMLInputElement} */(element))
 	}
 
+	handleClick = event => {
+		// action click
+		if (this.props.onSaveClick) this.props.onSaveClick(event)
+	}
+
 	render () {
 		const { withButton = true } = this.props
 		return (
@@ -50,7 +55,7 @@ class AdicionarRota extends Component {
 					</div>
 					<CustomTable data={this.state.data} header={['Pontos de Interesse']} className='component' />
 
-					{ withButton ? <Button className='component'> Salvar </Button> : null }
+					{ withButton ? <Button className='component' onClick={this.handleClick}> Salvar </Button> : null }
 				</Typography>
 			</main>
 		)

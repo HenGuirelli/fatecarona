@@ -14,18 +14,19 @@ class ComponentPopUpWrapper extends React.Component {
 
         return (
             <section 
-                className='poup-up-closable-background' 
-                style={{ display: open ? 'block' : 'none' }} 
+                className={`poup-up-closable-background poup-up-closable-background-${ open ? 'open' : 'close'}`}
                 onClick={(event) => this.handleClick(event, onBackgroundClick)}
             >
-                <center>
-                    <aside 
-                        className='poup-up-closable'
-                        onClick={(event) => this.handleClick(event, onContentClick)}
-                    >
-                        {children}
-                    </aside>
-                </center>
+                <div className='poup-up-closable-content'>
+                    <center>
+                        <aside 
+                            className='poup-up-closable'
+                            onClick={(event) => this.handleClick(event, onContentClick)}
+                        >
+                            {children}
+                        </aside>
+                    </center>
+                </div>
             </section>
         )
     }

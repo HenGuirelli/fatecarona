@@ -1,6 +1,6 @@
 :root {
   --primary-main: #673ab7;
-  --secondary-main: #f44336;
+  --secondary-main: #a8cf45;
 
   --margin-form-components: 1.3em;
   --width-form-components: 60%;
@@ -15,4 +15,9 @@
 
 body {
   background-color: #fafafa;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
 }

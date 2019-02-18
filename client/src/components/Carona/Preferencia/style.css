@@ -1,0 +1,35 @@
+.image-wrapper-carona {
+    border-radius: 45%;
+    width: 70px;
+    height: 70px;
+}
+
+.preferencia-img {
+    width: 40px;
+    margin-left: 18px;
+    margin-top: 10px;
+    position: absolute;
+}
+
+.image-wrapper-carona .check-box {
+    position: absolute;
+    display: none;
+}
+
+.image-wrapper-carona-selected {
+    background-color: var(--secondary-main) !important;
+}
+.image-wrapper-carona-unselected {
+    background-color: var(--primary-main);
+}
+
+.component-image-wrapper {
+    width: 70px;
+}
+
+.preferencias-component {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 99%;
+}
