@@ -9,7 +9,7 @@ class Perfil extends Component {
 
 	render() {
 		const { fistTimeEditingProfile = true } = this.props
-		return ( 
+		return (
 			fistTimeEditingProfile ? <FirstTime /> : <DefaultPage />
 		)
 	}

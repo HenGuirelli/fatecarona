@@ -62,7 +62,7 @@ class App extends Component {
           <Route path="/veiculos/cadastrar" component={CadVeiculo}/>
           <Route path="/recuperarsenha" component={Recuperar}/>
           <Route path="/cadastro" component={Cadastro}/>
-          <Route path="/notifications" component={Notifications}/>
+          <Route path="/notificacoes" component={Notifications}/>
           <Route path="/config" render={() => <Config logOut={this.logOut.bind(this)}/>}/>
           <Route render={() => <div>four oh four</div>}/>
         </Switch>

@@ -36,7 +36,7 @@ const itens =
     },
     {
         text: "Notificações",
-        route: "/"
+        route: "/notificacoes"
     },
     {
         text: "Logout",
