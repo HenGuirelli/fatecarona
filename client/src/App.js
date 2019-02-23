@@ -29,6 +29,10 @@ import 'typeface-roboto'
 import Menu from './components/Menu'
 import DevArea from './pages/devArea'
 
+import Andamento from './pages/caronas/gerenciar/andamento'
+import Pendente from './pages/caronas/gerenciar/pendente'
+import Historico from './pages/caronas/gerenciar/historico'
+
 
 class App extends Component { 
 
@@ -54,10 +58,13 @@ class App extends Component {
           <Route exact path="/perfil" component={Perfil}/>
           <Route path="/perfil/espiar" component={EspiarPerfil}/>
           <Route exact path="/caronas" component={Caronas}/>
+          <Route exact path="/caronas/:carpoollId/gerenciar/andamento" component={Andamento}/>
+          <Route exact path="/caronas/:carpoolId/gerenciar/pendente" component={Pendente}/>
+          <Route exact path="/caronas/:carpoollId/gerenciar/historico" component={Historico}/>
           { /*<Route path="/caronas/historico" component={Caronas}/>*/}
-          <Route path="/caronas/pedir" component={Pedir}/>
           {/* {<Route path="/caronas/matches" component={ResultCaronas}/>} */}
           <Route path="/caronas/oferecer" component={Oferecer}/>
+          <Route path="/caronas/pedir" component={Pedir}/>
           <Route exact path="/veiculos" component={Veiculos}/>
           <Route path="/veiculos/cadastrar" component={CadVeiculo}/>
           <Route path="/recuperarsenha" component={Recuperar}/>

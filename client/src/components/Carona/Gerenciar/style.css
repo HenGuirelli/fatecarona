@@ -3,10 +3,13 @@
     display: flex;
     -ms-flex-pack: distribute;
     flex-wrap: nowrap;
-    padding: 20px;
     justify-content: space-around;
 }
 
 #item-text {
     padding-left: 10px;
+}
+
+.gerneciar-carona-article {
+    padding: 20px;
 }
