@@ -13,11 +13,15 @@ class CustomTable extends React.Component {
         return (
             <Paper>
                 <Table { ...restProps }>
-                    <TableHead>
-                        <TableRow>
-                            {header.map(item => <TableCell align="center">{ item }</TableCell>)}
-                        </TableRow>
-                    </TableHead>
+                    { 
+                        header ? 
+                            <TableHead>
+                                <TableRow>
+                                    {header.map(item => <TableCell align="center">{ item }</TableCell>)}
+                                </TableRow>
+                            </TableHead>
+                        : null 
+                    }
                     <TableBody>
                         {
                             data.length > 0 ? data.map(row => (
