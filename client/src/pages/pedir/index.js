@@ -4,7 +4,7 @@ import Destino from '../../components/Carona/Destino'
 import Trajeto from '../../components/Carona/Trajeto'
 import Preferencia from '../../components/Carona/Preferencia'
 import Button from '../../components/Form/Button'
-import { Divider, Typography } from '@material-ui/core';
+import { Divider, Typography } from '@material-ui/core'
 import './style.css'
 
 class Pedir extends Component {
