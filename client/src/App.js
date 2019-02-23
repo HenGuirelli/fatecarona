@@ -13,7 +13,7 @@ import Oferecer from './pages/oferecer'
 import Pedir from './pages/pedir'
 import Caronas from './pages/caronas'
 import Notifications from './pages/notifications'
-import GerencCaronas from './components/LiftPend'
+//import Caronas from './components/LiftPend'
 import ResultCaronas from './pages/resultCaronas'
 import Config from './pages/config'
 import Veiculos from './pages/veiculos'
@@ -53,10 +53,10 @@ class App extends Component {
           <Route path="/rotas/adicionar" component={AdicionarRota}/>
           <Route exact path="/perfil" component={Perfil}/>
           <Route path="/perfil/espiar" component={EspiarPerfil}/>
-          <Route path="/caronas/historico" component={Caronas}/>
+          <Route exact path="/caronas" component={Caronas}/>
+          { /*<Route path="/caronas/historico" component={Caronas}/>*/}
           <Route path="/caronas/pedir" component={Pedir}/>
-          <Route path="/caronas/matches" component={ResultCaronas}/>
-          <Route path="/caronas/gerenciar" component={GerencCaronas}/>
+          {/* {<Route path="/caronas/matches" component={ResultCaronas}/>} */}
           <Route path="/caronas/oferecer" component={Oferecer}/>
           <Route exact path="/veiculos" component={Veiculos}/>
           <Route path="/veiculos/cadastrar" component={CadVeiculo}/>

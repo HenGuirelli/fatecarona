@@ -28,7 +28,7 @@ const itens =
     },
     {
         text: "Minhas Caronas",
-        route: "/"
+        route: "/caronas"
     },
     {
         text: "Meus Veiculos",
