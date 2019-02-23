@@ -4,21 +4,21 @@ import Button from '../../components/Form/Button'
 import './style.css'
 
 const veiculos = [
-  {
-    marca: 'fiat',
-    modelo: 'palio',
-    placa: 'abc-1234'
-  },
-  {
-    marca: 'fiat',
-    modelo: 'palio',
-    placa: 'abc-1234'
-  },
-  {
-    marca: 'fiat',
-    modelo: 'palio',
-    placa: 'abc-1234'
-  }
+	{
+		marca: 'fiat',
+		modelo: 'palio',
+		placa: 'abc-1234'
+	},
+	{
+		marca: 'fiat',
+		modelo: 'palio',
+		placa: 'abc-1234'
+	},
+	{
+		marca: 'fiat',
+		modelo: 'palio',
+		placa: 'abc-1234'
+	}
 ]
 
 class Veiculos extends Component{

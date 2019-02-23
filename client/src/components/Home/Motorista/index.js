@@ -41,17 +41,17 @@ class Motorista extends React.Component {
                     text="Avaliação"
                     score={0}
                 />
-            <div className='score-carona'>            
-                <ScoreCarona score={caronasRealizadas || 0 } text='Caronas Realizadas' />
-                <ScoreCarona score={caronasAvaliadas || 0 } text='Caronas Avaliadas' />
-                <ScoreCarona score={caronas5Estrelas || 0 } text='Caronas 5 Estrelas' />
-            </div>
-            <Divider light />
-                
-            <div className='carros'>
-                { this.getAllCars().map((carro, index) => 
-                    InfoVeiculoWrapper(<InfoVeiculo key={`home-carro-${index}`} marca={carro.marca} modelo={carro.modelo} placa={carro.placa} />))}
-            </div>
+                <div className='score-carona'>            
+                    <ScoreCarona score={caronasRealizadas || 0 } text='Caronas Realizadas' />
+                    <ScoreCarona score={caronasAvaliadas || 0 } text='Caronas Avaliadas' />
+                    <ScoreCarona score={caronas5Estrelas || 0 } text='Caronas 5 Estrelas' />
+                </div>
+                <Divider light />
+                    
+                <div className='carros'>
+                    { this.getAllCars().map((carro, index) => 
+                        InfoVeiculoWrapper(<InfoVeiculo key={`home-carro-${index}`} marca={carro.marca} modelo={carro.modelo} placa={carro.placa} />))}
+                </div>
             </Fragment>
         )
     }

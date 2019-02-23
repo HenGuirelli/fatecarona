@@ -1,0 +1,25 @@
+.gerenciar-carona-status .row {
+    width: 60%;
+    display: block;
+    margin: 0 auto;
+}
+
+.left-text,
+.right-text {
+    display: inline-block;
+}
+
+.left-text {
+    text-transform: uppercase;
+    font-weight: bold;    
+    text-align: right;
+    width: 35%;
+}
+
+.right-text {
+    margin-left: 1.3em;
+}
+
+.left-text::after {
+    content: ':';
+}

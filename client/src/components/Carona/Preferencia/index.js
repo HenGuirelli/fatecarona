@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react'
-import Section from '../Section';
-import CadeiranteIcon from './cadeirante.png'
-import FumanteIcon from './fumante.png'
-import MusicaIcon from './musica.png'
+import React from 'react'
+import Section from '../Section'
+import CadeiranteIcon from '../../../images/cadeirante.png'
+import FumanteIcon from '../../../images/fumante.png'
+import MusicaIcon from '../../../images/musica.png'
 import './style.css'
 import { Typography } from '@material-ui/core';
 
