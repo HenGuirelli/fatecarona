@@ -23,11 +23,11 @@ import Cadastro from './pages/cadastro'
 import { connect } from 'react-redux'
 import { setFirebase, updateUser, unsetUser,setUserData } from './actions/userActions'
 import * as firebase from 'firebase'
-import menuItems from './menuItems'
 import popUp, { TIPO } from './components/PopUp'
 import 'typeface-roboto'
 
 import Menu from './components/Menu'
+import DevArea from './pages/devArea'
 
 
 class App extends Component { 
@@ -64,6 +64,9 @@ class App extends Component {
           <Route path="/cadastro" component={Cadastro}/>
           <Route path="/notificacoes" component={Notifications}/>
           <Route path="/config" render={() => <Config logOut={this.logOut.bind(this)}/>}/>
+
+          <Route path='/dev' component={DevArea} />
+
           <Route render={() => <div>four oh four</div>}/>
         </Switch>
       </div>
