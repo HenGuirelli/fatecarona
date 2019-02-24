@@ -1,21 +1,24 @@
 import React from 'react'
 import Icon from '../../../../images/veiculo_preto.png'
+import Section from '../Section'
 import './style.css'
 
 const Veiculo = ({ marca, modelo, placa }) => (
-    <section className='gerenciar-carona-veiculo'>
-        <div className='image-wrapper'>
-            <img src={Icon} />
+    <Section title='veículo'>
+        <div  className='gerenciar-carona-veiculo'>
+            <div className='image-wrapper'>
+                <img src={Icon} />
+            </div>
+            <div>
+                <p>
+                    {marca}, {modelo}
+                </p>
+                <span>
+                    {placa}
+                </span>
+            </div>
         </div>
-        <div>
-            <p>
-                {marca}, {modelo}
-            </p>
-            <span>
-                {placa}
-            </span>
-        </div>
-    </section>
+    </Section>
 )
 
 export default Veiculo

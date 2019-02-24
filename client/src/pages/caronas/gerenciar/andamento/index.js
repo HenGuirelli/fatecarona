@@ -6,10 +6,10 @@ import Preferencia from '../../../../components/Carona/Gerenciar/Preferencia'
 import Veiculo from '../../../../components/Carona/Gerenciar/Veiculo'
 import Rota from '../../../../components/Carona/Gerenciar/Rota'
 import DentroDoCarro from '../../../../components/Carona/Gerenciar/DentroDoCarro'
-import InboxIcon from '@material-ui/icons/MoveToInbox'
 import { typeCarpool } from '../../../../enuns'
 import { Typography } from '@material-ui/core'
 import Button from '../../../../components/Form/Button'
+import Chat from '../../../../components/Carona/Gerenciar/Chat';
 import './style.css'
 
 // apenas para teste, remover
@@ -78,6 +78,8 @@ class Andamento extends Gerenciavel {
                 }
                 <Divider />
                 <Rota />
+                <Divider />
+                <Chat />
                 <Divider />
                 <Typography component='div' align='center' className='btn-finalizar-carona'>
                     <Button onClick={ () => console.log('finalizar carona') }> Finalizar Carona </Button>
