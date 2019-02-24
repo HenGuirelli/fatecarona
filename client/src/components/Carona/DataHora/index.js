@@ -6,7 +6,7 @@ class DataHora extends React.Component {
     render(){
         return (
             <Section title='Hora da Carona'>
-                <DatePicker label='Dia' block/>
+                <DatePicker label='Dia' block/> <br />
 				<TimePicker label='Hora' block/>
             </Section>
         )

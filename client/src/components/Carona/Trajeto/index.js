@@ -2,7 +2,6 @@ import React, { Fragment } from 'react'
 import { ComboBox } from '../../Form/TextField'
 import Button from '../../Form/Button'
 import AdicionarRota from '../../../pages/adicionarRota'
-import ComponentPopUpWrapper from '../../ComponentPopUpWrapper'
 import Section from '../Section'
 
 const trajetosTeste = [
@@ -48,14 +47,11 @@ class WithoutTrajetos extends React.Component {
     }
 
     render(){
-        console.log(this.state.rotaVisible)
         return (
             <Fragment>
-                <ComponentPopUpWrapper open={this.state.rotaVisible} onBackgroundClick={this.closePopUp}> 
-                    <AdicionarRota onSaveClick={() => this.setState({ rotaVisible: false })} />  
-                </ComponentPopUpWrapper>
                 <p>Você não tem um trajeto Salvo</p>
-                <Button onClick={ this.handleClick }>Adicionar</Button>
+                <AdicionarRota style={{ display: this.state.rotaVisible ? 'block' : 'none' }} onSaveClick={() => this.setState({ rotaVisible: false })} />
+                <Button style={{ display: this.state.rotaVisible ? 'none' : 'block' }} onClick={ this.handleClick }>Adicionar</Button>
             </Fragment>
         )
     }

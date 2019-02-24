@@ -42,9 +42,9 @@ class AdicionarRota extends Component {
 	}
 
 	render () {
-		const { withButton = true } = this.props
+		const { withButton = true, ...restProps } = this.props
 		return (
-			<main className='adicionar-rota'>
+			<main className='adicionar-rota' {...restProps}>
 				<Typography align='center'>
 					<OutlinedTextField label='Nome da Rota' block className='component' />
 					<OutlinedTextField label='Origem' inputRef={el => this.state.txtOrigem = el} block className='component' />
