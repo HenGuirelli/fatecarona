@@ -7,6 +7,24 @@ import Veiculos from '../../components/Carona/Veiculos'
 import Button from '../../components/Form/Button'
 import { Divider, Typography } from '@material-ui/core'
 
+const veiculos = [
+	{
+		marca: 'fiat',
+		modelo: 'palio',
+		placa: 'abc-1234'
+	},
+	{
+		marca: 'fiat',
+		modelo: 'palio',
+		placa: 'abc-1234'
+	},
+	{
+		marca: 'fiat',
+		modelo: 'palio',
+		placa: 'abc-1234'
+	}
+]
+
 class Oferecer extends Component {
 
 	render() {
@@ -18,7 +36,7 @@ class Oferecer extends Component {
 				<Destino />
 				<Divider />
 
-				<Veiculos />
+				<Veiculos veiculos={veiculos}/>
 				<Divider />
 				
 				<Trajeto />
