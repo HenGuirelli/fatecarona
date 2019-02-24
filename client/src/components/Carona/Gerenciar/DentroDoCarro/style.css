@@ -1,0 +1,16 @@
+.gerenciar-carona-dentro-carro {
+    display: flex;
+    justify-content: space-around;
+}
+
+.gerenciar-carona-dentro-carro > * {
+    margin: 1.3em 0;
+}
+
+.gerenciar-carona-dentro-carro > .image-wrapper {
+    width: 50px;
+}
+
+.gerenciar-carona-dentro-carro > .wrap-rating {
+    width: 100px;
+}

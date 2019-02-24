@@ -4,7 +4,7 @@ import './style.css'
 
 const Veiculo = ({ marca, modelo, placa }) => (
     <section className='gerenciar-carona-veiculo'>
-        <div class='image-wrapper'>
+        <div className='image-wrapper'>
             <img src={Icon} />
         </div>
         <div>

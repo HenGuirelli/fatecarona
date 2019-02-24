@@ -1,0 +1,4 @@
+.rating-wrapper-core {
+    display: flex;
+    justify-content: space-between;
+}

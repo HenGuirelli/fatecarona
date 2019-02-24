@@ -1,9 +1,7 @@
 import React from 'react'
 import InboxIcon from '@material-ui/icons/MoveToInbox'
-
-const Avaliator = stars => (
-    'estrela'
-)
+import Rating from '../Rating'
+import './style.css'
 
 const DentroDoCarro = ({ text, image, stars }) => (
     <section className='gerenciar-carona-dentro-carro'>
@@ -14,8 +12,10 @@ const DentroDoCarro = ({ text, image, stars }) => (
         <div>
             { text }
         </div>
-
-        <Avaliator stars={stars} />
+        
+        <div className='wrap-rating'>
+            <Rating max={5} stars={stars} onClick={ (star) => console.log('estrela clicada: ' + (star + 1)) } />
+        </div>
     </section>
 )
 

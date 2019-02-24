@@ -8,9 +8,12 @@ import Rota from '../../../../components/Carona/Gerenciar/Rota'
 import DentroDoCarro from '../../../../components/Carona/Gerenciar/DentroDoCarro'
 import InboxIcon from '@material-ui/icons/MoveToInbox'
 import { typeCarpool } from '../../../../enuns'
+import { Typography } from '@material-ui/core'
+import Button from '../../../../components/Form/Button'
+import './style.css'
 
 // apenas para teste, remover
-import img from '../../../../images/musica.png'
+import img from '../../../../images/veiculo_preto.png'
 
 /* TODO: CONTROLLER QUE RETORNA UM OBJETO COM TODOS ESSES DETALHES */
 const detalhesTest = {
@@ -46,7 +49,7 @@ const dentroDoCarroTest = [
         name: 'wesley',
         email: 'wesley@emai.com',
         img: img,
-        stars: 3,        
+        stars: 1,        
         type: typeCarpool.RIDER
     }
 ]
@@ -61,8 +64,6 @@ class Andamento extends Gerenciavel {
                 <Divider />
                 <Veiculo { ...veiculoTest } />
                 <Divider />
-                <Rota />
-                <Divider />
                 {
                     dentroDoCarroTest && dentroDoCarroTest.length > 0 ?
                     dentroDoCarroTest.map((item, index) => 
@@ -75,7 +76,12 @@ class Andamento extends Gerenciavel {
                     :
                     null
                 }
-                
+                <Divider />
+                <Rota />
+                <Divider />
+                <Typography component='div' align='center' className='btn-finalizar-carona'>
+                    <Button onClick={ () => console.log('finalizar carona') }> Finalizar Carona </Button>
+                </Typography>
              </main>
         )
     }
