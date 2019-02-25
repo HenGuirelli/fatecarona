@@ -14,6 +14,10 @@ class ProfileHandler {
     insertPersonalData = insertPersonalDataCommand => {
 
     }
+
+    updateProfileData = updateProfileDataCommand => {
+        
+    }
 }
 
 exports.ProfileHandler = ProfileHandler
