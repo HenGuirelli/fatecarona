@@ -1,5 +1,8 @@
 {
 	"mongodb": {
       "url": "mongodb://localhost:27017/fatecarona"
+  },
+  "App": {
+      "port": "8081"
   }
 }
