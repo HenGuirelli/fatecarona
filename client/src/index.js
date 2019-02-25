@@ -6,7 +6,6 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import store from './store'
-import './css/config.css'
 import { createMuiTheme } from '@material-ui/core/styles'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import { green300 } from 'material-ui/styles/colors';
