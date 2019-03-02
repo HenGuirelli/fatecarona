@@ -84,9 +84,3 @@ exports.InsertInMembros = InsertInMembros
 exports.IsValidEmailForInsert = IsValidEmailForInsert
 exports.IsValidEmailForUpdate = IsValidEmailForUpdate
 exports.UpdateMembros = UpdateMembros
-
-const Test = () => {
-    console.log(createUpdateQuery('membros')({ motorista: 0, nick: 'batata' },  'email', 'hen.guirelli'))
-}
-
-Test()
