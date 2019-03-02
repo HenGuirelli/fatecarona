@@ -3,6 +3,7 @@ const app = express();
 
 const config = require('./config.json').App
 const port = config.port
+app.use(express.json())
 
 // Controllers
 const { Members } = require('./controllers/membro')

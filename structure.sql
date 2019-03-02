@@ -4,7 +4,7 @@ use Fatecarona;
 create table membros(
 	email varchar(40) not null primary key,
 	nome varchar(40) not null,
-	telefone char(15) not null,
+	telefone char(15),
 	apelido varchar(20),
 	img varchar(50),
 	chegada time,

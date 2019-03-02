@@ -1,3 +1,6 @@
+const { CreateNewMemberCommand } = require('../commands/Access/CreateNewMemberCommand')
+const { AccessHandler } = require('../commandHandlers/AccessHandler')
+
 const MembersController = app => {
     // Get user info
     app.post('/login', (req, res) => {
@@ -16,7 +19,9 @@ const MembersController = app => {
 
     // Insert new profile
     app.post('/profile', (req, res) => {
-        res.send('insert new user')
+        const { email, name } = req.body
+        const command = new CreateNewMemberCommand(email, name)        
+        res.send(AccessHandler.createNewMember(command))
     })
 
     // Update profile
