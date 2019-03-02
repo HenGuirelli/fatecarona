@@ -1,13 +1,8 @@
 class AccessHandler {
-    createNewEmployee = createNewEmployeeCommand => {
+    createNewMember = createNewMemberCommand => {
 
     }
-
-    createNewStudent = createNewStudentCommand => {
-
-    }
-
-    getStudentInformation = getStudentInformationCommand => {
+    getMemberInformation = getMemberInformationCommand => {
 
     }
 }

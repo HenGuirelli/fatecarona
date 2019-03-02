@@ -8,7 +8,7 @@ class Perfil extends Component {
 	}
 
 	render() {
-		const { fistTimeEditingProfile = true } = this.props
+		const { fistTimeEditingProfile = false } = this.props
 		return (
 			fistTimeEditingProfile ? <FirstTime /> : <DefaultPage />
 		)
