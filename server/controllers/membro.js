@@ -9,35 +9,21 @@ const MembersController = app => {
         res.send('upsert')
     })
 
-    // Get user profile student
-    app.get('/profile/:email/student', (req, res) => {
-        res.send('get user profile student')
-    })
-
-    // Get user profile employee
-    app.get('/profile/:email/employee', (req, res) => {
-        res.send('get user profile employee')
+    // Get user profile 
+    app.get('/profile/:email', (req, res) => {
+        res.send('get user profile ')
     })
 
     // Insert new profile
-    app.post('/profile/employee', (req, res) => {
-        res.send('insert new profile')
-    })
-
-    // Insert new profile
-    app.post('/profile/student', (req, res) => {
-        res.send('insert new profile')
+    app.post('/profile', (req, res) => {
+        res.send('insert new user')
     })
 
     // Update profile
-    app.put('/profile/student', (req, res) => {
+    app.put('/profile', (req, res) => {
         res.send('update profile')
     })
 
-    // Update profile
-    app.put('/profile/employee', (req, res) => {
-        res.send('update profile')
-    })
 }
 
 exports.Members = MembersController
