@@ -64,12 +64,12 @@ class Cadastro extends Component {
     return (
 		<main className="cadastro">
 			<Typography component='div' align='center'>
-			<OutlinedTextField label="Email Instituicional" className='component' block />
-			<OutlinedTextField label="Nome" className='component' block />      
-			<OutlinedTextField label="Senha" className='component' block />
-			<OutlinedTextField label="Confirmar senha" className='component' block />
+				<OutlinedTextField label="Email Instituicional" className='component' block />
+				<OutlinedTextField label="Nome" className='component' block />      
+				<OutlinedTextField label="Senha" className='component' block />
+				<OutlinedTextField label="Confirmar senha" className='component' block />
 
-			<ContainedButton color="primary" className="component button" onClick={() => console.log('button clicked')}>Cadastrar</ContainedButton>
+				<ContainedButton color="primary" className="component button" onClick={() => console.log('button clicked')}>Cadastrar</ContainedButton>
 			</Typography>
 		</main>
     );
