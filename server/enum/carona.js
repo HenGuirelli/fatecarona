@@ -8,6 +8,12 @@ const Destination = {
     OUT_FATEC: 'OUT_FATEC'
 }
 
+const Status = {
+    ACTIVE: 'ACTIVE',
+    PENDING: 'PENDING',
+    FINISHED: 'FINISHED'
+}
 
 exports.TypeCarpool = TypeCarpool
 exports.Destination = Destination
+exports.Status = Status
