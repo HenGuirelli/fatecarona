@@ -1,5 +1,7 @@
 const { CreateNewMemberCommand } = require('../commands/Access/CreateNewMemberCommand')
+const { UpdateProfileDataCommand } = require('../commands/Profile/UpdateProfileDataCommand')
 const { AccessHandler } = require('../commandHandlers/AccessHandler')
+const { ProfileHandler } = require('../commandHandlers/ProfileHandler')
 
 const MembersController = app => {
     // Get user info
@@ -25,10 +27,10 @@ const MembersController = app => {
     })
 
     // Update profile
-    app.put('/profile', (req, res) => {
-        res.send('update profile')
+    app.put('/profile/:email', (req, res) => {
+        const command = new UpdateProfileDataCommand({ email: req.params.email, ...req.body })
+        res.send(ProfileHandler.updateProfileData(command))
     })
-
 }
 
 exports.Members = MembersController

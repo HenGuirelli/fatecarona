@@ -1,4 +1,4 @@
-const { InsertInMembros, IsValidEmail } = require('../DAO/mysql')
+const { InsertInMembros, IsValidEmailForInsert } = require('../DAO/mysql')
 
 class AccessHandler {
     static createNewMember(createNewMemberCommand) {
@@ -8,7 +8,7 @@ class AccessHandler {
         }
 
         try {
-            if (IsValidEmail(val.email)) {
+            if (IsValidEmailForInsert(val.email)) {
                 InsertInMembros(val)
                 return { success: true }
             }

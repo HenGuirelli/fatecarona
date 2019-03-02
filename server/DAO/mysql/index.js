@@ -20,7 +20,7 @@ connection.connect(err =>{
 const wrapString = val => typeof val === 'string' ? `'${val}'` : val
 
 const createInsertQuery = tableName => json => {
-    const keys   =  Object.keys(json)
+    const keys = Object.keys(json)
     const values = Object.values(json)
 
     return `INSERT INTO 
@@ -31,12 +31,24 @@ const createInsertQuery = tableName => json => {
 }
 
 const createSelectQuery = tableName => filter => {
-    const keys   =  Object.keys(filter)
+    const keys =  Object.keys(filter)
 
     return `SELECT * FROM
                 ${tableName}
             WHERE 
                 ${keys.map((item, index) => `${item} = ${wrapString(filter[item])}`) }
+            `
+}
+
+const createUpdateQuery = tableName => (values, whereColum, whereValue) => {
+    const keys  = Object.keys(values)
+
+   return `UPDATE 
+                ${tableName} 
+            SET
+                ${keys.map((item, index) => `${ item } = ${ wrapString(values[item]) }`) }
+            WHERE
+                ${whereColum} = ${wrapString(whereValue)}
             `
 }
 
@@ -50,13 +62,31 @@ const Insert = tableName => values => {
 
 const Select = tableName => filter => {
     const query = createSelectQuery(tableName)(filter)
-    console.log(query)
     return syncConnection.query(query)
+}
+
+const Update = tableName => (values, whereColum, whereValue) => {
+    const query = createUpdateQuery(tableName)(values, whereColum, whereValue)
+    return connection.query(query, (error, results, fields) => {
+        if (error)
+          throw error;
+   })
 }
 
 const InsertInMembros = values => Insert('membros')(values)
 
-const IsValidEmail = email => Select('membros')({ email }).length === 0
+const IsValidEmailForInsert = email => Select('membros')({ email }).length === 0
+const IsValidEmailForUpdate = email => Select('membros')({ email }).length >= 1
+
+const UpdateMembros = (values, email) => Update('membros')(values, 'email', email)
 
 exports.InsertInMembros = InsertInMembros
-exports.IsValidEmail = IsValidEmail
+exports.IsValidEmailForInsert = IsValidEmailForInsert
+exports.IsValidEmailForUpdate = IsValidEmailForUpdate
+exports.UpdateMembros = UpdateMembros
+
+const Test = () => {
+    console.log(createUpdateQuery('membros')({ motorista: 0, nick: 'batata' },  'email', 'hen.guirelli'))
+}
+
+Test()
