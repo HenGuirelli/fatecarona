@@ -47,7 +47,7 @@ class ProfileHandler {
             origem: insertFlowInformation.origin,
             destino: insertFlowInformation.destination,
             email: insertFlowInformation.email,
-            id: GetFlowNumRows() * 3, // só para não ficar sequencial
+            id: GetFlowNumRows() + 3, // só para não ficar sequencial
             pontos_interesse: insertFlowInformation.waypoints,
         }
         
