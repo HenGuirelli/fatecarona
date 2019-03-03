@@ -15,17 +15,29 @@ create table membros(
 	categoriaCNH char(2)
 );
 
--- create table veiculos(
---   id int auto_increment primary key,
---   placa char(8) not null unique,
---   email varchar(40) not null,
---   ativo boolean default 1,
---   marca varchar(20),
---   modelo varchar(20),
---   qtdViagens tinyint unsigned default 0,
---   cor varchar(25),
---   foreign key (email) references membros(email)
--- );
+create table veiculos(
+  placa char(8) not null unique,
+  email varchar(40) not null,
+  marca varchar(20),
+  modelo varchar(20),
+  cor varchar(25),
+  foreign key (email) references membros(email)
+);
+
+create table trajeto(
+	id int primary key auto_increment,
+	email varchar(40) not null,
+	nome varchar(40),
+	origem varchar(100),
+	destino varchar(100),
+  	foreign key (email) references membros(email)
+)
+
+create table pontos_interesse (
+	ponto varchar(100) not null,
+	id_trajeto int not null,
+	foreign key (id_trajeto) references trajeto(id)
+)
 
 -- create table avaliacao (
 --   estrelas tinyint unsigned,

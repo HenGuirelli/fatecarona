@@ -1,9 +1,10 @@
 class InsertFlowInformationCommand {
-    constructor(){
-        this.name
-        this.source
-        this.destiny
-        this.pointsOfInterest = []
+    constructor({ name, origin, destination, waypoints, email }){
+        this.name = name
+        this.origin = origin
+        this.destination = destination
+        this.waypoints = waypoints
+        this.email = email
     }
 }
 
