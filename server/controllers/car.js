@@ -2,10 +2,14 @@ const { InsertCarInformatinCommand } = require('../commands/Profile/InsertCarInf
 const { DeleteCarCommand } = require('../commands/Car/DeleteCarCommand')
 const { CarHandler } = require('../commandHandlers/CarHandler')
 
+const { GetCar } = require('../DAO/mongo')
+
 const CarsController = app => {
     // get all cars
     app.get('/car/:email', (req, res) => {
-        res.send('get all cars by email')
+        GetCar(req.params.email)
+        .then(result => res.send(result))
+        .catch(err => res.send({ success: false, message: err }))
     })
 
     // insert new car

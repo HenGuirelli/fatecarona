@@ -16,7 +16,7 @@ create table membros(
 );
 
 create table veiculos(
-  placa char(8) not null unique,
+  placa char(8) not null primary key,
   email varchar(40) not null,
   marca varchar(20),
   modelo varchar(20),
@@ -25,20 +25,36 @@ create table veiculos(
 );
 
 create table trajeto(
-	id int primary key auto_increment,
+	id int primary key,
 	email varchar(40) not null,
 	nome varchar(40),
 	origem varchar(100),
 	destino varchar(100),
   	foreign key (email) references membros(email)
-)
+);
 
 create table pontos_interesse (
 	ponto varchar(100) not null,
 	id_trajeto int not null,
 	foreign key (id_trajeto) references trajeto(id)
-)
+);
 
+create table caronas (
+	id int auto_increment primary key,
+	data_carona datetime,
+	hora_carona varchar(30),
+	placa_veiculo varchar(8) not null,
+	trajeto int,
+	email varchar(40),
+	cadeirante boolean,
+	fumante boolean,
+	musica boolean,
+	status varchar(15) default 'ativo',
+    destino varchar(20),
+	foreign key (email) references membros(email),
+	foreign key (placa_veiculo) references veiculos(placa),
+	foreign key (trajeto) references trajeto(id)
+);
 -- create table avaliacao (
 --   estrelas tinyint unsigned,
 --   mensagem varchar(140),
@@ -47,23 +63,6 @@ create table pontos_interesse (
 --   motorista boolean,
 --   foreign key (avaliado) references membros(email),
 --   foreign key (avaliador) references membros(email)
--- );
-
--- create table caronas (
---   id int auto_increment primary key,
---   dataCarona datetime,
---   rota varchar(50),
---   emailMotorista varchar(40),
---   kilometragem numeric(3,1) default 0,
---   acessibilidade boolean default 0,
---   fumantes boolean default 0,
---   musica boolean default 0,
---   veiculo int,
---   qtdVagas tinyint unsigned default 1,
---   tipo varchar(25),
---   status varchar(15),
---   foreign key (veiculo) references veiculos(id),
---   foreign key (emailMotorista) references membros(email)
 -- );
 
 -- create table membros_carona (

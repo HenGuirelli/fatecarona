@@ -7,6 +7,8 @@ const { InsertFlowInformationCommand } = require('../commands/Profile/InsertFlow
 const { AccessHandler } = require('../commandHandlers/AccessHandler')
 const { ProfileHandler } = require('../commandHandlers/ProfileHandler')
 
+const { GetProfile } = require('../DAO/mongo')
+
 const MembersController = app => {
     // Get user info
     app.post('/login', (req, res) => {
@@ -20,7 +22,9 @@ const MembersController = app => {
 
     // Get user profile 
     app.get('/profile/:email', (req, res) => {
-        res.send('get user profile ')
+        GetProfile(req.params.email)
+        .then(result => res.send(result))
+        .catch(e => res.send({ success: false, message: e}))
     })
 
     // Insert new profile

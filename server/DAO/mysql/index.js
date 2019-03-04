@@ -21,7 +21,8 @@ tableName = {
     FLOW: 'trajeto',
     MEMBER: 'membros',
     CAR: 'veiculos',
-    WAYPOINTS: 'pontos_interesse' 
+    WAYPOINTS: 'pontos_interesse',
+    CARPOOL: 'caronas'
 }
 
 const wrapString = val => typeof val === 'string' ? `'${val}'` : val
@@ -103,6 +104,8 @@ const EmailExists = email => Select(tableName.MEMBER)({ email }).length > 0
 const IsValidCar = plate => Select(tableName.CAR)({ placa: plate }).length === 0
 const GetFlowNumRows = () => syncConnection.query(`SELECT id FROM ${tableName.FLOW} order by id desc limit 1`)[0].id
 const WayPointExists = id => syncConnection.query(`SELECT COUNT(*) as numrow from ${tableName.WAYPOINTS} WHERE id_trajeto = ${id}`)[0].numrow > 0
+const CarExists = plate => Select(tableName.CAR)({ placa: plate }).length > 0
+const FlowExists = id => Select(tableName.FLOW)({ id }).length > 0
 
 // ações
 const InsertInMembros = values => Insert(tableName.MEMBER)(values)
@@ -130,6 +133,8 @@ const InsertWaypoints = (waypoints, id) => {
 const DeleteCar = plate => Delete(tableName.CAR)('placa', plate)
 const DeleteFlow = id => Delete(tableName.FLOW)('id', id)
 const DeleteWaypoints = idFlow => Delete(tableName.WAYPOINTS)('id_trajeto', idFlow)
+const InsertCarpoolOffer = values => Insert(tableName.CARPOOL)(values)
+
 
 exports.InsertInMembros = InsertInMembros
 exports.IsValidEmailForInsert = IsValidEmailForInsert
@@ -139,6 +144,7 @@ exports.InsertCar = InsertCar
 exports.UpdateMembros = UpdateMembros
 exports.InsertCar = InsertCar
 exports.EmailExists = EmailExists
+exports.CarExists = CarExists
 exports.GetFlowNumRows = GetFlowNumRows
 exports.InsertFlow = InsertFlow
 exports.DeleteCar = DeleteCar
@@ -148,3 +154,5 @@ exports.UpdateFlow = UpdateFlow
 exports.UpdateWaypoints = UpdateWaypoints
 exports.WayPointExists = WayPointExists
 exports.InsertWaypoints = InsertWaypoints
+exports.InsertCarpoolOffer = InsertCarpoolOffer
+exports.FlowExists = FlowExists

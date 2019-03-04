@@ -3,9 +3,14 @@ const { DeleteFlowCommand } = require('../commands/Flow/DeleteFlowCommand')
 const { UpdateFlowCommand } = require('../commands/Flow/UpdateFlowCommand')
 const { FlowHandler } = require('../commandHandlers/FlowHandler')
 
+const { GetFlow } = require('../DAO/mongo')
+
 const TrajetoController = app => {
+    // get all flow by email
     app.get('/trajeto/:email', (req, res) => {
-        res.send('get all trajetos')
+        GetFlow(req.params.email)
+        .then(result => res.send(result))
+        .catch(err => res.send({ success: false, message: err}))
     })
 
     // insert new flow
