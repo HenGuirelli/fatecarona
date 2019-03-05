@@ -6,7 +6,8 @@ const url = 'mongodb://localhost:27017/fatecarona'
 const schema = {
     PROFILE: 'profile',
     FLOW: 'flow',
-    CAR: 'car'
+    CAR: 'car',
+    CARPOOL: 'carpool',
 }
 
 const collectionsName = Object.values(schema)
@@ -49,7 +50,7 @@ const Update = collection => (where, document) => {
     }
 }
 
-const Select = collection => (where, callback) => {
+const Select = collection => (where) => {
     if (!mongo) { console.log('mongo não conectado'); return;}
     if (IsValidCollection(collection)){
         return new Promise(resolve => mongo.collection(collection).find(where).toArray((err, result) => resolve (result)))

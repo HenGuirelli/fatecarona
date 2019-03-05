@@ -1,6 +1,9 @@
 const { CreateNewCarpoolOfferCommand } = require('../commands/CarpoolOffer/CreateNewCarpoolOfferCommand')
 const { CarpoolOfferHandler } = require('../commandHandlers/CarpoolOfferHandler')
 
+const { GetCarpool, GetRequestCarpool } = require('../DAO/mongo')
+const { match } = require('../carpool/match')
+
 const CarpoolController = app => {
     const Offer = () => {
         // Add new carpooling offer
@@ -20,15 +23,19 @@ const CarpoolController = app => {
 
         // Get all carpooling offer by user email
         app.get('/carpool/offer/:email', (req, res) => {
-            res.send('all carpooling for email ' + req.params.email)
+            GetCarpool(req.params.email)
+            .then(result => res.send(result))
+            .catch(err => res.send({ success: false, message: err }))
         })
     }
 
     const Request = () => {
         // Search carpooling offers
-        app.get('/carpool/request/:date/:hour/:trajeto_id/search', (req, res) => {
-            const { hour, date, trajeto_id } = req.params
-            res.send(`search carpool in ${hour} - ${date} trajeto id: ${trajeto_id}`)
+        app.get('/carpool/request/search', (req, res) => {
+            const { date, email, hour } = req.query
+            GetRequestCarpool(date, email)
+            .then(result => res.send(match({ hour, date, email }, result)))
+            .catch(err => res.send({ success: false, message: err }))
         })
 
         // Request carpooling
