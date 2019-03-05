@@ -17,12 +17,13 @@ connection.connect(err =>{
     console.log('conectou!');
 })
 
-tableName = {
+const tableName = {
     FLOW: 'trajeto',
     MEMBER: 'membros',
     CAR: 'veiculos',
     WAYPOINTS: 'pontos_interesse',
-    CARPOOL: 'caronas'
+    CARPOOL: 'caronas',
+    RIDER: 'caronas_membros'
 }
 
 const wrapString = val => typeof val === 'string' ? `'${val}'` : val
@@ -71,8 +72,9 @@ const createUpdateQuery = tableName => (values, whereColum, whereValue) => {
 const Insert = tableName => values => {
     const createQuery = createInsertQuery(tableName)
     connection.query(createQuery(values), (error, results, fields) => {
-         if (error)
-           throw error;
+        if (error){
+           console.log(error);
+        }
     })
 }
 
@@ -85,7 +87,7 @@ const Update = tableName => (values, whereColum, whereValue) => {
     const query = createUpdateQuery(tableName)(values, whereColum, whereValue)
     return connection.query(query, (error, results, fields) => {
         if (error)
-          throw error;
+          console.log(error);
    })
 }
 
@@ -93,7 +95,7 @@ const Delete = tableName => (whereColum, whereValue) => {
     const query = `DELETE FROM ${tableName} WHERE ${whereColum} = ${wrapString(whereValue)}`
     return connection.query(query, (error, results, fields) => {
         if (error)
-            throw error 
+            console.log(error) 
     })
 }
 
@@ -134,6 +136,7 @@ const DeleteCar = plate => Delete(tableName.CAR)('placa', plate)
 const DeleteFlow = id => Delete(tableName.FLOW)('id', id)
 const DeleteWaypoints = idFlow => Delete(tableName.WAYPOINTS)('id_trajeto', idFlow)
 const InsertCarpoolOffer = values => Insert(tableName.CARPOOL)(values)
+const InsertPassageiro = values => Insert(tableName.RIDER)(values)
 
 
 exports.InsertInMembros = InsertInMembros
@@ -156,3 +159,4 @@ exports.WayPointExists = WayPointExists
 exports.InsertWaypoints = InsertWaypoints
 exports.InsertCarpoolOffer = InsertCarpoolOffer
 exports.FlowExists = FlowExists
+exports.InsertPassageiro = InsertPassageiro

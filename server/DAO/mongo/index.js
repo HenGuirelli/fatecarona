@@ -35,7 +35,8 @@ const GetFlow = async email => {
 //     email: 'henrique.guirelli',
 //     plate: 'ADS-123',
 //     brand: 'Fiat',
-//     model: 'Palio'
+//     model: 'Palio',
+//     color: 'preto'
 // }
 const GetCar = async email => {
     return mongo.Select('car')({ email })
@@ -54,6 +55,7 @@ const GetCar = async email => {
 //     music: false,
 //     status: "PENDING",
 //     destination: "TO_FATEC"
+//     riders: []
 // }
 const GetCarpool = async email => {
     return mongo.Select('flow')({ email })

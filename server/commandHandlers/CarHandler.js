@@ -1,5 +1,8 @@
 const { InsertCar, DeleteCar } = require('../DAO/mysql')
 const { IsValidCar, EmailExists } = require('../DAO/mysql')
+const { Sync, Operation, action, actionDestination } = require('../DAO/sync')
+
+const sync = Sync.getInstance()
 
 class CarHandler {
     static insertNewCar(insertNewCarCommand) {
@@ -20,12 +23,14 @@ class CarHandler {
         }
         
         InsertCar(val)
+        sync.add(new Operation({ action: action.INSERT, values: { ...insertNewCarCommand } }), actionDestination.CAR)
         return { success: true }
     }
 
     static deleteCar(deleteCarCommand) {
         if(!IsValidCar(deleteCarCommand.plate)){
             DeleteCar(deleteCarCommand.plate)
+            sync.add(new Operation({ action: action.DELETE, values: { ...deleteCarCommand } }), actionDestination.CAR)
             return { success: true }
         }
         return { success: false, message: `Veiculo com placa ${deleteCarCommand.plate} não encontrado` }

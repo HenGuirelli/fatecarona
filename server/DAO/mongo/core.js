@@ -72,3 +72,5 @@ exports.Insert = Insert
 exports.Update = Update
 exports.Select = Select
 exports.Delete = Delete
+
+exports.schema = schema

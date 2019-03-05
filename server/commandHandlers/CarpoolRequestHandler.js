@@ -1,9 +1,15 @@
+const { InsertPassageiro } = require('../DAO/mysql')
+
 class CarpoolRequestHandler {
-    getCarpoolOffers = getCarpoolOffersCommand => {
+    static sendCarpoolRequest(sendCarpoolRequestCommand) {
+        const val = {
+            id_carona: sendCarpoolRequestCommand.carpoolId,
+            email_membro: sendCarpoolRequestCommand.requesterEmail
+        }
 
-    }
-
-    sendCarpoolRequest = sendCarpoolRequestCommand => {
-        
+        InsertPassageiro(val)
+        return { success: true }
     }
 }
+
+exports.CarpoolRequestHandler = CarpoolRequestHandler

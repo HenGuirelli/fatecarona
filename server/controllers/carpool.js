@@ -1,5 +1,7 @@
 const { CreateNewCarpoolOfferCommand } = require('../commands/CarpoolOffer/CreateNewCarpoolOfferCommand')
+const { SendCarpoolRequestCommand } = require('../commands/CarpoolRequest/SendCarpoolRequestCommand')
 const { CarpoolOfferHandler } = require('../commandHandlers/CarpoolOfferHandler')
+const { CarpoolRequestHandler } = require('../commandHandlers/CarpoolRequestHandler')
 
 const { GetCarpool, GetRequestCarpool } = require('../DAO/mongo')
 const { match } = require('../carpool/match')
@@ -39,8 +41,9 @@ const CarpoolController = app => {
         })
 
         // Request carpooling
-        app.post('/carpool/request/:trajeto_target_id', (req, res) => {
-            res.send('request carpool ' + req.params.trajeto_target_id)
+        app.post('/carpool/request', (req, res) => {
+            const command = new SendCarpoolRequestCommand({ ...req.body })
+            res.send(CarpoolRequestHandler.sendCarpoolRequest(command))
         })
     }
 
