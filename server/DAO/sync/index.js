@@ -1,8 +1,6 @@
 const mongo = require('../mongo/core')
 
-const actionDestination = {
-    CAR: 'car',
-}
+const actionDestination = mongo.schema
 
 const action = {
     INSERT: 'INSERT',
@@ -11,9 +9,10 @@ const action = {
 }
 
 class Operation {
-    constructor({ action, values }){
+    constructor({ action, values, where = null }){
         this.action = action
         this.values = values
+        this.where = where
     }
 
     set action (val){
@@ -58,11 +57,10 @@ class _Sync {
         console.log(operation)
         switch(operation.action) {
             case action.INSERT:
-                console.log('inserindo na coleção: ', operation.collection)
                 mongo.Insert(operation.collection)(operation.values)
                 break
             case action.UPDATE:
-                mongo.Update(operation.collection)(operation.values)
+                mongo.Update(operation.collection)(operation.where, operation.values)
                 break
             case action.DELETE:
                 mongo.Delete(operation.collection)(operation.values)

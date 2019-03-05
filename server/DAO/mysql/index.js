@@ -108,6 +108,7 @@ const GetFlowNumRows = () => syncConnection.query(`SELECT id FROM ${tableName.FL
 const WayPointExists = id => syncConnection.query(`SELECT COUNT(*) as numrow from ${tableName.WAYPOINTS} WHERE id_trajeto = ${id}`)[0].numrow > 0
 const CarExists = plate => Select(tableName.CAR)({ placa: plate }).length > 0
 const FlowExists = id => Select(tableName.FLOW)({ id }).length > 0
+const GetLastIdCarpool = () => syncConnection.query(`SELECT id FROM ${tableName.CARPOOL} order by id desc limit 1`)[0].id
 
 // ações
 const InsertInMembros = values => Insert(tableName.MEMBER)(values)
@@ -160,3 +161,4 @@ exports.InsertWaypoints = InsertWaypoints
 exports.InsertCarpoolOffer = InsertCarpoolOffer
 exports.FlowExists = FlowExists
 exports.InsertPassageiro = InsertPassageiro
+exports.GetLastIdCarpool = GetLastIdCarpool

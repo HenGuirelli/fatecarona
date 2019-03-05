@@ -80,8 +80,19 @@ const GetRequestCarpool = async (date, email) => {
     return mongo.Select('carpool')({ date, status: Status.PENDING , email: { $ne: email } })
 }
 
+
+const GetFlowById = async id => {
+    return mongo.Select('flow')({ id })
+}
+
+const GetCarByPlate = async plate => {
+    return mongo.Select('car')({ plate })
+}
+
 exports.GetProfile = GetProfile
 exports.GetFlow = GetFlow
 exports.GetCar = GetCar
 exports.GetCarpool = GetCarpool
 exports.GetRequestCarpool = GetRequestCarpool
+exports.GetFlowById = GetFlowById
+exports.GetCarByPlate = GetCarByPlate
