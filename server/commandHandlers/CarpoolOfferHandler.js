@@ -16,6 +16,7 @@ const fetchJsonToMongo = json => {
     if (json.car){
         delete json.carPlate
     }
+    json.riders = []
     return json
 }
 
@@ -46,7 +47,7 @@ class CarpoolOfferHandler {
         if (!FlowExists(val.trajeto)){
             return { success: false, message: `Trajeto não encontrado` }
         }
-        // InsertCarpoolOffer(val)
+        InsertCarpoolOffer(val)
 
         GetFlowById(createNewCarpoolOfferCommand.flowId)
         .then(flow => {

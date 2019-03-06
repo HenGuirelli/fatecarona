@@ -28,7 +28,6 @@ class Operation {
     }
 }
 
-
 class _Sync {
     constructor(){
         this.data = []

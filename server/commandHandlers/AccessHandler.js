@@ -1,4 +1,7 @@
 const { InsertInMembros, IsValidEmailForInsert } = require('../DAO/mysql')
+const { Sync, Operation, action, actionDestination } = require('../DAO/sync')
+
+const sync = Sync.getInstance()
 
 class AccessHandler {
     static createNewMember(createNewMemberCommand) {
@@ -10,6 +13,7 @@ class AccessHandler {
         try {
             if (IsValidEmailForInsert(val.email)) {
                 InsertInMembros(val)
+                sync.add(new Operation({ action: action.INSERT, values: { ...createNewMemberCommand }}), actionDestination.PROFILE)
                 return { success: true }
             }
             throw 'Email já cadastrado'

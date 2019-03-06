@@ -89,6 +89,10 @@ const GetCarByPlate = async plate => {
     return mongo.Select('car')({ plate })
 }
 
+const GetCarpoolById = id => {
+    return mongo.Select('carpool')({ id })
+}
+
 exports.GetProfile = GetProfile
 exports.GetFlow = GetFlow
 exports.GetCar = GetCar
@@ -96,3 +100,4 @@ exports.GetCarpool = GetCarpool
 exports.GetRequestCarpool = GetRequestCarpool
 exports.GetFlowById = GetFlowById
 exports.GetCarByPlate = GetCarByPlate
+exports.GetCarpoolById = GetCarpoolById

@@ -42,8 +42,12 @@ const CarpoolController = app => {
 
         // Request carpooling
         app.post('/carpool/request', (req, res) => {
-            const command = new SendCarpoolRequestCommand({ ...req.body })
-            res.send(CarpoolRequestHandler.sendCarpoolRequest(command))
+            try {
+                const command = new SendCarpoolRequestCommand({ ...req.body })
+                res.send(CarpoolRequestHandler.sendCarpoolRequest(command))
+            }catch (e){
+                res.send({ success: false, message: e })
+            }
         })
     }
 

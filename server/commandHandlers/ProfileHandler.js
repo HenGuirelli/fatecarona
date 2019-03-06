@@ -1,5 +1,8 @@
 const { UpdateMembros, InsertCar, InsertFlow } = require('../DAO/mysql')
 const { IsValidEmailForUpdate, IsValidCar, EmailExists, GetFlowNumRows } = require('../DAO/mysql')
+const { Sync, Operation, action, actionDestination } = require('../DAO/sync')
+
+const sync = Sync.getInstance()
 
 class ProfileHandler {
     static insertCarInformation(insertCarInformationCommand) {
@@ -20,6 +23,7 @@ class ProfileHandler {
         }
         
         InsertCar(val)
+        sync.add(new Operation({ action: action.INSERT, values: { ...insertCarInformationCommand } }), actionDestination.CAR)
         return { success: true }
     }
 
@@ -35,6 +39,7 @@ class ProfileHandler {
 
         if (IsValidEmailForUpdate(email)){
             UpdateMembros(val, email)
+            sync.add(new Operation({ action: action.UPDATE, values: { ...insertDriverInformationCommand } }), actionDestination.PROFILE)
             return { success: true }
         }else{
             return { success: false, message: `Email ${email} inválido` }
@@ -42,12 +47,13 @@ class ProfileHandler {
     }
 
     static insertFlowInformation(insertFlowInformation) {
+        const id = GetFlowNumRows() + 3 // só para não ficar sequencial
         const val = {
             nome: insertFlowInformation.name,
             origem: insertFlowInformation.origin,
             destino: insertFlowInformation.destination,
             email: insertFlowInformation.email,
-            id: GetFlowNumRows() + 3, // só para não ficar sequencial
+            id,
             pontos_interesse: insertFlowInformation.waypoints,
         }
         
@@ -56,6 +62,7 @@ class ProfileHandler {
         }
         
         InsertFlow(val)
+        sync.add(new Operation({ action: action.INSERT, values: { ...insertFlowInformation, id }}), actionDestination.FLOW)
         return { success: true }
 
     }
@@ -69,9 +76,11 @@ class ProfileHandler {
             saida: insertPersonalDataCommand.outFatec,
             telefone: insertPersonalDataCommand.phone,
         }
+        console.log( { ...insertPersonalDataCommand })
 
         if (IsValidEmailForUpdate(email)){
             UpdateMembros(val, email)
+            sync.add(new Operation({ action: action.INSERT, values: { ...insertPersonalDataCommand }}), actionDestination.PROFILE)
             return { success: true }
         }else{
             return { success: false, message: `Email ${email} inválido` }
@@ -94,6 +103,7 @@ class ProfileHandler {
 
         if (IsValidEmailForUpdate(email)){
             UpdateMembros(val, email)
+            sync.add(new Operation({ action: action.UPDATE, values: { ...updateProfileDataCommand } }), actionDestination.PROFILE)
             return { success: true }
         }else{
             return { success: false, message: `Email ${email} inválido` }
