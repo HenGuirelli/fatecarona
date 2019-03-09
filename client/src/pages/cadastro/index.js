@@ -11,100 +11,67 @@ import { OutlinedTextField } from '../../components/Form/TextField'
 import ContainedButton from '../../components/Form/Button'
 
 class Cadastro extends Component {
-  constructor(props){
-	  super(props)
+	constructor(props){
+		super(props)
 
-	  this.state = {
-      email: '',
-      password: '',
-      name: '',
-      ra: '',
-      cel: '',
-      confirmPassword: '',
-      value: 0
-	  }
-  }
-
-  handleSubmit = (event) => {
-    event.preventDefault()
-	const { email, password, name, cel, ra, confirmPassword } = this.state
-   
-    if (!email.match('@fatec.sp.gov.br')) {
-      popUp({tipo: TIPO.ERRO, text: 'Utilize um email institucional! ex:"aluno.sobrenome@fatec.sp.gov.br"'})
-      return
-    }
-    if (!/[0-9]{5}-[0-9]{4}/.test(cel)) {
-      popUp({tipo: TIPO.ERRO, text: 'Numero com formato inválido. ex:"99999-9999"'})
-      return
+		this.state = {
+		email: '',
+		password: '',
+		name: '',
+		ra: '',
+		cel: '',
+		confirmPassword: '',
+		value: 0
+		}
 	}
-	if (confirmPassword !== password){
-		popUp({tipo: TIPO.ERRO, text: 'As senhas não coincidem'})
+
+	handleSubmit = (event) => {
+		event.preventDefault()
+		const { email, password, name, cel, ra, confirmPassword } = this.state
+	
+		if (!email.match('@fatec.sp.gov.br')) {
+		popUp({tipo: TIPO.ERRO, text: 'Utilize um email institucional! ex:"aluno.sobrenome@fatec.sp.gov.br"'})
 		return
+		}
+		if (!/[0-9]{5}-[0-9]{4}/.test(cel)) {
+		popUp({tipo: TIPO.ERRO, text: 'Numero com formato inválido. ex:"99999-9999"'})
+		return
+		}
+		if (confirmPassword !== password){
+			popUp({tipo: TIPO.ERRO, text: 'As senhas não coincidem'})
+			return
+		}
+		this.props.firebase.auth().createUserWithEmailAndPassword(email, password)
+		.then(a => {
+			this.props.dispatch(insertUser({
+				ra,
+				name,
+				telefone: cel,
+				email: email.split('@')[0]
+			}))
+		})
+		.catch((error) => {
+			popUp({tipo: TIPO.ERRO, title: 'Erro', text: error.message})
+		})
 	}
-    this.props.firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then(a => {
-      this.props.dispatch(insertUser({
-        ra,
-        name,
-        telefone: cel,
-        email: email.split('@')[0]
-      }))
-	})
-    .catch((error) => {
-     popUp({tipo: TIPO.ERRO, title: 'Erro', text: error.message})
-    })
-  }
 
-  handleChange = (event, value) => {
-	  this.setState({ value })
-  }
-  
-  studentPage = () => {
-    return (
-      <main className="cadastro">
-        <Typography component='div' align='center'>
-          <OutlinedTextField label="RA" className='component' block />
-          <OutlinedTextField label="Email Instituicional" className='component' block />
-          <OutlinedTextField label="Nome" className='component' block />      
-          <OutlinedTextField label="Senha" className='component' block />
-          <OutlinedTextField label="Confirmar senha" className='component' block />
-          <OutlinedTextField label="N° Senha" className='component' block />
-
-          <ContainedButton color="primary" className="component button" onClick={() => console.log('button clicked')}>Cadastrar</ContainedButton>
-        </Typography>
-      </main>
-    )
-  }
-
-  employeePage = () => {
-    return (
-      <main className="cadastro">
-        <Typography component='div' align='center'>
-          <OutlinedTextField label="RM" className='component' block />
-          <OutlinedTextField label="Email Instituicional" className='component' block />
-          <OutlinedTextField label="Nome" className='component' block />      
-          <OutlinedTextField label="Senha" className='component' block />
-          <OutlinedTextField label="Confirmar senha" className='component' block />
-          <OutlinedTextField label="N° Senha" className='component' block />
-
-          <ContainedButton color="primary" className="component button" onClick={() => console.log('button clicked')}>Cadastrar</ContainedButton>
-        </Typography>
-      </main>
-    )
-  }
+	handleChange = (event, value) => {
+		this.setState({ value })
+	}	
 
   render() {
     const { value } = this.state
     return (
-      <Fragment>
-        <AppBar position="static" color="primary">
-          <Tabs value={value} onChange={this.handleChange} variant="fullWidth" indicatorColor='secondary'>
-            <Tab label="Aluno" />
-            <Tab label="Funcionário" />
-          </Tabs>
-        </AppBar>
-        { value === 0 ? this.studentPage() : this.employeePage() }
-      </Fragment>
+		<main className="cadastro">
+			<Typography component='div' align='center'>
+				<OutlinedTextField label="Email Instituicional" className='component' block />
+				<OutlinedTextField label="Nome" className='component' block />      
+				<OutlinedTextField label="Senha" className='component' block />
+				<OutlinedTextField label="Confirmar senha" className='component' block />
+
+				<ContainedButton color="primary" className="component button" onClick={() => console.log('button clicked')}>Cadastrar</ContainedButton>
+			</Typography>
+		</main>
     );
   }
 }
