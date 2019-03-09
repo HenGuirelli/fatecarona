@@ -1,8 +1,15 @@
 const { UpdateMembros, InsertCar, InsertFlow } = require('../DAO/mysql')
 const { IsValidEmailForUpdate, IsValidCar, EmailExists, GetFlowNumRows } = require('../DAO/mysql')
+const { replaceKeyJson } = require('../utils')
 const { Sync, Operation, action, actionDestination } = require('../DAO/sync')
 
 const sync = Sync.getInstance()
+
+const fetchJsonToMongo = json => {
+    json = replaceKeyJson(json, '_expirationDate', 'expirationDate')
+    json = replaceKeyJson(json, '_typeCNH', 'typeCNH')
+    return json
+}
 
 class ProfileHandler {
     static insertCarInformation(insertCarInformationCommand) {
@@ -76,7 +83,6 @@ class ProfileHandler {
             saida: insertPersonalDataCommand.outFatec,
             telefone: insertPersonalDataCommand.phone,
         }
-        console.log( { ...insertPersonalDataCommand })
 
         if (IsValidEmailForUpdate(email)){
             UpdateMembros(val, email)
@@ -103,7 +109,12 @@ class ProfileHandler {
 
         if (IsValidEmailForUpdate(email)){
             UpdateMembros(val, email)
-            sync.add(new Operation({ action: action.UPDATE, values: { ...updateProfileDataCommand } }), actionDestination.PROFILE)
+
+            sync.add(new Operation({ action: action.UPDATE, 
+                where: { email },
+                values: fetchJsonToMongo({ ...updateProfileDataCommand })
+            }), actionDestination.PROFILE)
+
             return { success: true }
         }else{
             return { success: false, message: `Email ${email} inválido` }

@@ -104,7 +104,10 @@ const IsValidEmailForInsert = email => Select(tableName.MEMBER)({ email }).lengt
 const IsValidEmailForUpdate = email => Select(tableName.MEMBER)({ email }).length >= 1
 const EmailExists = email => Select(tableName.MEMBER)({ email }).length > 0
 const IsValidCar = plate => Select(tableName.CAR)({ placa: plate }).length === 0
-const GetFlowNumRows = () => syncConnection.query(`SELECT id FROM ${tableName.FLOW} order by id desc limit 1`)[0].id
+const GetFlowNumRows = () => {
+    const result = syncConnection.query(`SELECT id FROM ${tableName.FLOW} order by id desc limit 1`)
+    return result.length > 0 ? result[0].id : 0
+}
 const WayPointExists = id => syncConnection.query(`SELECT COUNT(*) as numrow from ${tableName.WAYPOINTS} WHERE id_trajeto = ${id}`)[0].numrow > 0
 const CarExists = plate => Select(tableName.CAR)({ placa: plate }).length > 0
 const FlowExists = id => Select(tableName.FLOW)({ id }).length > 0

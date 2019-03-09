@@ -29,7 +29,25 @@ const minutesDiff = (val1, val2, negative = true) => {
     return negative ? diff : Math.abs(diff)
 }
 
+/**
+ * Não modifica o json original
+ * 
+ * @param {json} json a ser clonado
+ * @returns {json} cópia do json
+ */
+const cloneJSON = json => JSON.parse(JSON.stringify(json))
+
+const replaceKeyJson = (json, key, newKey) => {
+    const result = cloneJSON(json)
+    result[newKey] = result[key]
+    delete result[key]
+    return result
+}
+
+
 exports.formatDate = formatDate
 exports.stringToBool = stringToBool
 exports.formatDateResolve = formatDateResolve
 exports.minutesDiff = minutesDiff
+exports.cloneJSON = cloneJSON
+exports.replaceKeyJson = replaceKeyJson

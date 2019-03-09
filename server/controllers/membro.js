@@ -61,6 +61,8 @@ const MembersController = app => {
                 command = new InsertFlowInformationCommand({ email, ...req.body })
                 res.send(ProfileHandler.insertFlowInformation(command))
                 break
+            default:
+                res.send({ success: false, message: `etapa ${step} não encontrada` })
 
          }
 
