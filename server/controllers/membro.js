@@ -21,8 +21,8 @@ const MembersController = app => {
     })
 
     // Get user profile 
-    app.get('/profile/:email', (req, res) => {
-        GetProfile(req.params.email)
+    app.get('/profile', (req, res) => {
+        GetProfile(req.query.email)
         .then(result => res.send(result))
         .catch(e => res.send({ success: false, message: e}))
     })
