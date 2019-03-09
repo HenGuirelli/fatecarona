@@ -1,0 +1,38 @@
+.profile-dados-pessoais .component {
+    width: 200px;
+}
+
+.profile-dados-pessoais .component {
+    margin-top: 1.3em;
+}
+
+.profile-dados-pessoais .component:last-child {
+    margin-bottom: 1.3em;
+}
+
+.profile-dados-pessoais {
+    margin: 0 auto;
+}
+
+.profile-dados-pessoais .profile-avatar-wrapper {
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.profile-dados-pessoais .profile-avatar {
+    width: 100px;
+    height: 100px;
+}
+
+.profile-avatar-wrapper .btn-choice-file {
+    width: 200px;
+    margin-top: 5px;
+}
+
+.profile-avatar-wrapper .input-choice-file {
+    opacity: 0;
+    outline: solid;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}

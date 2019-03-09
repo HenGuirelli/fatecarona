@@ -1,0 +1,17 @@
+.home-header {
+    background-color: var(--primary-main)
+}
+
+.home-header .item {
+    display: inline-block;
+    width: 33%;
+}
+
+.home-header .item * {    
+    color: white;
+}
+
+.home-header .item .avatar {
+    width: 70px;
+    height: 70px;
+}

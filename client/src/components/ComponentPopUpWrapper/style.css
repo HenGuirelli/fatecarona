@@ -1,0 +1,30 @@
+.poup-up-closable {
+    position: absolute;
+    z-index: 999;
+    background-color: white;
+    padding: 1.3em;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    cursor: pointer;
+}
+
+.poup-up-closable-background {
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.22);
+}
+
+.poup-up-closable-background-open {
+    visibility: visible;
+}
+
+.poup-up-closable-background-close {
+    visibility: hidden;
+}
+
+.poup-up-closable-content {
+    margin-top: 80px;
+}

@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
-import AvatarHeader from '../../components/AvatarHeader'
-import PerfilCaronista from '../../components/PerfilCaronista'
-import PerfilMotorista from '../../components/PerfilMotorista'
+import Caronista from './Caronista'
+import Motorista from './Motorista'
+import Header from './Header'
 
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 export default class Home extends Component {
   constructor(props){
     super(props);
     this.state = {
-      perfil: 'caronista'
+      perfil: 'caronista',
+      value: 0
     };
   }
 
@@ -18,51 +22,24 @@ export default class Home extends Component {
     })
   }
 
+  handleChange = (event, value) => {
+    this.setState( { value })
+  }
 
   render() {
-    const { userData } = this.props
-
-    const styles = {
-      content: {
-        'backgroundColor': 'white',
-      },
-      tab:{
-        backgroundColor: '#D2D3D5',
-        height: '2.5em',
-        margin: 0
-      }
-    }
-
+    const { value } = this.state
+    
     return (
-      <div className="pageBase">
-        <AvatarHeader userEmail={userData.email}/>
-        {
-          userData.motorista === 1 ?
-          <ul className="nav nav-pills row" id="pills-tab" role="tablist" style={styles.tab}>
-            <li className="col-6" style={{padding: 0, border: '2px solid white'}}>
-              <label className="nav-link active" id="pills-andamento-tab" data-toggle="pill" role="tab" aria-selected="true" onClick={() => this.handleClick("caronista")}>
-                <center>Caronista</center>
-              </label>
-            </li>
-            <li className="col-6" style={{padding: 0, border: '2px solid white', borderLeft: 'none'}}>
-              <label className="nav-link" id="pills-historico-tab" data-toggle="pill" role="tab" aria-selected="false" onClick={() => this.handleClick("motorista")}>
-                <center>Motorista</center>
-              </label>
-            </li>
-          </ul>
-          : null
-        }
-        {
-          this.state.perfil === 'caronista' ?
-            <PerfilCaronista
-              userEmail = {userData.email}
-            />
-          :
-            <PerfilMotorista
-              userEmail = {userData.email}
-            />
-        }
-      </div>
+      <main className='home'>
+        <Header> Rick </Header>
+        <AppBar position="static" color="default">
+          <Tabs value={value} onChange={this.handleChange} variant="fullWidth" indicatorColor='primary'>
+            <Tab label="Caronista" />
+            <Tab label="Motorista" />
+          </Tabs>
+        </AppBar>
+        { value === 0 ? <Caronista /> : <Motorista /> }
+      </main>
     )
   }
 }

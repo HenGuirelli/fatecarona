@@ -1,0 +1,23 @@
+.cars-driver-offer .car .img-wrapper {
+    width: 100px;
+    padding: 10px;
+}
+
+.cars-driver-offer .car .placa {
+    margin-top: 15px;
+}
+
+.cars-driver-offer .car {
+    width: 200px;
+    border-radius: 5%;
+    margin: 1em 0;
+    display: flex;
+}
+
+.selected {
+    background-color: var(--secondary-main);
+}
+
+.unselected {
+    background-color: var(--primary-main);
+}

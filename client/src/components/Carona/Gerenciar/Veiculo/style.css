@@ -1,0 +1,11 @@
+.gerenciar-carona-veiculo {
+    display: flex;
+    -ms-flex-wrap: nowrap;
+    justify-content: space-around;
+    width: 300px;
+    margin: 1.3em auto;
+}
+
+.gerenciar-carona-veiculo > .image-wrapper {
+    padding: 10px;
+}

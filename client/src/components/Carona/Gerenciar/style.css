@@ -1,0 +1,15 @@
+.gerenciar-carona-items {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: distribute;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+
+#item-text {
+    padding-left: 10px;
+}
+
+.gerneciar-carona-article {
+    padding: 20px;
+}

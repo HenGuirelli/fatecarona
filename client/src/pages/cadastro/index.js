@@ -1,22 +1,27 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { Component, Fragment } from 'react'
 import { insertUser } from '../../actions/userActions'
-import logo from '../../pages/form/login_fatecarona.svg'
-import Input from '../../components/Form/Input'
 import './style.css'
 import popUp, { TIPO } from '../../components/PopUp'
+
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import { OutlinedTextField } from '../../components/Form/TextField'
+import ContainedButton from '../../components/Form/Button'
 
 class Cadastro extends Component {
   constructor(props){
 	  super(props)
 
 	  this.state = {
-		email: '',
-		password: '',
-		name: '',
-		ra: '',
-		cel: '',
-		confirmPassword: ''
+      email: '',
+      password: '',
+      name: '',
+      ra: '',
+      cel: '',
+      confirmPassword: '',
+      value: 0
 	  }
   }
 
@@ -50,71 +55,58 @@ class Cadastro extends Component {
     })
   }
 
- 
-  render() {
-    const styles = {
-      root: {
-        paddingTop: '5em',
-        marginTop: '-58px',
-        backgroundColor: '#6E4D8B',
-        marginBottom: '-5000px',
-        paddingBottom: '5000px',
-        overflow: 'hidden'
-	  },
-	  button: {
-        margin: '25px 0',
-        borderRadius: '25px',
-        backgroundColor: 'transparent',
-        borderColor: '#a8cf45',
-        color: '#a8cf45',
-        fontSize: '25px',
-      },
-    }
-
-    //const { firebase } = this.props
+  handleChange = (event, value) => {
+	  this.setState({ value })
+  }
+  
+  studentPage = () => {
     return (
-      <div style={styles.root}>
-        <img src={logo} alt="" className="img-fluid mx-auto d-block"/>
-        <div className="container">
-        	<form onSubmit={this.handleSubmit} className="form-group">
-				<div className='wrapper-input'>
-					<Input required label='RA' type='number' name='ra' 
-						onChangeCallback={(value) => this.setState({ ra: value })} />
-				</div>
-				<div className='wrapper-input'>
-					<Input required 
-						label='E-mail Institucional'
-						placeholder='ex: "aluno.sobrenome@fatec.sp.gov.br"'
-						onChangeCallback={(value) => this.setState({ email: value })}
-					/>
-				</div>
-				<div className='wrapper-input'>
-					<Input required label="Nome" onChangeCallback={(value) => this.setState({ name: value })}/>
-				</div>
-				<div className='wrapper-input'>
-					<Input required type='password' label="Senha" onChangeCallback={(value) => this.setState({ password: value })}/>
-				</div>
-				<div className='wrapper-input'>
-					<Input required type='password' label='Confirmar senha' onChangeCallback={(value) => this.setState({ confirmPassword: value })}/>
-				</div>
-				<div className='wrapper-input'>
-					<Input required label="Nº Celular" onChangeCallback={(value) => this.setState({ cel: value })}/>
-				</div>
+      <main className="cadastro">
+        <Typography component='div' align='center'>
+          <OutlinedTextField label="RA" className='component' block />
+          <OutlinedTextField label="Email Instituicional" className='component' block />
+          <OutlinedTextField label="Nome" className='component' block />      
+          <OutlinedTextField label="Senha" className='component' block />
+          <OutlinedTextField label="Confirmar senha" className='component' block />
+          <OutlinedTextField label="N° Senha" className='component' block />
 
-				<input
-					type="submit"
-					className="btn btn-primary btn-block loginBtn"
-					style={styles.button} value="Cadastrar" 
-				/>
-		</form>
-        </div>
-      </div>
+          <ContainedButton color="primary" className="component button" onClick={() => console.log('button clicked')}>Cadastrar</ContainedButton>
+        </Typography>
+      </main>
+    )
+  }
+
+  employeePage = () => {
+    return (
+      <main className="cadastro">
+        <Typography component='div' align='center'>
+          <OutlinedTextField label="RM" className='component' block />
+          <OutlinedTextField label="Email Instituicional" className='component' block />
+          <OutlinedTextField label="Nome" className='component' block />      
+          <OutlinedTextField label="Senha" className='component' block />
+          <OutlinedTextField label="Confirmar senha" className='component' block />
+          <OutlinedTextField label="N° Senha" className='component' block />
+
+          <ContainedButton color="primary" className="component button" onClick={() => console.log('button clicked')}>Cadastrar</ContainedButton>
+        </Typography>
+      </main>
+    )
+  }
+
+  render() {
+    const { value } = this.state
+    return (
+      <Fragment>
+        <AppBar position="static" color="primary">
+          <Tabs value={value} onChange={this.handleChange} variant="fullWidth" indicatorColor='secondary'>
+            <Tab label="Aluno" />
+            <Tab label="Funcionário" />
+          </Tabs>
+        </AppBar>
+        { value === 0 ? this.studentPage() : this.employeePage() }
+      </Fragment>
     );
   }
 }
 
-export default connect(store => {
-  return {
-    firebase: store.user.firebase,
-  }
-})(Cadastro)
+export default Cadastro

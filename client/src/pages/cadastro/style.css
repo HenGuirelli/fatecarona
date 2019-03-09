@@ -1,4 +1,9 @@
-.wrapper-input {
-    margin-bottom: 1em;
-    margin-top: .3em;
+.cadastro .component {
+    margin: 0 auto;
+    margin-top: var(--margin-form-components);
+    width: var(--width-form-components);
+}
+
+.cadastro .component:first-child {
+    margin-top: 4.5em;
 }
