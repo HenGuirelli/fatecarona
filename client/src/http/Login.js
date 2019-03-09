@@ -9,8 +9,7 @@ class Login {
     }
 
     static getUserData({ email }) {
-        console.log('endpoint: ', baseUrl + '/profile/' + email)
-        return axios.get(baseUrl + '/profile/' + email)
+        return axios.get(baseUrl + '/profile', { params: { email } })
     }
 }
 

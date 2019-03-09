@@ -1,60 +1,20 @@
-import axios from 'axios'
-import config from '../config.json'
-
-export function insertUser(user) {
-  console.log('insert action')
-  return {
-    type: "INSERT_USER",
-    payload: axios.post(config.endpoint + "/users", user)
-  }
-}
-
-export function loadUser() {
-  return {
-    type: "LOAD_USER",
-    payload: axios.get(config.endpoint + "/userstest")
-  }
-}
-
 export function setFirebase(firebase) {
-  return {
-    type: "SET_FIREBASE",
-    payload: firebase
-  }
-}
-
-export function updateUser(user) {
-  console.log('update user ', user)
-  return {
-    type: "UPDATE_USER",
-    payload: user
-  }
-}
-
-export function setUserData(email) {
-  return {
-    type: "SET_USER_DATA",
-    payload: axios.get(config.endpoint + "/users/" + email)
-  }
-}
-
-export function updateUserData(email, userData) {
-  console.log('update user data', userData)
-  return {
-    type: "UPDATE_USER_DATA",
-    payload: axios.put(config.endpoint + "/users/" + email, userData)
-  }
-}
-
-export function unsetUser() {
-  return {
-    type: "UNSET_USER"
-  }
+	return {
+		type: "SET_FIREBASE",
+		payload: firebase
+	}
 }
 
 export function logIn(email, password, firebase) {
-  return {
-    type: "USER_LOGIN",
-    payload: firebase.auth().signInWithEmailAndPassword(email, password)
-  }
+	return {
+		type: "USER_LOGIN",
+		payload: firebase.auth().signInWithEmailAndPassword(email, password)
+	}
+}
+
+export function setEmail(email) {
+	return {
+		type: 'SET_EMAIL',
+		payload: email
+	}
 }

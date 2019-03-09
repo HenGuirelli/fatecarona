@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Home from '../../components/Home'
+import Home from '../../pages/home'
 
 
 class EspiarPerfil extends Component {

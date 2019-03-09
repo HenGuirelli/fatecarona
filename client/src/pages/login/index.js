@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import logo from './login_fatecarona.svg'
-import { logIn } from '../../actions/userActions'
 import popUp, { TIPO } from '../../components/PopUp'
 import { Typography } from '@material-ui/core'
 import './style.css'
@@ -13,6 +12,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { OutlinedTextField } from '../../components/Form/TextField'
 
 import Login from '../../http/Login'
+
+import { connect } from 'react-redux'
+import { logIn, setEmail } from '../../actions/userActions'
 
 class LoginForm extends Component {
   constructor() {
@@ -53,7 +55,15 @@ class LoginForm extends Component {
 
 	// pega valores do perfil na base de dados
 	Login.getUserData({ email })
-	.then(resolve => console.log(resolve.data))
+	.then(resolve => {
+		if (resolve.data.success){
+			this.props.dispatch(setEmail(email))			
+			console.log(this.props.user)
+			this.props.history.push('/')
+		}else{
+			popUp({ tipo: TIPO.AVISO, text: resolve.data.message })
+		}
+	})
   }
   
   handlePasswrod = event => {
@@ -89,4 +99,4 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm
+export default connect(store => { return {user: store} })(LoginForm)

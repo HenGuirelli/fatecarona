@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { sendSubscription } from '../../actions/notificationActions.js'
-import Home from '../../components/Home'
+import Home from '../../pages/home'
 
 
 class MainPage extends Component {

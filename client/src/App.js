@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { Route, withRouter, Switch } from 'react-router-dom'
+import { Route, withRouter, Switch, BrowserRouter as Router } from 'react-router-dom'
 import './App.css'
 import AdicionarRota from './pages/adicionarRota'
 import Rotas from './pages/rotas'
 import AlterarRota from './pages/alterarota'
 import Auth from './pages/login'
-import MainPage from './pages/main'
+import Home from './pages/home'
 import Verify from './pages/verify'
 import Perfil from './pages/perfil'
 import EspiarPerfil from './pages/espiarperfil'
@@ -47,36 +47,36 @@ class App extends Component {
   render() {
    
     return (
-      <div className="App">
-        <Menu />  
-        <Switch>
-          <Route exact path="/" component={MainPage}/>
-          <Route exact path="/login" component={Auth}/>
-          <Route exact path="/rotas" component={Rotas}/>
-          <Route path="/rotas/alterar" component={AlterarRota}/>
-          <Route path="/rotas/adicionar" component={AdicionarRota}/>
-          <Route exact path="/perfil" component={Perfil}/>
-          <Route path="/perfil/espiar" component={EspiarPerfil}/>
-          <Route exact path="/caronas" component={Caronas}/>
-          <Route exact path="/caronas/:carpoollId/gerenciar/andamento" component={Andamento}/>
-          <Route exact path="/caronas/:carpoolId/gerenciar/pendente" component={Pendente}/>
-          <Route exact path="/caronas/:carpoollId/gerenciar/historico" component={Historico}/>
-          { /*<Route path="/caronas/historico" component={Caronas}/>*/}
-          {/* {<Route path="/caronas/matches" component={ResultCaronas}/>} */}
-          <Route path="/caronas/oferecer" component={Oferecer}/>
-          <Route path="/caronas/pedir" component={Pedir}/>
-          <Route exact path="/veiculos" component={Veiculos}/>
-          <Route path="/veiculos/cadastrar" component={CadVeiculo}/>
-          <Route path="/recuperarsenha" component={Recuperar}/>
-          <Route path="/cadastro" component={Cadastro}/>
-          <Route path="/notificacoes" component={Notifications}/>
-          <Route path="/config" render={() => <Config logOut={this.logOut.bind(this)}/>}/>
+		<div className="App">
+			<Menu />
+				<Switch>
+					<Route exact path="/" component={Home}/>
+					<Route exact path="/login" component={Auth}/>
+					<Route exact path="/rotas" component={Rotas}/>
+					<Route path="/rotas/alterar" component={AlterarRota}/>
+					<Route path="/rotas/adicionar" component={AdicionarRota}/>
+					<Route exact path="/perfil" component={Perfil}/>
+					<Route path="/perfil/espiar" component={EspiarPerfil}/>
+					<Route exact path="/caronas" component={Caronas}/>
+					<Route exact path="/caronas/:carpoollId/gerenciar/andamento" component={Andamento}/>
+					<Route exact path="/caronas/:carpoolId/gerenciar/pendente" component={Pendente}/>
+					<Route exact path="/caronas/:carpoollId/gerenciar/historico" component={Historico}/>
+					{ /*<Route path="/caronas/historico" component={Caronas}/>*/}
+					{/* {<Route path="/caronas/matches" component={ResultCaronas}/>} */}
+					<Route path="/caronas/oferecer" component={Oferecer}/>
+					<Route path="/caronas/pedir" component={Pedir}/>
+					<Route exact path="/veiculos" component={Veiculos}/>
+					<Route path="/veiculos/cadastrar" component={CadVeiculo}/>
+					<Route path="/recuperarsenha" component={Recuperar}/>
+					<Route path="/cadastro" component={Cadastro}/>
+					<Route path="/notificacoes" component={Notifications}/>
+					<Route path="/config" render={() => <Config logOut={this.logOut.bind(this)}/>}/>
 
-          <Route path='/dev' component={DevArea} />
+					<Route path='/dev' component={DevArea} />
 
-          <Route render={() => <div>four oh four</div>}/>
-        </Switch>
-      </div>
+					<Route render={() => <div>four oh four</div>}/>
+				</Switch>
+		</div>
     );
   }
 }

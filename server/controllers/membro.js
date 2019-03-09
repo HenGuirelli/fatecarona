@@ -23,7 +23,13 @@ const MembersController = app => {
     // Get user profile 
     app.get('/profile', (req, res) => {
         GetProfile(req.query.email)
-        .then(result => res.send(result))
+        .then(result => {
+            if (result.length > 0){
+                res.send({ ...result[0], success: true })
+            }else{
+                res.send({ success: false, message: 'email não encontrado' })
+            }
+        })
         .catch(e => res.send({ success: false, message: e}))
     })
 
