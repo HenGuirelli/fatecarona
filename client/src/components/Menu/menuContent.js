@@ -7,12 +7,12 @@ const itens =
     {
         text: "Home",
         route: "/",
-        icon:  <MailIcon />
+        //icon:  <MailIcon />
     },
     {
         text: "Editar Perfil",
         route: "/perfil",
-        icon:  <InboxIcon />
+        //icon:  <InboxIcon />
     },
     {
         text: "Quero Carona",

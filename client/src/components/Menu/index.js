@@ -15,7 +15,6 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { setText } from '../../actions/navigationActions'
 
-
 class Menu extends React.Component {
 	state = {
 		open: false,
@@ -29,17 +28,15 @@ class Menu extends React.Component {
 		this.setState({ open: false })
 	}
 
-	redirect = item =>{
-		this.props.dispatch(setText(item.text))
-		this.props.history.push(item.route)
-	}
-
-	withLink = item =>  {
+	withLink = item => {
 		return (
-			<ListItem button onClick={() => this.redirect(item)} >
-				<ListItemIcon> { item.icon } </ListItemIcon>
-				<ListItemText primary={item.text} />
-			</ListItem>
+			<Link to={item.route} onClick={ ()=> 
+				this.props.dispatch(setText(item.text))}>
+				<ListItem button >
+					<ListItemIcon> { item.icon } </ListItemIcon>
+					<ListItemText primary={item.text} />
+				</ListItem>
+			</Link>
 		)
 	}
 	
@@ -92,6 +89,8 @@ class Menu extends React.Component {
 				</div>
 			)
 		}else{
+			if (!window.location.href.includes('/login'))
+				window.location.href = '/login'
 			return null
 		}
 	}
