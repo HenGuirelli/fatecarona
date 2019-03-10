@@ -23,6 +23,7 @@ class AdicionarRota extends Component {
 			destination: '',
 			waypoint: ''
 		}
+		this.trackState = {}
 	}
 
 	addWaypoint = event => {
@@ -44,6 +45,14 @@ class AdicionarRota extends Component {
 	}
 
 	handleChange = (name, value) => {
+		this.trackState[name] = value
+
+		if (name === 'waypoint'){
+			this.trackState[name] = this.state.waypoinsts
+		}
+        if(this.props.trackState){
+            this.props.trackState(this.trackState)
+        }
 		this.setState({ [name]: value })
 	}
 

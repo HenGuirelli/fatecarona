@@ -162,10 +162,15 @@ const DatePicker = (props) => {
 class ComboBox extends React.Component {
 	state = { value: '' }
 
-	handleChange = (event) => this.setState({ value: event.target.value })
+	handleChange = (event) => {
+		if (this.props.onChange){
+			this.props.onChange(event)
+		}
+		this.setState({ value: event.target.value })
+	}
 
 	render(){
-		const { options, label, ...restProps } = this.props
+		const { options, label, onChange, ...restProps } = this.props
 		return (
 		<Fragment>
 			<FormControl>

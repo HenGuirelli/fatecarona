@@ -15,7 +15,6 @@ class Car {
     }
 
     static createNewCar({ plate, brand, model, color, email }){
-        console.log ({ plate, brand, model, color, email })
         return Axios.post(baseUrl + '/car', { plate, brand, model, color, email })
     }
 }
