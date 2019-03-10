@@ -7,8 +7,8 @@ const { GetFlow } = require('../DAO/mongo')
 
 const TrajetoController = app => {
     // get all flow by email
-    app.get('/trajeto/:email', (req, res) => {
-        GetFlow(req.params.email)
+    app.get('/trajeto', (req, res) => {
+        GetFlow(req.query.email)
         .then(result => res.send(result))
         .catch(err => res.send({ success: false, message: err}))
     })

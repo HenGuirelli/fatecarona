@@ -89,8 +89,8 @@ class Menu extends React.Component {
 				</div>
 			)
 		}else{
-			if (!window.location.href.includes('/login'))
-				window.location.href = '/login'
+			// if (!window.location.href.includes('/login'))
+			// 	window.location.href = '/login'
 			return null
 		}
 	}

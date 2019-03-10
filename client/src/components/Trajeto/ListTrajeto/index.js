@@ -10,19 +10,19 @@ import './style.css'
 
 class ListTrajetos extends React.Component {
     render(){
-        const { trajetos } = this.props
+        const { trajetos, actionAfterClick } = this.props
         return (
         <div className='list-trajeto'>
 			{ trajetos.map((trajeto, index) => 
-				<ExpansionPanel>
+				<ExpansionPanel key={`expansion-panel-flow-${index}`}>
 					<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
 						<img src={TrajetoIcon} className='avatar'/>
 						<Typography component='div' align='center' className='centralize'> 
-							{ trajeto.nome } 
+							{ trajeto.name } 
 						</Typography>
 					</ExpansionPanelSummary>
 					<ExpansionPanelDetails>
-						<DetalhesTrajeto origem={trajeto.origem} destino={trajeto.destino} pontosDeInteresse={trajeto.pontosDeInteresse} />
+						<DetalhesTrajeto { ...trajeto } actionAfterClick={actionAfterClick} />
 					</ExpansionPanelDetails>
 				</ExpansionPanel>
 				)}

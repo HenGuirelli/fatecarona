@@ -33,7 +33,6 @@ class Home extends Component {
 			const result = resolve.data
 
 			if (result.success){
-				console.log(result)
 				this.setState({ ...result })
 			}
 		})

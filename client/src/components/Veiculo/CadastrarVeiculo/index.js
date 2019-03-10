@@ -3,8 +3,12 @@ import config from '../../../config.json'
 import axios from 'axios'
 import { FormattedInput, OutlinedTextField } from '../../Form/TextField'
 import Button from '../../Form/Button'
+import CarHttp from '../../../http/Car'
 
 import './style.css'
+import PopUp, { TIPO } from '../../PopUp/index.js';
+
+import { connect } from 'react-redux'
 
 const mask = 'AAA-1111'
 
@@ -82,59 +86,21 @@ class CadVeiculos extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      placa: '',
-      marca: '',
-      modelo: '',
-      cor: '',
+      plate: '',
+      brand: '',
+      model: '',
+      color: '',
       suggestionsMarca: [],
       suggestionsModelo: []
     };
   }
 
-
-  handlePlaca = (event) =>{
-        if (event.target.value.length > 8) return
-        this.setState({placa: event.target.value.toUpperCase()})
-  }
-  handleMarca = (event, {newValue}) =>{
-        this.setState({marca: newValue})
-        this.loadModelo(getIdByNameMarca(newValue));
-  }
-  handleModelo = (event, {newValue}) => {
-        this.setState({modelo:  newValue})
-  }
-  handleCor = (event) => {
-        this.setState({cor: event.target.value})
-  }
-
-  loadMarcas = async () => {
-        axios.get(config.endpoint + "/cars/marcas/*")
-        .then(result => {
-        marcas = result.data
-        })
-  }
-
-  loadModelo = (idMarca) => {
-        axios.get(config.endpoint + "/cars/marcas/" + this.state.marca)
-        .then(result =>{
-        try{
-            axios.get(config.endpoint + "/cars/modelos/" + idMarca)
-            .then(result =>{
-            modelos = result.data
-            this.setState({
-                modelos: result.data
-            })
-            })
-        }catch(err){
-            this.setState({
-            modelos: []
-            })
-        }
-        })
+  handleChange = (name, value) => {
+	  this.setState({ [name]: value })
   }
 
   componentDidMount(){
-        this.loadMarcas()
+        //this.loadMarcas()
   }
 
   // Marca
@@ -164,14 +130,29 @@ class CadVeiculos extends Component{
   };
 
   handleClickAdicionar = event => {
-      
-    if (this.props.onClickAdicionarCallback)
-        this.props.onClickAdicionarCallback(event)
+	const { plate, brand, model, color } = this.state
+	const { email } = this.props
+
+	CarHttp.createNewCar({ plate, brand, model, color, email })
+	.then(resolve => {
+		const result = resolve.data
+
+		if (result.success){
+			PopUp({ tipo: TIPO.SUCESSO, text: 'Veiculo adicionado' })
+		}else{
+			PopUp({ tipo: TIPO.ERRO, text: result.message })
+		}
+	})
+	
+
+    if (this.props.onClickAdicionarCallback){
+		this.props.onClickAdicionarCallback(event)
+	}
   }
 
   render(){
     const { suggestionsMarca, suggestionsModelo } = this.state;
-    const {  withButton = true, ...restProps } = this.props
+    const { withButton = true, ...restProps } = this.props
     return(
 		<div className='cadastro-veiculo' {...restProps}>
 			<div className='veiculos'>
@@ -180,15 +161,19 @@ class CadVeiculos extends Component{
 					mask={[/[A-Z]/, /[A-Z]/, /[A-Z]/, '-', /[1-9]/, /[1-9]/, /[1-9]/, /[1-9]/ ]}
 					variant='outlined'			
 					className='component centralize'
+					onChange={ (event) => this.handleChange('plate', event.target.value) }
 				/>
 				<OutlinedTextField label='Marca'
 					className='component centralize'
+					onChange={ (event) => this.handleChange('brand', event.target.value) }
 				/>
 				<OutlinedTextField label='Modelo' 
 					className='component centralize'
+					onChange={ (event) => this.handleChange('model', event.target.value) }
 				/>
 				<OutlinedTextField label='Cor' 
 					className='component centralize'
+					onChange={ (event) => this.handleChange('color', event.target.value) }
 				/>
                 { withButton ? <Button className='component centralize' onClick={this.handleClickAdicionar}> Adicionar </Button> : null }
 			</div>
@@ -197,4 +182,8 @@ class CadVeiculos extends Component{
   }
 }
 
-export default CadVeiculos
+export default connect(store => {
+	return {
+		email: store.user.email
+	}
+})(CadVeiculos)

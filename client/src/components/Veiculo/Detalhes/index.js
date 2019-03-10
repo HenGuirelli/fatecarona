@@ -1,28 +1,44 @@
 import React from 'react'
-import CarIcon from '../../../components/Veiculo/ListVeiculo/veiculo_preto.png'
 import './style.css'
 import { Typography } from '@material-ui/core'
 import Button from '../../../components/Form/Button'
+import CarsHttp from '../../../http/Car'
+import popUp, { TIPO } from '../../../components/PopUp'
 
 class DetalhesVeiculos extends React.Component {
     constructor(props){
         super(props)
     }
 
+    deleteCar(plate, afterDelete) {
+        CarsHttp.deleteCar({ plate })
+        .then(resolve => {
+            const result = resolve.data
+            console.log('entrou')
+            if (result.success){
+                afterDelete()
+            }else{
+                afterDelete()
+                popUp({ tipo: TIPO.ERRO, text: result.message })
+            }
+        })
+    }
+
     render(){
-        const { marca, modelo, placa } = this.props
+        const { brand, model, plate, color, updateView } = this.props
 
         return (
             <div className='veiculos-detalhe'>
                 <div>
                     <Typography component='span' variant='subtitle1'>
-                        { placa } <br />
-                        MARCA: {marca} <br/>
-                        MODELO: {modelo}
+                        { plate } <br />
+                        MARCA: {brand} <br/>
+                        MODELO: {model} <br />
+                        COR: {color}
                     </Typography>
                 </div>
 
-                <Button variant='outlined'> Excluir </Button>
+                <Button variant='outlined' onClick={ () => this.deleteCar(plate, updateView) }> Excluir </Button>
             </div>
         )
     }

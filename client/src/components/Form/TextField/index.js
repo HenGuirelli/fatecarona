@@ -84,11 +84,14 @@ class FormattedInput extends React.Component {
     this.setState({
       value: event.target.value,
     })
+    if (this.props.onChange){
+      this.props.onChange(event)
+    }
   }
 
   render() {
     const { textmask, value } = this.state
-    const { label, mask, ...restProps } = this.props
+    const { label, mask, onChange, ...restProps } = this.props
 
     return (
         <TextField

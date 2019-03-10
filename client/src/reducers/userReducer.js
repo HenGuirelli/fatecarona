@@ -1,5 +1,6 @@
 export default function reducer(state={
-		email: undefined,
+		//email: undefined,
+		email: 'henrique.guirelli',
 		firebase: {},
 	}, action) {
 	switch (action.type) {
