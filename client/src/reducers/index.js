@@ -8,5 +8,6 @@ import navigation from './navigationReducer'
 
 export default combineReducers({
     user,
-    navigation
+    navigation,
+    car
 })

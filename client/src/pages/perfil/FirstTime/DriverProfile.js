@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import CadVeiculos from '../../cadveiculos'
 import PerfilMotorista from '../../../components/perfil/motorista'
 import { Typography, Divider } from '@material-ui/core'
+import { connect } from 'react-redux'
 
 class DriverProfile extends React.Component {
     constructor(props){
@@ -9,7 +10,6 @@ class DriverProfile extends React.Component {
         this.state = {
             isDriver: this.props.isDriver || false
         }
-    
     }
 
     handleClick = ({ isDriver }) => {
@@ -38,4 +38,8 @@ class DriverProfile extends React.Component {
     }
 }
 
-export default DriverProfile
+export default connect(store => {
+    return {
+        isDriver: store.user.isDriver || false
+    }
+})(DriverProfile)

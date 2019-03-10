@@ -20,6 +20,7 @@ import DriverProfile from './DriverProfile'
 import AdicionarRota from '../../adicionarRota'
 
 import { setUserData, setDriverProfile } from '../../../actions/userActions'
+import { setCar } from '../../../actions/carActions';
 
 const steps = ['Dados Pessoais', 'Motorista', 'Trajetos']
 
@@ -94,17 +95,30 @@ class FirstTime extends React.Component {
     }
 
     saveDriverData = () => {
-        const data = driverData.getState()
+        const _driverData = driverData.getState()
         const local = () => {
-            console.log('dispatch: '. data)
-            this.props.dispatch(setDriverProfile({ ...data }))
+            this.props.dispatch(setDriverProfile({ ..._driverData }))
+        }
+
+        local()
+    }
+
+    saveCarData = () => {
+        const _carData = carData.getState()
+        const local = () => {
+            this.props.dispatch(setCar({ ..._carData }))
         }
 
         local()
     }
 
     saveFlowData = () => {
+        const _flowData = flowData.getState()
+        const local = () => {
+            //this.props.dispatch(setCar({ ..._flowData }))
+        }
 
+        local()
     }
 
     componentWillUnmount(){
@@ -124,8 +138,8 @@ class FirstTime extends React.Component {
             }
             case 2: {
                 this.saveDriverData()
+                this.saveCarData()
             }
-
             case 3: {
                 this.saveFlowData()
             }
@@ -160,7 +174,6 @@ class FirstTime extends React.Component {
                     nextButtonDisabled={this.state.nextButtonDisabled}
                     previousButtonDisabled={this.state.previousButtonDisabled}
                     label={steps[activeStep]}
-                    isDriver={this.props.isDriver}
                     steps={steps}
                 > 
                     { this.getStepContent(activeStep) } 
@@ -185,7 +198,6 @@ class FirstTime extends React.Component {
 
 export default connect(store => {
     return {
-        email: store.user.email,
-        isDriver: store.user.isDriver
+        email: store.user.email
     }
 })(FirstTime)
