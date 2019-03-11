@@ -23,10 +23,10 @@ class DadosPessoais extends React.Component {
     constructor(props){
         super(props)
         this.trackState = {
-            nick: '',
-            inFatec: '',
-            outFatec: '',
-            phone: ''
+            nick: this.props.nick,
+            inFatec: this.props.inFatec,
+            outFatec: this.props.outFatec,
+            phone: this.props.phone
         }
 
         this.state = {
@@ -44,6 +44,12 @@ class DadosPessoais extends React.Component {
         }
 
         this.setState({ [name]: value })
+    }
+
+    componentDidMount(){
+        if(this.props.trackState){
+            this.props.trackState(this.trackState)
+        }
     }
 
     render(){

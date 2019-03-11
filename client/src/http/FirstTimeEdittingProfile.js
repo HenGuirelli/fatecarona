@@ -5,7 +5,7 @@ const baseUrl = config.endpoint
 
 class FirstTimeEdittingProfile {
     static personalData({ email, nick, inFatec, outFatec, phone }){
-        return Axios.put(baseUrl + '/profile/0/' + email, { data: { nick, inFatec, outFatec, phone } })
+        return Axios.put(baseUrl + '/profile/0/' + email, { nick, inFatec, outFatec, phone })
     }
 
     static driverData({ email, isDriver, CNH, typeCNH, expirationDate}) {

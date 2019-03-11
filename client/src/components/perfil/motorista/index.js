@@ -16,7 +16,6 @@ const CNHOptions = ['A', 'B', 'AB', 'C', 'D']
 class PerfilMotorista extends React.Component {
     constructor(props){
         super(props)
-        this.trackState = {}
 
         const isDriver = props.isDriver || false
         this.state = {
@@ -25,6 +24,13 @@ class PerfilMotorista extends React.Component {
             CNH: props.CNH,
             typeCNH: props.typeCNH,
             expirationDate: props.expirationDate,
+        }
+
+        this.trackState = {
+            CNH: props.CNH,
+            typeCNH: props.typeCNH,
+            expirationDate: props.expirationDate,
+            isDriver,
         }
     }
 
@@ -47,6 +53,12 @@ class PerfilMotorista extends React.Component {
             this.props.trackState(this.trackState)
         }
         this.setState({ [name]: value })
+    }
+
+    componentDidMount(){
+        if(this.props.trackState){
+            this.props.trackState(this.trackState)
+        }
     }
 
     handleChange = (event, onChange) => {

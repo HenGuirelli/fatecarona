@@ -22,6 +22,7 @@ import AdicionarRota from '../../adicionarRota'
 import { setUserData, setDriverProfile } from '../../../actions/userActions'
 import { setCar } from '../../../actions/carActions';
 import { setFlow } from '../../../actions/flowActions';
+import FinalPage from './FinalPage';
 
 const steps = ['Dados Pessoais', 'Motorista', 'Trajetos']
 
@@ -67,7 +68,7 @@ class FirstTime extends React.Component {
             case 2:
                 return  <div className='step-cad-cars'> <AdicionarRota withButton={false} trackState={flowData.trackState} /></div>
             case 3:
-                return <h1>Perfil Atualizado!</h1>
+                return <FinalPage />
             default:
                 return <h1>Em Construção...</h1>
         }
@@ -109,6 +110,9 @@ class FirstTime extends React.Component {
 
     saveDriverData = () => {
         const _driverData = driverData.getState()
+        console.log(_driverData)
+        if (!_driverData.isDriver) return
+
         const local = () => {
             this.props.dispatch(setDriverProfile({ ..._driverData }))
         }
@@ -130,6 +134,9 @@ class FirstTime extends React.Component {
 
     saveCarData = () => {
         const _carData = carData.getState()
+
+        if (!driverData.getState().isDriver) return
+
         const local = () => {
             this.props.dispatch(setCar({ ..._carData }))
         }

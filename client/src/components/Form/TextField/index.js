@@ -141,22 +141,33 @@ const TimePicker = (props) => {
 	)
 }
 
-const DatePicker = (props) => {
-	const { className, ...restProps } = props
+class DatePicker extends React.Component {
 
-	let today = new Date();
-	let dd = today.getDate();
-	let mm = today.getMonth() + 1; // january is 0
-	let yyyy = today.getFullYear();
+	onChange = (event) => {
+		event.target.value = event.target.value.replace('undefined-undefined-', '')
+		if (this.props.onChange){
+			this.props.onChange(event)
+		}
+	}
 
-	return (
-		<Picker
-			type='date'
-			className={`time-picker ${className}`}
-			defaultValue={`${yyyy}-${fillZeros(2, mm.toString())}-${fillZeros(2, dd.toString())}`}
-			{ ...restProps }
-		/>
-	)
+	render(){
+		const { className, onChange, ...restProps } = this.props
+
+		let today = new Date();
+		let dd = today.getDate();
+		let mm = today.getMonth() + 1; // january is 0
+		let yyyy = today.getFullYear();
+
+		return (
+			<Picker
+				type='date'
+				className={`time-picker ${className}`}
+				defaultValue={`${yyyy}-${fillZeros(2, mm.toString())}-${fillZeros(2, dd.toString())}`}
+				onChange={this.onChange}
+				{ ...restProps }
+			/>
+		)
+	}
 }
 
 class ComboBox extends React.Component {

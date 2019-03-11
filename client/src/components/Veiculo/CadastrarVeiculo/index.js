@@ -12,12 +12,17 @@ class CadVeiculos extends Component{
 	constructor(props) {
 		super(props)
 		this.state = {
-			plate: props.plate || '',
-			brand: props.brand || '',
-			model: props.model || '',
-			color: props.color || ''
+			plate: props.plate,
+			brand: props.brand,
+			model: props.model,
+			color: props.color
 		}
-		this.trackState = {}
+		this.trackState = {
+			plate: props.plate,
+			brand: props.brand,
+			model: props.model,
+			color: props.color
+		}
 	}
 
 	handleChange = (name, value) => {
@@ -30,6 +35,9 @@ class CadVeiculos extends Component{
 
 	componentDidMount(){
 		//this.loadMarcas()
+		if(this.props.trackState){
+			this.props.trackState(this.trackState)
+		}
 	}
 
 	handleClickAdicionar = event => {
