@@ -1,4 +1,4 @@
-const { formatDate } = require('../../utils')
+const { formatDateResolve } = require('../../utils')
 const {TypeCNH} = require('../../enum/car')
 class InsertDriverInformatinCommand {
     constructor({ isDriver, CNH, typeCNH, expirationDate, email }){
@@ -10,7 +10,7 @@ class InsertDriverInformatinCommand {
     }
 
     set expirationDate(val){
-        this._expirationDate = formatDate(val)
+        this._expirationDate = formatDateResolve(val)
     }
 
     get expirationDate(){
