@@ -21,6 +21,7 @@ import AdicionarRota from '../../adicionarRota'
 
 import { setUserData, setDriverProfile } from '../../../actions/userActions'
 import { setCar } from '../../../actions/carActions';
+import { setFlow } from '../../../actions/flowActions';
 
 const steps = ['Dados Pessoais', 'Motorista', 'Trajetos']
 
@@ -91,7 +92,19 @@ class FirstTime extends React.Component {
             this.props.dispatch(setUserData({ ...data }))
         }
 
+        const persist = () => {
+            FirstTimeEdittingProfileHttp.personalData({ ...data, email: this.props.email })
+            .then(resolve => {
+                const result = resolve.data
+
+                if (!result.success){
+                    // TODO: mensagem de erro
+                }
+            })
+        }
+
         local()
+        persist()
     }
 
     saveDriverData = () => {
@@ -100,7 +113,19 @@ class FirstTime extends React.Component {
             this.props.dispatch(setDriverProfile({ ..._driverData }))
         }
 
+        const persist = () => {
+            FirstTimeEdittingProfileHttp.driverData({ ..._driverData, email: this.props.email })
+            .then(resolve => {
+                const result = resolve.data
+
+                if (!result.success){
+                    // TODO: mensagem de erro
+                }
+            })
+        }
+
         local()
+        persist()
     }
 
     saveCarData = () => {
@@ -109,16 +134,40 @@ class FirstTime extends React.Component {
             this.props.dispatch(setCar({ ..._carData }))
         }
 
+        const persist = () => {
+            FirstTimeEdittingProfileHttp.carData({ ..._carData, email: this.props.email })
+            .then(resolve => {
+                const result = resolve.data
+
+                if (!result.success){
+                    // TODO: mensagem de erro
+                }
+            })
+        }
+
         local()
+        persist()
     }
 
     saveFlowData = () => {
         const _flowData = flowData.getState()
         const local = () => {
-            //this.props.dispatch(setCar({ ..._flowData }))
+            this.props.dispatch(setFlow({ ..._flowData }))
+        }
+
+        const persist = () => {
+            FirstTimeEdittingProfileHttp.flowData({ ..._flowData, email: this.props.email })
+            .then(resolve => {
+                const result = resolve.data
+
+                if (!result.success){
+                    // TODO: mensagem de erro
+                }
+            })
         }
 
         local()
+        persist()
     }
 
     componentWillUnmount(){
@@ -127,21 +176,20 @@ class FirstTime extends React.Component {
 
     handleNext = event => {
         const activeStep = this.state.activeStep + 1
-        console.log('personalData: ', personalData.getState())
-        console.log('driverData: ', driverData.getState())
-        console.log('carData: ', carData.getState())
-        console.log('flowData: ', flowData.getState())
 
         switch (activeStep){
             case 1: {
                 this.savePersonalData()
+                break;
             }
             case 2: {
                 this.saveDriverData()
                 this.saveCarData()
+                break;
             }
             case 3: {
                 this.saveFlowData()
+                break
             }
 
         }

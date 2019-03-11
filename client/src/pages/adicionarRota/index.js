@@ -114,6 +114,10 @@ class AdicionarRota extends Component {
 
 export default connect(store => {
 	return {
-		email: store.user.email
+		email: store.user.email,
+		name: store.flow.name,
+		origin: store.flow.origin,
+		destination: store.flow.destination,
+		waypoints: store.flow.waypoinsts
 	}
 })(AdicionarRota)
