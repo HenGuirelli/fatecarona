@@ -45,8 +45,8 @@ class ProfileHandler {
         }
 
         if (IsValidEmailForUpdate(email)){
-            UpdateMembros(val, email)
-            sync.add(new Operation({ action: action.UPDATE, values: { ...insertDriverInformationCommand } }), actionDestination.PROFILE)
+            UpdateMembros(val, email) 
+            sync.add(new Operation({ action: action.UPDATE, where: { email }, values: { ...insertDriverInformationCommand } }), actionDestination.PROFILE)
             return { success: true }
         }else{
             return { success: false, message: `Email ${email} inválido` }
@@ -86,7 +86,7 @@ class ProfileHandler {
 
         if (IsValidEmailForUpdate(email)){
             UpdateMembros(val, email)
-            sync.add(new Operation({ action: action.INSERT, values: { ...insertPersonalDataCommand }}), actionDestination.PROFILE)
+            sync.add(new Operation({ action: action.UPDATE, where: { email } , values: { ...insertPersonalDataCommand }}), actionDestination.PROFILE)
             return { success: true }
         }else{
             return { success: false, message: `Email ${email} inválido` }
