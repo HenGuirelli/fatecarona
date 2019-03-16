@@ -10,12 +10,12 @@ const CarpoolController = app => {
     const Offer = () => {
         // Add new carpooling offer
         app.post('/carpool/offer', (req, res) => {
-            try{
+            // try{
                 const command = new CreateNewCarpoolOfferCommand({ ...req.body })
                 res.send(CarpoolOfferHandler.createNewCarpoolOffer(command))
-            }catch (e){
-                res.send({ success: false, message: e })
-            }
+            // }catch (e){
+            //     res.send({ success: false, message: e })
+            // }
         })
 
         // Delete offer carpooling

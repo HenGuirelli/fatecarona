@@ -3,7 +3,7 @@ const formatDate = date => {
     return `${resp[2]}-${resp[1]}-${resp[0]}`
 }
 
-const stringToBool = value => value.toUpperCase() === 'TRUE' 
+const stringToBool = value => value.toString().toUpperCase() === 'TRUE' 
 
 const formatDateResolve = date => {
     if (date.indexOf('-') !== -1){ // correct format

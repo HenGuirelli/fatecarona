@@ -71,6 +71,7 @@ const createUpdateQuery = tableName => (values, whereColum, whereValue) => {
 
 const Insert = tableName => values => {
     const createQuery = createInsertQuery(tableName)
+    console.log(createQuery(values))
     connection.query(createQuery(values), (error, results, fields) => {
         if (error){
            console.log(error);
@@ -111,7 +112,13 @@ const GetFlowNumRows = () => {
 const WayPointExists = id => syncConnection.query(`SELECT COUNT(*) as numrow from ${tableName.WAYPOINTS} WHERE id_trajeto = ${id}`)[0].numrow > 0
 const CarExists = plate => Select(tableName.CAR)({ placa: plate }).length > 0
 const FlowExists = id => Select(tableName.FLOW)({ id }).length > 0
-const GetLastIdCarpool = () => syncConnection.query(`SELECT id FROM ${tableName.CARPOOL} order by id desc limit 1`)[0].id
+const GetLastIdCarpool = () => { 
+    try {
+        return syncConnection.query(`SELECT id FROM ${tableName.CARPOOL} order by id desc limit 1`)[0].id
+    } catch(e){
+        return 0
+    }
+}
 
 // ações
 const InsertInMembros = values => Insert(tableName.MEMBER)(values)

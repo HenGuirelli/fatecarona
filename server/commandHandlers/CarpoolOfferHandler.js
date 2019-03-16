@@ -28,20 +28,20 @@ class CarpoolOfferHandler {
     static createNewCarpoolOffer(createNewCarpoolOfferCommand) {
         const id = generateId()
         const val = {
-            data_carona: createNewCarpoolOfferCommand.date,
-            hora_carona: createNewCarpoolOfferCommand.hour,
-            placa_veiculo: createNewCarpoolOfferCommand.carPlate,
+            dataCarona: createNewCarpoolOfferCommand.date,
+            horaCarona: createNewCarpoolOfferCommand.hour,
+            placa: createNewCarpoolOfferCommand.carPlate,
             trajeto: createNewCarpoolOfferCommand.flowId,
             destino: createNewCarpoolOfferCommand.destination, // enum/destination
-            fumante: createNewCarpoolOfferCommand.isSmokerAllowed, // boolean
+            fumantes: createNewCarpoolOfferCommand.isSmokerAllowed, // boolean
             musica: createNewCarpoolOfferCommand.isMusicAllowed,  // boolean
             cadeirante: createNewCarpoolOfferCommand.isWheelchairAccommodation, // bolean
             email: createNewCarpoolOfferCommand.email,
             id
         }
 
-        if (!CarExists(val.placa_veiculo)){
-            return { success: false, message: `Veiculo de placa ${val.placa_veiculo} não existe` }
+        if (!CarExists(val.placa)){
+            return { success: false, message: `Veiculo de placa ${val.placa} não existe` }
         }
 
         if (!FlowExists(val.trajeto)){

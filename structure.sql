@@ -1,3 +1,4 @@
+drop database fatecarona;
 create database Fatecarona;
 use Fatecarona;
 
@@ -41,72 +42,26 @@ create table pontos_interesse (
 
 create table caronas (
 	id int auto_increment primary key,
-	data_carona datetime,
-	hora_carona varchar(30),
-	placa_veiculo varchar(8) not null,
+	dataCarona datetime,
+	horaCarona varchar(30),
 	trajeto int,
 	email varchar(40),
 	cadeirante boolean,
-	fumante boolean,
+	fumantes boolean,
 	musica boolean,
-	status varchar(15) default 'ativo',
-    destino varchar(20),
+	qtdVagas tinyint unsigned default 1,
+  placa char(8) not null,
+  destino varchar(10),
+	status varchar(15) default 'PENDING',
 	foreign key (email) references membros(email),
-	foreign key (placa_veiculo) references veiculos(placa),
+	foreign key (placa) references veiculos(placa),
 	foreign key (trajeto) references trajeto(id)
 );
--- create table avaliacao (
---   estrelas tinyint unsigned,
---   mensagem varchar(140),
---   avaliador varchar(40),
---   avaliado varchar(40),
---   motorista boolean,
---   foreign key (avaliado) references membros(email),
---   foreign key (avaliador) references membros(email)
--- );
 
--- create table membros_carona (
---   id int,
---   emailCaronista varchar(40),
---   status char(9),
---   foreign key (emailCaronista) references membros (email),
---   foreign key (id) references caronas (id)
--- );
-
--- create table carro_marca(
---   id int auto_increment primary key,
---   marca varchar(30)
--- );
-
--- insert into carro_marca (marca) values
---   ('Chevrolet'), ('Fiat'), ('Ford'), ('Hyundai'), ('Volkswagen');
-
--- create table carro_modelo(
---   id int,
---   modelo varchar(30),
---   foreign key (id) references carro_marca (id)
--- );
-
--- insert into carro_modelo values
---   (1, 'Celta'), (1, 'Corsa'), (1, 'Onix'), (1, 'Opala'), (1, 'Spin'),
---   (2, 'Idea'), (2, 'Marea'), (2, 'Palio'), (2, 'Siena'), (2, 'Uno'),
---   (3, 'Escort'), (3, 'Fiesta'), (3, 'Focus'), (3, 'Ka'),(3, 'Ranger'),
---   (4, 'Azera'), (4, 'Creta'), (4, 'Elantra'), (4, 'HB20'), (4, 'IX35'),
---   (5, 'Gol'), (5, 'Golf'), (5, 'Passat'), (5, 'Polo'), (5, 'Voyage');
-
--- insert into veiculos (placa, email, ativo, marca, modelo, cor) values
---   ('BBB-2222', 'alexandre.santos67', 1, 'Fiat', 'Palio', 'vermelho'),
---   ('CCC-3333', 'alexandre.santos67', 0, 'Fiat', 'Siena', 'branco');
-
--- /*insert into caronas (dataCarona, rota, emailMotorista, kilometragem, veiculo, qtdVagas, musica, tipo, status) values
---   ("2018-07-09 10:08:28", "5abfbb953f4bbe6c741a195b", 'alexandre.santos67', 12.5, 1, 3, 1, "indo para a FATEC", "andamento"),
---   ("2018-07-20 10:08:28", "5acd5e718fc79a2d484721fb", 'alexandre.santos67', 12.5, 2, 3, 1, "saindo da FATEC", "historico"),
---   ("2018-07-25 13:15:00", "5acd5e718fc79a2d484721fb", 'antonio.souza26', 12.5, 2, 0, 1, "saindo da FATEC", "pendente"),
---   ("2018-07-30 10:08:28", "5abfbb953f4bbe6c741a195b", 'alexandre.santos67', 12.5, 1, 3, 1, "saindo da FATEC", "pendente");
-
--- insert into membros_carona values
---   (1, 'thiago.ramos9', 'aceito'),
---   (1, 'antonio.souza26', 'aceito'),
---   (2, 'antonio.souza26', 'aceito'),
---   (3, 'alexandre.santos67', 'aceito'),
---   (3, 'thiago.ramos9', 'aceito');*/
+create table caronas_membros (
+	id_carona int not null,
+    email_membro varchar(40) not null,
+    primary key (id_carona, email_membro),
+    foreign key (id_carona) references caronas(id),
+    foreign key (email_membro) references membros(email)
+);
