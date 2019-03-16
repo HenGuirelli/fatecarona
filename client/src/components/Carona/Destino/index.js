@@ -3,16 +3,26 @@ import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormControl from '@material-ui/core/FormControl'
-import FormLabel from '@material-ui/core/FormLabel'
 import Section from '../Section'
+import { connect } from 'react-redux'
+import { setDestination } from '../../../actions/carpoolActions'
 
 class Destino extends React.Component {	
     state = {
-        value: 'ir-fatec'
+        value: 'TO_FATEC'
+    }
+
+    componentDidMount(){
+        this.updateRedux()
+    }
+
+    updateRedux = () => {
+        this.props.dispatch(setDestination(this.state.value))
     }
 
     handleChange = event => {
         this.setState({ value: event.target.value })
+        this.updateRedux()
     }
     
     render(){
@@ -26,12 +36,12 @@ class Destino extends React.Component {
                         onChange={this.handleChange}
                     >
                         <FormControlLabel 
-                            value="ir-fatec" 
+                            value="TO_FATEC" 
                             control={<Radio color='primary' />}
                             label="Ir até a Fatec" 
                         />
                         <FormControlLabel 
-                            value="sair-fatec" 
+                            value="OUT_FATEC" 
                             control={<Radio color='primary' />}
                             label="Sair da Fatec" 
                         />
@@ -42,4 +52,4 @@ class Destino extends React.Component {
     }
 }
 
-export default Destino
+export default connect()(Destino)

@@ -7,8 +7,7 @@ import lift from './liftReducer'
 import navigation from './navigationReducer'
 import flow from './flowReducer'
 import flows from './flowsReducer'
-import carpoolRequest from './carpoolRequestReducer'
-import carpoolOffer from './carpoolOfferReducer'
+import carpool from './carpoolReducer'
 
 export default combineReducers({
     user,
@@ -16,6 +15,5 @@ export default combineReducers({
     car,
     flow,
     flows,
-    carpoolRequest,
-    carpoolOffer
+    carpool
 })

@@ -6,28 +6,30 @@ import Preferencia from '../../components/Carona/Preferencia'
 import Veiculos from '../../components/Carona/Veiculos'
 import Button from '../../components/Form/Button'
 import { Divider, Typography } from '@material-ui/core'
-
-const veiculos = [
-	{
-		marca: 'fiat',
-		modelo: 'palio',
-		placa: 'abc-1234'
-	},
-	{
-		marca: 'fiat',
-		modelo: 'palio',
-		placa: 'abc-1234'
-	},
-	{
-		marca: 'fiat',
-		modelo: 'palio',
-		placa: 'abc-1234'
-	}
-]
+import { connect } from 'react-redux'
+import CarHttp from '../../http/Car'
 
 class Oferecer extends Component {
+	state = {
+		cars: []
+	}
+
+	componentDidMount(){
+		this.searchCars()
+	}
+
+	searchCars = () => {
+		const { email } = this.props
+		CarHttp.getCars({ email })
+		.then(resolve => {
+			const result = resolve.data
+			this.setState({ cars: result })
+		})
+		.catch(err => { /* TODO: exibir mensagem de erro */ })
+	}
 
 	render() {
+		const { cars } = this.state
 		return (
 			<main className='page-pedir-carona'>				
 				<DataHora />
@@ -36,7 +38,7 @@ class Oferecer extends Component {
 				<Destino />
 				<Divider />
 
-				<Veiculos veiculos={veiculos}/>
+				<Veiculos cars={cars}/>
 				<Divider />
 				
 				<Trajeto />
@@ -53,4 +55,8 @@ class Oferecer extends Component {
 	}
 }
 
-export default Oferecer
+export default connect(store => {
+	return {
+		email: store.user.email	
+	}
+})(Oferecer)

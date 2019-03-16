@@ -3,7 +3,7 @@ import CarIconUnSelected from '../../../images/veiculo_preto.png'
 import CarIconSelected from '../../../images/veiculo_branco.png'
 import { connect } from 'react-redux'
 import './style.css'
-import { setCar } from '../../../actions/carpoolOfferActions'
+import { setCar } from '../../../actions/carActions'
 
 class WithCars extends React.Component {
     state = {
@@ -18,7 +18,6 @@ class WithCars extends React.Component {
         }else{
             this.setState({ selected: index })
             const { brand, model, plate } = this.props.cars[index]
-            console.log({ brand, model, plate })
             this.props.dispatch(setCar({ brand, model, plate }))
         }
     }

@@ -4,7 +4,9 @@ import CadeiranteIcon from '../../../images/cadeirante.png'
 import FumanteIcon from '../../../images/fumante.png'
 import MusicaIcon from '../../../images/musica.png'
 import './style.css'
-import { Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core'
+import { connect } from 'react-redux'
+import { setPreferences } from '../../../actions/carpoolActions'
 
 const ImgWrapper = ({ children, descricao, onClick, selected = false }) => (
     <div className='component-image-wrapper'>
@@ -21,28 +23,43 @@ const ImgWrapper = ({ children, descricao, onClick, selected = false }) => (
 
 class Preferencia extends React.Component {
     state = {
-        cadeirante: false,
-        fumante: false,
-        musica: false
+        isWheelchairAccommodation: false,
+        isSmokerAllowed: false,
+        isMusicAllowed: false
     }
 
-    handleClick = name => event => {
-        this.setState({ [name]: !this.state[name] })
+    componentDidMount(){
+        this.updateRedux()
+    }
+
+    handleClick = name => async event => {
+        await this.setState({ [name]: !this.state[name] })
+        this.updateRedux()
+    }
+
+    updateRedux = () => {
+        this.props.dispatch(setPreferences({ ...this.state }))
     }
 
     render(){
+        const {
+            isWheelchairAccommodation,
+            isSmokerAllowed,
+            isMusicAllowed
+        } = this.state
+
         return (
             <Section title="Preferências">
                 <div className='preferencias-component'>
-                    <ImgWrapper descricao='Acomodação de cadeirantes' onClick={this.handleClick('cadeirante')} selected={this.state.cadeirante}>
+                    <ImgWrapper descricao='Acomodação de cadeirantes' onClick={this.handleClick('isWheelchairAccommodation')} selected={isWheelchairAccommodation}>
                         <img src={CadeiranteIcon} />
                     </ImgWrapper>
                     
-                    <ImgWrapper descricao='Ouvinte de muita música' onClick={this.handleClick('musica')} selected={this.state.musica}>
+                    <ImgWrapper descricao='Ouvinte de muita música' onClick={this.handleClick('isMusicAllowed')} selected={isMusicAllowed}>
                         <img src={MusicaIcon} />
                     </ImgWrapper>
 
-                    <ImgWrapper descricao='Aceitação de Fumantes' onClick={this.handleClick('fumante')} selected={this.state.fumante}>
+                    <ImgWrapper descricao='Aceitação de Fumantes' onClick={this.handleClick('isSmokerAllowed')} selected={isSmokerAllowed}>
                         <img src={FumanteIcon} />
                     </ImgWrapper>
                 </div>
@@ -51,4 +68,4 @@ class Preferencia extends React.Component {
     }
 }
 
-export default Preferencia
+export default connect()(Preferencia)
