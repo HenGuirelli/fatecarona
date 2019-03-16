@@ -1,6 +1,6 @@
-export function setFlow({ name, origin, destination, waypoints = [] }) {
+export function setFlow({ id, name, origin, destination, waypoints = [] }) {
     return {
         type: 'SET_FLOW',
-        payload: { name, origin, destination, waypoints }
+        payload: { id, name, origin, destination, waypoints }
     }
 }

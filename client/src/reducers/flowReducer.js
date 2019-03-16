@@ -1,7 +1,8 @@
 export default function(state ={
     name: '',
     origin: '', 
-    destination: '', 
+    destination: '',
+    id: -1,
     waypoints: []
 }, action) {
     switch(action.type){

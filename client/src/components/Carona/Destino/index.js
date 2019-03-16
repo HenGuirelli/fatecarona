@@ -20,8 +20,8 @@ class Destino extends React.Component {
         this.props.dispatch(setDestination(this.state.value))
     }
 
-    handleChange = event => {
-        this.setState({ value: event.target.value })
+    handleChange = async event => {
+        await this.setState({ value: event.target.value })
         this.updateRedux()
     }
     
