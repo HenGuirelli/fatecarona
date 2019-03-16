@@ -1,5 +1,8 @@
 export default function(state ={
-
+    name: '',
+    origin: '', 
+    destination: '', 
+    waypoints: []
 }, action) {
     switch(action.type){
         case 'SET_FLOW': {

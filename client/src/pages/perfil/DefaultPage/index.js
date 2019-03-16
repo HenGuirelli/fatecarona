@@ -15,7 +15,6 @@ class DefaultPage extends React.Component {
 		ProfileHttp.getProfileData({  email: this.props.email  })
 		.then(resolve => {
 			const result = resolve.data
-			console.log(result)
 			this.props.dispatch(setUserData({ ...result }))
 			this.props.dispatch(setDriverProfile({ ...result }))
 		})

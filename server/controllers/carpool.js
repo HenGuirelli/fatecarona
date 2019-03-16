@@ -36,7 +36,7 @@ const CarpoolController = app => {
         app.get('/carpool/request/search', (req, res) => {
             const { date, email, hour } = req.query
             GetRequestCarpool(date, email)
-            .then(result => res.send(match({ hour, date, email }, result)))
+            .then(result => res.send({ success: true, matches: match({ hour, date, email }, result) }))
             .catch(err => res.send({ success: false, message: err }))
         })
 
