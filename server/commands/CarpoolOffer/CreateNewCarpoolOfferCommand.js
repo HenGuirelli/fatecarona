@@ -1,5 +1,6 @@
 const { Destination } = require('../../enum/carona')
 const { stringToBool, formatDateResolve } = require('../../utils')
+const { Status } = require('../../enum/carona')
 
 class CreateNewCarpoolOfferCommand {
     constructor({ date, hour, carPlate, flowId, destination, isSmokerAllowed, isMusicAllowed, isWheelchairAccommodation, email }){
@@ -11,6 +12,7 @@ class CreateNewCarpoolOfferCommand {
         this.isSmokerAllowed = stringToBool(isSmokerAllowed) // boolean
         this.isMusicAllowed = stringToBool(isMusicAllowed)  // boolean
         this.isWheelchairAccommodation = stringToBool(isWheelchairAccommodation) // bolean
+        this.status = Status.PENDING
         this.email = email
     }
 
