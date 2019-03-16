@@ -6,24 +6,6 @@ import CarsHttp from '../../http/Car'
 import './style.css'
 import { Link } from 'react-router-dom';
 
-const veiculos = [
-	{
-		brand: 'fiat',
-		model: 'palio',
-		plate: 'abc-1234'
-	},
-	{
-		brand: 'fiat',
-		model: 'palio',
-		plate: 'abc-1234'
-	},
-	{
-		brand: 'fiat',
-		model: 'palio',
-		plate: 'abc-1234'
-	}
-]
-
 class Veiculos extends Component{
 	state = {
 		cars: []

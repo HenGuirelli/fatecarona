@@ -14,12 +14,12 @@ class DetalhesVeiculos extends React.Component {
         CarsHttp.deleteCar({ plate })
         .then(resolve => {
             const result = resolve.data
-            console.log('entrou')
             if (result.success){
-                afterDelete()
-            }else{
-                afterDelete()
+                popUp({ tipo: TIPO.SUCESSO, text: 'Veiculo excluido' })
+                .then(value => afterDelete())
+            }else{                
                 popUp({ tipo: TIPO.ERRO, text: result.message })
+                .then(value => afterDelete())
             }
         })
     }
