@@ -53,18 +53,23 @@ class DadosPessoais extends React.Component {
     }
 
     render(){
+        const nick = this.state.nick || this.props.nick
+        const inFatec = this.state.inFatec || this.props.inFatec
+        const outFatec = this.state.outFatec || this.props.outFatec
+        const phone = this.state.phone || this.props.phone
+
         return (
             <div className='profile-dados-pessoais'>
                 <ChoiceAvatar firsLetterNick='R' />
                 <Typography component='div' align='center'>
                     <OutlinedTextField label='apelido' className='component' block 
-                        onChange={ (e) => this.handleChange('nick', e.target.value) }  value={this.state.nick}/>
+                        onChange={ (e) => this.handleChange('nick', e.target.value) }  value={nick}/>
                     <TimePicker label='Chego na Fatec'  className='component' block 
-                        onChange={ (e) => this.handleChange('inFatec', e.target.value) } value={this.state.inFatec}/>
+                        onChange={ (e) => this.handleChange('inFatec', e.target.value) } value={inFatec}/>
                     <TimePicker label='Saio da Fatec' className='component' block 
-                        onChange={ (e) => this.handleChange('outFatec', e.target.value) } value={this.state.outFatec}/>
+                        onChange={ (e) => this.handleChange('outFatec', e.target.value) } value={outFatec}/>
                     <TelephoneInput label='Telefone' className='component' block 
-                        onChange={ (e) => this.handleChange('phone', e.target.value) } value={this.state.phone}/>
+                        onChange={ (e) => this.handleChange('phone', e.target.value) } value={phone}/>
                 </Typography>
             </div>
         )

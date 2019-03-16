@@ -5,7 +5,6 @@ import PerfilMotorista from '../../../components/perfil/motorista'
 import Button from '../../../components/Form/Button'
 import ProfileHttp from '../../../http/Profile'
 import './style.css'
-import Profile from '../../../http/Profile'
 import { connect } from 'react-redux'
 
 import { setUserData, setDriverProfile } from '../../../actions/userActions'
@@ -28,7 +27,7 @@ class DefaultPage extends React.Component {
 				<Typography component='h3' variant='h6' align='center'>
 					Dados Pessoais
 				</Typography>
-				<DadosPessoais nick='roberto' />
+				<DadosPessoais />
 				<Divider />
 				
 				<Typography component='h3' variant='h6' align='center'>
