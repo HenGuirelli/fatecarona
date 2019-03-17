@@ -134,6 +134,14 @@ const GetEmailFromDriverByCarpoolId = carpoolId => {
         return -1
     }
 }
+const RiderAlreadyInCarpool = email => {
+    const result = Select(tableName.RIDER)({ email_membro: email })
+    if (result instanceof Array){
+        return result.length > 0
+    }else{
+        return result
+    }
+}
 
 // ações
 const InsertInMembros = values => Insert(tableName.MEMBER)(values)
@@ -165,8 +173,10 @@ const InsertCarpoolOffer = values => Insert(tableName.CARPOOL)(values)
 const InsertPassageiro = values => Insert(tableName.RIDER)(values)
 const InsertRequestCarpool = values => Insert(tableName.NOTIFICATION)(values)
 const UpdateNotification = (values, email) => Update(tableName.NOTIFICATION)(values, 'from', email)
+const AddRider = (values) => Insert(tableName.RIDER)(values)
 
 
+exports.AddRider = AddRider
 exports.UpdateNotification = UpdateNotification
 exports.GetEmailFromDriverByCarpoolId = GetEmailFromDriverByCarpoolId
 exports.InsertInMembros = InsertInMembros
@@ -192,3 +202,4 @@ exports.InsertCarpoolOffer = InsertCarpoolOffer
 exports.FlowExists = FlowExists
 exports.InsertPassageiro = InsertPassageiro
 exports.GetLastIdCarpool = GetLastIdCarpool
+exports.RiderAlreadyInCarpool = RiderAlreadyInCarpool

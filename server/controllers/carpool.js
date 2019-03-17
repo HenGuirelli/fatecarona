@@ -1,5 +1,6 @@
 const { CreateNewCarpoolOfferCommand } = require('../commands/CarpoolOffer/CreateNewCarpoolOfferCommand')
 const { SendCarpoolRequestCommand } = require('../commands/CarpoolRequest/SendCarpoolRequestCommand')
+const { AcceptCarpoolRequestCommand } = require('../commands/CarpoolOffer/AcceptCarpoolRequestCommand')
 const { CarpoolOfferHandler } = require('../commandHandlers/CarpoolOfferHandler')
 const { CarpoolRequestHandler } = require('../commandHandlers/CarpoolRequestHandler')
 
@@ -50,6 +51,21 @@ const CarpoolController = app => {
             // }
         })
     }
+
+    // accept carpool request
+    app.post('/carpool/accept', (req, res, next) => {
+        /**
+         * body: driveremail, rideremail, carpoolId,
+         */
+        var command = new AcceptCarpoolRequestCommand({ ...req.body })
+        CarpoolOfferHandler.acceptCarpoolRequest(command)
+        .then(result => {
+            res.send(result)
+        })
+        .catch(err => {
+            res.send({ success: false, message: err })
+        })
+    })
 
     Offer()
     Request()
