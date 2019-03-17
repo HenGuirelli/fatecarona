@@ -33,7 +33,8 @@ class CarpoolRequestHandler {
             from: GetEmailFromDriverByCarpoolId(sendCarpoolRequestCommand.carpoolId),
             title: config.texts.titleCarpool,
             text: config.texts.carpoolRequest.toString().replace(':rider', sendCarpoolRequestCommand.nameOrNick || ''),
-            type: TypeNotification.CARPOOL_REQUEST
+            type: TypeNotification.CARPOOL_REQUEST,
+            visualized: false // nova notificação sempre falsa
         }
 
         // InsertPassageiro(val)

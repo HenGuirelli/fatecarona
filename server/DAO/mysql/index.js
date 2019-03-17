@@ -27,7 +27,14 @@ const tableName = {
     NOTIFICATION: 'notification'
 }
 
-const wrapString = val => typeof val === 'string' ? `'${val}'` : val
+const wrapString = val => {
+    if (typeof val === 'string')
+        return `'${val}'` 
+    else if(typeof val === 'boolean') 
+        return val ? 1 : 0
+    else
+        return val
+}
 
 const createInsertQuery = tableName => values => {
     if ( !(values instanceof Array) ){
@@ -62,11 +69,11 @@ const createUpdateQuery = tableName => (values, whereColum, whereValue) => {
     const keys  = Object.keys(values)
 
    return `UPDATE 
-                ${tableName} 
+                \`${tableName}\` 
             SET
-                ${keys.map((item, index) => `${ item } = ${ wrapString(values[item]) }`) }
+                ${keys.map((item, index) => `\`${ item }\` = ${ wrapString(values[item]) }`) }
             WHERE
-                ${whereColum} = ${wrapString(whereValue)}
+                \`${whereColum}\` = ${wrapString(whereValue)}
             `
 }
 
@@ -157,8 +164,10 @@ const DeleteWaypoints = idFlow => Delete(tableName.WAYPOINTS)('id_trajeto', idFl
 const InsertCarpoolOffer = values => Insert(tableName.CARPOOL)(values)
 const InsertPassageiro = values => Insert(tableName.RIDER)(values)
 const InsertRequestCarpool = values => Insert(tableName.NOTIFICATION)(values)
+const UpdateNotification = (values, email) => Update(tableName.NOTIFICATION)(values, 'from', email)
 
 
+exports.UpdateNotification = UpdateNotification
 exports.GetEmailFromDriverByCarpoolId = GetEmailFromDriverByCarpoolId
 exports.InsertInMembros = InsertInMembros
 exports.InsertRequestCarpool = InsertRequestCarpool
