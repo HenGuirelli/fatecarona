@@ -26,6 +26,10 @@ class Carpool {
     static offerCarpool(data){
         return Axios.post(baseUrl + '/carpool/offer', { ...data })
     }
+
+    static acceptCarpoolOffer({ driverEmail, riderEmail, carpoolId }){
+        return Axios.post(baseUrl + '/carpool/accept', { driverEmail, riderEmail, carpoolId })
+    }
 }
 
 export default Carpool

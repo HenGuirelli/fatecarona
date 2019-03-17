@@ -171,16 +171,30 @@ const DeleteFlow = id => Delete(tableName.FLOW)('id', id)
 const DeleteWaypoints = idFlow => Delete(tableName.WAYPOINTS)('id_trajeto', idFlow)
 const InsertCarpoolOffer = values => Insert(tableName.CARPOOL)(values)
 const InsertPassageiro = values => Insert(tableName.RIDER)(values)
-const InsertRequestCarpool = values => Insert(tableName.NOTIFICATION)(values)
+const InsertNotification = values => Insert(tableName.NOTIFICATION)(values)
 const UpdateNotification = (values, email) => Update(tableName.NOTIFICATION)(values, 'from', email)
 const AddRider = (values) => Insert(tableName.RIDER)(values)
+const GetLastIdNotification = () => {
+    const result = syncConnection.query(`
+        select id from ${tableName.NOTIFICATION} order by id desc limit 1 `)
+    if ( result instanceof Array ){
+        return result[0].id
+    }
+    try {
+        return result.id
+    }catch (e){
+        return result
+    }
+}
+const DeleteNotification = id => Delete(tableName.NOTIFICATION)('id', id)
 
-
+exports.DeleteNotification = DeleteNotification
+exports.GetLastIdNotification = GetLastIdNotification
 exports.AddRider = AddRider
 exports.UpdateNotification = UpdateNotification
 exports.GetEmailFromDriverByCarpoolId = GetEmailFromDriverByCarpoolId
 exports.InsertInMembros = InsertInMembros
-exports.InsertRequestCarpool = InsertRequestCarpool
+exports.InsertNotification = InsertNotification
 exports.IsValidEmailForInsert = IsValidEmailForInsert
 exports.IsValidEmailForUpdate = IsValidEmailForUpdate
 exports.IsValidCar = IsValidCar

@@ -1,8 +1,9 @@
-const { GetEmailFromDriverByCarpoolId, InsertRequestCarpool } = require('../DAO/mysql')
+const { GetEmailFromDriverByCarpoolId } = require('../DAO/mysql')
 const { GetCarpoolById, GetProfile } = require('../DAO/mongo')
 const { Sync, Operation, action, actionDestination } = require('../DAO/sync')
 const config = require('../config.json')
 const { TypeNotification } = require('../enum/carona')
+const { Notification } = require('../notification')
 
 const sync = Sync.getInstance()
 
@@ -36,14 +37,8 @@ class CarpoolRequestHandler {
             type: TypeNotification.CARPOOL_REQUEST,
             visualized: false // nova notificação sempre falsa
         }
-
-        // InsertPassageiro(val)
-        // resolveRidersToMongo({ id: val.id_carona, email: val.email_membro })
-        InsertRequestCarpool({ ...val })
-        sync.add(
-            new Operation({ action: action.INSERT, values: { ...val, type: fetchTypeNotificationToMongo({ typeNotification: val.type }) }}), 
-            actionDestination.NOTIFICATION
-        )
+        const notification = new Notification(val)
+        notification.send()
         return { success: true }
     }
 }
