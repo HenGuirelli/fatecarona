@@ -30,16 +30,15 @@ class Notification {
         return GetLastIdNotification() + 3        
     }
 
-    static setVisualized({ email, visualized = true }){
+    static async setVisualized({ email, visualized = true }){
         UpdateNotification({ visualized }, email)
         sync.add(
-            new Operation({ action: action.UPDATE, where: { from: email } ,values: { ...val } }), 
+            new Operation({ action: action.UPDATE, where: { from: email } ,values: { visualized } }), 
             actionDestination.NOTIFICATION
         )
     }
 
     static async delete({ notificationId }){
-        // TODO: testar
         if (notificationId === undefined) {
             throw "notification id é obrigatório"
         }else{

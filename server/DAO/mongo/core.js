@@ -42,10 +42,10 @@ const Insert = collection => document => {
 
 const Update = collection => (where, document) => {
     if (!mongo) { console.log('mongo não conectado'); return;}
-    console.log('update ' + collection)
+    console.log('update ' + collection, where, {$set: document}, { multi: true })
 
     if (IsValidCollection(collection)){
-        return mongo.collection(collection).update(where, {$set: document})
+        return mongo.collection(collection).update(where, {$set: document},  { multi: true })
     }else{
         throw `Nome da coleção '${collection}' inválido`
     }
