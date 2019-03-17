@@ -5,7 +5,7 @@ import Button from '../../../components/Form/Button'
 import './style.css'
 import NOTIFICATION_TYPE from '../notificationType'
 
-const Notification = ({title, text, liftId, withButton = true}) => (
+const Notification = ({title, text, carpoolId, withButton = true}) => (
     <div>
         <Typography component='p' variant='h6' align='left'>
             { title }
@@ -18,8 +18,8 @@ const Notification = ({title, text, liftId, withButton = true}) => (
         { 
             withButton ? 
                 <div className='notification-lift-button'>
-                    <Button onClick={() => console.log('aceita id da carona: ' + liftId)}> Aceitar </Button>
-                    <Button onClick={() => console.log('recusa id da carona: ' + liftId)}> Recusar </Button>
+                    <Button onClick={() => console.log('aceita id da carona: ' + carpoolId)}> Aceitar </Button>
+                    <Button onClick={() => console.log('recusa id da carona: ' + carpoolId)}> Recusar </Button>
                 </div>
             :
                 null
@@ -29,7 +29,7 @@ const Notification = ({title, text, liftId, withButton = true}) => (
 
 class Caronas extends React.Component {
     fetchDataToJSX = data => {
-        return data.map(item => [<Notification {...item} withButton={ item.type === NOTIFICATION_TYPE.LIFT_MESSAGE_REQUEST }/>])
+        return data.map(item => [<Notification {...item} withButton={ item.type === NOTIFICATION_TYPE.CARPOOL_REQUEST }/>])
     }
 
     render(){
