@@ -7,29 +7,10 @@ import Veiculos from '../../components/Carona/Veiculos'
 import Button from '../../components/Form/Button'
 import { Divider, Typography } from '@material-ui/core'
 import { connect } from 'react-redux'
-import CarHttp from '../../http/Car'
 import { isNotNullOrEmpty } from '../../utils'
 import CarpoolHttp from '../../http/Carpool'
 
 class Oferecer extends Component {
-	state = {
-		cars: []
-	}
-
-	componentDidMount(){
-		this.searchCars()
-	}
-
-	searchCars = () => {
-		const { email } = this.props
-		CarHttp.getCars({ email })
-		.then(resolve => {
-			const result = resolve.data
-			this.setState({ cars: result })
-		})
-		.catch(err => { /* TODO: exibir mensagem de erro */ })
-	}
-
 	fetchData = ({ car, destination, date, hour, flow, preferences }) => {
 		return {
 			email: this.props.email,
@@ -64,7 +45,6 @@ class Oferecer extends Component {
 	}
 
 	render() {
-		const { cars } = this.state
 		return (
 			<main className='page-pedir-carona'>				
 				<DataHora />
@@ -73,7 +53,7 @@ class Oferecer extends Component {
 				<Destino />
 				<Divider />
 
-				<Veiculos cars={cars}/>
+				<Veiculos />
 				<Divider />
 				
 				<Trajeto />

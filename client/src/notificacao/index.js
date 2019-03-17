@@ -1,6 +1,6 @@
 import NotificationHttp from '../http/Notification'
 
-const intervalToGetNotification = 5000 // 5seg
+const intervalToGetNotification = 10000 // 5seg
 
 class Notificacao {
     static async run(email){

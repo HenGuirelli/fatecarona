@@ -7,6 +7,7 @@ import './style.css'
 import PopUp, { TIPO } from '../../PopUp/index.js'
 
 import { connect } from 'react-redux'
+import { addCar } from '../../../actions/carActions'
 
 class CadVeiculos extends Component{
 	constructor(props) {
@@ -56,7 +57,7 @@ class CadVeiculos extends Component{
 		})
 
 		if (this.props.onClickAdicionarCallback){
-			this.props.onClickAdicionarCallback(event)
+			setTimeout(() => this.props.onClickAdicionarCallback(event), 1000)			
 		}
 	}
 

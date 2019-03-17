@@ -15,6 +15,7 @@ class ResultCaronas extends Component {
 	}
 
 	componentDidMount(){
+		// TODO: PELOAMORDEDEUS tirar o timeout
 		setTimeout(this.searchCarpools, 3000)		
 	}
 
@@ -32,7 +33,6 @@ class ResultCaronas extends Component {
 
 	render() {
 		const carpools = this.state.carpools
-		console.log('carpools: ', carpools)
 		if (this.state.loading){ return <LinearProgress /> }
 		return (
 			<div className='result-caronas-page'>

@@ -15,6 +15,7 @@ import Login from '../../http/Login'
 
 import { connect } from 'react-redux'
 import { logIn, setEmail } from '../../actions/userActions'
+import { withRouter } from 'react-router-dom'
 
 class LoginForm extends Component {
   constructor() {
@@ -57,10 +58,9 @@ class LoginForm extends Component {
 	Login.getUserData({ email })
 	.then(resolve => {
 		if (resolve.data.success){
-			this.props.dispatch(setEmail(email))			
-			console.log(this.props.user)
+			this.props.dispatch(setEmail(email))
 			this.props.notificationThread(this.props.email)
-			//this.props.history.push('/')
+			this.props.history.push('/')
 		}else{
 			popUp({ tipo: TIPO.AVISO, text: resolve.data.message })
 		}
@@ -105,4 +105,4 @@ export default connect(store => {
 		user: store,
 		email: store.user.email
 	} 
-})(LoginForm)
+})(withRouter(LoginForm))

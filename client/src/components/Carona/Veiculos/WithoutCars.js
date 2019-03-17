@@ -10,12 +10,19 @@ class WithoutCars extends React.Component {
         visible: false
     }
 
+    onClickAdicionarCallback = () => {
+        this.setState({ visible: false })
+        if (this.props.onClickAdicionarCallback){
+            this.props.onClickAdicionarCallback()
+        }
+    }
+
     render(){
         const { visible } = this.state
         return (
             <div>
-                <p>Você Não possuiu nenhum veiculo cadastrado</p>
-                <CadastrarVeiculo style={{ display: visible ? 'block' : 'none' }} onClickAdicionarCallback={() => this.setState({ visible: false })}/>
+                <p>Você não possuiu nenhum veiculo cadastrado</p>
+                <CadastrarVeiculo style={{ display: visible ? 'block' : 'none' }} onClickAdicionarCallback={ this.onClickAdicionarCallback }/>
                 <Button style={{ display: visible ? 'none' : 'block' }} onClick={() => this.setState({ visible: true })}> Adicionar </Button>
             </div>
         )
