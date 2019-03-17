@@ -65,3 +65,17 @@ create table caronas_membros (
     foreign key (id_carona) references caronas(id),
     foreign key (email_membro) references membros(email)
 );
+
+create table notification_type (
+	id int primary key not null,
+	type varchar(20) not null
+);
+
+insert into notification_type values (0, 'CARPOOL'), (1, 'CARPOOL_REQUEST'), (2, 'MESSAGES');
+
+create table notification (
+	title varchar(20) not null,
+    text varchar(255),
+    type int not null,
+    foreign key (type) references notification_type(id)
+);

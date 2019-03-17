@@ -1,8 +1,14 @@
 {
-	"mongodb": {
-      "url": "mongodb://localhost:27017/fatecarona"
-  },
-  "App": {
-      "port": "8081"
-  }
+    "mongodb": {
+        "url": "mongodb://localhost:27017/fatecarona"
+    },
+    "App": {
+        "port": "8081"
+    },
+    "texts": {
+        "titleCarpool": "Carona",
+        "carpoolRequest": ":rider quer pegar carona com você",
+        "carpoolAcept": ":driver aceitou seu pedido de carona",
+        "carpoolReject": ":driver recusou seu pedido de carona"
+    }
 }

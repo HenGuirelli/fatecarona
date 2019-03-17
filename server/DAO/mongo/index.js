@@ -93,6 +93,10 @@ const GetCarpoolById = id => {
     return mongo.Select('carpool')({ id })
 }
 
+const GetNotificationsByEmail = async email => {
+    return mongo.Select('notification')({ to: email })
+}
+
 exports.GetProfile = GetProfile
 exports.GetFlow = GetFlow
 exports.GetCar = GetCar
@@ -101,3 +105,4 @@ exports.GetRequestCarpool = GetRequestCarpool
 exports.GetFlowById = GetFlowById
 exports.GetCarByPlate = GetCarByPlate
 exports.GetCarpoolById = GetCarpoolById
+exports.GetNotificationsByEmail = GetNotificationsByEmail

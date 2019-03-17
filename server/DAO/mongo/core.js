@@ -8,6 +8,7 @@ const schema = {
     FLOW: 'flow',
     CAR: 'car',
     CARPOOL: 'carpool',
+    NOTIFICATION: 'notification'
 }
 
 const collectionsName = Object.values(schema)

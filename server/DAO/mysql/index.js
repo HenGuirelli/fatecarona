@@ -23,7 +23,8 @@ const tableName = {
     CAR: 'veiculos',
     WAYPOINTS: 'pontos_interesse',
     CARPOOL: 'caronas',
-    RIDER: 'caronas_membros'
+    RIDER: 'caronas_membros',
+    NOTIFICATION: 'notification'
 }
 
 const wrapString = val => typeof val === 'string' ? `'${val}'` : val
@@ -33,7 +34,7 @@ const createInsertQuery = tableName => values => {
         const keys = Object.keys(values)
         const _values = Object.values(values)
         return `INSERT INTO 
-                    ${tableName}(${keys.map((item, index) => `${item}`) })
+                    ${tableName}(${keys.map((item, index) => `\`${item}\``) })
                 VALUES (
                     ${_values.map((item, index) => `${wrapString(item)}`) }
                 )`
@@ -72,7 +73,7 @@ const createUpdateQuery = tableName => (values, whereColum, whereValue) => {
 const Insert = tableName => values => {
     const createQuery = createInsertQuery(tableName)
     console.log(createQuery(values))
-    connection.query(createQuery(values), (error, results, fields) => {
+    return connection.query(createQuery(values), (error, results, fields) => {
         if (error){
            console.log(error);
         }
@@ -119,6 +120,13 @@ const GetLastIdCarpool = () => {
         return 0
     }
 }
+const GetEmailFromDriverByCarpoolId = carpoolId => {
+    try{
+        return Select(tableName.CARPOOL)({ id: carpoolId })[0].email
+    }catch(e){
+        return -1
+    }
+}
 
 // ações
 const InsertInMembros = values => Insert(tableName.MEMBER)(values)
@@ -148,9 +156,12 @@ const DeleteFlow = id => Delete(tableName.FLOW)('id', id)
 const DeleteWaypoints = idFlow => Delete(tableName.WAYPOINTS)('id_trajeto', idFlow)
 const InsertCarpoolOffer = values => Insert(tableName.CARPOOL)(values)
 const InsertPassageiro = values => Insert(tableName.RIDER)(values)
+const InsertRequestCarpool = values => Insert(tableName.NOTIFICATION)(values)
 
 
+exports.GetEmailFromDriverByCarpoolId = GetEmailFromDriverByCarpoolId
 exports.InsertInMembros = InsertInMembros
+exports.InsertRequestCarpool = InsertRequestCarpool
 exports.IsValidEmailForInsert = IsValidEmailForInsert
 exports.IsValidEmailForUpdate = IsValidEmailForUpdate
 exports.IsValidCar = IsValidCar
