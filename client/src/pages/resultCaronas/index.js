@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import InfoCarona from '../../components/InfoCarona'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+// TODO: import ListItemIcon from '@material-ui/core/ListItemIcon' ?
+import ListItemText from '@material-ui/core/ListItemText'
+import { Paper, Card, CardContent } from '@material-ui/core';
 
 const _carpools = [
 	{
@@ -76,8 +81,8 @@ class ResultCaronas extends Component {
 	render() {
 		const carpools = this.props.carpools || _carpools
 		return (
-			<div>
-				{ carpools.map((lift, key) => <InfoCarona key={key} carpool={lift} />)}
+			<div className='result-caronas-page'>
+				{ carpools.map((lift, key) => <Card className='card'> <CardContent> <InfoCarona key={key} carpool={lift} /> </CardContent> </Card>)}
 			</div>
 		)
 	}
