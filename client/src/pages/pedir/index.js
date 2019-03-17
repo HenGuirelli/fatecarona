@@ -6,28 +6,18 @@ import Preferencia from '../../components/Carona/Preferencia'
 import Button from '../../components/Form/Button'
 import { Divider, Typography } from '@material-ui/core'
 import { connect } from 'react-redux'
-import CarpoolHttp from '../../http/Carpool'
-import { isNotNullOrEmpty } from '../../utils'
+import { isNotNullOrEmpty, redirect } from '../../utils'
+import { withRouter } from 'react-router-dom'
 import './style.css'
 
 class Pedir extends Component {
 
 	search = () => {
-		console.log('chamou')
 		const { date, email, hour } = this.props
 		console.log({ date, email, hour })
 		console.log('isValid: ', this.isValidToSearch())
-		if (this.isValidToSearch()){
-			CarpoolHttp.searchCarpools({ date, email, hour })
-			.then(resolve => {
-				const result = resolve.data
-				console.log(result)
-				if (result.success){
-					/* TODO: redirecionar para pagina de resultados */
-				}
-			})
-			.catch(err => { /* TODO: mensagem de erro */ })
-			
+		if (this.isValidToSearch()){	
+			this.props.history.push('/caronas/resultados')			
 		}
 	}
 
@@ -56,7 +46,7 @@ class Pedir extends Component {
 				</Typography>				
 			</main>
 		)
-  }
+  	}
 }
 
 export default connect(store => {
@@ -65,4 +55,4 @@ export default connect(store => {
 		date: store.carpool.date,
 		hour: store.carpool.hour
 	}
-})(Pedir)
+})(withRouter(Pedir))

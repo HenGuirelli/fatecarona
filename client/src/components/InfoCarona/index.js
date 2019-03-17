@@ -2,9 +2,9 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import ProfileHttp from '../../http/Profile'
 import { formatDateToView } from '../../utils'
-import LinearProgress from '@material-ui/core/LinearProgress'
 import Button from '../Form/Button'
 import './style.css'
+import { CircularProgress } from '@material-ui/core'
 
 class InfoCarona extends Component {
 	state = {
@@ -30,7 +30,7 @@ class InfoCarona extends Component {
 		const { car, date, destination, hour, id } = this.props.carpool
 		// TODO: colocar avatar da pessoa aqui
 		if (this.state.loading){
-			return <LinearProgress />
+			return <CircularProgress />
 		}
 		return (
 			<div className='info-carona'>

@@ -5,84 +5,39 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 // TODO: import ListItemIcon from '@material-ui/core/ListItemIcon' ?
 import ListItemText from '@material-ui/core/ListItemText'
-import { Paper, Card, CardContent } from '@material-ui/core';
-
-const _carpools = [
-	{
-		"_id": "5c8d77b6b862203c24b5a713",
-		"date": "2010-10-10",
-		"hour": "10:01",
-		"isSmokerAllowed": false,
-		"isMusicAllowed": false,
-		"isWheelchairAccommodation": false,
-		"status": "PENDING",
-		"email": "henrique.guirelli",
-		"id": 15,
-		"flow": {
-		  "_id": "5c8d75784968b938805f2566",
-		  "name": "rota",
-		  "origin": "Arizona, EUA",
-		  "destination": "Geórgia, EUA",
-		  "waypoints": [
-			"Houston, TX, EUA",
-			"Houston, TX, EUA"
-		  ],
-		  "email": "henrique.guirelli",
-		  "id": 6
-		},
-		"car": {
-		  "_id": "5c8d75ab4968b938805f2567",
-		  "plate": "kkk",
-		  "brand": "asdasdasdasdas",
-		  "model": "dasdasdasdasdasdasdsa",
-		  "color": "aaa",
-		  "email": "henrique.guirelli"
-		},
-		"destination": "TO_FATEC",
-		"riders": []
-	  },
-	  {
-		"_id": "5c8d77b6b862203c24b5a713",
-		"date": "2010-10-10",
-		"hour": "10:01",
-		"isSmokerAllowed": false,
-		"isMusicAllowed": false,
-		"isWheelchairAccommodation": false,
-		"status": "PENDING",
-		"email": "henrique.guirelli",
-		"id": 15,
-		"flow": {
-		  "_id": "5c8d75784968b938805f2566",
-		  "name": "rota",
-		  "origin": "Arizona, EUA",
-		  "destination": "Geórgia, EUA",
-		  "waypoints": [
-			"Houston, TX, EUA",
-			"Houston, TX, EUA"
-		  ],
-		  "email": "henrique.guirelli",
-		  "id": 6
-		},
-		"car": {
-		  "_id": "5c8d75ab4968b938805f2567",
-		  "plate": "kkk",
-		  "brand": "asdasdasdasdas",
-		  "model": "dasdasdasdasdasdasdsa",
-		  "color": "aaa",
-		  "email": "henrique.guirelli"
-		},
-		"destination": "TO_FATEC",
-		"riders": []
-	  }
-]
+import { Paper, Card, CardContent, LinearProgress } from '@material-ui/core';
+import Carpool from '../../http/Carpool';
 
 class ResultCaronas extends Component {
+	state = {
+		carpools: [],
+		loading: true
+	}
+
+	componentDidMount(){
+		setTimeout(this.searchCarpools, 3000)		
+	}
+
+	searchCarpools = () => {
+		const { date, email, hour } = this.props
+		Carpool.searchCarpools({ date, email, hour })
+		.then(resolve => {
+			this.setState({ carpools: resolve.data.matches, loading: false })
+		})
+		.catch(err => {
+			// TODO: mensagem de erro
+			this.setState({ loading: false })
+		})
+	}
 
 	render() {
-		const carpools = this.props.carpools || _carpools
+		const carpools = this.state.carpools
+		console.log('carpools: ', carpools)
+		if (this.state.loading){ return <LinearProgress /> }
 		return (
 			<div className='result-caronas-page'>
-				{ carpools.map((lift, key) => <Card className='card'> <CardContent> <InfoCarona key={key} carpool={lift} /> </CardContent> </Card>)}
+				{ carpools.map((lift, key) => {
+					return <Card className='card'> <CardContent> <InfoCarona key={key} carpool={lift} /> </CardContent> </Card> })}
 			</div>
 		)
 	}
@@ -90,6 +45,9 @@ class ResultCaronas extends Component {
 
 export default connect(store => {
 	return {
-		carpools: store.carpool.matches
+		carpools: store.carpool.matches,
+		date: store.carpool.date,
+		hour: store.carpool.hour,
+		email: store.user.email
 	}
 })(ResultCaronas)
