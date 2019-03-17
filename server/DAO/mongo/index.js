@@ -97,6 +97,10 @@ const GetNotificationsByEmail = async email => {
     return mongo.Select('notification')({ to: email })
 }
 
+const GetNoVisualizedNotificationsByEmail = async email => {
+    return mongo.Select('notification')({ $and: [ { to: email, visualized: false } ]  })
+}
+
 exports.GetProfile = GetProfile
 exports.GetFlow = GetFlow
 exports.GetCar = GetCar
@@ -106,3 +110,4 @@ exports.GetFlowById = GetFlowById
 exports.GetCarByPlate = GetCarByPlate
 exports.GetCarpoolById = GetCarpoolById
 exports.GetNotificationsByEmail = GetNotificationsByEmail
+exports.GetNoVisualizedNotificationsByEmail = GetNoVisualizedNotificationsByEmail
