@@ -59,7 +59,8 @@ class LoginForm extends Component {
 		if (resolve.data.success){
 			this.props.dispatch(setEmail(email))			
 			console.log(this.props.user)
-			this.props.history.push('/')
+			this.props.notificationThread(this.props.email)
+			//this.props.history.push('/')
 		}else{
 			popUp({ tipo: TIPO.AVISO, text: resolve.data.message })
 		}
@@ -99,4 +100,9 @@ class LoginForm extends Component {
   }
 }
 
-export default connect(store => { return {user: store} })(LoginForm)
+export default connect(store => { 
+	return {
+		user: store,
+		email: store.user.email
+	} 
+})(LoginForm)

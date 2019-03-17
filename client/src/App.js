@@ -32,17 +32,22 @@ import DevArea from './pages/devArea'
 import Andamento from './pages/caronas/gerenciar/andamento'
 import Pendente from './pages/caronas/gerenciar/pendente'
 import Historico from './pages/caronas/gerenciar/historico'
+import NotificationService from './notificacao'
 
 
 class App extends Component { 
 
-  logOut() {
-    popUp({ 
-      tipo: TIPO.SIM_NAO, 
-      text: 'Deseja realmente sair?',
-      sim: () => { firebase.auth().signOut() }
-    })
-  }
+	logOut() {
+		popUp({ 
+			tipo: TIPO.SIM_NAO, 
+			text: 'Deseja realmente sair?',
+			sim: () => { firebase.auth().signOut() }
+		})
+	}
+
+	startThreadNotification(email){
+		NotificationService.run(email)
+	}
 
   render() {
    
@@ -51,7 +56,7 @@ class App extends Component {
 			<Menu />
 				<Switch>
 					<Route exact path="/" component={Home}/>
-					<Route exact path="/login" component={Auth}/>
+					<Route exact path="/login" component={() => <Auth notificationThread={this.startThreadNotification.bind(this)} />} />
 					<Route exact path="/rotas" component={Rotas}/>
 					<Route path="/rotas/alterar" component={AlterarRota}/>
 					<Route path="/rotas/adicionar" component={AdicionarRota}/>
