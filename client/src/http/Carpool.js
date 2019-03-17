@@ -5,6 +5,8 @@ const baseUrl = config.endpoint
 
 class Carpool {
     static searchCarpools({  date, email, hour }){
+        // TODO: apagar essa linha em baixo
+        email = 'asdasasas'
         return Axios.get(baseUrl + '/carpool/request/search', { params: { date, email, hour } })
     }
 

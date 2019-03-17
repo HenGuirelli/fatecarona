@@ -1,20 +1,20 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Home from '../../pages/home'
+import InfoCarona from '../../components/InfoCarona';
 
+const member = {
+	name: 'robson',
+	email: 'aa',
+
+}
 
 class EspiarPerfil extends Component {
-
-  render() {
-    const {membroEspiado} = this.props
-    return (
-      <div className="pageBase">
-        <Home
-          userData = {membroEspiado}
-        />
-      </div>
-    )
-  }
+	render() {
+		const { member } = this.props
+		return (
+			<InfoCarona member={member} />
+		)
+	}
 }
 
 export default connect(store => {

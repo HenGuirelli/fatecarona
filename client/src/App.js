@@ -62,7 +62,7 @@ class App extends Component {
 					<Route exact path="/caronas/:carpoolId/gerenciar/pendente" component={Pendente}/>
 					<Route exact path="/caronas/:carpoollId/gerenciar/historico" component={Historico}/>
 					{ /*<Route path="/caronas/historico" component={Caronas}/>*/}
-					{/* {<Route path="/caronas/matches" component={ResultCaronas}/>} */}
+					 <Route path="/caronas/resultados" component={ResultCaronas}/>
 					<Route path="/caronas/oferecer" component={Oferecer}/>
 					<Route path="/caronas/pedir" component={Pedir}/>
 					<Route exact path="/veiculos" component={Veiculos}/>
