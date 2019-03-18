@@ -27,11 +27,11 @@ class Veiculos extends React.Component {
         const { email } = this.props        
 		CarHttp.getCars({ email })
 		.then(resolve => {
-			const result = resolve.data            
+			const result = resolve.data
             console.log('result carros', result)
             this.props.dispatch(cleanCars())
             result.forEach(car => {
-                this.props.dispatch(addCar(car))                
+                this.props.dispatch(addCar(car))
             })
 
             this.setLoading(false)

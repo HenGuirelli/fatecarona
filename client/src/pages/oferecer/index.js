@@ -9,6 +9,7 @@ import { Divider, Typography } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { isNotNullOrEmpty } from '../../utils'
 import CarpoolHttp from '../../http/Carpool'
+import { withRouter } from 'react-router-dom'
 
 class Oferecer extends Component {
 	fetchData = ({ car, destination, date, hour, flow, preferences }) => {
@@ -31,8 +32,9 @@ class Oferecer extends Component {
 			CarpoolHttp.offerCarpool(this.fetchData({ car, destination, date, hour, flow, preferences }))
 			.then(resolve => {
 				const result = resolve.data
-				console.log(result)
-				// TODO: oferecimento de carona deu certo, redirecionar?
+				if(result.success){
+					this.props.history.push('/')
+				}
 			})
 			.catch(err => { /* TODO: mensagem de erro */ })
 		}
@@ -85,4 +87,4 @@ export default connect(store => {
 		car: store.car
 
 	}
-})(Oferecer)
+})(withRouter(Oferecer))

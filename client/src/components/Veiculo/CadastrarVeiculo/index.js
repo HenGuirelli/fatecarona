@@ -51,14 +51,15 @@ class CadVeiculos extends Component{
 
 			if (result.success){
 				PopUp({ tipo: TIPO.SUCESSO, text: 'Veiculo adicionado' })
+				.then (value => {
+					if (this.props.onClickAdicionarCallback){
+						this.props.onClickAdicionarCallback(event)
+					}
+				})
 			}else{
 				PopUp({ tipo: TIPO.ERRO, text: result.message })
 			}
 		})
-
-		if (this.props.onClickAdicionarCallback){
-			setTimeout(() => this.props.onClickAdicionarCallback(event), 1000)			
-		}
 	}
 
 	render(){
