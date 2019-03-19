@@ -7,7 +7,8 @@ import './style.css'
 import { connect } from 'react-redux'
 import Flow from '../../http/Flow'
 import PopUp, { TIPO } from '../../components/PopUp'
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress } from '@material-ui/core'
+import { sleep } from '../../utils'
 
 class AdicionarRota extends Component {
 	constructor(props) {
@@ -36,10 +37,6 @@ class AdicionarRota extends Component {
 	}
 
 	setLoading = loading => this.setState({ loading })
-
-	sleep(time){
-		return new Promise(resolve => setTimeout(resolve, time))
-	}
 
 	async componentDidMount() {
 		this.setLoading(true)

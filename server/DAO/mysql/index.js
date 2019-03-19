@@ -178,6 +178,8 @@ const GetLastIdNotification = () => {
     const result = syncConnection.query(`
         select id from ${tableName.NOTIFICATION} order by id desc limit 1 `)
     if ( result instanceof Array ){
+        if (result.length === 0)
+            return 0
         return result[0].id
     }
     try {

@@ -20,8 +20,11 @@ class Notifications extends Component {
 		Notification.getNotifications({ email })
 		.then(resolve => {
 			const result = resolve.data
-			const { notifications } = result
+			const { notifications } = result			
 			this.setState({ notifications })
+
+			Notification.setVisualized({ email })
+			.catch(err => { /** TODO: mensagem de erro (esse processo acontece em background então acho que um alert não seria uma boa opção) */ })
 		})
 		.catch(err => { /** TODO: mensagem de erro */ })
 	}
@@ -32,7 +35,7 @@ class Notifications extends Component {
 	
 	getTabsContent = (value) => [
 		<Caronas data={this.state.notifications.filter(item => 
-			item.type === NOTIFICATION_TYPE.CARPOOL_REQUEST || item.type === NOTIFICATION_TYPE.CARPOOL_REQUEST)} />, 
+			item.type === NOTIFICATION_TYPE.CARPOOL || item.type === NOTIFICATION_TYPE.CARPOOL_REQUEST)} />, 
 
 		<Mensagens data={this.state.notifications.filter(item => item.type === NOTIFICATION_TYPE.MESSAGE)} />
 	][value]

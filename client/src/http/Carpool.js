@@ -30,6 +30,10 @@ class Carpool {
     static acceptCarpoolOffer({ driverEmail, riderEmail, carpoolId }){
         return Axios.post(baseUrl + '/carpool/accept', { driverEmail, riderEmail, carpoolId })
     }
+
+    static iWantCarpool({ email, nameOrNick, carpoolId }) {
+        return Axios.post(baseUrl + '/carpool/request', { email, nameOrNick, carpoolId })
+    }
 }
 
 export default Carpool

@@ -17,5 +17,10 @@ const formatDateToSQL = date => {
     return `${resp[2]}-${resp[1]}-${resp[0]}`
 }
 
+const sleep = time => {
+    return new Promise(resolve => setTimeout(resolve, time))
+}
 
-export { fillZeros, isNotNullOrEmpty, redirect, formatDateToView, formatDateToSQL }
+
+
+export { fillZeros, isNotNullOrEmpty, redirect, formatDateToView, formatDateToSQL, sleep }

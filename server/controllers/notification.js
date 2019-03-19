@@ -8,7 +8,7 @@ const notificationController = app => {
         .catch(err => res.send({ success: false, message: err.toString() }))
     })
 
-    app.put('/notification/visualized/:email', (req, res, next) => {
+    app.put('/notifications/visualized/:email', (req, res, next) => {
         Notification.setVisualized({ ...req.params })
         .then(result => res.send({ success: true }))
         .catch(err => res.send({ success: false, message: err.toString() }))
@@ -20,7 +20,7 @@ const notificationController = app => {
         .catch(err => res.send({ success: false, message: err.toString() }))
     })
 
-    app.delete('/notification/:id', (req, res, next) => {
+    app.delete('/notifications/:id', (req, res, next) => {
         const id  = parseInt(req.params.id)
         Notification.delete({ notificationId: id })
         .then(result => res.send(result))
