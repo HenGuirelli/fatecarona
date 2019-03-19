@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 import { isNotNullOrEmpty } from '../../utils'
 import CarpoolHttp from '../../http/Carpool'
 import { withRouter } from 'react-router-dom'
+import PopUpFactory, { TIPO } from '../../components/PopUp';
 
 class Oferecer extends Component {
 	fetchData = ({ car, destination, date, hour, flow, preferences }) => {
@@ -33,6 +34,7 @@ class Oferecer extends Component {
 			.then(resolve => {
 				const result = resolve.data
 				if(result.success){
+					PopUpFactory({ tipo: TIPO.SUCESSO, text: 'Sucesso' })
 					this.props.history.push('/')
 				}
 			})
@@ -65,7 +67,7 @@ class Oferecer extends Component {
 				<Divider />
 
 				<Typography align='center' component='div' className='btn-buscar-wrapper'>
-					<Button className='btn-buscar' onClick={ this.offer }>Buscar</Button>
+					<Button className='btn-buscar' onClick={ this.offer }>Oferecer</Button>
 				</Typography>				
 			</main>
 		)

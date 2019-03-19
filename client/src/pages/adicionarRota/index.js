@@ -7,6 +7,7 @@ import './style.css'
 import { connect } from 'react-redux'
 import Flow from '../../http/Flow'
 import PopUp, { TIPO } from '../../components/PopUp'
+import { CircularProgress } from '@material-ui/core';
 
 class AdicionarRota extends Component {
 	constructor(props) {
@@ -21,7 +22,8 @@ class AdicionarRota extends Component {
 			name: '',
 			origin: '',
 			destination: '',
-			waypoint: ''
+			waypoint: '',
+			loading: true
 		}
 		this.trackState = {}
 	}
@@ -33,10 +35,29 @@ class AdicionarRota extends Component {
 		this.setState({ data: this.state.data, waypoint: '' })		
 	}
 
-	componentDidMount() {
-		this.bindAutoComplete('origin', this.state.txtOrigem)
-		this.bindAutoComplete('destination', this.state.txtDestino)
-		this.bindAutoComplete('waypoint', this.state.txtPontosInteresses)
+	setLoading = loading => this.setState({ loading })
+
+	sleep(time){
+		return new Promise(resolve => setTimeout(resolve, time))
+	}
+
+	async componentDidMount() {
+		this.setLoading(true)
+		while(!this.tryBindTextsFields()){
+			await this.sleep(1000)
+		}
+		this.setLoading(false)
+	}
+
+	tryBindTextsFields = async () => {
+		try {				
+			this.bindAutoComplete('origin', this.state.txtOrigem)
+			this.bindAutoComplete('destination', this.state.txtDestino)
+			this.bindAutoComplete('waypoint', this.state.txtPontosInteresses)
+			return true
+		} catch (e) { 
+			return false 
+		}
 	}
 
 	bindAutoComplete(name, element) {
@@ -85,6 +106,9 @@ class AdicionarRota extends Component {
 
 	render () {
 		const { withButton = true, ...restProps } = this.props
+
+		if (this.state.loading) return <CircularProgress />
+
 		return (
 			<main className='root-adicionar-rota' {...restProps}>
 				<div className='adicionar-rota'>
