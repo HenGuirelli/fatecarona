@@ -29,8 +29,8 @@ class Carpool {
         return Axios.post(baseUrl + '/carpool/accept', { driverEmail, riderEmail, carpoolId })
     }
 
-    static iWantCarpool({ email, nameOrNick, carpoolId }) {
-        return Axios.post(baseUrl + '/carpool/request', { email, nameOrNick, carpoolId })
+    static iWantCarpool({ from, nameOrNick, carpoolId }) {
+        return Axios.post(baseUrl + '/carpool/request', { from, nameOrNick, carpoolId })
     }
 
     static searchCarpool({ email, status }) {

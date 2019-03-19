@@ -30,8 +30,8 @@ class CarpoolRequestHandler {
     static sendCarpoolRequest(sendCarpoolRequestCommand) {
         const val = {
             carpoolId: sendCarpoolRequestCommand.carpoolId,
-            to: sendCarpoolRequestCommand.requesterEmail,
-            from: GetEmailFromDriverByCarpoolId(sendCarpoolRequestCommand.carpoolId),
+            to: GetEmailFromDriverByCarpoolId(sendCarpoolRequestCommand.carpoolId),
+            from: sendCarpoolRequestCommand.from,
             title: config.texts.titleCarpool,
             text: config.texts.carpoolRequest.toString().replace(':rider', sendCarpoolRequestCommand.nameOrNick || ''),
             type: TypeNotification.CARPOOL_REQUEST,

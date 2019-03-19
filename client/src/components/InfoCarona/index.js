@@ -40,9 +40,10 @@ class InfoCarona extends Component {
 	}
 
 	iWant = async () => {
-		const { id, email } = this.props.carpool
+		const { id } = this.props.carpool
+		const { email } = this.props
 		const nameOrNick = await this.getNickOrName()
-		CarpoolHttp.iWantCarpool({ carpoolId: id, nameOrNick, email })
+		CarpoolHttp.iWantCarpool({ carpoolId: id, nameOrNick, from: email })
 		.then(resolve => { PopUp({ tipo: TIPO.SUCESSO, text: 'Pedido enviado' }) })
 		.catch(err => PopUp({ tipo: TIPO.ERRO, text: 'Erro ' + err.toString() }))
 	}
