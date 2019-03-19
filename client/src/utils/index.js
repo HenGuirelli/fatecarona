@@ -9,7 +9,7 @@ const redirect = to => <Redirect to={to} />
 
 const formatDateToView = date => {
     const resp = date.toString().split('-')
-    return `${resp[2]}-${resp[1]}-${resp[0]}`
+    return `${resp[2]}/${resp[1]}/${resp[0]}`
 } 
 
 const formatDateToSQL = date => {

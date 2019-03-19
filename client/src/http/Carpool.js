@@ -4,9 +4,7 @@ import config from '../config.json'
 const baseUrl = config.endpoint
 
 class Carpool {
-    static searchCarpools({  date, email, hour }){
-        // TODO: apagar essa linha em baixo
-        email = 'asdasasas'
+    static searchRequestCarpools({  date, email, hour }){
         return Axios.get(baseUrl + '/carpool/request/search', { params: { date, email, hour } })
     }
 
@@ -21,7 +19,7 @@ class Carpool {
     "isSmokerAllowed": "false",
     "isMusicAllowed": "false",
     "isWheelchairAccommodation": "false"
-}
+    }
      */
     static offerCarpool(data){
         return Axios.post(baseUrl + '/carpool/offer', { ...data })
@@ -33,6 +31,10 @@ class Carpool {
 
     static iWantCarpool({ email, nameOrNick, carpoolId }) {
         return Axios.post(baseUrl + '/carpool/request', { email, nameOrNick, carpoolId })
+    }
+
+    static searchCarpool({ email, status }) {
+        return Axios.get(baseUrl + '/carpool/search', { params: { email, status }})
     }
 }
 

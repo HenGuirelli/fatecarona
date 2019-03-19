@@ -1,6 +1,6 @@
 export default function reducer(state={
 		//email: undefined,
-		email: 'henrique.guirelli',
+		email: 'robson',
 		firebase: {},
 		nick: '',
 		inFatec: '',

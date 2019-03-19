@@ -21,7 +21,7 @@ class ResultCaronas extends Component {
 
 	searchCarpools = () => {
 		const { date, email, hour } = this.props
-		Carpool.searchCarpools({ date, email, hour })
+		Carpool.searchRequestCarpools({ date, email, hour })
 		.then(resolve => {
 			this.setState({ carpools: resolve.data.matches, loading: false })
 		})

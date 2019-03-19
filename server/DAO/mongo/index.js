@@ -101,6 +101,11 @@ const GetNoVisualizedNotificationsByEmail = async email => {
     return mongo.Select('notification')({ $and: [ { to: email, visualized: false } ]  })
 }
 
+const GetCarpoolByStatusOrAll = async ({ email, status }) => {
+    const find = status ? { $or:  [ { email }, {riders: { $elemMatch: { email } } }] , status: status.toUpperCase() } : {  $or:  [ {email}, {riders: { $elemMatch: { email } } }] }
+    return mongo.Select('carpool')(find)
+}
+
 exports.GetProfile = GetProfile
 exports.GetFlow = GetFlow
 exports.GetCar = GetCar
@@ -111,3 +116,4 @@ exports.GetCarByPlate = GetCarByPlate
 exports.GetCarpoolById = GetCarpoolById
 exports.GetNotificationsByEmail = GetNotificationsByEmail
 exports.GetNoVisualizedNotificationsByEmail = GetNoVisualizedNotificationsByEmail
+exports.GetCarpoolByStatusOrAll = GetCarpoolByStatusOrAll
