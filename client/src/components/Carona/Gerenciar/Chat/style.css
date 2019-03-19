@@ -14,3 +14,28 @@
     margin-top: .5em;
     height: 40px;
 }
+
+.message, .your-message {
+    background-color: white;
+    margin: 8px;
+    padding: 10px 0 10px 10px;
+    padding-top: border-box;
+    border-radius: 10px;
+    width: 80%;
+}
+
+.your-message {
+    margin-left: 17%;
+}
+
+.message > *, .your-message > * {
+    display: block;
+}
+
+.author::after {
+    content: ':';
+}
+.author {
+    text-transform: capitalize;
+    font-weight: bold;
+}
