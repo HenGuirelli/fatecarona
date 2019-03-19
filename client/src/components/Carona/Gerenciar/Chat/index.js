@@ -7,43 +7,15 @@ import { OutlinedTextField } from '../../../Form/TextField'
 import Button from '../../../Form/Button'
 import Message from './Message';
 
-
-const testsMessages = [
-    { author: 'robson', message: 'oi', isYou: true },
-    { author: 'rick', message: 'oi', isYou: false },
-    { author: 'robson', message: 'coé', isYou: true },
-    { author: 'rick', message: 'coé', isYou: false },
-    { author: 'robson', message: 'oi', isYou: true },
-    { author: 'rick', message: 'oi', isYou: false },
-    { author: 'robson', message: 'coé', isYou: true },
-    { author: 'rick', message: 'coé', isYou: false },
-    { author: 'robson', message: 'oi', isYou: true },
-    { author: 'rick', message: 'oi', isYou: false },
-    { author: 'robson', message: 'coé', isYou: true },
-    { author: 'rick', message: 'coé', isYou: false },
-    { author: 'robson', message: 'oi', isYou: true },
-    { author: 'rick', message: 'oi', isYou: false },
-    { author: 'robson', message: 'coé', isYou: true },
-    { author: 'rick', message: 'coé', isYou: false },
-    { author: 'robson', message: 'oi', isYou: true },
-    { author: 'rick', message: 'oi', isYou: false },
-    { author: 'robson', message: 'coé', isYou: true },
-    { author: 'rick', message: 'coé', isYou: false },
-    { author: 'robson', message: 'oi', isYou: true },
-    { author: 'rick', message: 'oi', isYou: false },
-    { author: 'robson', message: 'coé', isYou: true },
-    { author: 'rick', message: 'coé ultimo', isYou: false },
-]
-
 class Chat extends React.Component {
     constructor(props){
         super(props)
-        this.chatBehavior = new ChatBehavior()
+        this.chatBehavior = new ChatBehavior(this.updateMessages)
 
         this.state = {
             socket: {},
             message: '',
-            messages: testsMessages
+            messages: []
         }
     }
 
@@ -53,7 +25,10 @@ class Chat extends React.Component {
 
     componentDidMount(){
         this.connect()
-        this.searchMessages()
+        this.adjustScrool()
+    }
+
+    adjustScrool = () => {        
         this.refs.messagesArea.scrollTop =  this.refs.messagesArea.scrollHeight
     }
 
@@ -65,12 +40,17 @@ class Chat extends React.Component {
     sendMessage = message => {
         const { email } = this.props
         this.chatBehavior.sendMessage({ email, message })
+        this.setState({ message: '' })
     }
-   
 
-    // busca as mensagens antigas
-    searchMessages = () => {
+    updateMessages = messages => {
+        console.log('response: ', messages)
+        this.setState({ messages })
+        this.adjustScrool()
+    }
 
+    fetchMessages = () => {
+        return this.state.messages.map(message => ({ ...message, isYou: message.email === this.props.email  }))
     }
 
     render(){
@@ -78,7 +58,7 @@ class Chat extends React.Component {
         return (
             <div className='chat'>
                 <div className='messages-area' ref='messagesArea' >
-                    { this.state.messages.map(message => <Message { ...message } /> ) }
+                    { this.fetchMessages().map(message => <Message { ...message } /> ) }
                 </div>
                 <div className='send-messages-area'>
                     <OutlinedTextField placeholder='Digite aqui...' onChange={this.handleChange} value={this.state.message} /> 

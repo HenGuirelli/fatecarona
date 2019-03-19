@@ -106,6 +106,16 @@ const GetCarpoolByStatusOrAll = async ({ email, status }) => {
     return mongo.Select('carpool')(find)
 }
 
+const SendMessage = async json => {
+    return mongo.Insert('chat')(json)
+}
+
+const GetMessage = async room => {
+    return mongo.Select('chat')({ room })
+}
+
+exports.SendMessage = SendMessage
+exports.GetMessage = GetMessage
 exports.GetProfile = GetProfile
 exports.GetFlow = GetFlow
 exports.GetCar = GetCar

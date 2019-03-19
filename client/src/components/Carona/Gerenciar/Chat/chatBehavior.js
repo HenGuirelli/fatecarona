@@ -1,12 +1,15 @@
 import socketIOClient from 'socket.io-client'
 import config from '../../../../config.json'
 
+// TODO: tratamento de cache enquanto estiver sem conexão
 class ChatBehavior {
-    constructor(){
+    constructor(responseCallBack){
         this.cache = []
         this.socket = socketIOClient(config.endpoint)
         this.room = ''
         this.messages = []
+
+        this._responseCallBack = responseCallBack
     }
 
     sendMessage = ({ email, message }) => {
@@ -21,10 +24,6 @@ class ChatBehavior {
         array.forEach(message => this.sendMessage(message))
     }
 
-    loadMessagesFrom = email => {
-
-    }
-
     isEmptyQueueMessages = () => {
         return this.messages.length === 0
     }
@@ -33,7 +32,10 @@ class ChatBehavior {
         this.room = room
         this.socket.on('connected', () => {
             this.socket.emit('room', room)
+            this.socket.emit('get messages')
         })
+
+        this.socket.on('get messages', this._responseCallBack)
     }
 }
 
