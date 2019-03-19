@@ -19,6 +19,7 @@ const { Cars } = require('./controllers/car')
 const { Trajeto } = require('./controllers/trajeto')
 const { Carpool } = require('./controllers/carpool')
 const { Notification } = require('./controllers/notification')
+const { Chat } = require('./controllers/chat')
 const { Dev } = require('./controllers/dev')
 
 // Run controllers
@@ -28,8 +29,10 @@ Trajeto(app)
 Carpool(app)
 Notification(app)
 Dev(app)
+// TODO: refatorar essa merda
+const httpServer = Chat(app)
 
 // Run server
-app.listen(port, () => {
+httpServer.listen(port, () => {
     console.log(`Server on in port ${port}`)
 })

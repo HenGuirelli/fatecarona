@@ -9,6 +9,7 @@ import DentroDoCarro from '../../../../components/Carona/Gerenciar/DentroDoCarro
 import { typeCarpool } from '../../../../enuns'
 // apenas para teste, remover
 import img from '../../../../images/veiculo_preto.png'
+import Chat from '../../../../components/Carona/Gerenciar/Chat';
 
 /* TODO: CONTROLLER QUE RETORNA UM OBJETO COM TODOS ESSES DETALHES */
 const detalhesTest = {
@@ -71,6 +72,8 @@ class Pendente extends Gerenciavel {
                     :
                     null
                 }
+                <Divider />
+                <Chat />
                 <Divider />
                 <Rota />
              </main>

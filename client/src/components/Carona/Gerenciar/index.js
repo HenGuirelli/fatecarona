@@ -5,6 +5,7 @@ import Button from '../../Form/Button'
 import './style.css'
 import { formatDateToView } from '../../../utils'
 import ProfileHttp from '../../../http/Profile'
+import { withRouter } from 'react-router-dom'
 
 const status = {
 	ANDAMENTO: 'ACTIVE',
@@ -79,4 +80,4 @@ export {
     status,
     side
 }
-export default Gerenciar
+export default withRouter(Gerenciar)
