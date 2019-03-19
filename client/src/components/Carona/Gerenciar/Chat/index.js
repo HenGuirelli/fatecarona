@@ -1,13 +1,15 @@
 import React from 'react'
 import './style.css'
 import { connect } from 'react-redux'
-import socketIOClient from "socket.io-client"
-import config from '../../../../config.json'
+import ChatBehavior from './chatBehavior'
+import { withRouter } from 'react-router-dom'
+import { OutlinedTextField } from '../../../Form/TextField'
+import Button from '../../../Form/Button'
 
 class Chat extends React.Component {
     constructor(props){
         super(props)
-        this.messages = []
+        this.chatBehavior = new ChatBehavior()
 
         this.state = {
             socket: {},
@@ -15,36 +17,25 @@ class Chat extends React.Component {
         }
     }
 
-    componentDidMount(){
-        this.searchMessages()
-
-        const socket = socketIOClient(config.endpoint);
-        const { idSala, email } = this.props
-        socket.on('connected', () => {
-          socket.emit('room', idSala)
-          socket.emit('add user', email)
-        })
-        socket.on('new message', (data) => {
-        })
-        this.setState({socket})
+    handleChange = (event) => {
+        this.setState({ message: event.target.value })
     }
 
-    isEmptyQueueMessages = () => {
-        return this.messages.length === 0
+    componentDidMount(){
+        this.connect()
+        this.searchMessages()        
+    }
+
+    connect = () => {
+        const { carpoolId } = this.props.match.params
+        this.chatBehavior.connect(carpoolId)
     }
 
     sendMessage = message => {
-        //e.preventDefault()
-        const { socket } = this.state
-        if (message.length === 0) return
-        socket.emit('new message', message)
-        this.setState({message: ''})
+        const { email } = this.props
+        this.chatBehavior.sendMessage({ email, message })
     }
-
-    // caso não tenha internet na hora
-    sendMessages = () => {
-
-    }
+   
 
     // busca as mensagens antigas
     searchMessages = () => {
@@ -54,14 +45,21 @@ class Chat extends React.Component {
     render(){
 
         return (
-            <div className='chat'><button onClick={() => this.sendMessage('oi')}></button></div>
+            <div className='chat'>
+                <div className='messages-area'>
+
+                </div>
+                <div className='send-messages-area'>
+                    <OutlinedTextField placeholder='Digite aqui...' onChange={this.handleChange} value={this.state.message} /> 
+                    <Button className='btn-send-message' onClick={() => this.sendMessage(this.state.message)}> Enviar </Button>
+                </div>
+            </div>
         )
     }
 }
 
 export default connect(store => {
     return {
-        email: store.user.email,
-        idSala: '10'
+        email: store.user.email
     }
-})(Chat)
+})(withRouter(Chat))

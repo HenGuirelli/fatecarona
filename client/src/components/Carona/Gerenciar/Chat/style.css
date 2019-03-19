@@ -1,3 +1,16 @@
 .chat {
     max-width: 100%;
+    margin: 1.3em;
+}
+
+.messages-area {
+    height: 400px;
+    overflow: scroll;
+    background-color: lightgray;
+}
+.send-messages-area {
+    display: flex;
+    justify-content: space-between;
+    margin-top: .5em;
+    height: 40px;
 }
