@@ -5,7 +5,7 @@ import Button from '../../Form/Button'
 import './style.css'
 import { formatDateToView } from '../../../utils'
 import ProfileHttp from '../../../http/Profile'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 
 const status = {
 	ANDAMENTO: 'ACTIVE',
@@ -26,7 +26,7 @@ class TextContent extends React.Component {
 
     componentDidMount(){
         // TODO: tirar a função do timeout
-       setTimeout(this.searchName, 3000)
+       setTimeout(this.searchName, 1000)
     }
 
     searchName = () => {
@@ -55,7 +55,7 @@ const _Gerenciar = ({ text, carpoolId, to, email }) => (
             </div>
         </section>
         <section>
-            <Button onClick={() => window.location=`/caronas/${carpoolId}/gerenciar/${to}`} variant='outlined'> Gerenciar </Button>
+            <Link to={`/caronas/${carpoolId}/gerenciar/${to}`}><Button variant='outlined'> Gerenciar </Button></Link>
         </section>
     </article>
 )

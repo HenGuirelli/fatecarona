@@ -8,7 +8,7 @@ import CarpoolHttp from '../../../http/Carpool'
 import popUp, { TIPO } from '../../PopUp'
 
 const acceptCarpool = ({ to, from, carpoolId }) => {
-    CarpoolHttp.acceptCarpoolOffer({ riderEmail: to, driverEmail: from, carpoolId })
+    CarpoolHttp.acceptCarpoolOffer({ riderEmail: from, driverEmail: to, carpoolId })
     .then(resolve => {
         const result = resolve.data
         if (result.success){

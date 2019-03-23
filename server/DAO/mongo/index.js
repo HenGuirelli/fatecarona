@@ -114,6 +114,11 @@ const GetMessage = async room => {
     return mongo.Select('chat')({ room })
 }
 
+const GetCarpoolByDate = async date => {
+    return mongo.Select('carpool')({ date })
+}
+
+exports.GetCarpoolByDate = GetCarpoolByDate
 exports.SendMessage = SendMessage
 exports.GetMessage = GetMessage
 exports.GetProfile = GetProfile

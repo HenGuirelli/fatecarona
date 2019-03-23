@@ -44,7 +44,18 @@ const replaceKeyJson = (json, key, newKey) => {
     return result
 }
 
+const fillZeros = (length, value) => '0'.repeat(length - value.length) + value
 
+const dateToString = (date, format = 'yyyy-mm-dd') => {
+    const y = date.getFullYear().toString()
+    const m = (date.getMonth() + 1).toString() // january is 0
+    const d = date.getDate().toString()
+
+    return format.replace('yyyy', y).replace('mm', fillZeros(2, m)).replace('dd', fillZeros(2, d))
+}
+
+exports.fillZeros = fillZeros
+exports.dateToString = dateToString
 exports.formatDate = formatDate
 exports.stringToBool = stringToBool
 exports.formatDateResolve = formatDateResolve
