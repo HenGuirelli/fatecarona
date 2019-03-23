@@ -153,16 +153,10 @@ class DatePicker extends React.Component {
 	render(){
 		const { className, onChange, ...restProps } = this.props
 
-		let today = new Date();
-		let dd = today.getDate();
-		let mm = today.getMonth() + 1; // january is 0
-		let yyyy = today.getFullYear();
-
 		return (
 			<Picker
 				type='date'
 				className={`time-picker ${className}`}
-				defaultValue={`${yyyy}-${fillZeros(2, mm.toString())}-${fillZeros(2, dd.toString())}`}
 				onChange={this.onChange}
 				{ ...restProps }
 			/>
