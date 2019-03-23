@@ -28,7 +28,7 @@ class Caronas extends React.Component {
 			const result = resolve.data
 			if (result.success){
 				console.log('result carpools:', result)
-				this.setState({ carpools: result.carpool })
+				this.setState({ carpools: result.carpool.reverse() })
 			}else{
 				// TODO: mensagem de erro
 			}

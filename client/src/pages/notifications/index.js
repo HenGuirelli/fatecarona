@@ -20,7 +20,10 @@ class Notifications extends Component {
 		Notification.getNotifications({ email })
 		.then(resolve => {
 			const result = resolve.data
-			const { notifications } = result			
+			const notifications = (() => { 
+				result.notifications.reverse()
+				return result.notifications
+			})()
 			this.setState({ notifications })
 
 			Notification.setVisualized({ email })
