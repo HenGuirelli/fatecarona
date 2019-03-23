@@ -2,12 +2,17 @@ const { Singleton } = require('./singleton')
 const { GetCarpoolByDate } = require('../DAO/mongo')
 const { dateToString, fillZeros } = require('../utils')
 const { Notification } = require('../notification')
-const { TypeNotification } = require('../enum/carona')
+const { TypeNotification, Status } = require('../enum/carona')
+const { StartCarpool } = require('../DAO/mysql')
+const { Sync, Operation, action, actionDestination } = require('../DAO/sync')
+
+const sync = Sync.getInstance()
 
 const timeToCheckCarpools = 1000
 const timeToCheckToRealodCarpools = 1000
 const timeToForceUpdateCarpools = 60000 // one minute
 const acceptableTimeToSendNotification = 60 // in minutes
+const timeToStartCarpool = 0 // in minutes
 
 class CarpoolNotifcation {
     constructor(){
@@ -62,8 +67,30 @@ class CarpoolNotifcation {
         return this._fetchLoadedData(result)
     }
 
+    _getNotificationSentFromPreviosCarpoolInCache(carpoolId) {
+        for (let carpool of this.carpools){
+            if (carpool.id === carpoolId){
+                return carpool.firstNotificationSent
+            }
+        }
+        return false;
+    }
+    
+    _getStatusChangeFromPreviousCarpoolInCache(carpoolId){
+        for (let carpool of this.carpools){
+            if (carpool.id === carpoolId){
+                return carpool.statusChange
+            }
+        }
+        return false;
+    }
+
     _fetchLoadedData(data) {
-        return data.map(item => ({ ...item, notificationSent: false }) )
+        return data.map(item => ({ 
+            ...item, 
+            firstNotificationSent: this._getNotificationSentFromPreviosCarpoolInCache(item.id),
+            statusChange: this._getStatusChangeFromPreviousCarpoolInCache(item.id)
+        }) )
     }
 
     _getCurrentDay(){
@@ -90,10 +117,10 @@ class CarpoolNotifcation {
         }
     }
 
-    _sendNotifcation(carpool){
+    _sendFirstNotifcation(carpool){
         const params = {
             title: 'Carona próxima',
-            text: 'Você tem uma carona em menos de 1 hora',
+            text: `Você tem uma carona em menos de 1 hora marcada para as ${carpool.hour}`,
             from: null,
             to: carpool.email,
             type: TypeNotification.CARPOOL,
@@ -103,7 +130,39 @@ class CarpoolNotifcation {
         const notification = new Notification(params)
         notification.send()
         console.log('enviando notificação para motorista ' + carpool.email)
-        carpool.notificationSent = true
+        carpool.firstNotificationSent = true
+    }
+
+    _sendActiveCarpoolNotification(carpool) {
+        const params = {
+            title: 'Carona começou',
+            text: `Sua carona marcada para ${carpool.hour} de hoje está ativa`,
+            from: null,
+            to: carpool.email,
+            type: TypeNotification.CARPOOL,
+            carpoolId: carpool.id,
+            visualized: false
+        }
+        const notification = new Notification(params)
+        console.log('enviando notificação de carona ativa')
+        notification.send()
+        console.log('atualiza carona para ativa')
+        StartCarpool(carpool.id)
+        sync.add( new Operation({ 
+            action: action.UPDATE, 
+            where: { id: carpool.id }, 
+            values:  { status: Status.ACTIVE }
+        }), actionDestination.CARPOOL)
+
+        carpool.statusChange = true
+    }
+
+    _shouldSendFirstNotification(diff, carpool){
+        return diff <= acceptableTimeToSendNotification && diff > timeToStartCarpool && carpool.firstNotificationSent === false
+    }
+
+    _shouldSendCarpoolActiveNotification(diff, carpool){
+        return diff === timeToStartCarpool && carpool.statusChange === false
     }
 
     _checkCarpools() {
@@ -112,10 +171,13 @@ class CarpoolNotifcation {
         const now = this._getCurrentTime()
         const diff = this._calcDiffTime(now)
         for (let carpool of this.carpools){
-            let shouldSendNotification = diff(carpool.hour) <= acceptableTimeToSendNotification && carpool.notificationSent === false
-            if (shouldSendNotification){
-                this._sendNotifcation(carpool)
-            }            
+            let minutesDiff = diff(carpool.hour)
+            if (this._shouldSendFirstNotification(minutesDiff, carpool)){
+                this._sendFirstNotifcation(carpool)
+            }
+            if (this._shouldSendCarpoolActiveNotification(minutesDiff, carpool)){
+                this._sendActiveCarpoolNotification(carpool)
+            }
         }
     }
 }

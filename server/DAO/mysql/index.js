@@ -1,5 +1,6 @@
 const mysql = require('mysql')
 const syncMysql = require('sync-mysql')
+const { Status } = require('../../enum/carona')
 
 const connectionConfig = {
     host     : 'localhost',
@@ -189,7 +190,11 @@ const GetLastIdNotification = () => {
     }
 }
 const DeleteNotification = id => Delete(tableName.NOTIFICATION)('id', id)
+const StartCarpool = id => Update(tableName.CARPOOL)({ status: Status.ACTIVE }, 'id', id)
+const FinalizeCarpool = id => Update(tableName.CARPOOL)({ status: Status.FINISHED }, 'id', id)
 
+exports.StartCarpool = StartCarpool
+exports.FinalizeCarpool = FinalizeCarpool
 exports.DeleteNotification = DeleteNotification
 exports.GetLastIdNotification = GetLastIdNotification
 exports.AddRider = AddRider
