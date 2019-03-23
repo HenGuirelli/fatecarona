@@ -5,17 +5,53 @@ const { Notification } = require('../notification')
 const { TypeNotification } = require('../enum/carona')
 
 const timeToCheckCarpools = 1000
-const timeToCheckToRealodCarpools = 1000 
+const timeToCheckToRealodCarpools = 1000
+const timeToForceUpdateCarpools = 60000 // one minute
 const acceptableTimeToSendNotification = 60 // in minutes
 
 class CarpoolNotifcation {
     constructor(){
         this.carpools = []
+        this.currentDay = undefined
+        this.isToCheckCarpools = false
     }
 
-    async run() {
-        this.carpools = await this._loadCarpools(new Date())
+    async _run() {
+        setInterval(this._updateDayIfNecessary.bind(this), timeToCheckToRealodCarpools)
+        setInterval(this._updateDay.bind(this), timeToForceUpdateCarpools)
         setInterval(this._checkCarpools.bind(this), timeToCheckCarpools)
+    }
+
+    async _updateDayIfNecessary(){        
+        if (this._shouldUpdateDay()){
+            this._updateDay()
+        }
+    }
+
+    async _updateDay(){
+        // para de executar a verificação de carona próximas
+        this._stopCheckCarpools()
+
+        // atualiza as caronas do dia
+        this.carpools = await this._loadCarpools(new Date())
+
+        // atualiza o dia
+        this.currentDay = this._getCurrentDay()
+
+        // volta o tratamento de caronas
+        this._startCheckCarpools()
+    }
+
+    _shouldUpdateDay(){
+       return this.currentDay !== this._getCurrentDay()
+    }
+
+    _startCheckCarpools(){
+        this.isToCheckCarpools = true
+    }
+
+    _stopCheckCarpools(){
+        this.isToCheckCarpools = false
     }
 
     async _loadCarpools(date) {
@@ -28,6 +64,10 @@ class CarpoolNotifcation {
 
     _fetchLoadedData(data) {
         return data.map(item => ({ ...item, notificationSent: false }) )
+    }
+
+    _getCurrentDay(){
+        return new Date().getDate()
     }
 
     _getCurrentTime() {
@@ -67,6 +107,8 @@ class CarpoolNotifcation {
     }
 
     _checkCarpools() {
+        if (!this.isToCheckCarpools) { return }
+
         const now = this._getCurrentTime()
         const diff = this._calcDiffTime(now)
         for (let carpool of this.carpools){
@@ -84,7 +126,7 @@ class _CarpoolNotification extends Singleton {
     static getInstance(){
         if (obj === undefined){
             obj = new CarpoolNotifcation()
-            obj.run()
+            obj._run()
             return obj
         }
         return obj
