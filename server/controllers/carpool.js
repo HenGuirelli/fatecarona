@@ -4,7 +4,7 @@ const { AcceptCarpoolRequestCommand } = require('../commands/CarpoolOffer/Accept
 const { CarpoolOfferHandler } = require('../commandHandlers/CarpoolOfferHandler')
 const { CarpoolRequestHandler } = require('../commandHandlers/CarpoolRequestHandler')
 
-const { GetCarpool, GetRequestCarpool, GetCarpoolByStatusOrAll } = require('../DAO/mongo')
+const { GetCarpool, GetRequestCarpool, GetCarpoolByStatusOrAll, GetCarpoolById } = require('../DAO/mongo')
 const { match } = require('../carpool/match')
 
 const CarpoolController = app => {
@@ -71,6 +71,12 @@ const CarpoolController = app => {
     // status opcional, caso não informado irá trazer todas as caronas do usuario com o email informado
     app.get('/carpool/search', (req, res, next) => {
         GetCarpoolByStatusOrAll({ ...req.query })
+        .then(result => res.send({ success: true, carpool: result }))
+        .catch(err => res.send({ success: false, message: err.toString() }))
+    })
+
+    app.get('/carpool/search/id', (req, res, next) => {
+        GetCarpoolById(parseInt(req.query.id))
         .then(result => res.send({ success: true, carpool: result }))
         .catch(err => res.send({ success: false, message: err.toString() }))
     })
