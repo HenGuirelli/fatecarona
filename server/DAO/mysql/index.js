@@ -58,7 +58,10 @@ const createSelectQuery = tableName => filter => {
         return `SELECT * FROM
                     ${tableName}
                 WHERE 
-                    ${keys.map((item, index) => `${item} = ${wrapString(filter[item])}`) }    
+                    ${
+                        keys.map((item, index) => `${item} = ${wrapString(filter[item])} ${index != keys.length - 1 ? 'AND': '' } `)
+                        .toString().replace(',', '')
+                    }    
                 `
     }
     else{
@@ -90,6 +93,7 @@ const Insert = tableName => values => {
 
 const Select = tableName => filter => {
     const query = createSelectQuery(tableName)(filter)
+    console.log(query)
     return syncConnection.query(query)
 }
 
@@ -135,8 +139,8 @@ const GetEmailFromDriverByCarpoolId = carpoolId => {
         return -1
     }
 }
-const RiderAlreadyInCarpool = email => {
-    const result = Select(tableName.RIDER)({ email_membro: email })
+const RiderAlreadyInCarpool = (email, carpoolId) => {
+    const result = Select(tableName.RIDER)({ email_membro: email, id_carona: carpoolId })
     if (result instanceof Array){
         return result.length > 0
     }else{

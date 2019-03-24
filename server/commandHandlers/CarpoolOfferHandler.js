@@ -29,7 +29,7 @@ class CarpoolOfferHandler {
             id_carona: id,
             email_membro: email
         }
-        if (RiderAlreadyInCarpool(email)) { throw 'Passageiro já está na carona' }
+        if (RiderAlreadyInCarpool(email, id)) { throw 'Passageiro já está na carona' }
         AddRider(val)
 
         // TODO: área de critica, fazer contenção de erro
