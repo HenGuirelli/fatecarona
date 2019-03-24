@@ -1,8 +1,10 @@
 const { CreateNewCarpoolOfferCommand } = require('../commands/CarpoolOffer/CreateNewCarpoolOfferCommand')
 const { SendCarpoolRequestCommand } = require('../commands/CarpoolRequest/SendCarpoolRequestCommand')
 const { AcceptCarpoolRequestCommand } = require('../commands/CarpoolOffer/AcceptCarpoolRequestCommand')
+const { FinalizeCarpoolCommand } = require('../commands/Carpool/FinalizeCarpoolCommand')
 const { CarpoolOfferHandler } = require('../commandHandlers/CarpoolOfferHandler')
 const { CarpoolRequestHandler } = require('../commandHandlers/CarpoolRequestHandler')
+const { CarpoolHandler } = require('../commandHandlers/CarpoolHandler')
 
 const { GetCarpool, GetRequestCarpool, GetCarpoolByStatusOrAll, GetCarpoolById } = require('../DAO/mongo')
 const { match } = require('../carpool/match')
@@ -84,6 +86,14 @@ const CarpoolController = app => {
                 res.send({ success: false, message: `id ${req.query.id} inválido` }) 
             }          
         })
+        .catch(err => res.send({ success: false, message: err.toString() }))
+    })
+
+    // finaliza a carona
+    app.post('/carpool/finalize/:id', (req, res, next) => {
+        const command = new FinalizeCarpoolCommand({ id: req.params.id })
+        CarpoolHandler.finalizeCarpool(command)
+        .then(result => res.send(result))
         .catch(err => res.send({ success: false, message: err.toString() }))
     })
 
