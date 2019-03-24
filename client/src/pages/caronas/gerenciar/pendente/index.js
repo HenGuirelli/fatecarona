@@ -15,16 +15,18 @@ import { connect } from 'react-redux'
 
 class Pendente extends Gerenciavel {
 
-    constructor(props){
-        super(props)
+    async componentDidMount(){
+        this._componentDidMount()
+        this.loadInformation()
     }
 
-    componentDidMount(){
-        this.loadInformation()
+    componentWillUnmount(){
+        this._componentWillUnmount()
     }
 
     render(){
         const { details, carpoolPreferences, car, peopleInCar } = this.state
+        console.log(this.state)
         return (
              <main className='detalhes-carona-pendente'>
                 <Status { ...details } />
