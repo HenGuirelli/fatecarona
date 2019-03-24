@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
-import StarChecked from '../../../../images/star_checked.svg'
-import StarUnchecked from '../../../../images/star_unchecked.svg'
+import StarChecked from '../../images/star_checked.svg'
+import StarUnchecked from '../../images/star_unchecked.svg'
 import './style.css'
 
 

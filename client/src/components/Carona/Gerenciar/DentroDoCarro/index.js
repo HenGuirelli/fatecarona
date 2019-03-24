@@ -1,6 +1,6 @@
 import React from 'react'
 import InboxIcon from '@material-ui/icons/MoveToInbox'
-import Rating from '../Rating'
+import Rating from '../../../Rating'
 import './style.css'
 
 const DentroDoCarro = ({ text, image, stars }) => (
