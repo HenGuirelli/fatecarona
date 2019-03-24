@@ -26,7 +26,6 @@ class Pendente extends Gerenciavel {
 
     render(){
         const { details, carpoolPreferences, car, peopleInCar } = this.state
-        console.log(this.state)
         return (
              <main className='detalhes-carona-pendente'>
                 <Status { ...details } />

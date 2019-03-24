@@ -71,7 +71,6 @@ class Gerenciavel extends React.Component {
             .then(resolve => {
                 const peopleInCar = resolve.data.peoples
                 this._isMounted && this.setState({ peopleInCar })
-                this._isMounted && this.props.dispatch(setPeopleInCar(riders))
             })
         }
     }
