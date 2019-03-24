@@ -18,3 +18,10 @@ export function setPreferences({  isWheelchairAccommodation, isSmokerAllowed, is
         payload: { isWheelchairAccommodation, isSmokerAllowed, isMusicAllowed }
     }
 }
+
+export function setPeopleInCar(peoples = []) {
+    return {
+        type: 'SET_PEOPLES',
+        payload: peoples
+    }
+}

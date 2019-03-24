@@ -16,8 +16,20 @@ import './style.css'
 import img from '../../../../images/veiculo_preto.png'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import CarpoolHttp from '../../../../http/Carpool';
+import PopUpFactory, { TIPO } from '../../../../components/PopUp'
+import FinalizeCarpool from '../../../../components/Carona/Gerenciar/FinalizeCarpool';
+
 
 class Andamento extends Gerenciavel {
+    constructor(props){
+        super(props)
+
+        this.state = {
+            ...this.state,
+            popupFinalizeCarpoolOpen: false
+        }
+    }
 
     async componentDidMount(){
         this._componentDidMount()
@@ -28,9 +40,29 @@ class Andamento extends Gerenciavel {
         this._componentWillUnmount()
     }
 
+    finalizeCarpool = () => {
+        const id = this.getCarPoolId()
+        CarpoolHttp.finalizeCarpool(id)
+        .then(resolve => {
+            const result = resolve.data
+            if (result.success){
+                PopUpFactory({ tipo: TIPO.SUCESSO, text: 'Carona finalizada, deixe sua avaliação ^^' })
+                .then(value => {
+                    this.setState({ popupFinalizeCarpoolOpen: true })
+                })
+            }
+        })
+    }
+
+    onCancelRatePopUp = () => {
+        this.setState({ popupFinalizeCarpoolOpen: false })
+        this.props.history.push('/')
+    }
+
+
     render(){
         const { details, carpoolPreferences, car, peopleInCar } = this.state
-        console.log(this.state)
+
         return (
              <main className='detalhes-carona-andamento'>
                 <Status { ...details } />
@@ -57,8 +89,12 @@ class Andamento extends Gerenciavel {
                 <Chat />
                 <Divider />
                 <Typography component='div' align='center' className='btn-finalizar-carona'>
-                    <Button onClick={ () => console.log('finalizar carona') }> Finalizar Carona </Button>
+                    <Button onClick={ this.finalizeCarpool }> Finalizar Carona </Button>
                 </Typography>
+                <FinalizeCarpool 
+                    carpoolId={this.getCarPoolId()}
+                    open={this.state.popupFinalizeCarpoolOpen} 
+                    onCancel={ this.onCancelRatePopUp } />
              </main>
         )
     }

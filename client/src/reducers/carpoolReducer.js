@@ -4,7 +4,8 @@ export default (state={
     destination: '',
     isWheelchairAccommodation: false,
     isSmokerAllowed: false,
-    isMusicAllowed: false
+    isMusicAllowed: false,
+    peopleInCar: []
 }, action) => {
     switch(action.type){
         case 'SET_DATE_HOUR': {
@@ -15,6 +16,9 @@ export default (state={
         }
         case 'SET_PREFERENCES': {
             return { ...state, ...action.payload }
+        }
+        case 'SET_PEOPLES': {
+            return { ...state, peopleInCar: action.payload }
         }
         default: {
             return { ...state }

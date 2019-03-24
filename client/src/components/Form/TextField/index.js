@@ -175,7 +175,7 @@ class ComboBox extends React.Component {
 	}
 
 	render(){
-		const { options, label, onChange, ...restProps } = this.props
+		const { options, label, onChange, values = [], ...restProps } = this.props
 		return (
 		<Fragment>
 			<FormControl>
@@ -187,7 +187,7 @@ class ComboBox extends React.Component {
 				input={<OutlinedInput labelWidth={200} />}
 				{ ...restProps }
 			>
-				{options.map((option, index) => <MenuItem key={`menu-item-${index}`} value={option}> {option} </MenuItem>)}
+				{options.map((option, index) => <MenuItem key={`menu-item-${index}`} value={values[index] || option}> {option} </MenuItem>)}
 			</Select>
 			</FormControl>
 			{ this.props.block ? <br /> : null }

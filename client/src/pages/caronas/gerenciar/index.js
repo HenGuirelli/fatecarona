@@ -1,7 +1,6 @@
 import React from 'react'
-import ProfileHttp from '../../../http/Profile'
 import CarpoolHttp from '../../../http/Carpool'
-import { typeCarpool } from '../../../enuns'
+import { setPeopleInCar } from '../../../actions/carpoolActions'
 
 class Gerenciavel extends React.Component {
     _isMounted = false
@@ -50,7 +49,6 @@ class Gerenciavel extends React.Component {
     }
 
     loadInformation = async () => {
-        console.log('chamou func')
         const resolve = await CarpoolHttp.getCarpoolById(this.getCarPoolId())
         const result = resolve.data.carpool
         if (resolve.data.success){
@@ -67,16 +65,14 @@ class Gerenciavel extends React.Component {
                 isWheelchairAccommodation: result.isWheelchairAccommodation,
                 isMusicAllowed: result.isMusicAllowed
             }
-            console.log('state chamado')
-            this._isMounted && this.setState({ details, car, peopleInCar: riders, carpoolPreferences })
+            this._isMounted && this.setState({ details, car, carpoolPreferences })
 
-            const profileResolve = await ProfileHttp.getProfileData({ email: this.props.email })
-            const { success, ...profile } = profileResolve.data
-            if (success){
-                riders.push({ ...profile, type: typeCarpool.DRIVER })
-                riders.reverse()
-                this.setState({ peopleInCar: riders })
-            }
+            CarpoolHttp.getPeoplesInCarpool(this.getCarPoolId())
+            .then(resolve => {
+                const peopleInCar = resolve.data.peoples
+                this._isMounted && this.setState({ peopleInCar })
+                this._isMounted && this.props.dispatch(setPeopleInCar(riders))
+            })
         }
     }
 }
