@@ -3,7 +3,7 @@ import Icon from './comute.svg'
 import { Avatar, CircularProgress } from '@material-ui/core'
 import Button from '../../Form/Button'
 import './style.css'
-import { formatDateToView } from '../../../utils'
+import { formatDateToView, formatDestinationText } from '../../../utils'
 import ProfileHttp from '../../../http/Profile'
 import { withRouter, Link } from 'react-router-dom'
 
@@ -63,7 +63,7 @@ const _Gerenciar = ({ text, carpoolId, to, email }) => (
 const Gerenciar = props => {
     const { email, riders, date } = props
     const carpoolId = props.id
-    const sideText = props.side === side.TO_FATEC ? 'indo para fatec' : 'saindo da fatec'
+    const sideText = formatDestinationText(props.side)
 
     if (props.type == status.ANDAMENTO){
         return <_Gerenciar email={email} text={`está dando carona para ${riders.map(rider => rider.name)} em ${formatDateToView(date)}, ${sideText}`}  to='andamento' carpoolId={carpoolId}/>

@@ -9,65 +9,99 @@ import DentroDoCarro from '../../../../components/Carona/Gerenciar/DentroDoCarro
 import { typeCarpool } from '../../../../enuns'
 // apenas para teste, remover
 import img from '../../../../images/veiculo_preto.png'
-import Chat from '../../../../components/Carona/Gerenciar/Chat';
-
-/* TODO: CONTROLLER QUE RETORNA UM OBJETO COM TODOS ESSES DETALHES */
-const detalhesTest = {
-    status: 'Pendente',
-    dia: '23/02/2019',
-    hora: '18:00',
-    tipo: 'indo para FATEC'
-}
-
-const prefCaronaTest = {
-    fumante: false,
-    deficiente: false,
-    musica: false
-}
-
-const veiculoTest =  {
-    marca: 'fiat',
-    modelo: 'palio',
-    placa: 'abc-1234'
-}
-
-const dentroDoCarroTest = [
-    {
-        nick: 'R',
-        name: 'Robson',
-        email: 'robsonGtna@emai.com',
-        img: img,
-        stars: 3,
-        type: typeCarpool.DRIVER
-    },
-    {
-        nick: 'W',
-        name: 'wesley',
-        email: 'wesley@emai.com',
-        img: img,
-        stars: 1,        
-        type: typeCarpool.RIDER
-    }
-]
+import Chat from '../../../../components/Carona/Gerenciar/Chat'
+import CarpoolHttp from '../../../../http/Carpool'
+import { withRouter } from 'react-router-dom'
+import ProfileHttp from '../../../../http/Profile'
+import { connect } from 'react-redux'
 
 class Pendente extends Gerenciavel {
+
+    constructor(props){
+        super(props)
+
+        const details = {
+            status: '',
+            day: '',
+            hour: '',
+            destination: ''
+        }
+
+        const carpoolPreferences = {
+            isSmokerAllowed: false,
+            isWheelchairAccommodation: false,
+            isMusicAllowed: false
+        }
+
+        const car = {
+            brand: '',
+            model: '',
+            plate: ''
+        }
+
+        const peopleInCar = []
+
+        this.state = {
+            details,
+            carpoolPreferences,
+            car,
+            peopleInCar
+        }
+    }
+
+    componentDidMount(){
+        this.loadInformation()
+    }
+
+    loadInformation = async () => {
+        const resolve = await CarpoolHttp.getCarpoolById(this.getCarPoolId())
+        console.log('load asyunc', resolve)
+        const result = resolve.data.carpool
+        if (resolve.data.success){
+            console.log(result)
+            const { car, riders } = result
+
+            const details = {
+                status: result.status,
+                date: result.date,
+                hour: result.hour,
+                destination: result.destination
+            }
+            const carpoolPreferences = {
+                isSmokerAllowed: result.isSmokerAllowed,
+                isWheelchairAccommodation: result.isWheelchairAccommodation,
+                isMusicAllowed: result.isMusicAllowed
+            }
+            this.setState({ details, car, peopleInCar: riders, carpoolPreferences })
+
+            const profileResolve = await ProfileHttp.getProfileData({ email: this.props.email })
+            const { success, ...profile } = profileResolve.data
+            if (success){
+                riders.push({ ...profile, type: typeCarpool.DRIVER })
+                riders.reverse()
+                this.setState({ peopleInCar: riders })
+            }
+        }
+    }
+
     render(){
+        const { details, carpoolPreferences, car, peopleInCar } = this.state
         return (
              <main className='detalhes-carona-pendente'>
-                <Status { ...detalhesTest } />
+                <Status { ...details } />
                 <Divider />
-                <Preferencia { ...prefCaronaTest } />
+                <Preferencia { ...carpoolPreferences } />
                 <Divider />
-                <Veiculo { ...veiculoTest } />
+                <Veiculo { ...car } />
                 <Divider />
                 {
-                    dentroDoCarroTest && dentroDoCarroTest.length > 0 ?
-                    dentroDoCarroTest.map((item, index) => 
+                    peopleInCar && peopleInCar.length > 0 ?
+                    peopleInCar.map((item, index) => 
                         <DentroDoCarro 
                             key={`dentro-do-carro-${index}`} 
                             text={item.type === typeCarpool.DRIVER ? `${ item.nick || item.name }, motorista` : `${ item.nick || item.name }, passageiro`}
-                            image={item.img}
-                            stars={item.stars}
+                            image={item.img || img }
+                            stars={item.stars || 0 }
                         />)
                     :
                     null
@@ -81,4 +115,8 @@ class Pendente extends Gerenciavel {
     }
 }
 
-export default Pendente
+export default withRouter(connect(store => {
+    return {
+        email: store.user.email
+    }
+})(Pendente))

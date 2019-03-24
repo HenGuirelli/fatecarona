@@ -10,7 +10,7 @@ import Message from './Message';
 class Chat extends React.Component {
     constructor(props){
         super(props)
-        this.chatBehavior = new ChatBehavior(this.updateMessages)
+        this.chatBehavior = null
 
         this.state = {
             socket: {},
@@ -24,12 +24,15 @@ class Chat extends React.Component {
     }
 
     componentDidMount(){
+        this.chatBehavior = new ChatBehavior(this.updateMessages)
         this.connect()
         this.adjustScrool()
     }
 
-    adjustScrool = () => {        
-        this.refs.messagesArea.scrollTop =  this.refs.messagesArea.scrollHeight
+    adjustScrool = () => {
+        try {     
+            this.refs.messagesArea.scrollTop =  this.refs.messagesArea.scrollHeight
+        }catch(e) { /* impedindo que o site exploda um erro gigante na cara do usuario */ }
     }
 
     connect = () => {

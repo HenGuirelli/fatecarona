@@ -77,7 +77,13 @@ const CarpoolController = app => {
 
     app.get('/carpool/search/id', (req, res, next) => {
         GetCarpoolById(parseInt(req.query.id))
-        .then(result => res.send({ success: true, carpool: result }))
+        .then(result => {
+            if(result.length > 0){ 
+                res.send({ success: true, carpool: result[0] }) 
+            }else{
+                res.send({ success: false, message: `id ${req.query.id} inválido` }) 
+            }          
+        })
         .catch(err => res.send({ success: false, message: err.toString() }))
     })
 

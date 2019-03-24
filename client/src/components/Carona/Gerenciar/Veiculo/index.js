@@ -3,7 +3,7 @@ import Icon from '../../../../images/veiculo_preto.png'
 import Section from '../Section'
 import './style.css'
 
-const Veiculo = ({ marca, modelo, placa }) => (
+const Veiculo = ({ brand, model, plate }) => (
     <Section title='veículo'>
         <div  className='gerenciar-carona-veiculo'>
             <div className='image-wrapper'>
@@ -11,10 +11,10 @@ const Veiculo = ({ marca, modelo, placa }) => (
             </div>
             <div>
                 <p>
-                    {marca}, {modelo}
+                    {brand}, {model}
                 </p>
                 <span>
-                    {placa}
+                    {plate}
                 </span>
             </div>
         </div>

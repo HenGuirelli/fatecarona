@@ -36,6 +36,10 @@ class Carpool {
     static searchCarpool({ email, status }) {
         return Axios.get(baseUrl + '/carpool/search', { params: { email, status }})
     }
+
+    static getCarpoolById(id) {
+        return Axios.get(baseUrl + '/carpool/search/id', { params: { id }})
+    }
 }
 
 export default Carpool

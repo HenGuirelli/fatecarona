@@ -8,8 +8,12 @@ const isNotNullOrEmpty = obj => obj !== undefined && obj !== null && obj !== '' 
 const redirect = to => <Redirect to={to} />
 
 const formatDateToView = date => {
-    const resp = date.toString().split('-')
-    return `${resp[2]}/${resp[1]}/${resp[0]}`
+    try{
+        const resp = date.toString().split('-')
+        return `${resp[2]}/${resp[1]}/${resp[0]}`
+    }catch(e){
+        return '...'
+    }
 } 
 
 const formatDateToSQL = date => {
@@ -21,6 +25,12 @@ const sleep = time => {
     return new Promise(resolve => setTimeout(resolve, time))
 }
 
+const formatDestinationText = side => {
+    try {
+        return side === side.TO_FATEC ? 'indo para fatec' : 'saindo da fatec'
+    }catch(e) {
+        return '...'
+    }
+}
 
-
-export { fillZeros, isNotNullOrEmpty, redirect, formatDateToView, formatDateToSQL, sleep }
+export { fillZeros, isNotNullOrEmpty, redirect, formatDateToView, formatDateToSQL, sleep, formatDestinationText }
