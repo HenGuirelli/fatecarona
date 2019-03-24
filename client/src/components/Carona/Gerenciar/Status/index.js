@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import './style.css'
+import { formatDateToView, formatDestinationText } from '../../../../utils'
 
 const Row = ({ left, right, ...restProps }) => (
     <div className='row'>
@@ -12,12 +13,12 @@ const Row = ({ left, right, ...restProps }) => (
     </div>
 )
 
-const Status = ({ status, dia, hora, tipo }) => (
+const Status = ({ status, date, hour, destination }) => (
     <section className='gerenciar-carona-status'>
         <Row left='status' right={status}/>
-        <Row left='dia'    right={dia}/>
-        <Row left='hora'   right={hora}/>
-        <Row left='tipo'   right={tipo}/>
+        <Row left='dia'    right={formatDateToView(date)}/>
+        <Row left='hora'   right={hour || '...' }/>
+        <Row left='tipo'   right={formatDestinationText(destination)}/>
     </section>
 )
 

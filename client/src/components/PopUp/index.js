@@ -12,22 +12,22 @@ const PopUpFactory = (props, redirect) => {
     const { tipo, ...resto } = props
     switch (tipo) {
         case TIPO.ERRO:
-            return withRedirect(erro(resto))(redirect)
+            return (erro(resto))
         case TIPO.AVISO:
-            return withRedirect(aviso(resto))(redirect)
+            return (aviso(resto))
         case TIPO.SUCESSO:
-            return withRedirect(sucesso(resto))(redirect)
+            return (sucesso(resto))
         case TIPO.SIM_NAO:
             return simNao(resto)
         default:
-            return withRedirect(_default(resto))(redirect)
+            return (_default(resto))
     }    
 }
 
-const aviso = props => () => sweetalert({  ...props, icon: 'warning' })
-const erro = props => () => sweetalert({ ...props, icon: 'error' })
-const sucesso = props => () => sweetalert({ ...props, icon: 'success' })
-const _default = props => () => sweetalert({ ...props })
+const aviso = props => sweetalert({  ...props, icon: 'warning' })
+const erro = props => sweetalert({ ...props, icon: 'error' })
+const sucesso = props => sweetalert({ ...props, icon: 'success' })
+const _default = props => sweetalert({ ...props })
 const simNao = props => {
     const { sim, nao } = props
     return  sweetalert({ ...props , dangerMode: true, buttons: ['Não', 'Sim']})

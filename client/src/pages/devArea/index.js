@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import './style.css'
-import Rating from '../../components/Carona/Gerenciar/Rating';
+import Rating from '../../components/Rating';
 
 const _Header = () => <div><h1>Dev Area</h1> <span>Use essa área pra teste em desenvolvimento</span></div>
 

@@ -42,21 +42,22 @@ create table pontos_interesse (
 
 create table caronas (
 	id int auto_increment primary key,
-	data_carona datetime,
-	hora_carona varchar(30),
-	placa_veiculo varchar(8) not null,
+	dataCarona datetime,
+	horaCarona varchar(30),
 	trajeto int,
 	email varchar(40),
 	cadeirante boolean,
-	fumante boolean,
+	fumantes boolean,
 	musica boolean,
-	status varchar(15) default 'ativo',
-    destino varchar(20),
+	qtdVagas tinyint unsigned default 1,
+  placa char(8) not null,
+  destino varchar(10),
+	status varchar(15) default 'PENDING',
 	foreign key (email) references membros(email),
-	foreign key (placa_veiculo) references veiculos(placa),
+	foreign key (placa) references veiculos(placa),
 	foreign key (trajeto) references trajeto(id)
 );
-/*drop table caronas_membros;*/
+
 create table caronas_membros (
 	id_carona int not null,
     email_membro varchar(40) not null,
@@ -66,3 +67,16 @@ create table caronas_membros (
 );
 
 
+create table notification_type (
+	id int primary key not null,
+	type varchar(20) not null
+);
+
+insert into notification_type values (0, 'CARPOOL'), (1, 'CARPOOL_REQUEST'), (2, 'MESSAGES');
+
+create table notification (
+	title varchar(20) not null,
+    text varchar(255),
+    type int not null,
+    foreign key (type) references notification_type(id)
+);

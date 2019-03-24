@@ -14,62 +14,35 @@ import './style.css'
 // apenas para teste, remover
 import img from '../../../../images/veiculo_preto.png'
 
-/* TODO: CONTROLLER QUE RETORNA UM OBJETO COM TODOS ESSES DETALHES */
-const detalhesTest = {
-    status: 'Historico',
-    dia: '23/02/2019',
-    hora: '18:00',
-    tipo: 'indo para FATEC'
-}
-
-const prefCaronaTest = {
-    fumante: false,
-    deficiente: false,
-    musica: false
-}
-
-const veiculoTest =  {
-    marca: 'fiat',
-    modelo: 'palio',
-    placa: 'abc-1234'
-}
-
-const dentroDoCarroTest = [
-    {
-        nick: 'R',
-        name: 'Robson',
-        email: 'robsonGtna@emai.com',
-        img: img,
-        stars: 3,
-        type: typeCarpool.DRIVER
-    },
-    {
-        nick: 'W',
-        name: 'wesley',
-        email: 'wesley@emai.com',
-        img: img,
-        stars: 1,        
-        type: typeCarpool.RIDER
-    }
-]
-
 class Historico extends Gerenciavel {
+
+    async componentDidMount(){
+        this._componentDidMount()
+        this.loadInformation()
+    }
+
+    componentWillUnmount(){
+        this._componentWillUnmount()
+    }
+
+
     render(){
+        const { details, carpoolPreferences, car, peopleInCar } = this.state
         return (
              <main className='detalhes-carona-historico'>
-                <Status { ...detalhesTest } />
+                <Status { ...details } />
                 <Divider />
-                <Preferencia { ...prefCaronaTest } />
+                <Preferencia { ...carpoolPreferences } />
                 <Divider />
-                <Veiculo { ...veiculoTest } />
+                <Veiculo { ...car } />
                 <Divider />
                 {
-                    dentroDoCarroTest && dentroDoCarroTest.length > 0 ?
-                    dentroDoCarroTest.map((item, index) => 
+                    peopleInCar && peopleInCar.length > 0 ?
+                    peopleInCar.map((item, index) => 
                         <DentroDoCarro 
                             key={`dentro-do-carro-${index}`} 
                             text={item.type === typeCarpool.DRIVER ? `${ item.nick || item.name }, motorista` : `${ item.nick || item.name }, passageiro`}
-                            image={item.img}
+                            image={item.img || img}
                             stars={item.stars}
                         />)
                     :

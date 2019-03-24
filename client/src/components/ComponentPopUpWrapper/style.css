@@ -1,5 +1,5 @@
 .poup-up-closable {
-    position: absolute;
+    position: fixed;
     z-index: 999;
     background-color: white;
     padding: 1.3em;
@@ -11,10 +11,10 @@
     width: 100%;
     height: 100%;
     z-index: 99;
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
-    background-color: rgba(0,0,0,0.22);
+    background-color: rgba(0,0,0,0.5);
 }
 
 .poup-up-closable-background-open {
@@ -26,5 +26,6 @@
 }
 
 .poup-up-closable-content {
-    margin-top: 80px;
+    position: static;
+    margin: 30% 20%;
 }

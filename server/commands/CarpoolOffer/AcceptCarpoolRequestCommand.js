@@ -1,6 +1,8 @@
 class AcceptCarpoolRequestCommand {
-    constructor(){
-        this.requestId
+    constructor({ driverEmail, riderEmail, carpoolId }){
+        this.driverEmail = driverEmail
+        this.riderEmail = riderEmail
+        this.carpoolId = carpoolId
     }
 }
 

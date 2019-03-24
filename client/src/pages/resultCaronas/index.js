@@ -1,74 +1,53 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import InfoCarona from '../../components/InfoCarona'
-import axios from 'axios'
-import config from '../../config.json'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+// TODO: import ListItemIcon from '@material-ui/core/ListItemIcon' ?
+import ListItemText from '@material-ui/core/ListItemText'
+import { Paper, Card, CardContent, LinearProgress } from '@material-ui/core';
+import Carpool from '../../http/Carpool';
 
 class ResultCaronas extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      loading: true
-    }
-  }
+	state = {
+		carpools: [],
+		loading: true
+	}
 
-  gatherDrivers = (caronas) => {
-    return new Promise((resolve, reject) => {
-      caronas.forEach((e, index) => {
-        axios.get(config.endpoint + '/users/' + e.emailMotorista)
-        .then(result => {
-          e.motorista = result.data
-          if (index === (caronas.length - 1)) {
-            resolve()
-          }
-        })
-        .catch((err) => reject(err.message))
-      })
-    })
-  }
+	componentDidMount(){
+		// TODO: PELOAMORDEDEUS tirar o timeout
+		setTimeout(this.searchCarpools, 3000)		
+	}
 
-  gatherCars = (caronas) => {
-    return new Promise((resolve, reject) => {
-      caronas.forEach((e, index) => {
-        axios.get(config.endpoint + '/cars/lift/' + e.veiculo)
-        .then(result => {
-          e.veiculo = result.data[0]
-          if (index === (caronas.length - 1)) {
-            resolve()
-          }
-        })
-        .catch((err) => reject(err.message))
-      })
-    })
-  }
+	searchCarpools = () => {
+		const { date, email, hour } = this.props
+		Carpool.searchRequestCarpools({ date, email, hour })
+		.then(resolve => {
+			this.setState({ carpools: resolve.data.matches, loading: false })
+		})
+		.catch(err => {
+			// TODO: mensagem de erro
+			this.setState({ loading: false })
+		})
+	}
 
-  componentWillMount() {
-    this.gatherDrivers(this.props.caronas)
-    .then(() => {
-      this.gatherCars(this.props.caronas)
-      .then(() => {
-        this.setState({loading: false})
-      })
-      .catch(err => <div>{err}</div>)
-    })
-    .catch(err => <div>{err}</div>)
-  }
-
-  render() {
-    const { caronas } = this.props
-
-    if (this.state.loading) return <div>Loading...</div>
-
-    return (
-      <div className="pageBase container">
-        { caronas.map((lift, key) => <InfoCarona key={key} history={this.props.history} carona={lift}/>)}
-      </div>
-    )
-  }
+	render() {
+		const carpools = this.state.carpools
+		if (this.state.loading){ return <LinearProgress /> }
+		return (
+			<div className='result-caronas-page'>
+				{ carpools.map((lift, key) => {
+					return <Card className='card'> <CardContent> <InfoCarona key={key} carpool={lift} /> </CardContent> </Card> })}
+			</div>
+		)
+	}
 }
 
 export default connect(store => {
-  return {
-    caronas: store.lift.resultCaronas
-  }
+	return {
+		carpools: store.carpool.matches,
+		date: store.carpool.date,
+		hour: store.carpool.hour,
+		email: store.user.email
+	}
 })(ResultCaronas)

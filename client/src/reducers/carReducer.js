@@ -1,23 +1,24 @@
 export default function reducer(state={
-    veiculo: {},
-    veiculos: [],
-    liftCar: {},
-    marcas:{},
-    modelos:{},
-    needLoad: true
+	plate: '',
+	brand: '',
+	model: '',
+	color: '',
+	cars: []
   }, action) {
     switch (action.type) {
-       case 'ATIVAR_VEICULO':{
-         return{...state, veiculo: action.payload}
-       }
-       case 'LOAD_CAR_FULFILLED': {
-         return {...state, veiculos: action.payload.data, needLoad:false}
-       }
-       case 'LOAD_CAR_BY_ID_FULFILLED':{
-         return {...state, liftCar: action.payload.data[0]}
-       }
-       default: {
-         return state
-       }
+		case 'SET_CAR': {
+			return { ...state, ...action.payload }
+		}
+		case 'ADD_CAR': {
+			const cars = state.cars
+			cars.push(action.payload)
+			return { ...state, cars }
+		}
+		case 'CLEAN_CARS': {
+			return { ...state, cars: action.payload }
+		}
+		default: {
+			return state
+		}
     }
 }

@@ -12,77 +12,93 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import menuContent from './menuContent'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { setText } from '../../actions/navigationActions'
 
-const withLink = item =>  (
-	<Link to={item.route} key={item.text}>
-		<ListItem button >
+class Menu extends React.Component {
+	state = {
+		open: false,
+	}
+
+	handleDrawerOpen = () => {
+		this.setState({ open: true })
+	}
+
+	handleDrawerClose = () => {
+		this.setState({ open: false })
+	}
+
+	withLink = item => {
+		return (
+			<Link to={item.route} onClick={ ()=> 
+				this.props.dispatch(setText(item.text))}>
+				<ListItem button >
+					<ListItemIcon> { item.icon } </ListItemIcon>
+					<ListItemText primary={item.text} />
+				</ListItem>
+			</Link>
+		)
+	}
+	
+	withAction = item => (
+		<ListItem button key={item.text} onClick={item.action}>
 			<ListItemIcon> { item.icon } </ListItemIcon>
 			<ListItemText primary={item.text} />
 		</ListItem>
-	</Link>
-)
-
-const withAction = item => (
-	<ListItem button key={item.text} onClick={item.action}>
-		<ListItemIcon> { item.icon } </ListItemIcon>
-		<ListItemText primary={item.text} />
-	</ListItem>
-)
-
-class Menu extends React.Component {
-  state = {
-    open: false,
-  }
-
-  handleDrawerOpen = () => {
-    this.setState({ open: true })
-  }
-
-  handleDrawerClose = () => {
-    this.setState({ open: false })
-  }
-
-  render() {
-    const { open } = this.state
-	const sideList = (
-		<Fragment>		
-			<Divider />
-			<List>
-				{menuContent.map((item, index) => (	item.route ? withLink(item) : withAction(item) ))}
-			</List>
-		</Fragment>
 	)
 
-    return (
-      <div>
-        <AppBar position='relative'>
-          <Toolbar disableGutters={!open}>
-            <IconButton
-              color="inherit"
-              aria-label="Open drawer"
-              onClick={this.handleDrawerOpen}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" color="inherit" noWrap>
-              Rota Atual
-            </Typography>
-          </Toolbar>
-        </AppBar>
+	render() {
+		const { open } = this.state
+		const sideList = (
+			<Fragment>		
+				<Divider />
+				<List>
+					{menuContent.map((item, index) => (	item.route ? this.withLink(item) : this.withAction(item) ))}
+				</List>
+			</Fragment>
+		)
 
-		<Drawer open={open} onClose={this.handleDrawerClose}>
-			<div
-				tabIndex={0}
-				role="button"
-				onClick={this.handleDrawerClose}
-				onKeyDown={this.handleDrawerClose}
-			>
-			{sideList}
-			</div>
-		</Drawer>
-      </div>
-    )
-  }
+		if (this.props.isLogged){
+			return (
+				<div>
+					<AppBar position='relative'>
+						<Toolbar disableGutters={!open}>
+						<IconButton
+							color="inherit"
+							aria-label="Open drawer"
+							onClick={this.handleDrawerOpen}
+						>
+							<MenuIcon />
+						</IconButton>
+						<Typography variant="h6" color="inherit" noWrap>
+							{ this.props.text }
+						</Typography>
+						</Toolbar>
+					</AppBar>
+
+					<Drawer open={open} onClose={this.handleDrawerClose}>
+						<div
+							tabIndex={0}
+							role="button"
+							onClick={this.handleDrawerClose}
+							onKeyDown={this.handleDrawerClose}
+						>
+						{sideList}
+						</div>
+					</Drawer>
+				</div>
+			)
+		}else{
+			// if (!window.location.href.includes('/login'))
+			// 	window.location.href = '/login'
+			return null
+		}
+	}
 }
 
-export default Menu
+export default connect(store => {
+	return {
+		isLogged: store.user.email !== undefined,
+		text: store.navigation.text
+	}
+})(Menu)

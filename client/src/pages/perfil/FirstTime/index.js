@@ -2,147 +2,45 @@ import React, { Fragment } from 'react'
 import Step from '@material-ui/core/Step'
 import Stepper from '@material-ui/core/Stepper'
 import StepLabel from '@material-ui/core/StepLabel'
-import DadosPessoais from '../../../components/perfil/DadosPessoais'
-import PerfilMotorista from '../../../components/perfil/motorista'
 import Button from '../../../components/Form/Button'
-import MobileStepper from '@material-ui/core/MobileStepper'
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import { Paper, Typography } from '@material-ui/core'
-import CadVeiculos from '../../cadveiculos'
-import AdicionarRota from '../../adicionarRota'
-import Snackbar from '@material-ui/core/Snackbar'
-import IconButton from '@material-ui/core/IconButton'
-import CloseIcon from '@material-ui/icons/Close'
 import './style.css'
+import FirstTimeEdittingProfileHttp from '../../../http/FirstTimeEdittingProfile'
+import { connect }from 'react-redux'
 
-const steps = ['Dados Pessoais', 'Motorista', 'Carros', 'Trajetos']
-const SnackVeiculoMessage = 'Caso você não seja motorista, deixe essa página em branco.'
+// steppers
+import MyMobileStepper from './MobileStepper'
+import DesktopStepper from './DesktopStepper'
 
-class CadVeiculoSnack extends React.Component {
-    state = {
-        open: false,
-    }
-    
-    handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-        return
-        }
-    
-        this.setState({ open: false })
-    }
-    
-    componentDidMount() {
-        this.setState({ open: true })
+// pages
+import DadosPessoais from './DadosPessoais'
+import DriverProfile from './DriverProfile'
+import AdicionarRota from '../../adicionarRota'
+
+import { setUserData, setDriverProfile } from '../../../actions/userActions'
+import { setCar } from '../../../actions/carActions';
+import { setFlow } from '../../../actions/flowActions';
+import FinalPage from './FinalPage';
+
+const steps = ['Dados Pessoais', 'Motorista', 'Trajetos']
+
+// Tracks
+class Track {
+    constructor(){
+        this.data = {}
     }
 
-    render() {
-        return (
-        <div>
-            <CadVeiculos withButton={false} />
-            <Snackbar
-            anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-            }}
-            open={this.state.open}
-            autoHideDuration={6000}
-            onClose={this.handleClose}
-            ContentProps={{
-                'aria-describedby': 'message-id',
-            }}
-            message={<span id="message-id">{ SnackVeiculoMessage }</span>}
-            action={[
-                <IconButton
-                    key="close"
-                    aria-label="Close"
-                    color="inherit"
-                    onClick={this.handleClose}
-                >
-                <CloseIcon />
-                </IconButton>,
-            ]}
-            />
-        </div>
-        )
-    }
-      
-} 
+    trackState = val => this.data = val
 
-const getStepContent = index => {
-    switch (index){
-        case 0:
-            return <DadosPessoais />
-        case 1:
-            return <PerfilMotorista />
-        case 2:
-            return <CadVeiculoSnack />
-        case 3:
-            return <AdicionarRota withButton={false} />
-        case 4:
-            return <FinalPage />
-        default:
-            return <h1>Em Construção...</h1>
-    }
+    getState = () => this.data
 }
 
-const FinalPage = props => (
-    <h1>Perfil Atualizado!</h1>
-)
-
-const DesktopStepper = props => (
-    <Paper className='profile-desktop-paper'>
-        <div className='desktop-stepper'>
-            <Stepper activeStep={props.activeStep} className='stepper-first-time'>
-                {steps.map(label => (
-                    <Step key={label} className='step-item'>
-                        <StepLabel>{label}</StepLabel>
-                    </Step>
-                ))}
-            </Stepper>
-            { props.children }
-            <br />
-            <div className='buttons-desktop'>
-                <Button onClick={props.handlePrevious} disabled={props.previousButtonDisabled}> 
-                    <KeyboardArrowLeft />
-                    Anterior 
-                </Button>
-                <Button onClick={props.handleNext} disabled={props.nextButtonDisabled}> 
-                    Próximo 
-                    <KeyboardArrowRight />
-                </Button>
-            </div>
-        </div>
-    </Paper>
-)
-
-const MyMobileStepper = props => (
-    <Fragment>
-        <Paper square elevation={0} className='profile-mobile-header'>
-            <Typography component='h3' variant='subtitle1' align='center'>
-                { props.label }
-            </Typography>
-        </Paper>
-        { props.children }
-        <MobileStepper
-            steps={steps.length}
-            position="static"
-            activeStep={props.activeStep}
-            nextButton={
-                <Button size="small" onClick={props.handleNext} disabled={props.nextButtonDisabled}>
-                    Próximo
-                    <KeyboardArrowRight />
-                </Button>
-                }
-                backButton={
-                <Button size="small" onClick={props.handlePrevious} disabled={props.previousButtonDisabled}>
-                    <KeyboardArrowLeft />
-                    Anterior
-                </Button>
-                }
-        />
-    </Fragment>
-)
+const personalData = new Track()
+const driverData = new Track()
+const carData = new Track()
+const flowData = new Track()
 
 const mobileStepperWidth = 500
 
@@ -158,8 +56,24 @@ class FirstTime extends React.Component {
             previousButtonDisabled: true
         }
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
+
     }
     
+    getStepContent = index => {
+        switch (index){
+            case 0:
+                return <DadosPessoais trackState={personalData.trackState} />
+            case 1:
+                return <DriverProfile withButton={false} driverTrack={driverData.trackState} carTrack={carData.trackState} />
+            case 2:
+                return  <div className='step-cad-cars'> <AdicionarRota withButton={false} trackState={flowData.trackState} /></div>
+            case 3:
+                return <FinalPage />
+            default:
+                return <h1>Em Construção...</h1>
+        }
+    }
+
     componentDidMount() {
         this.updateWindowDimensions()
         window.addEventListener('resize', this.updateWindowDimensions)
@@ -169,13 +83,125 @@ class FirstTime extends React.Component {
         window.removeEventListener('resize', this.updateWindowDimensions)
     }
   
-    updateWindowDimensions() {        
+    updateWindowDimensions() {
         this.setState({ width: window.innerWidth, height: window.innerHeight })
     }
 
+    savePersonalData = () => {
+        const data = personalData.getState()
+        const local = () => {
+            this.props.dispatch(setUserData({ ...data }))
+        }
+
+        const persist = () => {
+            FirstTimeEdittingProfileHttp.personalData({ ...data, email: this.props.email })
+            .then(resolve => {
+                const result = resolve.data
+
+                if (!result.success){
+                    // TODO: mensagem de erro
+                }
+            })
+        }
+
+        local()
+        persist()
+    }
+
+    saveDriverData = () => {
+        const _driverData = driverData.getState()
+        console.log(_driverData)
+        if (!_driverData.isDriver) return
+
+        const local = () => {
+            this.props.dispatch(setDriverProfile({ ..._driverData }))
+        }
+
+        const persist = () => {
+            FirstTimeEdittingProfileHttp.driverData({ ..._driverData, email: this.props.email })
+            .then(resolve => {
+                const result = resolve.data
+
+                if (!result.success){
+                    // TODO: mensagem de erro
+                }
+            })
+        }
+
+        local()
+        persist()
+    }
+
+    saveCarData = () => {
+        const _carData = carData.getState()
+
+        if (!driverData.getState().isDriver) return
+
+        const local = () => {
+            this.props.dispatch(setCar({ ..._carData }))
+        }
+
+        const persist = () => {
+            FirstTimeEdittingProfileHttp.carData({ ..._carData, email: this.props.email })
+            .then(resolve => {
+                const result = resolve.data
+
+                if (!result.success){
+                    // TODO: mensagem de erro
+                }
+            })
+        }
+
+        local()
+        persist()
+    }
+
+    saveFlowData = () => {
+        const _flowData = flowData.getState()
+        const local = () => {
+            this.props.dispatch(setFlow({ ..._flowData }))
+        }
+
+        const persist = () => {
+            FirstTimeEdittingProfileHttp.flowData({ ..._flowData, email: this.props.email })
+            .then(resolve => {
+                const result = resolve.data
+
+                if (!result.success){
+                    // TODO: mensagem de erro
+                }
+            })
+        }
+
+        local()
+        persist()
+    }
+
+    componentWillUnmount(){
+        // TODO: clear redux
+    }
+
     handleNext = event => {
+        const activeStep = this.state.activeStep + 1
+
+        switch (activeStep){
+            case 1: {
+                this.savePersonalData()
+                break;
+            }
+            case 2: {
+                this.saveDriverData()
+                this.saveCarData()
+                break;
+            }
+            case 3: {
+                this.saveFlowData()
+                break
+            }
+
+        }
         this.setState({
-            activeStep: this.state.activeStep + 1,
+            activeStep,
             nextButtonDisabled: this.state.activeStep === steps.length - 1,
             previousButtonDisabled: false
         })
@@ -184,7 +210,7 @@ class FirstTime extends React.Component {
     handlePrevious = event => {
         this.setState({
             activeStep: this.state.activeStep - 1,
-            nextButtonDisabled: this.state.activeStep === steps.length - 1,
+            nextButtonDisabled: this.state.activeStep - 2 === steps.length - 1,
             previousButtonDisabled: this.state.activeStep === 1
         })
     }
@@ -203,8 +229,9 @@ class FirstTime extends React.Component {
                     nextButtonDisabled={this.state.nextButtonDisabled}
                     previousButtonDisabled={this.state.previousButtonDisabled}
                     label={steps[activeStep]}
+                    steps={steps}
                 > 
-                    { getStepContent(activeStep) } 
+                    { this.getStepContent(activeStep) } 
                 </MyMobileStepper> 
             )
         }else {
@@ -215,12 +242,17 @@ class FirstTime extends React.Component {
                     handleNext={this.handleNext}
                     nextButtonDisabled={this.state.nextButtonDisabled}
                     previousButtonDisabled={this.state.previousButtonDisabled}
+                    steps={steps}
                 >
-                    { getStepContent(activeStep) }
+                    { this.getStepContent(activeStep) }
                 </DesktopStepper> 
             )
         }
     }
 }
 
-export default FirstTime
+export default connect(store => {
+    return {
+        email: store.user.email
+    }
+})(FirstTime)

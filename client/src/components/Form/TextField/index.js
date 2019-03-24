@@ -84,11 +84,14 @@ class FormattedInput extends React.Component {
     this.setState({
       value: event.target.value,
     })
+    if (this.props.onChange){
+      this.props.onChange(event)
+    }
   }
 
   render() {
     const { textmask, value } = this.state
-    const { label, mask, ...restProps } = this.props
+    const { label, mask, onChange, ...restProps } = this.props
 
     return (
         <TextField
@@ -138,31 +141,41 @@ const TimePicker = (props) => {
 	)
 }
 
-const DatePicker = (props) => {
-	const { className, ...restProps } = props
+class DatePicker extends React.Component {
 
-	let today = new Date();
-	let dd = today.getDate();
-	let mm = today.getMonth() + 1; // january is 0
-	let yyyy = today.getFullYear();
+	onChange = (event) => {
+		event.target.value = event.target.value.replace('undefined-undefined-', '')
+		if (this.props.onChange){
+			this.props.onChange(event)
+		}
+	}
 
-	return (
-		<Picker
-			type='date'
-			className={`time-picker ${className}`}
-			defaultValue={`${yyyy}-${fillZeros(2, mm.toString())}-${fillZeros(2, dd.toString())}`}
-			{ ...restProps }
-		/>
-	)
+	render(){
+		const { className, onChange, ...restProps } = this.props
+
+		return (
+			<Picker
+				type='date'
+				className={`time-picker ${className}`}
+				onChange={this.onChange}
+				{ ...restProps }
+			/>
+		)
+	}
 }
 
 class ComboBox extends React.Component {
 	state = { value: '' }
 
-	handleChange = (event) => this.setState({ value: event.target.value })
+	handleChange = (event) => {
+		if (this.props.onChange){
+			this.props.onChange(event)
+		}
+		this.setState({ value: event.target.value })
+	}
 
 	render(){
-		const { options, label, ...restProps } = this.props
+		const { options, label, onChange, values = [], ...restProps } = this.props
 		return (
 		<Fragment>
 			<FormControl>
@@ -174,7 +187,7 @@ class ComboBox extends React.Component {
 				input={<OutlinedInput labelWidth={200} />}
 				{ ...restProps }
 			>
-				{options.map((option, index) => <MenuItem key={`menu-item-${index}`} value={option}> {option} </MenuItem>)}
+				{options.map((option, index) => <MenuItem key={`menu-item-${index}`} value={values[index] || option}> {option} </MenuItem>)}
 			</Select>
 			</FormControl>
 			{ this.props.block ? <br /> : null }

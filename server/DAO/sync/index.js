@@ -62,7 +62,7 @@ class _Sync {
                 mongo.Update(operation.collection)(operation.where, operation.values)
                 break
             case action.DELETE:
-                mongo.Delete(operation.collection)(operation.values)
+                mongo.Delete(operation.collection)(operation.where)
                 break
         }
     }

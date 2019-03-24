@@ -1,13 +1,16 @@
 import React, { Fragment } from 'react'
 import Icon from './comute.svg'
-import { Avatar } from '@material-ui/core'
+import { Avatar, CircularProgress } from '@material-ui/core'
 import Button from '../../Form/Button'
 import './style.css'
+import { formatDateToView, formatDestinationText } from '../../../utils'
+import ProfileHttp from '../../../http/Profile'
+import { withRouter, Link } from 'react-router-dom'
 
 const status = {
-	ANDAMENTO: 'ANDAMENTO',
-	PENDENTE: 'PENDENTE',
-	REALIZADO: 'REALIZADO'
+	ANDAMENTO: 'ACTIVE',
+	PENDENTE: 'PENDING',
+	REALIZADO: 'FINISHED'
 }
 
 const side = {
@@ -15,34 +18,61 @@ const side = {
 	OUT_FATEC: 'OUT_FATEC'
 }
 
-const _Gerenciar = ({ text, carPoolId, to }) => (
+class TextContent extends React.Component {
+    state = {
+        loading: true,
+        name: ''
+    }
+
+    componentDidMount(){
+        // TODO: tirar a função do timeout
+       setTimeout(this.searchName, 1000)
+    }
+
+    searchName = () => {
+        const { email } = this.props
+        ProfileHttp.getProfileData({ email })
+        .then( ({ data }) => {
+            this.setState({ name: data.name })
+        })
+        this.setState({ loading: false })
+    }
+
+    render(){
+        if (this.state.loading) return <div style={{ width: 100, height: 30 }}> <CircularProgress /> </div>
+        return <p> { this.state.name } { this.props.children } </p>
+    }
+}
+
+const _Gerenciar = ({ text, carpoolId, to, email }) => (
     <article className='gerneciar-carona-article'>
         <section className='gerenciar-carona-items'>
             <div className='item'>
                 <Avatar src={Icon} />
             </div>
             <div className='item' id='item-text'>
-                <p> { text } </p>
+               <TextContent email={email}> { text } </TextContent>
             </div>
         </section>
         <section>
-            <Button onClick={() => window.location=`/caronas/${carPoolId}/gerenciar/${to}`} variant='outlined'> Gerenciar </Button>
+            <Link to={`/caronas/${carpoolId}/gerenciar/${to}`}><Button variant='outlined'> Gerenciar </Button></Link>
         </section>
     </article>
 )
 
 const Gerenciar = props => {
-    const { driver, rider, date, carPoolId } = props
-    const sideText = props.side === side.TO_FATEC ? 'indo para fatec' : 'saindo da fatec'
+    const { email, riders, date } = props
+    const carpoolId = props.id
+    const sideText = formatDestinationText(props.side)
 
     if (props.type == status.ANDAMENTO){
-        return <_Gerenciar text={`${driver} está dando carona para ${rider} em ${date}, ${sideText}`}  to='andamento' carPoolId={carPoolId}/>
+        return <_Gerenciar email={email} text={`está dando carona para ${riders.map(rider => rider.name)} em ${formatDateToView(date)}, ${sideText}`}  to='andamento' carpoolId={carpoolId}/>
     }
     if (props.type == status.PENDENTE){
-        return <_Gerenciar text={`${driver} está oferencedo carona para ${rider} em ${date}, ${sideText}`} to='pendente'  carPoolId={carPoolId}/>
+        return <_Gerenciar email={email} text={`está oferencedo carona para ${riders.map(rider => rider.name)} em ${formatDateToView(date)}, ${sideText}`} to='pendente'  carpoolId={carpoolId}/>
     }
     if (props.type == status.REALIZADO){
-        return <_Gerenciar text={`${driver} deu carona para ${rider} em ${date}, ${sideText}`} to='historico' carPoolId={carPoolId}/>
+        return <_Gerenciar email={email} text={`deu carona para ${riders.map(rider => rider.name)} em ${formatDateToView(date)}, ${sideText}`} to='historico' carpoolId={carpoolId}/>
     }
 }
 
@@ -50,4 +80,4 @@ export {
     status,
     side
 }
-export default Gerenciar
+export default withRouter(Gerenciar)

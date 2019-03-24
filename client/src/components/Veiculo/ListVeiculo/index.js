@@ -14,20 +14,20 @@ export default class Veiculo extends Component {
   }
 
   render() {
-    const { veiculos } = this.props
+    const { veiculos, updateView } = this.props
 
     return(
 		<div className='list-veiculo'>
 			{ veiculos.map((veiculo, index) => 
-				<ExpansionPanel>
+				<ExpansionPanel key={`expansion-panel-veiculo-${index}`}>
 					<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
 						<img src={CarIcon} className='avatar'/>
 						<Typography component='div' align='center' className='centralize'> 
-							{veiculo.marca}, {veiculo.modelo} 
+							{veiculo.brand}, {veiculo.model} 
 						</Typography>
 					</ExpansionPanelSummary>
 					<ExpansionPanelDetails>
-						<DetalheVeiculo marca={veiculo.marca} modelo={veiculo.modelo} placa={veiculo.placa}/>
+						<DetalheVeiculo { ...veiculo } updateView={updateView}/>
 					</ExpansionPanelDetails>
 				</ExpansionPanel>
 				)}

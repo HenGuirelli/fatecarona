@@ -1,5 +1,6 @@
 .home-header {
-    background-color: var(--primary-main)
+    background-color: var(--primary-main);
+    padding: 1.3em;
 }
 
 .home-header .item {

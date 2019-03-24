@@ -1,96 +1,77 @@
-import React, { Component } from 'react'
-import Avatar from 'material-ui/Avatar'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import styles from './styles'
-import config from '../../config.json'
-import { espiarMembro } from '../../actions/liftActions'
-import axios from 'axios'
-import popUp, { TIPO } from '../PopUp'
+import ProfileHttp from '../../http/Profile'
+import CarpoolHttp from '../../http/Carpool'
+import { formatDateToView } from '../../utils'
+import Button from '../Form/Button'
+import './style.css'
+import { CircularProgress } from '@material-ui/core'
+import PopUp, { TIPO } from '../PopUp'
 
 class InfoCarona extends Component {
+	state = {
+		loading: true,
+		driverName: undefined
+	}
 
-  handleEspiar = (carona) => {
-    this.props.dispatch(espiarMembro(carona.emailMotorista));
-    this.props.history.push('/perfil/espiar')
-  }
+	componentDidMount(){
+		const { email } = this.props.carpool
+		ProfileHttp.getProfileData({ email })
+		.then(resolve => {
+			const result = resolve.data
+			this.setState({ driverName: result.apelido || result.name })
+			// TODO: PELOAMORDEDEUS tirar do timeout
+			setTimeout(() => this.setState({ loading: false }), 2000 )
+		})
+	}
 
-  requestLift = () => {
-    popUp({
-      tipo: TIPO.SIM_NAO,
-      text: "Deseja pegar essa carona?",
-      sim: () => {this.handleRequest()}
-    })
-  }
+	formatDestination = destination => destination === 'TO_FATEC' ? 'Saindo da FATEC' : 'Indo para FATEC'
 
-  handleRequest = () => {
-    const { carona, userData } = this.props
-    axios.post(config.endpoint + '/lift/members', {
-      id: carona.id,
-      emailCaronista: userData.email,
-      status: 'pendente'
-    })
-    .then(() => {
-      axios.post(config.endpoint + '/notify/' + carona.emailMotorista, {
-        message: userData.apelido + ' solicitou vaga na carona de ' + new Date(carona.dataCarona).toLocaleDateString('pt-BR'),
-        emailRemetente: userData.email,
-        imgRemetente: userData.img,
-        idCarona: carona.id
-      })
-      .then(() => {
-        popUp({
-          tipo: TIPO.SUCESSO,
-          text: 'Solicitação enviada, aguarde a resposta do motorista.'
-        })
-      })
-    })
-    .catch(() => {
-      popUp({
-        tipo: TIPO.ERRO,
-        text: 'Erro ao solicitar carona.'
-      })
-    })
-  }
+	getNickOrName = async () => {
+		const { email } = this.props
+		const resolve = await ProfileHttp.getProfileData({ email })
+		const result = resolve.data
 
-  render() {
-    const { carona } = this.props
-    let dataLift = new Date(carona.dataCarona)
-    let dataCarona = (("0" + dataLift.getDate()).slice(-2) + "/" + ("0" + (dataLift.getMonth() + 1)).slice(-2) +
-        "/" + dataLift.getFullYear())
-    let horaCarona = dataLift.toTimeString().substr(0, 8)
-    return(
-      <div className="row" style={styles.root}>
-        <div className="row" onClick={() => {popUp({ tipo: TIPO.SUCESSO, text: "Test"})}}>
-          <div className="col-3 col-xl-1">
-            <Avatar
-              src={carona.motorista.img ? config.endpoint + "/images/" + carona.motorista.img : ""}
-              size={50}
-            />
-          </div>
-          <div className="col-9 col-xl-11">
-            <div>
-              <span>{carona.motorista.apelido + " "}</span>oferecendo carona com
-              <span>{" " + carona.veiculo.marca + " " + carona.veiculo.modelo + " "}</span>
-              em {dataCarona} {carona.tipo} horário de encontro {horaCarona}
-            </div>
-          </div>
-        </div>
-        <div className="row" style={{bottom: 0, width: '100%'}}>
-          <div className="col-6">
-            <input type="button" style={styles.btnL} className="btn btn-primary" value="EU QUERO"
-              onClick={this.requestLift}
-            />
-          </div>
-          <div className="col-6">
-            <input type="button" style={styles.btnR} onClick ={() => this.handleEspiar(carona)} className="btn btn-primary" value="ESPIAR MOTORISTA" />
-          </div>
-        </div>
-      </div>
-    )
-  }
+		if (result.success){
+			return result.nick || result.name
+		}else{
+			// TODO: mensagem de erro
+		}
+	}
+
+	iWant = async () => {
+		const { id } = this.props.carpool
+		const { email } = this.props
+		const nameOrNick = await this.getNickOrName()
+		CarpoolHttp.iWantCarpool({ carpoolId: id, nameOrNick, from: email })
+		.then(resolve => { PopUp({ tipo: TIPO.SUCESSO, text: 'Pedido enviado' }) })
+		.catch(err => PopUp({ tipo: TIPO.ERRO, text: 'Erro ' + err.toString() }))
+	}
+
+	render() {
+		const { driverName } = this.state
+		const { car, date, destination, hour } = this.props.carpool
+		// TODO: colocar avatar da pessoa aqui
+		if (this.state.loading){
+			return <CircularProgress />
+		}
+		return (
+			<div className='info-carona'>
+				{ driverName } está oferendo Carona em um { car.brand } { car.model } em { formatDateToView(date) } <br />
+				{ this.formatDestination(destination) }<br />
+				horário de encontro às { hour }<br />
+				<p>3 vagas restantes</p>
+				<div className='buttons'>
+					<Button onClick={ this.iWant }>EU QUERO!</Button>
+					<Button variant='outlined'>Espiar motorista</Button>
+				</div>
+			</div>
+		)
+	}
 }
 
 export default connect(store => {
   return {
-    userData: store.user.userData
+	email: store.user.email
   }
 })(InfoCarona)

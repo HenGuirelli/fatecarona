@@ -8,7 +8,7 @@ class CadVeiculos extends Component{
 
 	render(){
 		return(
-			<CadastrarVeiculo />
+			<CadastrarVeiculo withButton={this.props.withButton} trackState={this.props.trackState} />
 		)
 	}
 }

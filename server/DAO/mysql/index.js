@@ -1,5 +1,6 @@
 const mysql = require('mysql')
 const syncMysql = require('sync-mysql')
+const { Status } = require('../../enum/carona')
 
 const connectionConfig = {
     host     : 'localhost',
@@ -23,17 +24,26 @@ const tableName = {
     CAR: 'veiculos',
     WAYPOINTS: 'pontos_interesse',
     CARPOOL: 'caronas',
-    RIDER: 'caronas_membros'
+    RIDER: 'caronas_membros',
+    NOTIFICATION: 'notification',
+    RATE: 'rating'
 }
 
-const wrapString = val => typeof val === 'string' ? `'${val}'` : val
+const wrapString = val => {
+    if (typeof val === 'string')
+        return `'${val}'` 
+    else if(typeof val === 'boolean') 
+        return val ? 1 : 0
+    else
+        return val
+}
 
 const createInsertQuery = tableName => values => {
     if ( !(values instanceof Array) ){
         const keys = Object.keys(values)
         const _values = Object.values(values)
         return `INSERT INTO 
-                    ${tableName}(${keys.map((item, index) => `${item}`) })
+                    ${tableName}(${keys.map((item, index) => `\`${item}\``) })
                 VALUES (
                     ${_values.map((item, index) => `${wrapString(item)}`) }
                 )`
@@ -49,7 +59,10 @@ const createSelectQuery = tableName => filter => {
         return `SELECT * FROM
                     ${tableName}
                 WHERE 
-                    ${keys.map((item, index) => `${item} = ${wrapString(filter[item])}`) }    
+                    ${
+                        keys.map((item, index) => `${item} = ${wrapString(filter[item])} ${index != keys.length - 1 ? 'AND': '' } `)
+                        .toString().replace(',', '')
+                    }    
                 `
     }
     else{
@@ -61,17 +74,18 @@ const createUpdateQuery = tableName => (values, whereColum, whereValue) => {
     const keys  = Object.keys(values)
 
    return `UPDATE 
-                ${tableName} 
+                \`${tableName}\` 
             SET
-                ${keys.map((item, index) => `${ item } = ${ wrapString(values[item]) }`) }
+                ${keys.map((item, index) => `\`${ item }\` = ${ wrapString(values[item]) }`) }
             WHERE
-                ${whereColum} = ${wrapString(whereValue)}
+                \`${whereColum}\` = ${wrapString(whereValue)}
             `
 }
 
 const Insert = tableName => values => {
     const createQuery = createInsertQuery(tableName)
-    connection.query(createQuery(values), (error, results, fields) => {
+    console.log(createQuery(values))
+    return connection.query(createQuery(values), (error, results, fields) => {
         if (error){
            console.log(error);
         }
@@ -80,6 +94,7 @@ const Insert = tableName => values => {
 
 const Select = tableName => filter => {
     const query = createSelectQuery(tableName)(filter)
+    console.log(query)
     return syncConnection.query(query)
 }
 
@@ -111,7 +126,28 @@ const GetFlowNumRows = () => {
 const WayPointExists = id => syncConnection.query(`SELECT COUNT(*) as numrow from ${tableName.WAYPOINTS} WHERE id_trajeto = ${id}`)[0].numrow > 0
 const CarExists = plate => Select(tableName.CAR)({ placa: plate }).length > 0
 const FlowExists = id => Select(tableName.FLOW)({ id }).length > 0
-const GetLastIdCarpool = () => syncConnection.query(`SELECT id FROM ${tableName.CARPOOL} order by id desc limit 1`)[0].id
+const GetLastIdCarpool = () => { 
+    try {
+        return syncConnection.query(`SELECT id FROM ${tableName.CARPOOL} order by id desc limit 1`)[0].id
+    } catch(e){
+        return 0
+    }
+}
+const GetEmailFromDriverByCarpoolId = carpoolId => {
+    try{
+        return Select(tableName.CARPOOL)({ id: carpoolId })[0].email
+    }catch(e){
+        return -1
+    }
+}
+const RiderAlreadyInCarpool = (email, carpoolId) => {
+    const result = Select(tableName.RIDER)({ email_membro: email, id_carona: carpoolId })
+    if (result instanceof Array){
+        return result.length > 0
+    }else{
+        return result
+    }
+}
 
 // ações
 const InsertInMembros = values => Insert(tableName.MEMBER)(values)
@@ -141,9 +177,38 @@ const DeleteFlow = id => Delete(tableName.FLOW)('id', id)
 const DeleteWaypoints = idFlow => Delete(tableName.WAYPOINTS)('id_trajeto', idFlow)
 const InsertCarpoolOffer = values => Insert(tableName.CARPOOL)(values)
 const InsertPassageiro = values => Insert(tableName.RIDER)(values)
+const InsertNotification = values => Insert(tableName.NOTIFICATION)(values)
+const UpdateNotification = (values, email) => Update(tableName.NOTIFICATION)(values, 'from', email)
+const AddRider = (values) => Insert(tableName.RIDER)(values)
+const GetLastIdNotification = () => {
+    const result = syncConnection.query(`
+        select id from ${tableName.NOTIFICATION} order by id desc limit 1 `)
+    if ( result instanceof Array ){
+        if (result.length === 0)
+            return 0
+        return result[0].id
+    }
+    try {
+        return result.id
+    }catch (e){
+        return result
+    }
+}
+const DeleteNotification = id => Delete(tableName.NOTIFICATION)('id', id)
+const StartCarpool = id => Update(tableName.CARPOOL)({ status: Status.ACTIVE }, 'id', id)
+const FinalizeCarpool = id => Update(tableName.CARPOOL)({ status: Status.FINISHED }, 'id', id)
+const InsertNewRate = values => Insert(tableName.RATE)(values)
 
-
+exports.InsertNewRate = InsertNewRate
+exports.StartCarpool = StartCarpool
+exports.FinalizeCarpool = FinalizeCarpool
+exports.DeleteNotification = DeleteNotification
+exports.GetLastIdNotification = GetLastIdNotification
+exports.AddRider = AddRider
+exports.UpdateNotification = UpdateNotification
+exports.GetEmailFromDriverByCarpoolId = GetEmailFromDriverByCarpoolId
 exports.InsertInMembros = InsertInMembros
+exports.InsertNotification = InsertNotification
 exports.IsValidEmailForInsert = IsValidEmailForInsert
 exports.IsValidEmailForUpdate = IsValidEmailForUpdate
 exports.IsValidCar = IsValidCar
@@ -165,3 +230,4 @@ exports.InsertCarpoolOffer = InsertCarpoolOffer
 exports.FlowExists = FlowExists
 exports.InsertPassageiro = InsertPassageiro
 exports.GetLastIdCarpool = GetLastIdCarpool
+exports.RiderAlreadyInCarpool = RiderAlreadyInCarpool

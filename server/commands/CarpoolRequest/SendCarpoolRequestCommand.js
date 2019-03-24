@@ -1,7 +1,8 @@
 class SendCarpoolRequestCommand {
-    constructor({ email, carpoolId }){
-        this.requesterEmail = email
+    constructor({ from, carpoolId, nameOrNick }){
+        this.from = from
         this.carpoolId = carpoolId
+        this.nameOrNick = nameOrNick
     }
 }
 

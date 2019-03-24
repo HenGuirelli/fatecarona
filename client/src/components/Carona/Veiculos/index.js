@@ -1,72 +1,64 @@
 import React from 'react'
 import Section from '../Section'
-import CarIconUnSelected from '../../../images/veiculo_preto.png'
-import CarIconSelected from '../../../images/veiculo_branco.png'
-import CadastrarVeiculo from '../../Veiculo/CadastrarVeiculo'
-import Button from '../../Form/Button'
+import WithCars from './WithCars'
+import WithoutCars from './WithoutCars'
+import { connect } from 'react-redux'
 import './style.css'
-
-class WithCars extends React.Component {
-    state = {
-        selected: -1
-    }
-
-    render(){
-        const { veiculos } = this.props
-        const { selected } = this.state
-
-        return (
-            <div className='cars-driver-offer'>
-            { 
-                veiculos.map((veiculo, index) =>
-                        <div className={`car ${index === selected ? 'selected' : 'unselected'}`} onClick={() => this.setState({ selected: index })}>
-                            <div className='img-wrapper'>
-                                <img src={index === selected ? CarIconUnSelected : CarIconSelected} alt='foto de um carro' />
-                            </div>
-                            <span className='placa' style={{ color: index === selected ? 'black' : 'white' }}>
-                                { veiculo.placa }
-                            </span>
-                        </div>
-                    )
-                }
-            </div>
-        )
-    }
-}
-
-class WithoutCars extends React.Component {
-    state = {
-        visible: false
-    }
-
-    render(){
-        const { visible } = this.state
-        return (
-            <div>
-                <p>Você Não possuiu nenhum veiculo cadastrado</p>
-                <CadastrarVeiculo style={{ display: visible ? 'block' : 'none' }} onClickAdicionarCallback={() => this.setState({ visible: false })}/>
-                <Button style={{ display: visible ? 'none' : 'block' }} onClick={() => this.setState({ visible: true })}> Adicionar </Button>
-            </div>
-        )
-    }
-}
+import CarHttp from '../../../http/Car'
+import { addCar, cleanCars } from '../../../actions/carActions';
+import { CircularProgress } from '@material-ui/core';
 
 class Veiculos extends React.Component {
-    render(){
-        // const { veiculos } = this.props
-        let veiculos = undefined
+    state = {
+        loading: true
+    }
 
+    componentDidMount(){
+        this.searchCars()
+    }
+
+    setLoading = state => {        
+        this.setState({ loading: state })
+    } 
+
+    searchCars = () => {
+        this.setLoading(true)
+
+        const { email } = this.props        
+		CarHttp.getCars({ email })
+		.then(resolve => {
+			const result = resolve.data
+            console.log('result carros', result)
+            this.props.dispatch(cleanCars())
+            result.forEach(car => {
+                this.props.dispatch(addCar(car))
+            })
+
+            this.setLoading(false)
+		})
+		.catch(err => { /* TODO: exibir mensagem de erro */ })
+	}
+
+    render(){
+        const { cars }  = this.props
+
+        if (this.state.loading) return <CircularProgress />
         return (
             <Section title='Veículo'>
                 {
-                    veiculos  && veiculos.length > 0 ?
-                    <WithCars veiculos={veiculos} />
+                    cars  && cars.length > 0 ?
+                    <WithCars cars={cars} />
                     :
-                    <WithoutCars />
+                    <WithoutCars onClickAdicionarCallback={this.searchCars} />
                 }
             </Section>
         )
     }
 }
 
-export default Veiculos
+export default connect(store => {
+    return {
+        cars: store.car.cars,
+        email: store.user.email
+    }
+})(Veiculos)

@@ -5,41 +5,31 @@ import Tab from '@material-ui/core/Tab'
 import Caronas from '../../components/Notificacao/Caronas'
 import Mensagens from '../../components/Notificacao/Mensagens'
 import NOTIFICATION_TYPE from '../../components/Notificacao/notificationType'
-
-const notificationTestJson = [
-	{
-		title: 'Notificação 1',
-		text: 'coé..',
-		type: 'CHAT',
-		liftId: 1,
-		new: false
-	},
-	{
-		title: 'Notificação 2',
-		text: 'suave?',
-		type: 'CHAT',
-		liftId: 0,
-		new: false
-	},
-	{
-		title: 'Notificação lift',
-		text: 'Pessoa 1 quer pegar carona contigo',
-		type: 'LIFT_MESSAGE_REQUEST',
-		liftId: 3,
-		new: false
-	},
-	{
-		title: 'Notificação lift',
-		text: 'Pessoa 2 aceitou sua carona',
-		type: 'LIFT_MESSAGE',
-		liftId: 3,
-		new: false
-	}
-]
+import Notification from '../../http/Notification'
+import { connect } from 'react-redux'
 
 class Notifications extends Component {
 	state = {
-		value: 0
+		value: 0,
+		notifications: []
+	}
+
+	componentDidMount(){
+		// TODO: loading enquanto não carrega
+		const { email } = this.props
+		Notification.getNotifications({ email })
+		.then(resolve => {
+			const result = resolve.data
+			const notifications = (() => { 
+				result.notifications.reverse()
+				return result.notifications
+			})()
+			this.setState({ notifications })
+
+			Notification.setVisualized({ email })
+			.catch(err => { /** TODO: mensagem de erro (esse processo acontece em background então acho que um alert não seria uma boa opção) */ })
+		})
+		.catch(err => { /** TODO: mensagem de erro */ })
 	}
 
 	handleChange = (event, value) => {
@@ -47,10 +37,10 @@ class Notifications extends Component {
 	}
 	
 	getTabsContent = (value) => [
-		<Caronas data={notificationTestJson.filter(item => 
-			item.type === NOTIFICATION_TYPE.LIFT_MESSAGE_REQUEST || item.type === NOTIFICATION_TYPE.LIFT_MESSAGE)} />, 
+		<Caronas data={this.state.notifications.filter(item => 
+			item.type === NOTIFICATION_TYPE.CARPOOL || item.type === NOTIFICATION_TYPE.CARPOOL_REQUEST)} />, 
 
-		<Mensagens data={notificationTestJson.filter(item => item.type === NOTIFICATION_TYPE.CHAT)} />
+		<Mensagens data={this.state.notifications.filter(item => item.type === NOTIFICATION_TYPE.MESSAGE)} />
 	][value]
 
 	render() {
@@ -70,4 +60,8 @@ class Notifications extends Component {
 	}
 }
 
-export default Notifications
+export default connect(store => {
+	return {
+		email: store.user.email
+	}
+})(Notifications)

@@ -1,33 +1,44 @@
-const { InsertPassageiro } = require('../DAO/mysql')
+const { GetEmailFromDriverByCarpoolId } = require('../DAO/mysql')
 const { GetCarpoolById, GetProfile } = require('../DAO/mongo')
 const { Sync, Operation, action, actionDestination } = require('../DAO/sync')
-
+const config = require('../config.json')
+const { TypeNotification } = require('../enum/carona')
+const { Notification } = require('../notification')
 
 const sync = Sync.getInstance()
 
-const resolveRidersToMongo = async ({id, email}) => {
-    let carpool  = await GetCarpoolById(id)
-    const member = await GetProfile(email)
-    if (carpool[0].riders){
-        carpool[0].riders.push(member[0])
-    }else{
-        carpool[0].riders = [member[0]]
-    }
-    sync.add(
-        new Operation({ action: action.UPDATE, where: { id }, values: { riders: carpool[0].riders }}), 
-        actionDestination.CARPOOL
-    )
+// adiciona passageiros no mongo
+// const resolveRidersToMongo = async ({id, email}) => {
+//     let carpool  = await GetCarpoolById(id)
+//     const member = await GetProfile(email)
+//     if (carpool[0].riders){
+//         carpool[0].riders.push(member[0])
+//     }else{
+//         carpool[0].riders = [member[0]]
+//     }
+//     sync.add(
+//         new Operation({ action: action.UPDATE, where: { id }, values: { riders: carpool[0].riders }}), 
+//         actionDestination.CARPOOL
+//     )
+// }
+
+const fetchTypeNotificationToMongo = ({ typeNotification }) => {
+    return Object.keys(TypeNotification)[typeNotification]
 }
 
 class CarpoolRequestHandler {
     static sendCarpoolRequest(sendCarpoolRequestCommand) {
         const val = {
-            id_carona: sendCarpoolRequestCommand.carpoolId,
-            email_membro: sendCarpoolRequestCommand.requesterEmail
+            carpoolId: sendCarpoolRequestCommand.carpoolId,
+            to: GetEmailFromDriverByCarpoolId(sendCarpoolRequestCommand.carpoolId),
+            from: sendCarpoolRequestCommand.from,
+            title: config.texts.titleCarpool,
+            text: config.texts.carpoolRequest.toString().replace(':rider', sendCarpoolRequestCommand.nameOrNick || ''),
+            type: TypeNotification.CARPOOL_REQUEST,
+            visualized: false // nova notificação sempre falsa
         }
-
-        InsertPassageiro(val)
-        resolveRidersToMongo({ id: val.id_carona, email: val.email_membro })
+        const notification = new Notification(val)
+        notification.send()
         return { success: true }
     }
 }

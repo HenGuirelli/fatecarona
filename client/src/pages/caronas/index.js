@@ -4,41 +4,35 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Gerenciar, { status, side } from '../../components/Carona/Gerenciar'
 import { Paper } from '@material-ui/core'
-
-const andamentosTest = [
-	{
-		carPoolId: 3,
-		date: '23/02/2019',
-		side: side.TO_FATEC,
-		driver: 'nome motorista',
-		rider: 'nome caronista',
-		status: status.ANDAMENTO
-	},
-	{
-		carPoolId: 3,
-		date: '23/02/2019',
-		side: side.OUT_FATEC,
-		driver: 'nome motorista 2',
-		rider: 'nome caronista 2',
-		status: status.PENDENTE
-	},
-	{
-		carPoolId: 3,
-		date: '23/02/2019',
-		side: side.OUT_FATEC,
-		driver: 'nome motorista 2',
-		rider: 'nome caronista 2',
-		status: status.REALIZADO
-	}
-]
+import CarpoolHttp from '../../http/Carpool'
+import { connect } from 'react-redux'
 
 class Caronas extends React.Component {
 	state = {
-		value: 0
+		value: 0,
+		carpools: []
 	}
 
 	constructor(props){
 		super(props);   
+	}
+
+	componentDidMount(){
+		this.searchCarpools()
+	}
+
+	searchCarpools = () => {
+		const { email } = this.props
+		CarpoolHttp.searchCarpool({ email })
+		.then(resolve => {
+			const result = resolve.data
+			if (result.success){
+				console.log('result carpools:', result)
+				this.setState({ carpools: result.carpool.reverse() })
+			}else{
+				// TODO: mensagem de erro
+			}
+		})
 	}
 
 	handleChange = (event, value) => {
@@ -47,7 +41,7 @@ class Caronas extends React.Component {
 
 	getPage = value => [ 
 		<div>
-			{andamentosTest.filter(item => item.status === status.ANDAMENTO)
+			{this.state.carpools.filter(item => item.status === status.ANDAMENTO)
 				.map((carona, index) => 
 					<Paper>
 						<Gerenciar key={`carona-andamento-${index}`} {...carona} type={status.ANDAMENTO} />
@@ -55,14 +49,14 @@ class Caronas extends React.Component {
 				)}
 		</div>, 
 		<div>
-			{andamentosTest.filter(item => item.status === status.REALIZADO).map((carona, index) =>
+			{this.state.carpools.filter(item => item.status === status.REALIZADO).map((carona, index) =>
 				<Paper>
 					<Gerenciar key={`carona-realizado-${index}`}  { ...carona } type={status.REALIZADO} />
 				</Paper>
 			)}
 		</div>,
 		<div>
-			{andamentosTest.filter(item => item.status === status.PENDENTE).map((carona, index) =>
+			{this.state.carpools.filter(item => item.status === status.PENDENTE).map((carona, index) =>
 				<Paper>
 					<Gerenciar key={`carona-pendente-${index}`} { ...carona }  type={status.PENDENTE} />
 				</Paper>
@@ -86,4 +80,8 @@ class Caronas extends React.Component {
 	}
 }
 
-export default Caronas
+export default connect(store => {
+	return {
+		email: store.user.email
+	}
+})(Caronas)

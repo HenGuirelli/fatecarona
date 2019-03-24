@@ -13,14 +13,13 @@ class Header extends React.Component {
 
         this.state = {
             src: props.src,
-            children: props.children,
-            firstLetter: getFirstLetter(props.children),
             alt: props.alt
         }
     }
 
     render(){
-        const { firstLetter, children } = this.state
+        const { inFatec, outFatec, nick } = this.props
+        const fistLetter = nick !== '' ? getFirstLetter(nick) : '' 
 
         return (
             <section className='home-header'>
@@ -29,13 +28,13 @@ class Header extends React.Component {
                         Chegando <br/> na <br/> Fatec 
                     </Typography>              
                     <Typography component='div' variant='h5'>
-                        undefined
+                        { inFatec }
                     </Typography>
                 </div>
                 <div className='item'>
                     <Typography component='div' variant='h5' align='center'>
-                        { children }
-                        <Avatar alt={this.state.alt} src={this.state.src} className='centralize avatar'> {firstLetter} </Avatar>
+                        { nick }
+                        <Avatar alt={this.state.alt} src={this.state.src} className='centralize avatar'> {fistLetter} </Avatar>
                     </Typography>
                 </div>
                 <div className='item'>
@@ -43,7 +42,7 @@ class Header extends React.Component {
                         Saindo <br/> da <br/> fatec
                     </Typography>
                     <Typography component='div' variant='h5' align='right'>
-                        undefined
+                        { outFatec }
                     </Typography>
                 </div>
             </section>

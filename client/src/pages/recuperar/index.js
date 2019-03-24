@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import logo from '../../pages/form/login_fatecarona.svg'
+import logo from '../../pages/login/login_fatecarona.svg'
 import popUp, { TIPO } from '../../components/PopUp'
 
 class Recuperar extends Component {

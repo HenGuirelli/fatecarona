@@ -6,14 +6,14 @@ const { GetCar } = require('../DAO/mongo')
 
 const CarsController = app => {
     // get all cars
-    app.get('/car/:email', (req, res) => {
-        GetCar(req.params.email)
+    app.get('/car', (req, res) => {
+        GetCar(req.query.email)
         .then(result => res.send(result))
         .catch(err => res.send({ success: false, message: err }))
     })
 
     // insert new car
-    app.post('/car/:email', (req, res) => {
+    app.post('/car', (req, res) => {
         const command = new InsertCarInformatinCommand({ ...req.body })
         res.send(CarHandler.insertNewCar(command))
     })

@@ -93,6 +93,49 @@ const GetCarpoolById = id => {
     return mongo.Select('carpool')({ id })
 }
 
+const GetNotificationsByEmail = async email => {
+    return mongo.Select('notification')({ to: email })
+}
+
+const GetNoVisualizedNotificationsByEmail = async email => {
+    return mongo.Select('notification')({ $and: [ { to: email, visualized: false } ]  })
+}
+
+const GetCarpoolByStatusOrAll = async ({ email, status }) => {
+    const find = status ? { $or:  [ { email }, {riders: { $elemMatch: { email } } }] , status: status.toUpperCase() } : {  $or:  [ {email}, {riders: { $elemMatch: { email } } }] }
+    return mongo.Select('carpool')(find)
+}
+
+const SendMessage = async json => {
+    return mongo.Insert('chat')(json)
+}
+
+const GetMessage = async room => {
+    return mongo.Select('chat')({ room })
+}
+
+const GetCarpoolByDate = async date => {
+    return mongo.Select('carpool')({ date })
+}
+
+const GetRateByEmail = async email => {
+    return mongo.Select('rate')({ ratedEmail: email })
+}
+
+const GetPeoplesInCarpool = async carpoolId => {
+    let result = await GetCarpoolById(carpoolId)
+    result = result instanceof Array ? result[0] : result
+    const riders = result.riders
+    const driver = await GetProfile(result.email)
+    riders.push(driver instanceof Array ? driver[0] : driver)
+    return riders
+}
+
+exports.GetPeoplesInCarpool = GetPeoplesInCarpool
+exports.GetRateByEmail = GetRateByEmail
+exports.GetCarpoolByDate = GetCarpoolByDate
+exports.SendMessage = SendMessage
+exports.GetMessage = GetMessage
 exports.GetProfile = GetProfile
 exports.GetFlow = GetFlow
 exports.GetCar = GetCar
@@ -101,3 +144,6 @@ exports.GetRequestCarpool = GetRequestCarpool
 exports.GetFlowById = GetFlowById
 exports.GetCarByPlate = GetCarByPlate
 exports.GetCarpoolById = GetCarpoolById
+exports.GetNotificationsByEmail = GetNotificationsByEmail
+exports.GetNoVisualizedNotificationsByEmail = GetNoVisualizedNotificationsByEmail
+exports.GetCarpoolByStatusOrAll = GetCarpoolByStatusOrAll

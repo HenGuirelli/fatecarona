@@ -13,11 +13,11 @@ const Row = ({ src, text }) => (
     </div>
 )
 
-const Preferencia = ({ fumante, deficiente, musica }) => (
+const Preferencia = ({ isSmokerAllowed, isWheelchairAccommodation, isMusicAllowed }) => (
     <section className='gerenciar-carona-preferencia'>
-        <Row src={FumanteIcon} text={fumante ? 'Permitido fumar' : 'Não é permitido fumar'} />
-        <Row src={CadeiranteIcon} text={deficiente ? 'Acomoda deficiente' : 'Não acomoda deficientes'} />
-        <Row src={MusicaIcon} text={musica ? 'Permitido ouvir música' : 'Não é permitido ouvir música'} />
+        <Row src={FumanteIcon} text={isSmokerAllowed ? 'Permitido fumar' : 'Não é permitido fumar'} />
+        <Row src={CadeiranteIcon} text={isWheelchairAccommodation ? 'Acomoda deficiente' : 'Não acomoda deficientes'} />
+        <Row src={MusicaIcon} text={isMusicAllowed ? 'Permitido ouvir música' : 'Não é permitido ouvir música'} />
     </section>
 )
 
