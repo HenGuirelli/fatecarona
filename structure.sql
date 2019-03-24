@@ -66,6 +66,7 @@ create table caronas_membros (
     foreign key (email_membro) references membros(email)
 );
 
+
 create table notification_type (
 	id int primary key not null,
 	type varchar(20) not null
