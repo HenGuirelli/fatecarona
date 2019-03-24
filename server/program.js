@@ -22,6 +22,7 @@ const { Carpool } = require('./controllers/carpool')
 const { Notification } = require('./controllers/notification')
 const { Chat } = require('./controllers/chat')
 const { Dev } = require('./controllers/dev')
+const { Rating } = require('./controllers/rating')
 
 // Run controllers
 Members(app)
@@ -30,6 +31,7 @@ Trajeto(app)
 Carpool(app)
 Notification(app)
 Dev(app)
+Rating(app)
 // TODO: refatorar essa merda
 const httpServer = Chat(app)
 

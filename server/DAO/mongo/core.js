@@ -9,7 +9,8 @@ const schema = {
     CAR: 'car',
     CARPOOL: 'carpool',
     NOTIFICATION: 'notification',
-    CHAT: 'chat'
+    CHAT: 'chat',
+    RATE: 'rate'
 }
 
 const collectionsName = Object.values(schema)

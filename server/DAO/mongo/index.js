@@ -118,6 +118,11 @@ const GetCarpoolByDate = async date => {
     return mongo.Select('carpool')({ date })
 }
 
+const GetRateByEmail = async email => {
+    return mongo.Select('rate')({ ratedEmail: email })
+}
+
+exports.GetRateByEmail = GetRateByEmail
 exports.GetCarpoolByDate = GetCarpoolByDate
 exports.SendMessage = SendMessage
 exports.GetMessage = GetMessage

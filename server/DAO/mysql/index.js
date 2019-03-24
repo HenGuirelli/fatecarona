@@ -25,7 +25,8 @@ const tableName = {
     WAYPOINTS: 'pontos_interesse',
     CARPOOL: 'caronas',
     RIDER: 'caronas_membros',
-    NOTIFICATION: 'notification'
+    NOTIFICATION: 'notification',
+    RATE: 'rating'
 }
 
 const wrapString = val => {
@@ -196,7 +197,9 @@ const GetLastIdNotification = () => {
 const DeleteNotification = id => Delete(tableName.NOTIFICATION)('id', id)
 const StartCarpool = id => Update(tableName.CARPOOL)({ status: Status.ACTIVE }, 'id', id)
 const FinalizeCarpool = id => Update(tableName.CARPOOL)({ status: Status.FINISHED }, 'id', id)
+const InsertNewRate = values => Insert(tableName.RATE)(values)
 
+exports.InsertNewRate = InsertNewRate
 exports.StartCarpool = StartCarpool
 exports.FinalizeCarpool = FinalizeCarpool
 exports.DeleteNotification = DeleteNotification
