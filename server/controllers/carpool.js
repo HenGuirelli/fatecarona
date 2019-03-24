@@ -6,7 +6,7 @@ const { CarpoolOfferHandler } = require('../commandHandlers/CarpoolOfferHandler'
 const { CarpoolRequestHandler } = require('../commandHandlers/CarpoolRequestHandler')
 const { CarpoolHandler } = require('../commandHandlers/CarpoolHandler')
 
-const { GetCarpool, GetRequestCarpool, GetCarpoolByStatusOrAll, GetCarpoolById } = require('../DAO/mongo')
+const { GetCarpool, GetRequestCarpool, GetCarpoolByStatusOrAll, GetCarpoolById, GetPeoplesInCarpool } = require('../DAO/mongo')
 const { match } = require('../carpool/match')
 
 const CarpoolController = app => {
@@ -94,6 +94,15 @@ const CarpoolController = app => {
         const command = new FinalizeCarpoolCommand({ id: req.params.id })
         CarpoolHandler.finalizeCarpool(command)
         .then(result => res.send(result))
+        .catch(err => res.send({ success: false, message: err.toString() }))
+    })
+
+    // retorna todas as pessoas na carona informada (motorista + caronista)
+    // parametro: carpoolId
+    app.get('/carpool/peoples', (req, res, next) => {
+        const carpoolId = parseInt(req.query.carpoolId)
+        GetPeoplesInCarpool(carpoolId)
+        .then(result => res.send({ success: true, peoples: result }))
         .catch(err => res.send({ success: false, message: err.toString() }))
     })
 

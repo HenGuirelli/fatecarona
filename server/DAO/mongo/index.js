@@ -122,6 +122,16 @@ const GetRateByEmail = async email => {
     return mongo.Select('rate')({ ratedEmail: email })
 }
 
+const GetPeoplesInCarpool = async carpoolId => {
+    let result = await GetCarpoolById(carpoolId)
+    result = result instanceof Array ? result[0] : result
+    const riders = result.riders
+    const driver = await GetProfile(result.email)
+    riders.push(driver instanceof Array ? driver[0] : driver)
+    return riders
+}
+
+exports.GetPeoplesInCarpool = GetPeoplesInCarpool
 exports.GetRateByEmail = GetRateByEmail
 exports.GetCarpoolByDate = GetCarpoolByDate
 exports.SendMessage = SendMessage
