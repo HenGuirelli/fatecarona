@@ -55,10 +55,8 @@ class Pendente extends Gerenciavel {
 
     loadInformation = async () => {
         const resolve = await CarpoolHttp.getCarpoolById(this.getCarPoolId())
-        console.log('load asyunc', resolve)
         const result = resolve.data.carpool
         if (resolve.data.success){
-            console.log(result)
             const { car, riders } = result
 
             const details = {
