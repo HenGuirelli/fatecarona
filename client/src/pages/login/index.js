@@ -71,6 +71,13 @@ class LoginForm extends Component {
     this.setState({ password: event.target.value })
   }
 
+  validateEmal = () => {
+	  const { email } = this.state
+	  if (email && !email.includes('@')){
+		  this.setState({ email: email + '@fatec.sp.gov.br' })
+	  }
+  }
+
   render() {
     return (
 		<main className="login">
@@ -83,7 +90,7 @@ class LoginForm extends Component {
 						Login
 					</Typography>
 					<CardContent>
-						<OutlinedTextField label="Email" onChange={this.handleEmail} className="component" block/>
+						<OutlinedTextField label="Email" onChange={this.handleEmail} value={this.state.email} onBlur={this.validateEmal} className="component" block/>
 						<OutlinedTextField label="Senha" type="password" onChange={this.handlePasswrod} className="component" block/>
 					</CardContent>
 					<CardContent>

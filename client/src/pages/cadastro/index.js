@@ -57,27 +57,37 @@ class Cadastro extends Component {
 
 	handleChange = (name, value) => {
 		this.setState({ [name]: value })
-	}	
+	}
 
-  render() {
-    const { value } = this.state
-    return (
-		<main className="cadastro">
-			<Typography component='div' align='center'>
-				<OutlinedTextField label="Email Instituicional" className='component' block
-					onChange={(event) => this.handleChange('email', event.target.value)} Focusout={(event) => console.log('saiu', event)}/>
-				<OutlinedTextField label="Nome" className='component' block
-					onChange={(event) => this.handleChange('name', event.target.value)} />
-				<OutlinedTextField label="Senha" className='component' type="password" block
-					onChange={(event) => this.handleChange('password', event.target.value)} />
-				<OutlinedTextField label="Confirmar senha" className='component' type="password" block
-					onChange={(event) => this.handleChange('confirmPassword', event.target.value)} />
+	validateEmail = () => {
+		const { email } = this.state
+		if (!email.includes('@')){
+			console.log(email)
+			this.setState({ email: email + '@fatec.sp.gov.br' })
+		}
+	}
 
-				<ContainedButton color="primary" className="component button" onClick={ this.handleSubmit }>Cadastrar</ContainedButton>
-			</Typography>
-		</main>
-    );
-  }
+	render() {
+		const { value } = this.state
+		return (
+			<main className="cadastro">
+				<Typography component='div' align='center'>
+					<OutlinedTextField label="Email Instituicional" className='component' block
+						onChange={(event) => this.handleChange('email', event.target.value)} 
+						value={this.state.email}
+						onBlur={ this.validateEmail }/>
+					<OutlinedTextField label="Nome" className='component' block
+						onChange={(event) => this.handleChange('name', event.target.value)} />
+					<OutlinedTextField label="Senha" className='component' type="password" block
+						onChange={(event) => this.handleChange('password', event.target.value)} />
+					<OutlinedTextField label="Confirmar senha" className='component' type="password" block
+						onChange={(event) => this.handleChange('confirmPassword', event.target.value)} />
+
+					<ContainedButton color="primary" className="component button" onClick={ this.handleSubmit }>Cadastrar</ContainedButton>
+				</Typography>
+			</main>
+		)
+  	}
 }
 
 export default Cadastro
