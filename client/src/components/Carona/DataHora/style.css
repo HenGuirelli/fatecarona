@@ -1,0 +1,9 @@
+.weekdays-component {
+    display: flex;
+    justify-content: space-between;
+    max-width: 350px;
+}
+
+.selected {
+    background-color: #673ab7 !important;
+}

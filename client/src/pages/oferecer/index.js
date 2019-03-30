@@ -10,10 +10,10 @@ import { connect } from 'react-redux'
 import { isNotNullOrEmpty } from '../../utils'
 import CarpoolHttp from '../../http/Carpool'
 import { withRouter } from 'react-router-dom'
-import PopUpFactory, { TIPO } from '../../components/PopUp';
+import PopUpFactory, { TIPO } from '../../components/PopUp'
 
 class Oferecer extends Component {
-	fetchData = ({ car, destination, date, hour, flow, preferences }) => {
+	fetchData = ({ car, destination, date, hour, flow, preferences, weekdays, repeat }) => {
 		return {
 			email: this.props.email,
 			date,
@@ -23,19 +23,22 @@ class Oferecer extends Component {
 			destination,
 			isSmokerAllowed: preferences.isSmokerAllowed,
 			isMusicAllowed: preferences.isMusicAllowed,
-			isWheelchairAccommodation: preferences.isWheelchairAccommodation
+			isWheelchairAccommodation: preferences.isWheelchairAccommodation,
+			weekdays,
+			repeat
 		}
 	}
 
 	offer = () => {
-		const { car, destination, date, hour, flow, preferences } = this.props
+		const { car, destination, date, hour, flow, preferences, weekdays, repeat } = this.props
 		if (this.isValidToOffer()){
-			CarpoolHttp.offerCarpool(this.fetchData({ car, destination, date, hour, flow, preferences }))
+			CarpoolHttp.offerCarpool(this.fetchData({ car, destination, date, hour, flow, preferences, weekdays, repeat }))
 			.then(resolve => {
 				const result = resolve.data
 				if(result.success){
 					PopUpFactory({ tipo: TIPO.SUCESSO, text: 'Sucesso' })
-					this.props.history.push('/')
+					console.log(weekdays)
+					//this.props.history.push('/')
 				}
 			})
 			.catch(err => { /* TODO: mensagem de erro */ })
@@ -86,6 +89,8 @@ export default connect(store => {
 			isSmokerAllowed: store.carpool.isSmokerAllowed,
 			isWheelchairAccommodation: store.carpool.isWheelchairAccommodation,
 		},
+		weekdays: store.carpool.weekdays,
+		repeat: store.carpool.repeat,
 		car: store.car
 
 	}

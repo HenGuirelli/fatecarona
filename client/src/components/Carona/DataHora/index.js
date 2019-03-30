@@ -3,6 +3,9 @@ import { TimePicker, DatePicker, OutlinedTextField } from '../../Form/TextField'
 import Section from '../Section'
 import { setDateAndHour } from '../../../actions/carpoolActions'
 import { connect } from 'react-redux'
+import Checkbox from '@material-ui/core/Checkbox'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import WeekDays from './WeekDays'
 
 class DataHora extends React.Component {
 
@@ -13,7 +16,8 @@ class DataHora extends React.Component {
             date: this.props.date,
             hour: this.props.hour,
             refHour: '',
-            refDate: ''
+            refDate: '',
+            repeat: false
         }
     }
 
@@ -37,20 +41,31 @@ class DataHora extends React.Component {
     }
 
     render(){
-        const { date, hour } = this.state
+        const { date, hour, repeat } = this.state
 
         return (
             <Section title='Hora da Carona'>
-                <DatePicker label='Dia' block  onChange={ e => this.onChange('date', e) } value={date} 
-                    inputProps={{
-                        ref: node => { this.state.refDate = node }
-                    }}
-                /> <br />
+                { repeat ? null : 
+                    <DatePicker label='Dia' block  onChange={ e => this.onChange('date', e) } value={date} 
+                        inputProps={{
+                            ref: node => { this.state.refDate = node }
+                        }}
+                    /> 
+                }
+                <br />
                 <TimePicker type='time' 
                     inputProps={{
                         ref: node => { this.state.refHour = node },
                       }} 
-                      label='Hora' block  onChange={ (e) => this.onChange('hour', e) } value={hour} />
+                      label='Hora' block  onChange={ (e) => this.onChange('hour', e) } value={hour}
+                />
+                <FormControlLabel 
+                    control={<Checkbox checked={repeat} onChange={ e => this.setState({ repeat: e.target.checked })} color='primary' />}
+                    label='Repetir'
+                />
+
+                { repeat ? <WeekDays /> : null }
+
             </Section>
         )
     }

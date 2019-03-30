@@ -25,3 +25,13 @@ export function setPeopleInCar(peoples = []) {
         payload: peoples
     }
 }
+
+export function setRepeat(repeat, weekdays) {
+    return {
+        type: 'SET_REPEAT',
+        payload: {
+            repeat,
+            weekdays
+        }
+    }
+}
