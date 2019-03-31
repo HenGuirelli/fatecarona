@@ -1,5 +1,6 @@
 const mongo = require('./core')
 const { Status } = require('../../enum/carona')
+const { getWeekdayName } = require('../../utils')
 
 // Estrutura de retorno 
 // {
@@ -61,25 +62,12 @@ const GetCarpool = async email => {
     return mongo.Select('flow')({ email })
 }
 
-// Estrutura de retorno:
-// {
-//     "_id": "5c7dd588d74cb4734cdb1419",
-//     "id": 1,
-//     "date": "04/03/2018",
-//     "hour": "21:30",
-//     "plate": "ADS-234",
-//     "flow": 3,
-//     "email": "henrique.guirelli",
-//     "wheelchair": false,
-//     "smoker": false,
-//     "music": false,
-//     "status": "PENDING",
-//     "destination": "TO_FATEC"
-//  }
 const GetRequestCarpool = async (date, email) => {
-    return mongo.Select('carpool')({ date, status: Status.PENDING , email: { $ne: email } })
+    const result = await mongo.Select('carpool')({ date, status: Status.PENDING , email: { $ne: email } })
+    const sheduledResult = await GetCarpoolSheduledByDate(getWeekdayName(new Date(date)).toLowerCase())
+    result.push(...sheduledResult.map( carpool => ({ ...carpool, date })))
+    return result
 }
-
 
 const GetFlowById = async id => {
     return mongo.Select('flow')({ id })
@@ -133,6 +121,7 @@ const GetPeoplesInCarpool = async carpoolId => {
 
 const GetCarpoolSheduledByDate = async weekdayName => {
     const keyName = `weekdays.${weekdayName}`
+    console.log(keyName)
     return mongo.Select('carpool_sheduled')({ [keyName]: true })
 }
 
