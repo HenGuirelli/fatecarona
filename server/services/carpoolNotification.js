@@ -1,6 +1,6 @@
 const { Singleton } = require('./singleton')
-const { GetCarpoolByDate } = require('../DAO/mongo')
-const { dateToString, fillZeros } = require('../utils')
+const { GetCarpoolByDate, GetCarpoolSheduledByDate } = require('../DAO/mongo')
+const { dateToString, fillZeros, getWeekdayName } = require('../utils')
 const { Notification } = require('../notification')
 const { TypeNotification, Status } = require('../enum/carona')
 const { StartCarpool } = require('../DAO/mysql')
@@ -64,6 +64,8 @@ class CarpoolNotifcation {
             throw `\n\nparametro date inválido\nesprado: Date.\nrecebido: ${typeof date}\n\n`
         }
         const result = await GetCarpoolByDate(dateToString(date, 'yyyy-mm-dd'))
+        const sheduled = await GetCarpoolSheduledByDate(getWeekdayName(date).toLowerCase())
+        result.push(...sheduled)
         return this._fetchLoadedData(result)
     }
 

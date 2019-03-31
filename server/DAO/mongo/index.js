@@ -131,6 +131,12 @@ const GetPeoplesInCarpool = async carpoolId => {
     return riders
 }
 
+const GetCarpoolSheduledByDate = async weekdayName => {
+    const keyName = `weekdays.${weekdayName}`
+    return mongo.Select('carpool_sheduled')({ [keyName]: true })
+}
+
+exports.GetCarpoolSheduledByDate = GetCarpoolSheduledByDate
 exports.GetPeoplesInCarpool = GetPeoplesInCarpool
 exports.GetRateByEmail = GetRateByEmail
 exports.GetCarpoolByDate = GetCarpoolByDate

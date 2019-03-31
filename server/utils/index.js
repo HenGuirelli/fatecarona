@@ -1,3 +1,5 @@
+const { Weekday } = require('../enum/carona')
+
 const formatDate = date => {
     const resp = date.split('/')
     return `${resp[2]}-${resp[1]}-${resp[0]}`
@@ -54,6 +56,17 @@ const dateToString = (date, format = 'yyyy-mm-dd') => {
     return format.replace('yyyy', y).replace('mm', fillZeros(2, m)).replace('dd', fillZeros(2, d))
 }
 
+const getWeekdayName = date => {
+    if( !(date instanceof Date) ){
+        throw `Valor inesperado, esperado: Date\nRecebido: ${typeof date}`
+    }
+    const keys = Object.keys(Weekday)
+    for (key of keys){
+        if (Weekday[key] === date.getDay())
+            return key
+    }
+}
+
 exports.fillZeros = fillZeros
 exports.dateToString = dateToString
 exports.formatDate = formatDate
@@ -62,3 +75,4 @@ exports.formatDateResolve = formatDateResolve
 exports.minutesDiff = minutesDiff
 exports.cloneJSON = cloneJSON
 exports.replaceKeyJson = replaceKeyJson
+exports.getWeekdayName = getWeekdayName
