@@ -1,4 +1,5 @@
 const { CreateNewCarpoolOfferCommand } = require('../commands/CarpoolOffer/CreateNewCarpoolOfferCommand')
+const { CreateNewCarpoolOfferSheduledCommand } = require('../commands/CarpoolOffer/CreateNewCarpoolOfferSheduledCommand')
 const { SendCarpoolRequestCommand } = require('../commands/CarpoolRequest/SendCarpoolRequestCommand')
 const { AcceptCarpoolRequestCommand } = require('../commands/CarpoolOffer/AcceptCarpoolRequestCommand')
 const { FinalizeCarpoolCommand } = require('../commands/Carpool/FinalizeCarpoolCommand')
@@ -13,12 +14,14 @@ const CarpoolController = app => {
     const Offer = () => {
         // Add new carpooling offer
         app.post('/carpool/offer', (req, res) => {
-            // try{
+            const { repeat } = req.body
+            if (repeat){
+                const command = new CreateNewCarpoolOfferSheduledCommand(req.body)
+                res.send(CarpoolOfferHandler.createNewCarpoolScheduledOffer(command))
+            }else{
                 const command = new CreateNewCarpoolOfferCommand({ ...req.body })
                 res.send(CarpoolOfferHandler.createNewCarpoolOffer(command))
-            // }catch (e){
-            //     res.send({ success: false, message: e })
-            // }
+            }
         })
 
         // Delete offer carpooling

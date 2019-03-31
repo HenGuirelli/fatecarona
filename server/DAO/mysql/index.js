@@ -26,7 +26,8 @@ const tableName = {
     CARPOOL: 'caronas',
     RIDER: 'caronas_membros',
     NOTIFICATION: 'notification',
-    RATE: 'rating'
+    RATE: 'rating',
+    CARPOOLSHEDULED: 'carona_agendada'
 }
 
 const wrapString = val => {
@@ -198,7 +199,9 @@ const DeleteNotification = id => Delete(tableName.NOTIFICATION)('id', id)
 const StartCarpool = id => Update(tableName.CARPOOL)({ status: Status.ACTIVE }, 'id', id)
 const FinalizeCarpool = id => Update(tableName.CARPOOL)({ status: Status.FINISHED }, 'id', id)
 const InsertNewRate = values => Insert(tableName.RATE)(values)
+const InsertCarpoolOfferSheduled = values => Insert(tableName.CARPOOLSHEDULED)(values)
 
+exports.InsertCarpoolOfferSheduled = InsertCarpoolOfferSheduled
 exports.InsertNewRate = InsertNewRate
 exports.StartCarpool = StartCarpool
 exports.FinalizeCarpool = FinalizeCarpool

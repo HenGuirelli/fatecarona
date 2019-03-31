@@ -1,7 +1,8 @@
-const { InsertCarpoolOffer, AddRider } = require('../DAO/mysql')
+const { InsertCarpoolOffer, AddRider, InsertCarpoolOfferSheduled } = require('../DAO/mysql')
 const { CarExists, FlowExists, GetLastIdCarpool, RiderAlreadyInCarpool } = require('../DAO/mysql')
 const { GetFlowById, GetCarByPlate, GetProfile, GetCarpoolById } = require('../DAO/mongo')
 const { Sync, Operation, action, actionDestination } = require('../DAO/sync')
+const { Weekday } = require('../enum/carona')
 
 const sync = Sync.getInstance()
 
@@ -47,10 +48,10 @@ class CarpoolOfferHandler {
         // TODO: remover a notificação (mysql e mongo)
     }
 
-    static createNewCarpoolOffer(createNewCarpoolOfferCommand) {
+    static async createNewCarpoolOffer(createNewCarpoolOfferCommand) {
         const id = generateId()
         const val = {
-            dataCarona: createNewCarpoolOfferCommand.date,
+            dataCarona: createNewCarpoolOfferCommand.date || null,
             horaCarona: createNewCarpoolOfferCommand.hour,
             placa: createNewCarpoolOfferCommand.carPlate,
             trajeto: createNewCarpoolOfferCommand.flowId,
@@ -59,7 +60,8 @@ class CarpoolOfferHandler {
             musica: createNewCarpoolOfferCommand.isMusicAllowed,  // boolean
             cadeirante: createNewCarpoolOfferCommand.isWheelchairAccommodation, // bolean
             email: createNewCarpoolOfferCommand.email,
-            id
+            id,
+            agendado: createNewCarpoolOfferCommand.repeat || false
         }
 
         if (!CarExists(val.placa)){
@@ -81,8 +83,37 @@ class CarpoolOfferHandler {
             }), actionDestination.CARPOOL))    
         })
 
-        
-        return { success: true }
+        return { success: true, carpoolId: id }
+    }
+
+    static async createNewCarpoolScheduledOffer(createNewCarpoolOfferScheduledCommand) {
+        const step1 = await CarpoolOfferHandler.createNewCarpoolOffer(createNewCarpoolOfferScheduledCommand)
+        if (step1.success){
+            const { carpoolId } = step1
+            const weekdays = createNewCarpoolOfferScheduledCommand.weekdays
+            const keys = Object.keys(weekdays)
+            keys.forEach(key => {
+                if (weekdays[key]){
+                    const weekdayId = this.getWeekdayId(key)
+                    InsertCarpoolOfferSheduled({ id_carona: carpoolId, id_dia_semana: weekdayId })
+                }
+            })
+            GetFlowById(createNewCarpoolOfferScheduledCommand.flowId)
+            .then(flow => {
+                GetCarByPlate(createNewCarpoolOfferScheduledCommand.carPlate)
+                .then(car => 
+                    sync.add( new Operation({ 
+                        action: action.INSERT,
+                        values: fetchJsonToMongo({ ...createNewCarpoolOfferScheduledCommand, flow: flow[0], car: car[0], id: carpoolId })
+                    }), actionDestination.CARPOOL_SHEDULED)
+                )
+            })
+            return { success: true }
+        }
+    } 
+
+    static getWeekdayId(weekdayName){
+        return Weekday[weekdayName.toUpperCase()]
     }
 
     static refuseCarpoolRequest(RefuseCarpoolRequestCommand) {
