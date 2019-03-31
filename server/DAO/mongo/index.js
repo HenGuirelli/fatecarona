@@ -68,7 +68,6 @@ const GetRequestCarpool = async (date, email) => {
     const dateToSend = moment(date, 'YYYY-MM-DD').toDate()
     const sheduledResult = await GetCarpoolSheduledByDate(getWeekdayName(dateToSend).toLowerCase())
     result.push(...sheduledResult.map( carpool => ({ ...carpool, date })))
-    console.log(result)
     return result
 }
 
