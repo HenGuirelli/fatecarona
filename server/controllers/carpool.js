@@ -17,10 +17,10 @@ const CarpoolController = app => {
             const { repeat } = req.body
             if (repeat){
                 const command = new CreateNewCarpoolOfferSheduledCommand(req.body)
-                res.send(CarpoolOfferHandler.createNewCarpoolScheduledOffer(command))
+                res.send({ success: true, ...CarpoolOfferHandler.createNewCarpoolScheduledOffer(command) })
             }else{
                 const command = new CreateNewCarpoolOfferCommand({ ...req.body })
-                res.send(CarpoolOfferHandler.createNewCarpoolOffer(command))
+                res.send({ success: true, ...CarpoolOfferHandler.createNewCarpoolOffer(command) })
             }
         })
 
