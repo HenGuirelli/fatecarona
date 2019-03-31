@@ -62,7 +62,6 @@ class Andamento extends Gerenciavel {
 
     render(){
         const { details, carpoolPreferences, car, peopleInCar } = this.state
-
         return (
              <main className='detalhes-carona-andamento'>
                 <Status { ...details } />

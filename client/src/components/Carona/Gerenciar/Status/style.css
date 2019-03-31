@@ -1,5 +1,7 @@
 .gerenciar-carona-status {
     margin: 1.3em 0;
+    display: flex;
+    justify-content: center;
 }
 
 .gerenciar-carona-status .row {
@@ -15,13 +17,15 @@
 
 .left-text {
     text-transform: uppercase;
-    font-weight: bold;    
+    font-weight: bold;
     text-align: right;
-    width: 35%;
+    /* width: 35%; */
+    display: block;
 }
 
 .right-text {
     margin-left: 1.3em;
+    display: block;
 }
 
 .left-text::after {

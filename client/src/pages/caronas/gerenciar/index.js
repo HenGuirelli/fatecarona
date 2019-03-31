@@ -11,7 +11,9 @@ class Gerenciavel extends React.Component {
             status: '',
             day: '',
             hour: '',
-            destination: ''
+            destination: '',
+            repeat: false,
+            weekdays: []
         }
 
         const carpoolPreferences = {
@@ -53,12 +55,13 @@ class Gerenciavel extends React.Component {
         const result = resolve.data.carpool
         if (resolve.data.success){
             const { car, riders } = result
-
             const details = {
                 status: result.status,
                 date: result.date,
                 hour: result.hour,
-                destination: result.destination
+                destination: result.destination,
+                repeat: result.repeat,
+                weekdays: result.weekdays
             }
             const carpoolPreferences = {
                 isSmokerAllowed: result.isSmokerAllowed,

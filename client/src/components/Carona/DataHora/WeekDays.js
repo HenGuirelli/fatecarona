@@ -1,7 +1,7 @@
 import React from 'react'
 import { Avatar } from '@material-ui/core'
 import { connect } from 'react-redux'
-import { setRepeat } from '../../../actions/carpoolActions'
+import { setWeekdays } from '../../../actions/carpoolActions'
 import './style.css'
 
 const AvatarWeekDay = ({ children, selected, ...restProps }) => (
@@ -22,7 +22,7 @@ class WeekDays extends React.Component {
     handleClick = async name => {
         const value = this.state[name]
         await this.setState({ [name]: !value })
-        this.props.dispatch(setRepeat(true, this.state))
+        this.props.dispatch(setWeekdays(this.state))
     }
 
     render(){

@@ -1,7 +1,7 @@
 import React from 'react'
 import { TimePicker, DatePicker, OutlinedTextField } from '../../Form/TextField'
 import Section from '../Section'
-import { setDateAndHour } from '../../../actions/carpoolActions'
+import { setDateAndHour, setRepeat } from '../../../actions/carpoolActions'
 import { connect } from 'react-redux'
 import Checkbox from '@material-ui/core/Checkbox'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
@@ -37,7 +37,16 @@ class DataHora extends React.Component {
     updateRedux = async name => {
         const value = this.getValueByPropsNameName(name)
         await this.setState({ [name]: value })
+        this.updateDateAndHour()
+    }
+
+    updateDateAndHour = () => {
         this.props.dispatch(setDateAndHour({ ...this.state }))
+    }
+
+    updateRepeat = () => {
+        const { repeat } = this.state
+        this.props.dispatch(setRepeat(repeat))
     }
 
     render(){
@@ -67,7 +76,11 @@ class DataHora extends React.Component {
                     {
                         withWeekdays ? 
                         <FormControlLabel 
-                            control={<Checkbox checked={repeat} onChange={ e => this.setState({ repeat: e.target.checked })} color='primary' />}
+                            control={<Checkbox checked={repeat}
+                            onChange={ async e => {
+                                await this.setState({ repeat: e.target.checked })
+                                await this.updateRepeat()
+                            }} color='primary' />}
                             label='Repetir'
                         />
                         : null 

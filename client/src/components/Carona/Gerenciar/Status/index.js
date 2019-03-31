@@ -13,13 +13,38 @@ const Row = ({ left, right, ...restProps }) => (
     </div>
 )
 
-const Status = ({ status, date, hour, destination }) => (
-    <section className='gerenciar-carona-status'>
-        <Row left='status' right={status}/>
-        <Row left='dia'    right={formatDateToView(date)}/>
-        <Row left='hora'   right={hour || '...' }/>
-        <Row left='tipo'   right={formatDestinationText(destination)}/>
-    </section>
-)
+const Column = ({values, className}) => {
+    return (
+        <div className='column'>
+            {
+                values.map(val => <span className={className}> {val} </span>)
+            }
+        </div>
+    )
+}
+
+const Status = ({ status, date, hour, destination, repeat, weekdays }) => {
+    let dateText = ''
+    if (repeat){
+        const keys = Object.keys(weekdays)
+        const weekdaysText = keys.filter(key => weekdays[key] === true)
+        console.log(weekdaysText)
+        weekdaysText.forEach((item, index) => {
+            dateText += `${item}` + (index === weekdaysText.length -1 ? '' : ', ')
+        })
+    }else{
+        dateText = formatDateToView(date)
+    }
+    return(
+        <section className='gerenciar-carona-status'>
+            <Column values={['status', 'dia', 'hora', 'tipo']} className={'left-text'} />
+            <Column values={[status,dateText, hour || '...', formatDestinationText(destination)]} className={'right-text'} />
+            {/* <Row left='status' right={status}/>
+            <Row left='dia'    right={dateText}/>
+            <Row left='hora'   right={hour || '...' }/>
+            <Row left='tipo'   right={formatDestinationText(destination)}/> */}
+        </section>
+    )
+}
 
 export default Status

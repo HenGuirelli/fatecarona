@@ -31,7 +31,10 @@ export default (state={
             return { ...state, peopleInCar: action.payload }
         }
         case 'SET_REPEAT': {
-            return { ...state, repeat: action.payload.repeat, weekdays: action.payload.weekdays }
+            return { ...state, repeat: action.payload.repeat }
+        }
+        case 'SET_WEEKDAYS': {
+            return { ...state, weekdays: action.payload }
         }
         default: {
             return { ...state }
