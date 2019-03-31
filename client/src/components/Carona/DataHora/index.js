@@ -42,30 +42,39 @@ class DataHora extends React.Component {
 
     render(){
         const { date, hour, repeat } = this.state
+        const { withWeekdays } = this.props
 
         return (
             <Section title='Hora da Carona'>
-                { repeat ? null : 
-                    <DatePicker label='Dia' block  onChange={ e => this.onChange('date', e) } value={date} 
-                        inputProps={{
-                            ref: node => { this.state.refDate = node }
-                        }}
-                    /> 
-                }
-                <br />
-                <TimePicker type='time' 
-                    inputProps={{
-                        ref: node => { this.state.refHour = node },
-                      }} 
-                      label='Hora' block  onChange={ (e) => this.onChange('hour', e) } value={hour}
-                />
-                <FormControlLabel 
-                    control={<Checkbox checked={repeat} onChange={ e => this.setState({ repeat: e.target.checked })} color='primary' />}
-                    label='Repetir'
-                />
-
-                { repeat ? <WeekDays /> : null }
-
+                <div className='date-hour-carpool-wrapper'>
+                    { repeat ? null :
+                        <div className='component'>
+                            <DatePicker label='Dia' block  onChange={ e => this.onChange('date', e) } value={date} 
+                                inputProps={{
+                                    ref: node => { this.state.refDate = node }
+                                }}
+                            /> 
+                        </div>
+                    }
+                    <div className='component'>
+                        <TimePicker type='time' 
+                            inputProps={{
+                                ref: node => { this.state.refHour = node },
+                            }} 
+                            label='Hora' block  onChange={ (e) => this.onChange('hour', e) } value={hour}
+                        />
+                    </div>
+                    {
+                        withWeekdays ? 
+                        <FormControlLabel 
+                            control={<Checkbox checked={repeat} onChange={ e => this.setState({ repeat: e.target.checked })} color='primary' />}
+                            label='Repetir'
+                        />
+                        : null 
+                    }
+                    { repeat ? <WeekDays /> : null }
+            
+                </div>
             </Section>
         )
     }

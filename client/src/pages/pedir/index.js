@@ -14,8 +14,6 @@ class Pedir extends Component {
 
 	search = () => {
 		const { date, email, hour } = this.props
-		console.log({ date, email, hour })
-		console.log('isValid: ', this.isValidToSearch())
 		if (this.isValidToSearch()){	
 			this.props.history.push('/caronas/resultados')			
 		}
@@ -29,7 +27,7 @@ class Pedir extends Component {
   	render() {
 		return (
 			<main className='page-pedir-carona'>				
-				<DataHora />
+				<DataHora withWeekdays={false} />
 				<Divider />
 
 				<Destino />

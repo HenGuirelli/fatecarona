@@ -2,6 +2,7 @@ import React from 'react'
 import { ComboBox } from '../../Form/TextField'
 import { connect } from 'react-redux'
 import { setFlow } from '../../../actions/flowActions'
+import './style.css'
 
 class WithTrajetos extends React.Component {
     
@@ -19,11 +20,13 @@ class WithTrajetos extends React.Component {
 
     render(){
         return (
-            <ComboBox 
-                options={this.fillFlows()} 
-                label='Selecione...' 
-                onChange={ e => this.saveInRedux(e.target.value) } 
-            />
+            <div className='combobox-flow'>
+                <ComboBox 
+                    options={this.fillFlows()} 
+                    label='Selecione...' 
+                    onChange={ e => this.saveInRedux(e.target.value) } 
+                />
+            </div>
         )
     }
 }

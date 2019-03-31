@@ -178,16 +178,16 @@ class ComboBox extends React.Component {
 		const { options, label, onChange, values = [], ...restProps } = this.props
 		return (
 		<Fragment>
-			<FormControl>
+			<FormControl variant='outlined'>
 			<InputLabel>{ label }</InputLabel>
 			<Select
 				className='combo-box'
 				value={this.state.value}
 				onChange={this.handleChange}
-				input={<OutlinedInput labelWidth={200} />}
+				input={<OutlinedInput labelWidth={90}/>}
 				{ ...restProps }
 			>
-				{options.map((option, index) => <MenuItem key={`menu-item-${index}`} value={values[index] || option}> {option} </MenuItem>)}
+				{ options && options.map((option, index) => <MenuItem key={`menu-item-${index}`} value={values[index] || option}> {option} </MenuItem>)}
 			</Select>
 			</FormControl>
 			{ this.props.block ? <br /> : null }

@@ -37,8 +37,7 @@ class Oferecer extends Component {
 				const result = resolve.data
 				if(result.success){
 					PopUpFactory({ tipo: TIPO.SUCESSO, text: 'Sucesso' })
-					console.log(weekdays)
-					//this.props.history.push('/')
+					this.props.history.push('/')
 				}
 			})
 			.catch(err => { /* TODO: mensagem de erro */ })
@@ -46,15 +45,18 @@ class Oferecer extends Component {
 	}
 
 	isValidToOffer = () => {
-		const { car, destination, date, hour, flow } = this.props
-		return isNotNullOrEmpty(car) && isNotNullOrEmpty(destination) && 
-			   isNotNullOrEmpty(date) && isNotNullOrEmpty(hour) && isNotNullOrEmpty(flow)
+		const { car, destination, date, hour, flow, repeat } = this.props
+		return (
+			isNotNullOrEmpty(car) && isNotNullOrEmpty(destination) && 
+			isNotNullOrEmpty(hour) && isNotNullOrEmpty(flow) && 
+			(isNotNullOrEmpty(date) || repeat)
+		)
 	}
 
 	render() {
 		return (
 			<main className='page-pedir-carona'>				
-				<DataHora />
+				<DataHora withWeekdays={true} />
 				<Divider />
 
 				<Destino />

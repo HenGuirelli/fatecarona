@@ -7,3 +7,11 @@
 .selected {
     background-color: #673ab7 !important;
 }
+
+.date-hour-carpool-wrapper {
+    padding-top: 1.3em;
+}
+
+.date-hour-carpool-wrapper > .component:not(:first-child) {
+    margin-top: 1.3em;
+}

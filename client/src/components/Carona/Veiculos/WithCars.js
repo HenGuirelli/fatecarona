@@ -1,6 +1,6 @@
 import React from 'react'
-import CarIconUnSelected from '../../../images/veiculo_preto.png'
-import CarIconSelected from '../../../images/veiculo_branco.png'
+// import CarIconUnSelected from '../../../images/veiculo_preto.png'
+import CarIcon from '../../../images/veiculo_branco.png'
 import { connect } from 'react-redux'
 import './style.css'
 import { setCar } from '../../../actions/carActions'
@@ -29,11 +29,11 @@ class WithCars extends React.Component {
             <div className='cars-driver-offer'>
             { 
                 cars.map((veiculo, index) =>
-                        <div className={`car ${index === selected ? 'selected' : 'unselected'}`} onClick={ () => this.handleClick(index) }>
+                        <div key={`car-driver-offer-${index}`} className={`car ${index === selected ? 'selected' : 'unselected'}`} onClick={ () => this.handleClick(index) }>
                             <div className='img-wrapper'>
-                                <img src={index === selected ? CarIconUnSelected : CarIconSelected} alt='foto de um carro' />
+                                <img src={CarIcon} alt='foto de um carro' />
                             </div>
-                            <span className='placa' style={{ color: index === selected ? 'black' : 'white' }}>
+                            <span className='placa'>
                                 { veiculo.plate }
                             </span>
                         </div>

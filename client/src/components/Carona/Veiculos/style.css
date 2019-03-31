@@ -5,6 +5,7 @@
 
 .cars-driver-offer .car .placa {
     margin-top: 15px;
+    color: white;
 }
 
 .cars-driver-offer .car {
@@ -15,9 +16,9 @@
 }
 
 .selected {
-    background-color: var(--secondary-main);
+    background-color: var(--primary-main);
 }
 
 .unselected {
-    background-color: var(--primary-main);
+    background-color: var(--gray);
 }
