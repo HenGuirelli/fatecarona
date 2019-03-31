@@ -1,6 +1,7 @@
 const mongo = require('./core')
 const { Status } = require('../../enum/carona')
 const { getWeekdayName } = require('../../utils')
+const moment = require('moment')
 
 // Estrutura de retorno 
 // {
@@ -64,8 +65,10 @@ const GetCarpool = async email => {
 
 const GetRequestCarpool = async (date, email) => {
     const result = await mongo.Select('carpool')({ date, status: Status.PENDING , email: { $ne: email } })
-    const sheduledResult = await GetCarpoolSheduledByDate(getWeekdayName(new Date(date)).toLowerCase())
+    const dateToSend = moment(date, 'YYYY-MM-DD').toDate()
+    const sheduledResult = await GetCarpoolSheduledByDate(getWeekdayName(dateToSend).toLowerCase())
     result.push(...sheduledResult.map( carpool => ({ ...carpool, date })))
+    console.log(result)
     return result
 }
 
