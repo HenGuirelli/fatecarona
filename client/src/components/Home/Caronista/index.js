@@ -4,17 +4,20 @@ import { Typography } from '@material-ui/core'
 import './style.css'
 import Divider from '@material-ui/core/Divider'
 
-import CadeiranteIcon from '../../../components/LiftMgt/cadeirante_roxo.png'
-import SmokingIcon from '../../../components/LiftMgt/fumante_roxo.png'
-import MusicIcon from '../../../components/LiftMgt/musica_roxo.png'
+import CadeiranteIcon from '../../../images/cadeirante.png'
+import SmokingIcon from '../../../images/fumante.png'
+import MusicIcon from '../../../images/musica.png'
 import Avatar from '@material-ui/core/Avatar'
 import ScoreCarona from '../ScoreCarona'
 
 const ScoreBusca = ({ percent, text, img, alt }) => {
     return (
         <div className='score'>
-            <Avatar src={img} alt={alt} className='centralize avatar' />
-            <br />
+            <div className='img-score-wrapper-background'>
+                <div className='img-score-wrapper'>
+                    <img src={img} alt={alt} />
+                </div>
+            </div>
             <Typography component='span' variant='subtitle1' align='center'>
                 { text }
             </Typography>

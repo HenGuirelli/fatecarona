@@ -10,7 +10,19 @@
     justify-content: space-around;
 }
 
-.score-buscas .avatar {
+.score-buscas .img-score-wrapper-background {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
     width: 70px;
     height: 70px;
+    background-color: var(--primary-main);
+    margin: 0 auto;
+    border-radius: 45%;
+}
+
+.score-buscas .img-score-wrapper {
+    width: 45px;
+    height: 45px;
+    margin-top: 15%;
 }
