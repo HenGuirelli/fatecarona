@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 
-export default class Map extends Component {
+class Map extends Component {
   componentDidMount() {
     this.setMap();
-    this.props.callback(this.displayRoute, this.renderCircles, this.circleContains);
+    this.props.callback(this.setRoute, this.renderCircles, this.circleContains);
   }
 
   setMap() {
@@ -48,6 +48,20 @@ export default class Map extends Component {
     )
   };
 
+  setRoute = (origin, destination, waypoints = []) => {
+      const request = {
+          origin,
+          destination,
+          waypoints,
+          travelMode: 'DRIVING'
+      }
+      this.dirServ.route(request, (response, status) => {
+        if (status == 'OK') {
+            this.dirDisp.setDirections(response);
+          }
+      })
+  }
+
   renderCircles = (path) => {
     let circles = []
     circles[0] = new window.google.maps.Circle({
@@ -90,3 +104,6 @@ export default class Map extends Component {
     );
   }
 }
+
+
+export default Map
