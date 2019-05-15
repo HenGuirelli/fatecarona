@@ -1,6 +1,6 @@
 const { InsertFlow, DeleteFlow, DeleteWaypoints, UpdateFlow, UpdateWaypoints, InsertWaypoints } = require('../DAO/mysql')
 const { EmailExists, GetFlowNumRows, WayPointExists } = require('../DAO/mysql')
-const { Sync, Operation, action, actionDestination } = require('../DAO/sync')
+const { Sync, Operation, action, actionDestination } = require('../services/sync')
 
 const sync = Sync.getInstance()
 

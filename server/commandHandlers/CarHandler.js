@@ -1,6 +1,6 @@
 const { InsertCar, DeleteCar } = require('../DAO/mysql')
 const { IsValidCar, EmailExists } = require('../DAO/mysql')
-const { Sync, Operation, action, actionDestination } = require('../DAO/sync')
+const { Sync, Operation, action, actionDestination } = require('../services/sync')
 
 const sync = Sync.getInstance()
 

@@ -1,6 +1,6 @@
 const { FinalizeCarpool } = require("../DAO/mysql")
 const { Status } = require('../enum/carona')
-const { Sync, Operation, action, actionDestination } = require('../DAO/sync')
+const { Sync, Operation, action, actionDestination } = require('../services/sync')
 
 const sync = Sync.getInstance()
 

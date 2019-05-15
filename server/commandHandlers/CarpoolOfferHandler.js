@@ -1,7 +1,7 @@
 const { InsertCarpoolOffer, AddRider, InsertCarpoolOfferSheduled } = require('../DAO/mysql')
 const { CarExists, FlowExists, GetLastIdCarpool, RiderAlreadyInCarpool } = require('../DAO/mysql')
 const { GetFlowById, GetCarByPlate, GetProfile, GetCarpoolById } = require('../DAO/mongo')
-const { Sync, Operation, action, actionDestination } = require('../DAO/sync')
+const { Sync, Operation, action, actionDestination } = require('../services/sync')
 const { Weekday } = require('../enum/carona')
 
 const sync = Sync.getInstance()

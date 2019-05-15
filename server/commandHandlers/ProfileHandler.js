@@ -1,7 +1,7 @@
 const { UpdateMembros, InsertCar, InsertFlow } = require('../DAO/mysql')
 const { IsValidEmailForUpdate, IsValidCar, EmailExists, GetFlowNumRows } = require('../DAO/mysql')
 const { replaceKeyJson } = require('../utils')
-const { Sync, Operation, action, actionDestination } = require('../DAO/sync')
+const { Sync, Operation, action, actionDestination } = require('../services/sync')
 
 const sync = Sync.getInstance()
 

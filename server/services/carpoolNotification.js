@@ -4,7 +4,7 @@ const { dateToString, fillZeros, getWeekdayName } = require('../utils')
 const { Notification } = require('../notification')
 const { TypeNotification, Status } = require('../enum/carona')
 const { StartCarpool } = require('../DAO/mysql')
-const { Sync, Operation, action, actionDestination } = require('../DAO/sync')
+const { Sync, Operation, action, actionDestination } = require('../services/sync')
 
 const sync = Sync.getInstance()
 

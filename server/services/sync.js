@@ -1,4 +1,4 @@
-const mongo = require('../mongo/core')
+const mongo = require('../DAO/mongo/core')
 
 const actionDestination = mongo.schema
 

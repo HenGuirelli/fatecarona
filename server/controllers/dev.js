@@ -1,4 +1,4 @@
-const { Sync, Operation, action } = require('../DAO/sync')
+const { Sync, Operation, action } = require('../services/sync')
 
 const sync = Sync.getInstance()
 

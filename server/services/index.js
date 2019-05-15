@@ -1,5 +1,5 @@
 const { CarpoolNotification } = require('./carpoolNotification')
-const { Sync } = require('../DAO/sync')
+const { Sync } = require('../services/sync')
 
 class Services {
     static start(){

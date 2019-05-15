@@ -1,6 +1,6 @@
 const { GetEmailFromDriverByCarpoolId } = require('../DAO/mysql')
 const { GetCarpoolById, GetProfile } = require('../DAO/mongo')
-const { Sync, Operation, action, actionDestination } = require('../DAO/sync')
+const { Sync, Operation, action, actionDestination } = require('../services/sync')
 const config = require('../config.json')
 const { TypeNotification } = require('../enum/carona')
 const { Notification } = require('../notification')
