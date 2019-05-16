@@ -1,4 +1,5 @@
 const mongo = require('../DAO/mongo/core')
+const { Singleton } = require('./singleton')
 
 const actionDestination = mongo.schema
 
@@ -30,26 +31,32 @@ class Operation {
 
 class _Sync {
     constructor(){
-        this.data = []
+        this.operations = []
     }
 
     add(operation, actionDestination){
         operation.collection = actionDestination
         if (operation.collection)
-            this.data.push(operation)
+            this.operations.push(operation)
     }
 
     remove(){
-        this.data.pop()
+        this.operations.pop()
     }
 
     async _run(){        
-        setInterval(() => {
-            if (this.data.length > 0){
-                this.data.forEach(item => this._exec(item))
-                this.data = []
-            }
-        }, 300)
+        setInterval(this.executeQueue, 300)
+    }
+
+    executeQueue() {
+        if (this.operations.length > 0){
+            this.operations.forEach(item => this._exec(item))
+            this.clarQueue()
+        }
+    }
+
+    clarQueue(){
+        this.operations = []
     }
 
     async _exec(operation){
@@ -70,10 +77,7 @@ class _Sync {
 
 let instance = undefined
 
-class Sync {
-    constructor(){
-        throw `Sync não pode ser instanciado. use o método getInstance()`
-    }
+class Sync extends Singleton {
 
     static getInstance(){
         if (instance === undefined){
