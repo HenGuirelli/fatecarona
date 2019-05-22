@@ -106,6 +106,7 @@ class AdicionarRota extends Component {
 
 			if (result.success){
 				PopUp({ tipo: TIPO.SUCESSO, text: 'Trajeto cadastrado'})
+				this.props.history.push('/rotas')
 			}else{
 				PopUp({ tipo: TIPO.ERROR, text: result.message })
 			}

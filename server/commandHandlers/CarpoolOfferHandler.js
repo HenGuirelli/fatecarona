@@ -87,29 +87,26 @@ class CarpoolOfferHandler {
     }
 
     static async createNewCarpoolScheduledOffer(createNewCarpoolOfferScheduledCommand) {
-        const step1 = await CarpoolOfferHandler.createNewCarpoolOffer(createNewCarpoolOfferScheduledCommand)
-        if (step1.success){
-            const { carpoolId } = step1
-            const weekdays = createNewCarpoolOfferScheduledCommand.weekdays
-            const keys = Object.keys(weekdays)
-            keys.forEach(key => {
-                if (weekdays[key]){
-                    const weekdayId = this.getWeekdayId(key)
-                    InsertCarpoolOfferSheduled({ id_carona: carpoolId, id_dia_semana: weekdayId })
-                }
-            })
-            GetFlowById(createNewCarpoolOfferScheduledCommand.flowId)
-            .then(flow => {
-                GetCarByPlate(createNewCarpoolOfferScheduledCommand.carPlate)
-                .then(car => 
-                    sync.add( new Operation({ 
-                        action: action.INSERT,
-                        values: fetchJsonToMongo({ ...createNewCarpoolOfferScheduledCommand, flow: flow[0], car: car[0], id: carpoolId })
-                    }), actionDestination.CARPOOL_SHEDULED)
-                )
-            })
-            return { success: true }
-        }
+        const carpoolId = generateId()
+        const weekdays = createNewCarpoolOfferScheduledCommand.weekdays
+        const keys = Object.keys(weekdays)
+        keys.forEach(key => {
+            if (weekdays[key]){
+                const weekdayId = this.getWeekdayId(key)
+                InsertCarpoolOfferSheduled({ id_carona: carpoolId, id_dia_semana: weekdayId })
+            }
+        })
+        GetFlowById(createNewCarpoolOfferScheduledCommand.flowId)
+        .then(flow => {
+            GetCarByPlate(createNewCarpoolOfferScheduledCommand.carPlate)
+            .then(car => 
+                sync.add( new Operation({ 
+                    action: action.INSERT,
+                    values: fetchJsonToMongo({ ...createNewCarpoolOfferScheduledCommand, flow: flow[0], car: car[0], id: carpoolId })
+                }), actionDestination.CARPOOL_SHEDULED)
+            )
+        })
+        return { success: true }
     } 
 
     static getWeekdayId(weekdayName){

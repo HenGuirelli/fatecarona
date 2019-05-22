@@ -44,12 +44,12 @@ class _Sync {
         this.operations.pop()
     }
 
-    async _run(){        
-        setInterval(this.executeQueue, 300)
+    async run(){        
+        setInterval(this.executeQueue.bind(this), 300)
     }
 
     executeQueue() {
-        if (this.operations.length > 0){
+        if (this.operations && this.operations.length > 0){
             this.operations.forEach(item => this._exec(item))
             this.clarQueue()
         }
@@ -77,12 +77,12 @@ class _Sync {
 
 let instance = undefined
 
-class Sync extends Singleton {
+class Sync{
 
     static getInstance(){
         if (instance === undefined){
             instance = new _Sync()
-            instance._run()
+            instance.run()
         }
         return instance
     }

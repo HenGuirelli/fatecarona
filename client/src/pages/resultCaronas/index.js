@@ -23,6 +23,7 @@ class ResultCaronas extends Component {
 		const { date, email, hour } = this.props
 		Carpool.searchRequestCarpools({ date, email, hour })
 		.then(resolve => {
+			console.log('resolveeee', resolve)
 			this.setState({ carpools: resolve.data.matches, loading: false })
 		})
 		.catch(err => {

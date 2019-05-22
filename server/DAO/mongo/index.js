@@ -66,7 +66,8 @@ const GetCarpool = async email => {
 const GetRequestCarpool = async (date, email) => {
     const result = await mongo.Select('carpool')({ date, status: Status.PENDING , email: { $ne: email } })
     const dateToSend = moment(date, 'YYYY-MM-DD').toDate()
-    const sheduledResult = await GetCarpoolSheduledByDate(getWeekdayName(dateToSend).toLowerCase())
+    const weekdayName = getWeekdayName(dateToSend).toLowerCase()
+    const sheduledResult = await GetCarpoolSheduledByDate(weekdayName)
     result.push(...sheduledResult.map( carpool => ({ ...carpool, date })))
     return result
 }
