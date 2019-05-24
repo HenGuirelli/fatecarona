@@ -115,5 +115,10 @@
   },
   "eslintConfig": {
     "extends": "react-app"
-  }
+  },
+  "description": "WebApp(PWA) Fatecarona",
+  "main": "index.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC"
 }
