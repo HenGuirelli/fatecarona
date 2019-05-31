@@ -8,7 +8,6 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 import store from './store'
 import { createMuiTheme } from '@material-ui/core/styles'
 import { MuiThemeProvider } from '@material-ui/core/styles'
-import { green300 } from 'material-ui/styles/colors';
 
 // Needed for onTouchTap used by some material-ui components
 // http://stackoverflow.com/a/34015469/988941
@@ -20,7 +19,7 @@ const muiTheme = createMuiTheme({
       main: "#673ab7"
     },
     secondary: {
-      main: green300
+      main: "#bdbdbd"
     },
   },
 });

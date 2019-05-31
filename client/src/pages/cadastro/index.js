@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { OutlinedTextField } from '../../components/Form/TextField'
 import ContainedButton from '../../components/Form/Button'
 import CadastroHttp from '../../http/Cadastro'
+import TermoDeUso from '../termoDeUso';
 
 class Cadastro extends Component {
 	constructor(props){
@@ -16,7 +17,8 @@ class Cadastro extends Component {
 			email: '',
 			password: '',
 			confirmPassword: '',
-			name: ''
+			name: '',
+			showTermoDeUso: false
 		}
 	}
 
@@ -68,7 +70,10 @@ class Cadastro extends Component {
 	}
 
 	render() {
-		const { value } = this.state
+		const { value, showTermoDeUso } = this.state
+		if (showTermoDeUso) {
+			return <TermoDeUso onClick={ () => this.handleSubmit } /> 
+		}
 		return (
 			<main className="cadastro">
 				<Typography component='div' align='center'>
@@ -83,7 +88,7 @@ class Cadastro extends Component {
 					<OutlinedTextField label="Confirmar senha" className='component' type="password" block
 						onChange={(event) => this.handleChange('confirmPassword', event.target.value)} />
 
-					<ContainedButton color="primary" className="component button" onClick={ this.handleSubmit }>Cadastrar</ContainedButton>
+					<ContainedButton color="primary" className="component button" onClick={ () => this.setState({ showTermoDeUso: true }) }>Cadastrar</ContainedButton>
 				</Typography>
 			</main>
 		)
