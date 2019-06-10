@@ -181,7 +181,7 @@ const DeleteWaypoints = idFlow => Delete(tableName.WAYPOINTS)('id_trajeto', idFl
 const InsertCarpoolOffer = values => Insert(tableName.CARPOOL)(values)
 const InsertPassageiro = values => Insert(tableName.RIDER)(values)
 const InsertNotification = values => Insert(tableName.NOTIFICATION)(values)
-const UpdateNotification = (values, email) => Update(tableName.NOTIFICATION)(values, 'from', email)
+const UpdateNotification = (values, email) => Update(tableName.NOTIFICATION)(values, 'to', email)
 const AddRider = (values) => Insert(tableName.RIDER)(values)
 const GetLastIdNotification = () => {
     const result = syncConnection.query(`

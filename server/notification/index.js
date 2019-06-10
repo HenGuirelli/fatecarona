@@ -33,7 +33,7 @@ class Notification {
     static async setVisualized({ email, visualized = true }){
         UpdateNotification({ visualized }, email)
         sync.add(
-            new Operation({ action: action.UPDATE, where: { from: email } ,values: { visualized } }), 
+            new Operation({ action: action.UPDATE, where: { to: email } ,values: { visualized } }), 
             actionDestination.NOTIFICATION
         )
     }
