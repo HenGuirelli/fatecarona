@@ -105,6 +105,7 @@ class AdicionarRota extends Component {
 
 	handleClick = event => {
 		const data = this.getValues()
+		const { withRedirect } = this.props || false
 
 		Flow.createNewFlow({ ...data })
 		.then(resolve => {
@@ -112,7 +113,10 @@ class AdicionarRota extends Component {
 
 			if (result.success){
 				PopUp({ tipo: TIPO.SUCESSO, text: 'Trajeto cadastrado'})
-				this.props.history.push('/rotas')
+				.then(_ => {
+					if (withRedirect)
+						this.props.history.push('/rotas')
+				})
 			}else{
 				PopUp({ tipo: TIPO.ERROR, text: result.message })
 			}

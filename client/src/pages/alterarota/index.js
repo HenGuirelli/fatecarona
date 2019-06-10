@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import TrajetoIcon  from '../../components/Rota/trajeto.png'
+import TrajetoIcon  from '../../images/trajeto.png'
 import { excluirRota } from '../../actions/mapActions'
 import GoogleMaps from '../../components/GoogleMaps'
 

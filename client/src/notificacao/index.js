@@ -1,20 +1,41 @@
 import NotificationHttp from '../http/Notification'
 
-const intervalToGetNotification = 10000 // 5seg
+const intervalToGetNotification = 1000 // 10seg
 
-class Notificacao {
-    static async run(email){
-        setInterval( () => this.getNotifications(email), intervalToGetNotification)
+class _Notificacao {
+
+    constructor(){
+        this.running = false
+        this.email = null
     }
 
-    static getNotifications(email){
+    run(email, cb){
+        this.running = true
+        setInterval( () => this.getNotifications(email, cb), intervalToGetNotification)
+    }
+
+    getNotifications(email, cb){
+        email = this.email || email
+        console.log('escolhido: ', email)
         NotificationHttp.getNotifications({ email })
         .then(resolve => {
             const result = resolve.data
             if (result.success){
-                console.log(result)
+                if (cb) cb(result.notifications)
             }
         })
+    }
+}
+
+const instance = new _Notificacao()
+
+class Notificacao {
+    constructor(){
+        throw 'Notificacao não pode ser instanciado'
+    }
+
+    static getInstance(){
+        return instance
     }
 }
 

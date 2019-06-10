@@ -45,9 +45,6 @@ class App extends Component {
 		})
 	}
 
-	startThreadNotification(email){
-		NotificationService.run(email)
-	}
 
   render() {
    
@@ -56,7 +53,7 @@ class App extends Component {
 			<Menu />
 				<Switch>
 					<Route exact path="/" component={Home}/>
-					<Route exact path="/login" component={() => <Auth notificationThread={this.startThreadNotification.bind(this)} />} />
+					<Route exact path="/login" component={() => <Auth />} />
 					<Route exact path="/rotas" component={Rotas}/>
 					<Route path="/rotas/alterar" component={AlterarRota}/>
 					<Route path="/rotas/adicionar" component={AdicionarRota}/>

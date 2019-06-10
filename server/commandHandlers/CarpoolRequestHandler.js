@@ -7,25 +7,6 @@ const { Notification } = require('../notification')
 
 const sync = Sync.getInstance()
 
-// adiciona passageiros no mongo
-// const resolveRidersToMongo = async ({id, email}) => {
-//     let carpool  = await GetCarpoolById(id)
-//     const member = await GetProfile(email)
-//     if (carpool[0].riders){
-//         carpool[0].riders.push(member[0])
-//     }else{
-//         carpool[0].riders = [member[0]]
-//     }
-//     sync.add(
-//         new Operation({ action: action.UPDATE, where: { id }, values: { riders: carpool[0].riders }}), 
-//         actionDestination.CARPOOL
-//     )
-// }
-
-const fetchTypeNotificationToMongo = ({ typeNotification }) => {
-    return Object.keys(TypeNotification)[typeNotification]
-}
-
 class CarpoolRequestHandler {
     static sendCarpoolRequest(sendCarpoolRequestCommand) {
         const val = {

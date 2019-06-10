@@ -14,10 +14,12 @@ const acceptCarpool = ({ to, from, carpoolId }) => {
         if (result.success){
             popUp({tipo: TIPO.SUCESSO, text: "Sucesso"})
         }else{
-            popUp({tipo: TIPO.ERRO, text: result.message})
+            popUp({tipo: TIPO.ERRO, text: result})
         }
     })
-    .catch(err => { popUp({tipo: TIPO.ERRO, text: err }) })
+    .catch(err => { 
+        popUp({tipo: TIPO.ERRO, text: err })
+    })
 }
 
 const Notification = ({title, text, to, from, carpoolId, withButton = true}) => (

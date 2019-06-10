@@ -7,6 +7,7 @@ import Mensagens from '../../components/Notificacao/Mensagens'
 import NOTIFICATION_TYPE from '../../components/Notificacao/notificationType'
 import Notification from '../../http/Notification'
 import { connect } from 'react-redux'
+import { setNumberOfNewNotifications } from '../../actions/notificationActions'
 
 class Notifications extends Component {
 	state = {
@@ -27,6 +28,10 @@ class Notifications extends Component {
 			this.setState({ notifications })
 
 			Notification.setVisualized({ email })
+			.then(_ => {
+				// zera o contador de notificação no menu
+				this.props.dispatch(setNumberOfNewNotifications(0))
+			})
 			.catch(err => { /** TODO: mensagem de erro (esse processo acontece em background então acho que um alert não seria uma boa opção) */ })
 		})
 		.catch(err => { /** TODO: mensagem de erro */ })

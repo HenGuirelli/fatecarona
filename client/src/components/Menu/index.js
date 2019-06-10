@@ -14,6 +14,7 @@ import menuContent from './menuContent'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { setText } from '../../actions/navigationActions'
+import { Badge } from '@material-ui/core';
 
 class Menu extends React.Component {
 	state = {
@@ -29,23 +30,34 @@ class Menu extends React.Component {
 	}
 
 	withLink = item => {
+		const getContent = () => (
+			<Fragment>
+				<ListItemIcon> { item.icon } </ListItemIcon>
+				<ListItemText primary={item.text} />
+			</Fragment>
+		)
 		return (
 			<Link to={item.route} onClick={ ()=> 
 				this.props.dispatch(setText(item.text))}>
 				<ListItem button >
-					<ListItemIcon> { item.icon } </ListItemIcon>
-					<ListItemText primary={item.text} />
+					{ item.badge ? <Badge badgeContent={this.props.numberOfNotification} color='error'> { getContent() } </Badge>: getContent() }
 				</ListItem>
 			</Link>
 		)
 	}
 	
-	withAction = item => (
-		<ListItem button key={item.text} onClick={item.action}>
-			<ListItemIcon> { item.icon } </ListItemIcon>
-			<ListItemText primary={item.text} />
-		</ListItem>
-	)
+	withAction = item => {
+		const getContent = () => (
+			<Fragment>
+				<ListItemIcon> { item.icon } </ListItemIcon>
+				<ListItemText primary={item.text} />
+			</Fragment>
+		)
+			
+		return <ListItem button key={item.text} onClick={item.action}>
+					{ item.badge ? <Badge badgeContent={this.props.numberOfNotification} color='error'> { getContent() } </Badge> : getContent() }
+				</ListItem>
+	}
 
 	render() {
 		const { open } = this.state
@@ -53,7 +65,9 @@ class Menu extends React.Component {
 			<Fragment>		
 				<Divider />
 				<List>
-					{menuContent.map((item, index) => (	item.route ? this.withLink(item) : this.withAction(item) ))}
+					{menuContent.map((item, index) => {
+						return item.route ? this.withLink(item) : this.withAction(item)
+					})}
 				</List>
 			</Fragment>
 		)
@@ -68,7 +82,9 @@ class Menu extends React.Component {
 							aria-label="Open drawer"
 							onClick={this.handleDrawerOpen}
 						>
-							<MenuIcon />
+							<Badge badgeContent={this.props.numberOfNotification} color='error'>
+								<MenuIcon />
+							</Badge>
 						</IconButton>
 						<Typography variant="h6" color="inherit" noWrap>
 							{ this.props.text }
@@ -99,6 +115,7 @@ class Menu extends React.Component {
 export default connect(store => {
 	return {
 		isLogged: store.user.email !== undefined,
-		text: store.navigation.text
+		text: store.navigation.text,
+		numberOfNotification: store.notification.number
 	}
 })(Menu)

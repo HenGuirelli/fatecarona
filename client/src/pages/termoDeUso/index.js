@@ -14,7 +14,7 @@ class TermoDeUso extends React.Component {
                 <div className="wrapper-termo-de-uso">
                     <div className="termo-de-uso">
                         <Typography component='span'>
-                            <span className="texto">A Fatec Sao Caetano do Sul e os desenvolvedores nao se responsabilizam por qualquer incidente que ocorra durante a carona.</span>
+                            <span className="texto">A Fatec São Caetano do Sul e os desenvolvedores não se responsabilizam por qualquer incidente que ocorra durante a carona.</span>
                         </Typography>
                         <br /> <br />
                         <Button color='primary' onClick={(e) => onClick(e)}> Aceitar </Button>

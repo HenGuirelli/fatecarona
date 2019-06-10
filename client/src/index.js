@@ -8,6 +8,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 import store from './store'
 import { createMuiTheme } from '@material-ui/core/styles'
 import { MuiThemeProvider } from '@material-ui/core/styles'
+import AlertSnackBar from './pages/notifications/alertSnackBar';
 
 // Needed for onTouchTap used by some material-ui components
 // http://stackoverflow.com/a/34015469/988941
@@ -29,6 +30,7 @@ ReactDOM.render(
     <MuiThemeProvider theme={muiTheme}>
       <BrowserRouter>
         <div>
+          <AlertSnackBar />
           <App />
         </div>
       </BrowserRouter>

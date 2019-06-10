@@ -65,7 +65,7 @@ class Oferecer extends Component {
 				<Veiculos />
 				<Divider />
 				
-				<Trajeto />
+				<Trajeto withRedirect={ false } />
 				<Divider />
 
 				<Preferencia />

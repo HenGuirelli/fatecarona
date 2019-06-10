@@ -1,8 +1,11 @@
-const { InsertCarpoolOffer, AddRider, InsertCarpoolOfferSheduled } = require('../DAO/mysql')
+const { InsertCarpoolOffer, AddRider, InsertCarpoolOfferSheduled, GetEmailFromDriverByCarpoolId } = require('../DAO/mysql')
 const { CarExists, FlowExists, GetLastIdCarpool, RiderAlreadyInCarpool } = require('../DAO/mysql')
 const { GetFlowById, GetCarByPlate, GetProfile, GetCarpoolById } = require('../DAO/mongo')
 const { Sync, Operation, action, actionDestination } = require('../services/sync')
 const { Weekday } = require('../enum/carona')
+const { Notification } = require('../notification')
+const { TypeNotification } = require('../enum/carona')
+const config = require('../config.json')
 
 const sync = Sync.getInstance()
 
@@ -30,22 +33,35 @@ class CarpoolOfferHandler {
             id_carona: id,
             email_membro: email
         }
-        if (RiderAlreadyInCarpool(email, id)) { throw 'Passageiro já está na carona' }
-        AddRider(val)
+        // if (RiderAlreadyInCarpool(email, id)) { throw 'Você já está na carona' }
+        // AddRider(val)
 
-        // TODO: área de critica, fazer contenção de erro
-        const profile = await GetProfile( email )
-        const carpool = await GetCarpoolById( id )
-        const riders = carpool[0].riders || []
-        riders.push(profile[0])
-        sync.add( new Operation({ 
-                    action: action.UPDATE, 
-                    where: { id }, 
-                    values:  { riders }
-                }), actionDestination.CARPOOL)
+        // // TODO: área critica, fazer tratamento de erro
+        // const profile = await GetProfile( email )
+        // const carpool = await GetCarpoolById( id )
+        // const riders = carpool[0].riders || []
+        // riders.push(profile[0])
+        // sync.add( new Operation({ 
+        //             action: action.UPDATE, 
+        //             where: { id }, 
+        //             values:  { riders }
+        //         }), actionDestination.CARPOOL)
         
+        const from = GetEmailFromDriverByCarpoolId(id)
+        const driverProfile = await GetProfile( from )
+        const driverName = driverProfile[0].nick || driverProfile[0].name
+
+        const notification = new Notification({
+            carpoolId: id,
+            title: config.texts.titleCarpool,
+            from: from,
+            to: email,
+            text: config.texts.carpoolAcept.toString().replace(':driver', driverName ),
+            type: TypeNotification.CARPOOL,
+        })
+        notification.send()
+
         return { success: true }
-        // TODO: remover a notificação (mysql e mongo)
     }
 
     static async createNewCarpoolOffer(createNewCarpoolOfferCommand) {

@@ -19,7 +19,6 @@ class PerfilMotorista extends React.Component {
         super(props)
 
         const isDriver = props.isDriver || false
-        console.log('constructor -- motorista')
         this.state = {
             isDriver,
             value: this.getValueDriver(isDriver),

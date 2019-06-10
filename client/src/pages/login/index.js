@@ -59,7 +59,6 @@ class LoginForm extends Component {
 	.then(resolve => {
 		if (resolve.data.success){
 			this.props.dispatch(setEmail(email))
-			this.props.notificationThread(this.props.email)
 			this.props.history.push('/')
 		}else{
 			popUp({ tipo: TIPO.AVISO, text: resolve.data.message })

@@ -8,6 +8,7 @@ import navigation from './navigationReducer'
 import flow from './flowReducer'
 import flows from './flowsReducer'
 import carpool from './carpoolReducer'
+import notification from './notificationReducer'
 
 export default combineReducers({
     user,
@@ -15,5 +16,6 @@ export default combineReducers({
     car,
     flow,
     flows,
-    carpool
+    carpool,
+    notification
 })

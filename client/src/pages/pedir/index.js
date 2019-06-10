@@ -33,7 +33,7 @@ class Pedir extends Component {
 				<Destino />
 				<Divider />
 
-				<Trajeto />
+				<Trajeto withRedirect={ false } />
 				<Divider />
 
 				<Preferencia />

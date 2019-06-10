@@ -50,7 +50,8 @@ const itens =
     {
         text: "Notificações",
         route: "/notificacoes",
-        icon:  <img src={Notificacoes} />  
+        icon:  <img src={Notificacoes} />,
+        badge: true  
     },
     {
         text: "Logout",
