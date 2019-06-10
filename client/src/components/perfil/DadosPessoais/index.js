@@ -5,6 +5,7 @@ import { Typography } from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '../../Form/Button'
 import { connect } from 'react-redux'
+import { setUserData } from '../../../actions/userActions';
 
 const ChoiceAvatar = props => (
     <div className='profile-avatar-wrapper'>
@@ -37,13 +38,14 @@ class DadosPessoais extends React.Component {
         }
     }
 
-    handleChange = (name, value) => {
+    handleChange = async (name, value) => {
         this.trackState[name] = value
         if(this.props.trackState){
             this.props.trackState(this.trackState)
         }
 
-        this.setState({ [name]: value })
+        await this.setState({ [name]: value })
+        this.props.dispatch(setUserData(this.state))
     }
 
     componentDidMount(){
@@ -62,13 +64,13 @@ class DadosPessoais extends React.Component {
             <div className='profile-dados-pessoais'>
                 <ChoiceAvatar firsLetterNick='R' />
                 <Typography component='div' align='center'>
-                    <OutlinedTextField label='apelido' className='component' block 
+                    <OutlinedTextField label='apelido' className='component' block  optional={true}
                         onChange={ (e) => this.handleChange('nick', e.target.value) }  value={nick}/>
-                    <TimePicker label='Chego na Fatec'  className='component' block 
+                    <TimePicker label='Chego na Fatec'  className='component' block   optional={true}
                         onChange={ (e) => this.handleChange('inFatec', e.target.value) } value={inFatec}/>
-                    <TimePicker label='Saio da Fatec' className='component' block 
+                    <TimePicker label='Saio da Fatec' className='component' block   optional={true}
                         onChange={ (e) => this.handleChange('outFatec', e.target.value) } value={outFatec}/>
-                    <TelephoneInput label='Telefone' className='component' block 
+                    <TelephoneInput  label='Telefone' className='component' block  optional={true}                       
                         onChange={ (e) => this.handleChange('phone', e.target.value) } value={phone}/>
                 </Typography>
             </div>

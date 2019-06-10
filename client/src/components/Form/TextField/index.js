@@ -1,49 +1,66 @@
 import React, { Fragment } from 'react'
 import TextField from '@material-ui/core/TextField'
 import MenuItem from '@material-ui/core/MenuItem'
-import MaskedInput from 'react-text-mask'
 import './style.css'
-import Input from '@material-ui/core/Input'
 import Select from '@material-ui/core/Select'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import OutlinedInput from '@material-ui/core/OutlinedInput'
-import { fillZeros } from '../../../utils'
+
+const optionalText = '- opcional -'
 
 class DefaultTextFieldCore extends React.Component {
-  state = {
-    value: ''
-  }
+	state = {
+		value: '',
+		error: false
+	}
 
-  constructor(props, variant){
-    super(props)
-    this.variant = variant
-  }
+	constructor(props, variant){
+		super(props)
+		this.variant = variant
+	}
 
-  handleChange = event => {
-    this.setState({
-      value: event.target.value,
-    })
+	handleChange = event => {
+		this.setState({
+			value: event.target.value,
+		})
 
-    const { onChange } = this.props
-    if (onChange)
-        onChange(event)
-  }
+		const { onChange } = this.props
+		if (onChange)
+			onChange(event)
+	}
 
-  render() {
-    const { onChange, ...props } = this.props
-    return (
-      <Fragment>
-        <TextField
-          value={this.state.value}
-          onChange={this.handleChange}
-          variant={this.variant}
-          { ...props }
-        />
-        { this.props.block ? <br /> : null }
-      </Fragment>
-    )
-  }
+	isValid = () => {
+		const { validate } = this.props
+		if (validate) {
+			if (!validate(this.state.value)) {
+				this.setState({ error: true })
+			}else {                
+				this.setState({ error: false })
+			}
+		}
+	}
+
+	render() {
+		const { onChange, errorText, optional = false, block, ...props } = this.props
+		const { error } = this.state
+		return (
+			<Fragment>
+				<TextField
+					error={error}
+					value={this.state.value}
+					onChange={this.handleChange}
+					variant={this.variant}
+					onBlur={this.isValid}
+					helperText={optional ? optionalText : '' }
+					{ ...props }
+				/>
+				{ block ? <br /> : null }
+				{ error ? <span> { errorText } </span> : null }
+				{ block && error ? <br/> : null }
+			</Fragment>
+		)
+	}
 }
 
 class OutlinedTextField extends DefaultTextFieldCore {
@@ -58,57 +75,94 @@ class DefaultTextField extends DefaultTextFieldCore {
   }
 }
 
-const TextMaskCustom = (props) => {
-    console.log(props)
-    const { inputRef, ...other } = props
-
-    return (
-      <MaskedInput
-        {...other}
-        ref={ref => {
-          inputRef(ref ? ref.inputElement : null)
-        }}
-        mask={[/[A-Z]/, /[A-Z]/, /[A-Z]/, '-', /[1-9]/, /[1-9]/, /[1-9]/, /[1-9]/ ]}
-        placeholderChar={'\u2000'}
-        showMask
-      />
-    )
-  }
-
-class FormattedInput extends React.Component {
-  state = {
-    value: '',
-  }
-
-  handleChange = event => {
-    this.setState({
-      value: event.target.value,
-    })
-    if (this.props.onChange){
-      this.props.onChange(event)
-    }
-  }
-
-  render() {
-    const { textmask, value } = this.state
-    const { label, mask, onChange, ...restProps } = this.props
-
-    return (
-        <TextField
-          label={label}
-          value={value}
-          onChange={this.handleChange}
-          inputComponent={TextMaskCustom}
-          { ...restProps }
-        />
-    )
-  }
-}
-
-// TODO: implements masked textInputs
 class TelephoneInput extends React.Component {
+	constructor(props){
+		super(props)
+
+		this.mask = '(__) _____-____'
+		this.state = {
+			value: this.mask,
+		}
+
+		this.isDeleteClicked = false
+
+		this.eventMap = {
+			1: value => `(${value}_) _____-____`,
+			2: value => `(${value}) _____-____`,
+			3: value => `(${value.slice(0, 2)}) ${value.slice(2,3)}____-____`,
+			4: value => `(${value.slice(0, 2)}) ${value.slice(2,4)}___-____`,
+			5: value => `(${value.slice(0, 2)}) ${value.slice(2,5)}__-____`,
+			6: value => `(${value.slice(0, 2)}) ${value.slice(2,6)}_-____`,
+			7: value => `(${value.slice(0, 2)}) ${value.slice(2,7)}-____`,
+			8: value => `(${value.slice(0, 2)}) ${value.slice(2,7)}-${value.slice(7, 8)}____`,
+			9: value => `(${value.slice(0, 2)}) ${value.slice(2,7)}-${value.slice(7, 9)}___`,
+			10: value => `(${value.slice(0, 2)}) ${value.slice(2,7)}-${value.slice(7, 10)}_`,
+			11: value => `(${value.slice(0, 2)}) ${value.slice(2,7)}-${value.slice(7,11)}`,
+		}
+	}
+
+	handleChange = event => {
+		const { value } = event.target
+
+		if (this.isDeleteClicked){
+			this.isDeleteClicked = false
+			return
+		}
+
+		if (this.removeFormat(value).length > 11)
+			return
+
+		this.setState({ value: this.format(value) })
+	}
+
+	onKeyDown = (e) => {
+		if (e.keyCode === 8) {
+			this.isDeleteClicked = true
+			let { value } = e.target
+
+			if (value) {
+				value = this.removeFormat(value)
+				if (value.length > 0){
+					value = value.slice(0, value.length - 1)
+					
+					this.setState({ value: this.format(value) })
+				}
+			}
+		}
+	}
+
+	removeFormat = (value) => {
+		return value
+				.replace('(', '')
+				.replace(/_/g, '')
+				.replace(')', '')
+				.replace('-', '')
+				.replace(' ', '')
+	}
+
+	format = (value) => {
+		value = this.removeFormat(value)
+
+		if (value){
+			if (value.length > 0 && value.length < 12){
+				try {
+					return this.eventMap[value.length](value)
+				}catch (e) {
+					return value
+				}	
+			}
+		}else {
+			return this.mask
+		}
+	}
+
+	isValid = () => {
+
+	}
+
 	render() {
-		return <FormattedInput {...this.props} variant='outlined' mask={[/[A-Z]/, /[A-Z]/, /[A-Z]/, '-', /[1-9]/, /[1-9]/, /[1-9]/, /[1-9]/ ]}/>
+		const { onChange, value, ...restProps } = this.props
+		return <OutlinedTextField type='tel' onChange={e => { this.handleChange(e); onChange(e) }} onKeyDown={ this.onKeyDown }  value={ this.state.value } {...restProps} />
 	}
 }
 
@@ -128,13 +182,14 @@ const Picker = props => (
 
 /// defaultValue, label
 const TimePicker = (props) => {
-	const { className, ...restProps } = props
+	const { className, optional = false, ...restProps } = props
 	return (
 		<Picker
 			type='time'
 			inputProps={{
 				step: 300, // 5 min
 			}}
+			helperText={optional ? optionalText : ''}
 			className={`time-picker ${className}`}
 			{ ...restProps }
 		/>
@@ -199,7 +254,6 @@ class ComboBox extends React.Component {
 export {
   OutlinedTextField,
   DefaultTextField,
-  FormattedInput,
   TimePicker,
   DatePicker,
   TelephoneInput,

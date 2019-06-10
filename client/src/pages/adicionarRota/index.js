@@ -9,6 +9,10 @@ import Flow from '../../http/Flow'
 import PopUp, { TIPO } from '../../components/PopUp'
 import { CircularProgress } from '@material-ui/core'
 import { sleep } from '../../utils'
+import IconButton from '@material-ui/core/IconButton'
+import ContactSupport from '@material-ui/icons/ContactSupport'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import Tooltip from '@material-ui/core/Tooltip'
 
 class AdicionarRota extends Component {
 	constructor(props) {
@@ -24,7 +28,9 @@ class AdicionarRota extends Component {
 			origin: '',
 			destination: '',
 			waypoint: '',
-			loading: true
+			loading: true,
+
+			toolTipOpenned: false
 		}
 		this.trackState = {}
 		this.setRoute = () => console.error('setRouter() não atribuido')
@@ -125,6 +131,17 @@ class AdicionarRota extends Component {
 		this.setRoute(txtOrigem.value, txtDestino.value)
 	}
 
+	openToolTip = () => {
+		this.setState({ toolTipOpenned: true })
+		this._closeToolTipInSec()
+	}
+
+	_closeToolTipInSec = async () => {
+		setTimeout(() => {
+			this.setState({ toolTipOpenned: false })
+		}, 8000)
+	}
+
 	render () {
 		const { withButton = true, ...restProps } = this.props
 		const { loading } = this.state
@@ -147,7 +164,33 @@ class AdicionarRota extends Component {
 
 							<div className='add-waypoints'>
 								<OutlinedTextField label='Pontos de interesse' inputRef={el => this.state.txtPontosInteresses = el} block  className='component'
-									onChange={ (event) => this.handleChange('waypoint', event.target.value)} value={this.state.waypoint} />
+									onChange={ (event) => this.handleChange('waypoint', event.target.value)} value={this.state.waypoint} 
+									InputProps = {
+										{
+											endAdornment: (
+													<InputAdornment position="end">
+														<IconButton edge='end' aria-label="Toggle password visibility" onClick={ this.openToolTip }>
+															
+															<Tooltip 
+																title="pontos da sua viagem que você acha interessante para pegar pessoas próximas :)" 
+																placement="top" 
+																open={this.state.toolTipOpenned}
+																PopperProps={{
+																	disablePortal: true,
+																}}
+																disableFocusListener
+																disableHoverListener
+																disableTouchListener
+															>
+																<ContactSupport />
+															</Tooltip>
+														</IconButton>
+													</InputAdornment>
+											)
+										}
+									}
+									
+								/>
 								<Button onClick={() => this.addWaypoint() && this.renderMap() } className='btn-add-flow'> Adicionar </Button>
 							</div>
 						</div>

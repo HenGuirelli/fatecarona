@@ -84,7 +84,7 @@ class LoginForm extends Component {
 			<Typography component='div' align='center'>
 				<Card className="card">
           			<Avatar className="avatar">
-						<LockOutlinedIcon />
+						<LockOutlinedIcon lightingColor='primary' />
 					</Avatar>
 					<Typography component='h1' variant='h5'>
 						Login

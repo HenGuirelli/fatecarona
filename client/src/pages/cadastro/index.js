@@ -72,7 +72,7 @@ class Cadastro extends Component {
 	render() {
 		const { value, showTermoDeUso } = this.state
 		if (showTermoDeUso) {
-			return <TermoDeUso onClick={ () => this.handleSubmit } /> 
+			return <TermoDeUso onClick={ (e) => this.handleSubmit(e) } /> 
 		}
 		return (
 			<main className="cadastro">

@@ -1,7 +1,10 @@
 const { Weekday } = require('../enum/carona')
 
 const formatDate = date => {
+    
     const resp = date.split('/')
+    if (resp.length < 3)
+        throw 'Split errado no em utils/formatDate'
     return `${resp[2]}-${resp[1]}-${resp[0]}`
 }
 

@@ -35,6 +35,8 @@ const wrapString = val => {
         return `'${val}'` 
     else if(typeof val === 'boolean') 
         return val ? 1 : 0
+    else if (val == undefined)
+        return 'null'
     else
         return val
 }

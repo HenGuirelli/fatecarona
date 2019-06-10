@@ -8,6 +8,7 @@ import FormLabel from '@material-ui/core/FormLabel'
 import Typography from '@material-ui/core/Typography'
 import { connect } from 'react-redux'
 import './style.css'
+import { setDriverProfile } from '../../../actions/userActions';
 
 
 const CNHOptions = ['A', 'B', 'AB', 'C', 'D']
@@ -18,9 +19,10 @@ class PerfilMotorista extends React.Component {
         super(props)
 
         const isDriver = props.isDriver || false
+        console.log('constructor -- motorista')
         this.state = {
             isDriver,
-            value: isDriver ? 'motorista' : 'nao-motorista',
+            value: this.getValueDriver(isDriver),
             CNH: props.CNH,
             typeCNH: props.typeCNH,
             expirationDate: props.expirationDate,
@@ -34,25 +36,36 @@ class PerfilMotorista extends React.Component {
         }
     }
 
+    getValueDriver = isDriver => {
+        return isDriver ? 'motorista' : 'nao-motorista'
+    }
+
     souMotorista = () => {
         return(
             <Fragment>
-                <DefaultTextField type='number' label='Número CNH' variant='outlined' className='component' block 
-                    onChange={ (event) => this.onChange('CNH', event.target.value) } value={this.state.CNH} />
-                <ComboBox options={CNHOptions} label='Selecione...' variant='outlined' className='component' block 
-                    onChange={ (event) => this.onChange('typeCNH', event.target.value) } value={this.state.typeCNH} />
-                <DatePicker variant='outlined' label='Validade CNH' className='component' block 
-                    onChange={ (event) => this.onChange('expirationDate', event.target.value) } value={this.state.expirationDate} />
+                <div className='wrapper-component'>
+                    <DefaultTextField type='number' label='Número CNH' variant='outlined' className='component' block 
+                        onChange={ (event) => this.onChange('CNH', event.target.value) } value={this.state.CNH} />
+                </div>
+                <div className='wrapper-component'>
+                    <ComboBox options={CNHOptions} label='Selecione...'  className='component' block 
+                        onChange={ (event) => this.onChange('typeCNH', event.target.value) } value={this.state.typeCNH} />
+                </div>
+                <div className='wrapper-component'>
+                    <DatePicker variant='outlined' label='Validade CNH' className='component' block 
+                        onChange={ (event) => this.onChange('expirationDate', event.target.value) } value={this.state.expirationDate} />
+                </div>
             </Fragment>
         )
     }
 
-    onChange = (name, value) => {
+    onChange = async (name, value) => {
         this.trackState[name] = value
         if(this.props.trackState){
             this.props.trackState(this.trackState)
         }
-        this.setState({ [name]: value })
+        await this.setState({ [name]: value })
+        this.props.dispatch(setDriverProfile(this.state))
     }
 
     componentDidMount(){
@@ -71,6 +84,7 @@ class PerfilMotorista extends React.Component {
     }
     
     render(){
+        const valor = this.getValueDriver(this.props.isDriver || this.state.isDriver)
         return (
             <div className='profile-motorista centralize'>
                 <FormControl component="fieldset" className='content-radios'>
@@ -78,7 +92,7 @@ class PerfilMotorista extends React.Component {
                     <RadioGroup
                         aria-label="Motorista"
                         name="motorista"
-                        value={this.state.value}
+                        value={valor}
                         onChange={e => this.handleChange(e, this.props.onChange)}
                     >
                         <FormControlLabel 

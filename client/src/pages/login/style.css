@@ -12,6 +12,6 @@
 }
 
 .login .avatar {    
-    background-color: var(--secondary-main);
+    background-color: var(--primary-main);
     margin: 0 auto;
 }

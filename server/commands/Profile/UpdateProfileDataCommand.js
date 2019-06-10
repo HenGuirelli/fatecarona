@@ -1,5 +1,5 @@
 const { TypeCNH } = require('../../enum/car')
-const { formatDate } = require('../../utils')
+const { formatDateResolve } = require('../../utils')
 
 class UpdateProfileDataCommand {
     constructor({ nick, inFatec, outFatec, phone, isDriver, CNH, typeCNH, expirationDate, email }){
@@ -17,7 +17,7 @@ class UpdateProfileDataCommand {
 
     set typeCNH(val){
         if ( !(TypeCNH[val])){
-            throw `CNH inválida: ${val}`
+            this._typeCNH = undefined
         }
         this._typeCNH = val
     }
@@ -27,7 +27,11 @@ class UpdateProfileDataCommand {
     }
 
     set expirationDate(val) {
-        this._expirationDate = formatDate(val)
+        try {
+            this._expirationDate = formatDateResolve(val)
+        }catch(e){
+            this._expirationDate = undefined
+        }
     }
 
     get expirationDate(){

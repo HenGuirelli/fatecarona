@@ -7,6 +7,10 @@
 
 .profile-motorista .component {
     width: 200px;
+    /* margin-top: 1.3em; */
+}
+
+.profile-motorista .wrapper-component {
     margin-top: 1.3em;
 }
 
@@ -15,4 +19,5 @@
     width: fit-content;
     display: block;
     margin-top: 1.3em;
+    margin-bottom: 1.3em;
 }

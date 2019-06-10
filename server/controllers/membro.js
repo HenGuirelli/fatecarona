@@ -42,7 +42,8 @@ const MembersController = app => {
 
     // Update profile
     app.put('/profile/:email', (req, res) => {
-        const command = new UpdateProfileDataCommand({ email: req.params.email, ...req.body })
+        const j = { email: req.params.email, ...req.body }
+        const command = new UpdateProfileDataCommand(j)
         res.send(ProfileHandler.updateProfileData(command))
     })
 

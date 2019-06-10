@@ -5,7 +5,7 @@ use Fatecarona;
 create table membros(
 	email varchar(40) not null primary key,
 	nome varchar(40) not null,
-	telefone char(15),
+	telefone char(20),
 	apelido varchar(20),
 	img varchar(50),
 	chegada time,
@@ -115,3 +115,5 @@ create table rating (
     foreign key (ratedEmail) references membros(email),
     foreign key (raterEmail) references membros(email)
 );
+
+
