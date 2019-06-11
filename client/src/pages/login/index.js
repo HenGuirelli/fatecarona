@@ -77,6 +77,10 @@ class LoginForm extends Component {
 	  }
   }
 
+  componentDidMount(){
+	  this.props.dispatch(setEmail(undefined))
+  }
+
   render() {
     return (
 		<main className="login">

@@ -1,17 +1,19 @@
 .poup-up-closable {
-    position: fixed;
+    position: absolute;
     z-index: 999;
     background-color: white;
     padding: 1.3em;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     cursor: pointer;
+
+    margin-top: 800px;
 }
 
 .poup-up-closable-background {
     width: 100%;
-    height: 100%;
+    height: 300%;
     z-index: 99;
-    position: fixed;
+    position: absolute;
     top: 0;
     right: 0;
     background-color: rgba(0,0,0,0.5);

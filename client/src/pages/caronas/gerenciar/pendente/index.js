@@ -49,7 +49,6 @@ class Pendente extends Gerenciavel {
                 <Divider />
                 <Chat />
                 <Divider />
-                <Rota />
              </main>
         )
     }

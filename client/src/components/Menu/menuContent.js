@@ -55,8 +55,8 @@ const itens =
     },
     {
         text: "Logout",
-        action: () => console.log('clicked'),
-       // icon:  <img src={Logout} />  
+        action: () => window.location.href = '/login',
+        icon:  <img src={Logout} />  
     }
 ]
 

@@ -33,19 +33,19 @@ class CarpoolOfferHandler {
             id_carona: id,
             email_membro: email
         }
-        // if (RiderAlreadyInCarpool(email, id)) { throw 'Você já está na carona' }
-        // AddRider(val)
+        if (RiderAlreadyInCarpool(email, id)) { throw 'Você já está na carona' }
+            AddRider(val)
 
-        // // TODO: área critica, fazer tratamento de erro
-        // const profile = await GetProfile( email )
-        // const carpool = await GetCarpoolById( id )
-        // const riders = carpool[0].riders || []
-        // riders.push(profile[0])
-        // sync.add( new Operation({ 
-        //             action: action.UPDATE, 
-        //             where: { id }, 
-        //             values:  { riders }
-        //         }), actionDestination.CARPOOL)
+        // TODO: área critica, fazer tratamento de erro
+        const profile = await GetProfile( email )
+        const carpool = await GetCarpoolById( id )
+        const riders = carpool[0].riders || []
+        riders.push(profile[0])
+        sync.add( new Operation({ 
+                    action: action.UPDATE, 
+                    where: { id }, 
+                    values:  { riders }
+                }), actionDestination.CARPOOL)
         
         const from = GetEmailFromDriverByCarpoolId(id)
         const driverProfile = await GetProfile( from )

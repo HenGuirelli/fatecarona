@@ -49,7 +49,6 @@ class Historico extends Gerenciavel {
                     null
                 }
                 <Divider />
-                <Rota />
              </main>
         )
     }

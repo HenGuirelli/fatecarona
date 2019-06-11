@@ -83,8 +83,6 @@ class Andamento extends Gerenciavel {
                     null
                 }
                 <Divider />
-                <Rota />
-                <Divider />
                 <Chat />
                 <Divider />
                 <Typography component='div' align='center' className='btn-finalizar-carona'>

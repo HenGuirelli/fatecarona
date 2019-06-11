@@ -14,11 +14,14 @@ import menuContent from './menuContent'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { setText } from '../../actions/navigationActions'
-import { Badge } from '@material-ui/core';
+import { Badge } from '@material-ui/core'
+
+const pathNotToShow = [ '/login', '/cadastro' ]
 
 class Menu extends React.Component {
 	state = {
 		open: false,
+		inPathNotToShow: false
 	}
 
 	handleDrawerOpen = () => {
@@ -59,6 +62,14 @@ class Menu extends React.Component {
 				</ListItem>
 	}
 
+	inPathNotToShow(){
+		for (let path of pathNotToShow){
+			if (window.location.href.includes(path))
+				this.setState({ inPathNotToShow: true })
+		}
+		this.setState({ inPathNotToShow: false })
+	}
+
 	render() {
 		const { open } = this.state
 		const sideList = (
@@ -74,7 +85,7 @@ class Menu extends React.Component {
 
 		if (this.props.isLogged){
 			return (
-				<div>
+				<div style={{ display: this.state.inPathNotToShow ? 'none' : 'flex' }}>
 					<AppBar position='relative'>
 						<Toolbar disableGutters={!open}>
 						<IconButton
@@ -105,8 +116,8 @@ class Menu extends React.Component {
 				</div>
 			)
 		}else{
-			// if (!window.location.href.includes('/login'))
-			// 	window.location.href = '/login'
+			 if (!window.location.href.includes('/login'))
+			 	window.location.href = '/login'
 			return null
 		}
 	}
