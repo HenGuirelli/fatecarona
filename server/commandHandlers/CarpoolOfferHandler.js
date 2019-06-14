@@ -104,6 +104,7 @@ class CarpoolOfferHandler {
 
     static async createNewCarpoolScheduledOffer(createNewCarpoolOfferScheduledCommand) {
         const carpoolId = generateId()
+        await this.createNewCarpoolOffer(createNewCarpoolOfferScheduledCommand)
         const weekdays = createNewCarpoolOfferScheduledCommand.weekdays
         const keys = Object.keys(weekdays)
         keys.forEach(key => {
