@@ -1,10 +1,13 @@
-drop database fatecarona;
-create database Fatecarona;
-use Fatecarona;
+drop database fatecarona2;
+create database fatecarona2;
+use fatecarona2;
 
-create table membros(
-	email varchar(40) not null primary key,
-	nome varchar(40) not null,
+SET SQL_SAFE_UPDATES=0;
+
+create table contas (
+    email varchar(50) primary key,
+    senha varchar(50),
+	nome varchar(40),
 	telefone char(20),
 	apelido varchar(20),
 	img varchar(50),
@@ -16,104 +19,99 @@ create table membros(
 	categoriaCNH char(2)
 );
 
-create table veiculos(
-  placa char(8) not null primary key,
-  email varchar(40) not null,
-  marca varchar(20),
-  modelo varchar(20),
-  cor varchar(25),
-  foreign key (email) references membros(email)
+create table veiculos (
+	placa char(8) not null primary key,
+	email varchar(40) not null,
+	marca varchar(20),
+	modelo varchar(20),
+	cor varchar(25),
+	foreign key (email) references contas(email)
 );
 
-create table trajeto(
-	id int primary key,
+create table trajetos (
+	id int auto_increment primary key,
 	email varchar(40) not null,
 	nome varchar(40),
 	origem varchar(100),
 	destino varchar(100),
-  	foreign key (email) references membros(email)
+  	foreign key (email) references contas(email)
 );
 
-create table pontos_interesse (
-	ponto varchar(100) not null,
+create table pontos_de_interesse (
 	id_trajeto int not null,
-	foreign key (id_trajeto) references trajeto(id)
+    `local` varchar(50),
+    foreign key (id_trajeto) references trajetos(id) 
 );
+
 
 create table caronas (
-	id int auto_increment primary key,
-	dataCarona datetime,
-	horaCarona varchar(30),
-	trajeto int,
-	email varchar(40),
-	cadeirante boolean,
-	fumantes boolean,
-	musica boolean,
-	qtdVagas tinyint unsigned default 4,
-    placa char(8) not null,
-    destino varchar(10),
-    agendado bool default false,
-	`status` varchar(15) default 'PENDING',
-	foreign key (email) references membros(email),
-	foreign key (placa) references veiculos(placa),
-	foreign key (trajeto) references trajeto(id)
+	 id int auto_increment primary key,
+     motorista varchar(50),
+     veiculo char(8),
+     trajeto int,
+     
+     `data` date,
+	 hora time,
+     destino varchar(20),
+     
+     permitido_fumar bool default false,
+     permitido_musica_alta bool default false,
+     permitido_cadeira_rodas bool default false,
+     
+     eh_semanal bool default false,
+     
+     segunda bool default false,
+     terca bool default false,
+     quarta bool default false,
+     quinta bool default false,
+     sexta bool default false,
+     sabado bool default false,
+     domingo bool default false,     
+     
+     foreign key (motorista) references contas(email),
+     foreign key (veiculo) references veiculos(placa),
+     foreign key (trajeto) references trajetos(id)
 );
 
-create table dias_da_semana (
-	id int not null primary key,
-    nome varchar(20)
+delimiter $
+CREATE TRIGGER apagar_pontos_interesse before delete
+ON trajetos
+FOR EACH ROW
+BEGIN
+	delete from pontos_de_interesse where id_trajeto = OLD.id;
+END$
+
+CREATE TRIGGER apagar_carona BEFORE DELETE
+ON caronas
+FOR EACH ROW
+BEGIN
+	DELETE FROM pedidos_carona WHERE id_carona = OLD.id;
+END$
+delimiter ;
+
+
+create table passageiros (
+	passageiro varchar(50),
+    id_carona int,
+    foreign key (passageiro) references contas(email),
+    foreign key (id_carona) references caronas(id)
 );
 
-create table carona_agendada (
-	id_carona int not null,
-    id_dia_semana int not null,
+create table pedidos_carona (
+	id_carona int,
+    email_passageiro varchar(50),
+    
     foreign key (id_carona) references caronas(id),
-    foreign key (id_dia_semana) references dias_da_semana(id)
+    foreign key (email_passageiro) references contas(email),
+    primary key (id_carona, email_passageiro)
 );
 
-insert into dias_da_semana values (0, 'domingo'), (1, 'segunda'), (2, 'terça'), (3, 'quarta'), (4, 'quinta'), (5, 'sexta'), (6, 'sabado');
+delimiter $
+CREATE PROCEDURE ACEITAR_PEDIDO_CARONA(IN ID INT, IN EMAIL_PASSAGEIRO VARCHAR(50))
+BEGIN
+	DELETE FROM PEDIDOS_CARONA WHERE ID_CARONA = ID AND EMAIL_PASSAGEIRO = EMAIL_PASSAGEIRO;
+    INSERT INTO PASSAGEIROS(PASSAGEIRO, ID_CARONA) VALUES (EMAIL_PASSAGEIRO, ID);
+END$
+delimiter ;
 
-create table caronas_membros (
-	id_carona int not null,
-    email_membro varchar(40) not null,
-    primary key (id_carona, email_membro),
-    foreign key (id_carona) references caronas(id),
-    foreign key (email_membro) references membros(email)
-);
-
-
-/*drop table notification;
-drop table notification_type;*/
-
-create table notification_type (
-	id int primary key not null,
-	type varchar(20) not null
-);
-
-insert into notification_type values (0, 'CARPOOL'), (1, 'CARPOOL_REQUEST'), (2, 'MESSAGE');
-
-create table notification (
-	id int primary key not null,
-	title varchar(20) not null,
-    `to` varchar(40) not null,
-    `from` varchar(40),    
-    text varchar(255),
-    type int not null,
-    carpoolId int, /* pode ser nulo */
-    visualized bool default false,
-    foreign key (type) references notification_type(id),
-    foreign key (`to`) references membros(email),
-    foreign key (`from`) references membros(email),
-    foreign key (carpoolId) references caronas(id)
-);
-
-create table rating (
-	ratedEmail varchar(30),
-    raterEmail varchar(30),
-    `comment` varchar(51),
-    stars int,
-    foreign key (ratedEmail) references membros(email),
-    foreign key (raterEmail) references membros(email)
-);
-
-
+ALTER TABLE CARONAS ADD COLUMN FINALIZADA BOOL DEFAULT FALSE;
