@@ -44,10 +44,8 @@ class App extends Component {
 			sim: () => { firebase.auth().signOut() }
 		})
 	}
-
-
+	
   render() {
-   
     return (
 		<div className="App">
 			<Menu />

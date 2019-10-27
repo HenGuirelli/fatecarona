@@ -27,8 +27,7 @@ class Veiculos extends React.Component {
         const { email } = this.props        
 		CarHttp.getCars({ email })
 		.then(resolve => {
-			const result = resolve.data
-            console.log('result carros', result)
+            const result = resolve.data.resultado.map(carro => ({ model: carro.modelo, brand: carro.marca, color: carro.cor, plate: carro.placa }))
             this.props.dispatch(cleanCars())
             result.forEach(car => {
                 this.props.dispatch(addCar(car))
@@ -36,7 +35,7 @@ class Veiculos extends React.Component {
 
             this.setLoading(false)
 		})
-		.catch(err => { /* TODO: exibir mensagem de erro */ })
+		.catch(err => { console.log('erro -------', err) })
 	}
 
     render(){

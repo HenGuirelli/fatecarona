@@ -17,13 +17,10 @@ class Rotas extends Component{
 	}
 
 	loadFlows = () => {
-		console.log('callback')
 		Flow.getFlows({ email: this.props.email })
 		.then(resolve => {
 			const result = resolve.data
-			console.log('load...')
 			this.setState({ trajetos: result })
-			console.log(this.state.trajeto)
 		})
 	}
 

@@ -68,7 +68,7 @@ function removerSenha(perfil){
 }
 
 async function atualizarDadosPerfil(perfil, onSucesso, onFalha) {
-    const query = `
+    const query = removerUndefined(`
     update 
         contas 
     set 
@@ -84,7 +84,7 @@ async function atualizarDadosPerfil(perfil, onSucesso, onFalha) {
         categoriaCNH = '${perfil.categoriaCNH}'
     where
         email = '${perfil.email}'
-    `
+    `)
     
     return connection.query(query, (error, results, fields) => {
         if (error){
@@ -93,6 +93,10 @@ async function atualizarDadosPerfil(perfil, onSucesso, onFalha) {
             onSucesso({ sucesso: true })
         }
     })
+}
+
+function removerUndefined(query){
+    return query.replace(/'undefined'/g, 'null').replace(/undefined/g, 0)
 }
 
 async function inserirVeiculo(veiculo, onSucesso, onFalha) {
@@ -176,7 +180,7 @@ async function inserirTrajetoDAO(trajeto, resultado) {
 
     connection.query(`select id from trajetos order by id desc`, (err, results, fields) => {
         const id_trajeto = results && results[0]["id"]
-        pontosInteresse.forEach(local => {
+        pontosInteresse && pontosInteresse.forEach(local => {
             const query = `
             insert into 
                 pontos_de_interesse (id_trajeto, local)
@@ -433,6 +437,36 @@ async function finalizarCaronaDAO(carona, resultado) {
         })
 }
 
+async function buscarVeiculoPelaPlacaDAO(veiculo, resultado) {
+    connection.query(`SELECT * FROM VEICULOS WHERE PLACA = '${veiculo.placa}'`, (err, result, fields) => {
+        if (err){
+            resultado({ sucesso: false, err})
+        }else {
+            resultado({ sucesso: true, result})
+        }
+    })
+}
+
+async function buscarNotificacaoDAO(email, resultado){
+    connection.query(`
+    SELECT 
+        * 
+    FROM 
+        PEDIDOS_CARONA PC 
+    INNER JOIN 
+        CARONAS C 
+    ON 
+        PC.ID_CARONA = C.ID
+    WHERE
+        MOTORISTA = '${email}'`, (err, result, fields) => {
+            if(err){
+                resultado({ sucesso: false, err })
+            }else {
+                resultado({ sucesso: true, resultado: result })
+            }
+    })
+}
+
 exports.inserirNovaConta = inserirNovaConta
 exports.buscarConta = buscarConta
 exports.atualizarDadosPerfil = atualizarDadosPerfil
@@ -453,3 +487,5 @@ exports.pedirCaronaDAO = pedirCaronaDAO
 exports.filtrarCaronasDAO = filtrarCaronasDAO
 exports.aceitarPedidoDeCaronaDAO = aceitarPedidoDeCaronaDAO
 exports.finalizarCaronaDAO = finalizarCaronaDAO
+exports.buscarVeiculoPelaPlacaDAO = buscarVeiculoPelaPlacaDAO
+exports.buscarNotificacaoDAO = buscarNotificacaoDAO

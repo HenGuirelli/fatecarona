@@ -18,7 +18,6 @@ class Trajeto extends React.Component {
         FlowHttp.getFlows({ email: this.props.email })
         .then(resolve => {
             const result = resolve.data
-            console.log('result', result)
             this.setState({ flows: result })
         })
     }

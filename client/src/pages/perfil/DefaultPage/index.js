@@ -52,12 +52,27 @@ class DefaultPage extends React.Component {
 			outFatec,
 			phone
 		} = this.props
-		ProfileHttp.saveProfile({email, nick, inFatec, outFatec, phone, isDriver, CNH, typeCNH, expirationDate })
+		
+		ProfileHttp.saveProfile({ 
+			email, 
+			nome: nick, 
+			chegada: inFatec, 
+			saida: outFatec, 
+			telefone: phone, 
+			motorista: isDriver, 
+			cnh: CNH, 
+			categoriaCNH: typeCNH, 
+			validadeCNH: expirationDate 
+		})
 		.then(result => {
-			PopUp({ tipo: TIPO.SUCESSO, text: 'Perfil atualizado' })
-			.then(_ => {
-				this.props.history.push('/')
-			})
+			if (result.data.sucesso){
+				PopUp({ tipo: TIPO.SUCESSO, text: 'Perfil atualizado' })
+				.then(_ => {
+					this.props.history.push('/')
+				})
+			}else {
+				PopUp({ tipo: TIPO.ERRO, text: 'Erro ao atualizar' })
+			}
 		})
 	}
 

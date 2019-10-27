@@ -1,4 +1,4 @@
-const { criarVeiculo, deletarVeiculo, buscarVeiculo } = require('./veiculo')
+const { criarVeiculo, deletarVeiculo, buscarVeiculo, buscarVeiculoPelaPlaca } = require('./veiculo')
 
 function veiculoEndpoint(app){
     app.post('/veiculo', (req, res) => {
@@ -18,6 +18,12 @@ function veiculoEndpoint(app){
 
     app.get('/veiculo/:email', (req, res) => {
         buscarVeiculo(req.params, result => {
+            res.send(result)
+        })
+    })
+
+    app.get('/veiculo/placa/:placa', (req, res) => {
+        buscarVeiculoPelaPlaca(req.params, result => {
             res.send(result)
         })
     })

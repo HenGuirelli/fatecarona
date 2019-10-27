@@ -111,14 +111,14 @@ class AdicionarRota extends Component {
 		.then(resolve => {
 			const result = resolve.data
 
-			if (result.success){
+			if (result.sucesso){
 				PopUp({ tipo: TIPO.SUCESSO, text: 'Trajeto cadastrado'})
 				.then(_ => {
 					if (withRedirect)
 						this.props.history.push('/rotas')
 				})
 			}else{
-				PopUp({ tipo: TIPO.ERROR, text: result.message })
+				PopUp({ tipo: TIPO.ERROR, text: 'erro ao inserir trajeto' })
 			}
 		})
 		// action click

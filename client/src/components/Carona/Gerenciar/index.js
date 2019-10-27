@@ -61,29 +61,19 @@ const _Gerenciar = ({ text, carpoolId, to, email }) => (
 )
 
 const Gerenciar = props => {
-    const { email, riders, date, hour } = props
+    const { email, date, hour } = props
     const carpoolId = props.id
     const sideText = formatDestinationText(props.destination)
-    console.log(props)
 
     let dateText = ''
-    //const riders = riders.map(rider => rider.name)
     if (props.repeat){
         const keys = Object.keys(props.weekdays)
-        dateText = keys.filter(key => props.weekdays[key] === true)
+        dateText = keys.filter(key => props.weekdays[key] == true)
     }else{
         dateText = formatDateToView(date)
     }
     
-    if (props.type == status.ANDAMENTO){
-        return <_Gerenciar email={email} text={`está dando carona ${dateText}, ${sideText} as ${hour}`}  to='andamento' carpoolId={carpoolId}/>
-    }
-    if (props.type == status.PENDENTE){
-        return <_Gerenciar email={email} text={`está oferencedo carona ${dateText}, ${sideText} as ${hour}`} to='pendente'  carpoolId={carpoolId}/>
-    }
-    if (props.type == status.REALIZADO){
-        return <_Gerenciar email={email} text={`deu carona ${dateText}, ${sideText} as ${hour}`} to='historico' carpoolId={carpoolId}/>
-    }
+    return <_Gerenciar email={email} text={`está dando carona ${dateText}, ${sideText} as ${hour}`}  to='andamento' carpoolId={carpoolId}/>
 }
 
 export {

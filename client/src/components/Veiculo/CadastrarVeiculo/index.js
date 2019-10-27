@@ -45,11 +45,11 @@ class CadVeiculos extends Component{
 		const { plate, brand, model, color } = this.state
 		const { email } = this.props
 
-		CarHttp.createNewCar({ plate, brand, model, color, email })
+		CarHttp.createNewCar({ placa: plate, marca: brand, modelo: model, cor: color, email })
 		.then(resolve => {
 			const result = resolve.data
 
-			if (result.success){
+			if (result.sucesso){
 				PopUp({ tipo: TIPO.SUCESSO, text: 'Veiculo adicionado' })
 				.then (value => {
 					if (this.props.onClickAdicionarCallback){

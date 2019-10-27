@@ -64,7 +64,7 @@ class DadosPessoais extends React.Component {
             <div className='profile-dados-pessoais'>
                 <ChoiceAvatar firsLetterNick='R' />
                 <Typography component='div' align='center'>
-                    <OutlinedTextField label='apelido' className='component' block  optional={true}
+                    <OutlinedTextField label='Nome' className='component' block  optional={true}
                         onChange={ (e) => this.handleChange('nick', e.target.value) }  value={nick}/>
                     <TimePicker label='Chego na Fatec'  className='component' block   optional={true}
                         onChange={ (e) => this.handleChange('inFatec', e.target.value) } value={inFatec}/>

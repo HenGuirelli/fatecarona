@@ -19,10 +19,8 @@ class Perfil extends Component {
 	}
 
 	render() {
-		const { fistTimeEditingProfile } = this.state
-		console.log('render: ', fistTimeEditingProfile)
 		return (
-			fistTimeEditingProfile ? <FirstTime /> : <DefaultPage />
+			<DefaultPage />
 		)
 	}
 }

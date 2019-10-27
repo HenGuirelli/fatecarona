@@ -14,7 +14,7 @@ class DetalhesVeiculos extends React.Component {
         CarsHttp.deleteCar({ plate })
         .then(resolve => {
             const result = resolve.data
-            if (result.success){
+            if (result.sucesso){
                 popUp({ tipo: TIPO.SUCESSO, text: 'Veiculo excluido' })
                 .then(value => afterDelete())
             }else{                

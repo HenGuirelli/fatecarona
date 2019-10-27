@@ -1,12 +1,11 @@
-import Axios from "axios"
-
+import axios from "axios"
 import config from '../config.json'
 
 const baseUrl = config.endpoint
 
 class Cadastro {
-    static createNewUser({ email, name }){
-        return Axios.post(baseUrl + '/profile', { email, name })
+    static createNewUser({ email, senha }){
+        return axios.post(baseUrl + '/conta', { email, senha })
     }
 }
 

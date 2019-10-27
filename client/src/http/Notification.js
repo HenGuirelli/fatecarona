@@ -5,7 +5,7 @@ const baseUrl = config.endpoint
 
 class Notification {
     static getNotifications({ email }){
-        return axios.get(baseUrl + '/notifications', { params: { email } })
+        return axios.get(baseUrl + '/notificacao/' + email)
     }
 
     static setVisualized({ email }){

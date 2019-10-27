@@ -11,7 +11,6 @@ class _Notificacao {
 
     run(email, cb){
         this.running = true
-        setInterval( () => this.getNotifications(email, cb), intervalToGetNotification)
     }
 
     getNotifications(email, cb){

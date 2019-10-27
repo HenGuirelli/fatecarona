@@ -18,8 +18,8 @@ class Veiculos extends Component{
 	updateView = () => {
 		CarsHttp.getCars({ email: this.props.email })
 		.then(resolve => {
-			const result = resolve.data
-			this.setState({ cars: result })
+			const data = resolve.data
+			this.setState({ cars: data.resultado.map(car => ({ plate: car.placa, model: car.modelo, brand: car.marca, email: car.email, color: car.cor }) ) })
 		})
 	}
 

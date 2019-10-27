@@ -18,96 +18,93 @@ import { logIn, setEmail } from '../../actions/userActions'
 import { withRouter } from 'react-router-dom'
 
 class LoginForm extends Component {
-  constructor() {
-    super()
-    this.state = {
-      email: '',
-      password: ''
-    }
-  }
-
-  handleEmail = (event) => {
-    this.setState({email: event.target.value.toLowerCase()})
-  };
-
-  abrirCadastro = () => {
-    this.props.history.push('/cadastro')
-  };
-
-  abrirRecuperar = () => {
-    this.props.history.push('/recuperarsenha')
-  };
-
-  handleSubmit = (event) => {
-	event.preventDefault()
-	const email = this.state.email.replace('@fatec.sp.gov.br', '')
-	const password = this.state.password
-
-	// valida email e senha preenchidos
-	if(this.state.email.length === 0 || this.state.password.length === 0) {
-        popUp({tipo: TIPO.ERRO, text: 'Favor inserir email e senha'})
-        return
+	constructor() {
+		super()
+		this.state = {
+		email: '',
+		password: ''
+		}
 	}
 
-	
-	// TODO: logar pelo FIREBASE
-	// const res = this.props.firebase.auth().signInWithEmailAndPassword(email, password)
-	// console.log(res)
+	handleEmail = (event) => {
+		this.setState({email: event.target.value.toLowerCase()})
+	};
 
-	// pega valores do perfil na base de dados
-	Login.getUserData({ email })
-	.then(resolve => {
-		if (resolve.data.success){
-			this.props.dispatch(setEmail(email))
-			this.props.history.push('/')
-		}else{
-			popUp({ tipo: TIPO.AVISO, text: resolve.data.message })
+	abrirCadastro = () => {
+		this.props.history.push('/cadastro')
+	};
+
+	abrirRecuperar = () => {
+		this.props.history.push('/recuperarsenha')
+	};
+
+	handleSubmit = (event) => {
+		event.preventDefault()
+		const email = this.state.email
+		const senha = this.state.password
+
+		this.verificarEmailESenhaPreenchidos()
+
+		Login.logar({ email, senha })
+		.then(resolve => {
+			if (resolve.data.sucesso){
+				this.props.dispatch(setEmail(email))
+				this.props.history.push('/')
+			}else{
+				popUp({ tipo: TIPO.AVISO, text: "Usuario e/ou senha inválidos" })
+			}
+		})
+	}
+
+	verificarEmailESenhaPreenchidos = () => {
+		if(this.state.email.length === 0 || this.state.password.length === 0) {
+			popUp({tipo: TIPO.ERRO, text: 'Favor inserir email e senha'})
+			throw "Senha ou email vazios"
 		}
-	})
-  }
-  
-  handlePasswrod = event => {
-    this.setState({ password: event.target.value })
-  }
+	}
+	
+	handlePasswrod = event => {
+		this.setState({ password: event.target.value })
+	}
 
-  validateEmal = () => {
-	  const { email } = this.state
-	  if (email && !email.includes('@')){
-		  this.setState({ email: email + '@fatec.sp.gov.br' })
-	  }
-  }
+	validateEmal = () => {
+		const { email } = this.state
+		if (email && !email.includes('@')){
+			this.setState({ email: email + '@fatec.sp.gov.br' })
+		}
+	}
 
-  componentDidMount(){
-	  this.props.dispatch(setEmail(undefined))
-  }
+	componentDidMount(){
+		this.props.dispatch(setEmail(undefined))
+	}
 
-  render() {
-    return (
-		<main className="login">
-			<Typography component='div' align='center'>
-				<Card className="card">
-          			<Avatar className="avatar">
-						<LockOutlinedIcon lightingColor='primary' />
-					</Avatar>
-					<Typography component='h1' variant='h5'>
-						Login
-					</Typography>
-					<CardContent>
-						<OutlinedTextField label="Email" onChange={this.handleEmail} value={this.state.email} onBlur={this.validateEmal} className="component" block/>
-						<OutlinedTextField label="Senha" type="password" onChange={this.handlePasswrod} className="component" block/>
-					</CardContent>
-					<CardContent>
-						<ContainedButton color="primary" className="component button" onClick={ this.handleSubmit }>Logar</ContainedButton>
-						<br />
-						<ContainedButton color="primary" className="component button" onClick={() => window.location.href='/cadastro' }>Cadastrar</ContainedButton>
-						<br />
-						<ContainedButton color="primary" variant="outlined" className="component button" onClick={() => console.log('button clicked')}>Esqueci minha senha</ContainedButton>
-					</CardContent>
-				</Card>
-			</Typography>
-		</main>
-    );
-  }
+	render() {
+		return (
+			<main className="login">
+				<Typography component='div' align='center'>
+					<Card className="card">
+						<Avatar className="avatar">
+							<LockOutlinedIcon lightingColor='primary' />
+						</Avatar>
+						<Typography component='h1' variant='h5'>
+							Login
+						</Typography>
+						<CardContent>
+							<OutlinedTextField label="Email" onChange={this.handleEmail} value={this.state.email} onBlur={this.validateEmal} className="component" block/>
+							<OutlinedTextField label="Senha" type="password" onChange={this.handlePasswrod} className="component" block/>
+						</CardContent>
+						<CardContent>
+							<ContainedButton color="primary" className="component button" onClick={ this.handleSubmit }>Logar</ContainedButton>
+							<br />
+							<ContainedButton color="primary" className="component button" onClick={() => window.location.href='/cadastro' }>Cadastrar</ContainedButton>
+							<br />
+							<ContainedButton color="primary" variant="outlined" className="component button" onClick={() => console.log('button clicked')}>Esqueci minha senha</ContainedButton>
+						</CardContent>
+					</Card>
+				</Typography>
+			</main>
+		);
+	}
 }
 
 export default connect(store => { 

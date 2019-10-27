@@ -15,21 +15,36 @@ class ResultCaronas extends Component {
 	}
 
 	componentDidMount(){
-		// TODO: PELOAMORDEDEUS tirar o timeout
-		setTimeout(this.searchCarpools, 3000)		
+		this.searchCarpools()
 	}
 
 	searchCarpools = () => {
 		const { date, email, hour } = this.props
 		Carpool.searchRequestCarpools({ date, email, hour })
 		.then(resolve => {
-			console.log('resolveeee', resolve)
-			this.setState({ carpools: resolve.data.matches, loading: false })
+			this.translateAll(resolve)
 		})
 		.catch(err => {
 			// TODO: mensagem de erro
+			console.log('erro', err)
 			this.setState({ loading: false })
 		})
+	}
+
+	translate(carpool){
+		return {
+			id: carpool.id,
+			email: carpool.email,
+			car: { model: carpool.veiculo.modelo, brand: carpool.veiculo.marca, plate: carpool.veiculo.placa  }, 
+			date: carpool.data,
+			destination: carpool.destino,
+			hour: carpool.hora
+		}
+	}
+
+	translateAll(carpools){
+		const newValue = carpools.map(this.translate)
+		this.setState({ carpools: newValue, loading: false  })
 	}
 
 	render() {

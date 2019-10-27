@@ -9,6 +9,7 @@ import Tab from '@material-ui/core/Tab'
 
 import { connect } from 'react-redux'
 import ProfileHttp from '../../http/Profile'
+import NotificationHttp from '../../http/Notification'
 
 class Home extends Component {
 	constructor(props){
@@ -20,6 +21,30 @@ class Home extends Component {
 			inFatec: '',
 			outFatec: '',
 			value: 0
+		}
+		this.threadNotificacaoAtivada = false
+	}
+
+
+	verificarNotificacao(){
+		const { email } = this.props.user
+		if (email != null){
+			NotificationHttp.getNotifications({ email })
+			.then(resolve => {
+				const { data } = resolve
+				if (data && data.sucesso){
+					// notificacao aqui
+				}
+			})
+		}
+	}
+
+	iniciarThreadNotificacao(){
+		if(!this.threadNotificacaoAtivada){
+			setInterval(() => {
+				this.verificarNotificacao()
+			}, 5000);
+			this.threadNotificacaoAtivada = true
 		}
 	}
 
@@ -36,6 +61,7 @@ class Home extends Component {
 				this.setState({ ...result })
 			}
 		})
+		this.iniciarThreadNotificacao()
 	}
 
 	driverComponent(){

@@ -5,12 +5,35 @@ const baseUrl = config.endpoint
 
 class Profile {
     static getProfileData({ email }){
-        return axios.get(baseUrl + '/profile', { params: { email } })
+        return axios.get(baseUrl + '/perfil/' + email)
     }
 
-    static async saveProfile({email, nick, inFatec, outFatec, phone, isDriver, CNH, typeCNH, expirationDate }) {
-        return axios.put(baseUrl + '/profile/' + email, {
-            nick, inFatec, outFatec, phone, isDriver, CNH, typeCNH, expirationDate
+    static async saveProfile({ 
+        nome,
+        telefone,
+        apelido,
+        img,
+        chegada,
+        saida,
+        motorista,
+        cnh,
+        validadeCNH,
+        categoriaCNH,
+        email 
+    }) 
+        {
+        return axios.put(baseUrl + '/perfil', {
+            nome,
+            telefone,
+            apelido,
+            img,
+            chegada,
+            saida,
+            motorista,
+            cnh,
+            validadeCNH,
+            categoriaCNH,
+            email,
         })
     }
 }

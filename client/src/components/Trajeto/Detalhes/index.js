@@ -48,7 +48,7 @@ class Detalhes extends React.Component {
                     <Body> { destination } </Body>
                 </section>
 
-                { waypoints.length > 0 ? 
+                { waypoints && waypoints.length > 0 ? 
                     <section className='section-trajeto'>
                         <Title> PONTOS DE INTERESSE: </Title>
                         { waypoints.map((item, index) => <div><Body key={`pnt-interesse-${index}`}> { item } </Body></div>) }
@@ -58,7 +58,6 @@ class Detalhes extends React.Component {
                 }
 
                 <section className='section-trajeto'>
-                    <Button variant='outlined' className='btn' onClick={this.updateFlow}> Alterar </Button>
                     <Button variant='outlined' className='btn' onClick={this.deleteFlow}> Excluir </Button>
                 </section>
             </div>

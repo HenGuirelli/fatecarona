@@ -23,12 +23,11 @@ class Caronas extends React.Component {
 
 	searchCarpools = () => {
 		const { email } = this.props
-		CarpoolHttp.searchCarpool({ email })
+		CarpoolHttp.pesquisarCaronas(email)
 		.then(resolve => {
 			const result = resolve.data
-			if (result.success){
-				console.log('result carpools:', result)
-				this.setState({ carpools: result.carpool.reverse() })
+			if (result.sucesso){
+				this.setState({ carpools: result.resultado.reverse() })
 			}else{
 				// TODO: mensagem de erro
 			}
@@ -39,42 +38,35 @@ class Caronas extends React.Component {
 		this.setState({ value })
 	}
 
-	getPage = value => [ 
-		<div>
-			{this.state.carpools.filter(item => item.status === status.ANDAMENTO)
-				.map((carona, index) => 
-					<Paper>
-						<Gerenciar key={`carona-andamento-${index}`} {...carona} type={status.ANDAMENTO} />
-					</Paper>
-				)}
-		</div>, 
-		<div>
-			{this.state.carpools.filter(item => item.status === status.REALIZADO).map((carona, index) =>
-				<Paper>
-					<Gerenciar key={`carona-realizado-${index}`}  { ...carona } type={status.REALIZADO} />
-				</Paper>
-			)}
-		</div>,
-		<div>
-			{this.state.carpools.filter(item => item.status === status.PENDENTE).map((carona, index) =>
-				<Paper>
-					<Gerenciar key={`carona-pendente-${index}`} { ...carona }  type={status.PENDENTE} />
-				</Paper>
-			)}
-		</div>][value]
-
 	render() {
-		const { value } = this.state
+		const carpool = this.state.carpools.map(carpool => {
+			return {
+				id: carpool.id,
+				email: carpool.motorista,
+				date: carpool.data,
+				hour: carpool.hora,
+				destination: carpool.destino,
+				repeat: carpool.eh_semanal,
+				weekdays: {
+					segunda: carpool.segunda,
+					terca: carpool.terca,
+					quarta: carpool.quarta,
+					quinta: carpool.quinta,
+					sexta: carpool.sexta,
+					sabado: carpool.sabado,
+					domingo: carpool.domingo,
+				}
+			}
+		})
 		return (
 			<Fragment>
-				<AppBar position="static" color='default'>
-					<Tabs value={value} onChange={this.handleChange} variant="fullWidth" indicatorColor='primary'>
-						<Tab label="Andamento" />
-						<Tab label="Histórico" />
-						<Tab label="Pendente" />
-					</Tabs>
-				</AppBar>
-				{ this.getPage(value) }
+				<div>
+					{carpool.map((carona, index) => 
+						<Paper>
+							<Gerenciar key={`carona-andamento-${index}`} {...carona} />
+						</Paper>
+					)}
+				</div>
 			</Fragment>
 		)
 	}

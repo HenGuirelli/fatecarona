@@ -51,6 +51,8 @@ class InfoCarona extends Component {
 	render() {
 		const { driverName } = this.state
 		const { car, date, destination, hour } = this.props.carpool
+
+		console.log(this.props.carpool)
 		// TODO: colocar avatar da pessoa aqui
 		if (this.state.loading){
 			return <CircularProgress />
@@ -63,7 +65,6 @@ class InfoCarona extends Component {
 				<p>3 vagas restantes</p>
 				<div className='buttons'>
 					<Button onClick={ this.iWant }>EU QUERO!</Button>
-					<Button variant='outlined'>Espiar motorista</Button>
 				</div>
 			</div>
 		)

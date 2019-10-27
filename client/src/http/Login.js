@@ -4,12 +4,8 @@ import config from '../config.json'
 const baseUrl = config.endpoint
 
 class Login {
-    static createUser({ email, name }) {
-        return axios.post(baseUrl + '/profile', { email, name })
-    }
-
-    static getUserData({ email }) {
-        return axios.get(baseUrl + '/profile', { params: { email } })
+    static logar({ email, senha }) {
+        return axios.post(baseUrl + '/conta/logar', { email, senha  })
     }
 }
 

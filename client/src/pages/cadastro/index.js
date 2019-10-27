@@ -17,56 +17,55 @@ class Cadastro extends Component {
 			email: '',
 			password: '',
 			confirmPassword: '',
-			name: '',
 			showTermoDeUso: false
 		}
 	}
 
 	handleSubmit = (event) => {
 		event.preventDefault()
-		const { email, password, name, confirmPassword } = this.state
+		const { email, password } = this.state
+
+		this.verificarCamposVazios()
+		this.verificarSenhaCoincide()
+		this.verificarEmailInstitucional()
+
+		CadastroHttp.createNewUser({ email, senha: password })
+		.then(result => {
+			if (result.data.sucesso){
+				popUp({ tipo: TIPO.SUCESSO, text: "Conta criada com sucesso" })
+			}
+			setTimeout(() => {
+				window.location.href='/login'				
+			}, 3000);
+		})
+	}
+
+	verificarCamposVazios = () => {
+		const { email, password, confirmPassword } = this.state
+		if (!email || !password || !confirmPassword){
+			popUp({ tipo: TIPO.ERRO, text: "Preencha todos os campos!" })
+			throw "Campos vazios"
+		}
+	}
 	
+	verificarSenhaCoincide = () => {
+		const { password, confirmPassword } = this.state
+		if (password !== confirmPassword){
+			popUp({ tipo: TIPO.ERRO, text: "Senhas não coincidem" })
+			throw "Senhas não coincidem"
+		}
+	}
+
+	verificarEmailInstitucional = () => {
+		const { email } = this.state
 		if (!email.match('@fatec.sp.gov.br')) {
 			popUp({tipo: TIPO.ERRO, text: 'Utilize um email institucional! ex:"aluno.sobrenome@fatec.sp.gov.br"'})
-			return
+			throw "Email inválido"
 		}
-		if (confirmPassword !== password){
-			popUp({tipo: TIPO.ERRO, text: 'As senhas não coincidem'})
-			return
-		}
-
-		CadastroHttp.createNewUser({ email, name })
-		.then(result => {
-			if (!result.data.success){
-				popUp({ tipo: TIPO.ERRO, text: result.data.message })
-			}else{
-				window.location.href='/login'
-			}
-		})
-		// this.props.firebase.auth().createUserWithEmailAndPassword(email, password)
-		// .then(a => {
-		// 	this.props.dispatch(insertUser({
-		// 		ra,
-		// 		name,
-		// 		telefone: cel,
-		// 		email: email.split('@')[0]
-		// 	}))
-		// })
-		// .catch((error) => {
-		// 	popUp({tipo: TIPO.ERRO, title: 'Erro', text: error.message})
-		// })
 	}
 
 	handleChange = (name, value) => {
 		this.setState({ [name]: value })
-	}
-
-	validateEmail = () => {
-		const { email } = this.state
-		if (!email.includes('@')){
-			console.log(email)
-			this.setState({ email: email + '@fatec.sp.gov.br' })
-		}
 	}
 
 	render() {
@@ -81,8 +80,6 @@ class Cadastro extends Component {
 						onChange={(event) => this.handleChange('email', event.target.value)} 
 						value={this.state.email}
 						onBlur={ this.validateEmail }/>
-					<OutlinedTextField label="Nome" className='component' block
-						onChange={(event) => this.handleChange('name', event.target.value)} />
 					<OutlinedTextField label="Senha" className='component' type="password" block
 						onChange={(event) => this.handleChange('password', event.target.value)} />
 					<OutlinedTextField label="Confirmar senha" className='component' type="password" block

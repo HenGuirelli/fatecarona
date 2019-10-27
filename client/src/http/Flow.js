@@ -6,13 +6,28 @@ const baseUrl = config.endpoint
 class Flow {
     static createNewFlow({ email, name, origin, destination, waypoints = [] }) {
         return Axios.post(baseUrl + '/trajeto', {
-            email, name, origin, destination, waypoints
+            email, nome: name, origem: origin, destino: destination, pontos_de_interesse: waypoints
         })
     }
 
     static getFlows({ email }) {
-        return Axios.get(baseUrl + '/trajeto', {
-            params: { email }
+        return new Promise((resolve, reject) => {
+            Axios.get(baseUrl + '/trajeto/' + email)
+            .then(result => {
+                resolve({ 
+                    data: result.data.resultado.map(
+                        trajeto => ({ 
+                            email, 
+                            name: trajeto.nome, 
+                            origin: trajeto.origem, 
+                            destination: trajeto.destino, 
+                            waypoints: trajeto.pontos_de_interesse,
+                            id: trajeto.id
+                        })
+                    )
+                })
+            })
+            .catch(_ => reject(_))
         })
     }
 

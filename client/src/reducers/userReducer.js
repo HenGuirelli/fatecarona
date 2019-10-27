@@ -1,7 +1,6 @@
 
 export default function reducer(state={
-		//email: undefined,
-		email: 'robson',
+		email: 'email@fatec.sp.gov.br',
 		firebase: {},
 		nick: '',
 		inFatec: '',

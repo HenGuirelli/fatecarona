@@ -6,7 +6,8 @@ async function criarConta(usuario, onSucesso, onReject) {
 }
 
 async function logar(usuario, onTerminar) {
-    return await buscarConta(usuario.email, criptografar(usuario.senha), onTerminar)
+    const senhaCriptografada = await criptografar(usuario.senha)
+    return await buscarConta(usuario.email, senhaCriptografada, onTerminar)
 }
 
 exports.criarConta = criarConta

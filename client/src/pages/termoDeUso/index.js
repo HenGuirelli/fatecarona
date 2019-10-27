@@ -18,7 +18,6 @@ class TermoDeUso extends React.Component {
                         </Typography>
                         <br /> <br />
                         <Button color='primary' onClick={(e) => onClick(e)}> Aceitar </Button>
-                        <Button color="primary" variant='outlined' onClick={() => window.href = '/login'}> Recusar </Button>
                     </div>
                 </div>
                 </CardContent>
